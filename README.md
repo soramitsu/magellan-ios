@@ -1,2 +1,1 @@
-# magellan-ios
-This repository is managed by Terraform!
+todo add readme c

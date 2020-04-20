@@ -1,10 +1,4 @@
 PODS:
-  - BoringSSL (10.0.3):
-    - BoringSSL/Implementation (= 10.0.3)
-    - BoringSSL/Interface (= 10.0.3)
-  - BoringSSL/Implementation (10.0.3):
-    - BoringSSL/Interface (= 10.0.3)
-  - BoringSSL/Interface (10.0.3)
   - Cuckoo (1.3.2):
     - Cuckoo/Swift (= 1.3.2)
   - Cuckoo/Swift (1.3.2)
@@ -29,48 +23,16 @@ PODS:
   - GoogleMaps/Base (3.8.0)
   - GoogleMaps/Maps (3.8.0):
     - GoogleMaps/Base
-  - gRPC (1.11.0):
-    - gRPC-RxLibrary (= 1.11.0)
-    - gRPC/Main (= 1.11.0)
-  - gRPC-Core (1.11.0):
-    - gRPC-Core/Implementation (= 1.11.0)
-    - gRPC-Core/Interface (= 1.11.0)
-  - gRPC-Core/Implementation (1.11.0):
-    - BoringSSL (~> 10.0)
-    - gRPC-Core/Interface (= 1.11.0)
-    - nanopb (~> 0.3)
-  - gRPC-Core/Interface (1.11.0)
-  - gRPC-ProtoRPC (1.11.0):
-    - gRPC (= 1.11.0)
-    - gRPC-RxLibrary (= 1.11.0)
-    - Protobuf (~> 3.0)
-  - gRPC-RxLibrary (1.11.0)
-  - gRPC/Main (1.11.0):
-    - gRPC-Core (= 1.11.0)
-    - gRPC-RxLibrary (= 1.11.0)
-  - IrohaCommunication (4.0.0):
-    - BoringSSL (= 10.0.3)
-    - gRPC-ProtoRPC (= 1.11.0)
-    - IrohaCrypto/Iroha (~> 0.3.0)
-    - nanopb (= 0.3.8)
-    - Protobuf (~> 3.5.0)
-  - IrohaCrypto/Common (0.3.0)
-  - IrohaCrypto/Iroha (0.3.0):
-    - IrohaCrypto/Common
+  - IQKeyboardManagerSwift (6.5.5)
   - Magellan (0.1.0):
     - Google-Maps-iOS-Utils
     - GoogleMaps
-    - IrohaCommunication (~> 4.0.0)
+    - IQKeyboardManagerSwift
     - RobinHood (~> 2.3.0)
     - SoraFoundation/DateProcessing (~> 0.7.0)
     - SoraFoundation/Localization (~> 0.7.0)
     - SoraFoundation/NotificationHandlers (~> 0.7.0)
     - SoraUI (~> 1.8.7)
-  - nanopb (0.3.8):
-    - nanopb/decode (= 0.3.8)
-    - nanopb/encode (= 0.3.8)
-  - nanopb/decode (0.3.8)
-  - nanopb/encode (0.3.8)
   - OHHTTPStubs/Core (9.0.0)
   - OHHTTPStubs/Default (9.0.0):
     - OHHTTPStubs/Core
@@ -84,7 +46,6 @@ PODS:
   - OHHTTPStubs/OHPathHelpers (9.0.0)
   - OHHTTPStubs/Swift (9.0.0):
     - OHHTTPStubs/Default
-  - Protobuf (3.5.0)
   - RobinHood (2.3.0)
   - SoraFoundation/DateProcessing (0.7.0):
     - SoraFoundation/Localization
@@ -132,19 +93,11 @@ DEPENDENCIES:
 
 SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
-    - BoringSSL
     - Cuckoo
     - Google-Maps-iOS-Utils
     - GoogleMaps
-    - gRPC
-    - gRPC-Core
-    - gRPC-ProtoRPC
-    - gRPC-RxLibrary
-    - IrohaCommunication
-    - IrohaCrypto
-    - nanopb
+    - IQKeyboardManagerSwift
     - OHHTTPStubs
-    - Protobuf
     - RobinHood
     - SoraFoundation
     - SoraKeystore
@@ -157,20 +110,12 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  BoringSSL: c46efb47593135382bc0934196f16d2f726f5f36
   Cuckoo: 57f71c6616b6b08cd9fe27f803da056fb619ff3e
   Google-Maps-iOS-Utils: f5d6ea55799d2ef47c113e1351b48e21cddd593c
   GoogleMaps: 7c8d66d70e4e8c300f43a7219d8fdaad7b325a9a
-  gRPC: 70703dc9ba31c72341fc7f37745cc1c379edee96
-  gRPC-Core: 164639cd8ae18ca8b65477fafb2efbaecf4f181a
-  gRPC-ProtoRPC: bb5fddf3424aa4fad74d76736578a79fe40e244e
-  gRPC-RxLibrary: 26d53d1b1f306befd4ad4e15bd6de27839a82481
-  IrohaCommunication: e53d340e9e787d920612248c34fbe4e4e5444fe8
-  IrohaCrypto: 5d518bd6fcde6d90be5e3f4d077d6cadb6e43fad
-  Magellan: f1f61e104a730b2edb2470325cca1d0061c0f612
-  nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
+  IQKeyboardManagerSwift: 0fb93310284665245591f50f7a5e38de615960b7
+  Magellan: 7151c4116bc2e40d6a5fed60ac3e66b6a3b3d68f
   OHHTTPStubs: cb29d2a9d09a828ecb93349a2b0c64f99e0db89f
-  Protobuf: 8a9838fba8dae3389230e1b7f8c104aa32389c03
   RobinHood: 73a108285ad4149c86d12839bbf209a296cfa542
   SoraFoundation: adeb5d9756236db69c76712e0e57df9bcc324c59
   SoraKeystore: 408a26aafda780fc3005b20ab336791832b5419e
@@ -178,6 +123,6 @@ SPEC CHECKSUMS:
   SwiftGen: f872ca75cbd17bf7103c17f13dcfa0d9a15667b0
   SwiftLint: 7a0227733d786395817373b2d0ca799fd0093ff3
 
-PODFILE CHECKSUM: a6b19f70ec321359039fac56de7a470b0248c72a
+PODFILE CHECKSUM: f8600e7ab751d53a71330b1502c79e9df09ec8a6
 
 COCOAPODS: 1.9.1

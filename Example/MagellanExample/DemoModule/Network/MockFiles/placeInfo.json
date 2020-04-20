@@ -1,0 +1,25 @@
+{
+  "status": {
+    "code": 0,
+    "errorCode": null,
+    "error": null,
+    "warning": null
+  },
+  "data": {
+    "id": 1,
+    "name": "Merchant's name",
+    "type": "Pharmacy",
+    "coordinates": {
+      "lat": 52.7374,
+      "lon": 52.7737
+    },
+    "address": "Russian Blv, 79",
+    "phoneNumber": "855123456789",
+    "openHours": "Monday 6:30am–8:30pm, Tuesday 8am–2pm 5–10pm, Wednesday 8am–2pm 5–10pm",
+    "website": "https://website.com",
+    "facebook": "https://facebook.com",
+    "logoUuid": "5f2d071b-7c12-4e2f-9234-c88c9395f272",
+    "promoImageUuid": "5f2d071b-7c12-4e2f-9234-c88c9395f273",
+    "distance": "350m" / "2.5km"
+  }
+}

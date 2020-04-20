@@ -8,6 +8,7 @@ target 'MagellanExample' do
   pod 'SwiftLint', '= 0.31.0'
   pod 'OHHTTPStubs/Swift', :inhibit_warnings => true
   pod 'SwiftGen', :inhibit_warnings => true
+  pod 'SwiftGen'
 
   target 'MagellanExampleTests' do
     inherit! :search_paths

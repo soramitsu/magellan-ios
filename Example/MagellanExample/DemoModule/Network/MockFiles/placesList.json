@@ -1,0 +1,32 @@
+{
+  "status": {
+    "code": 0,
+    "errorCode": null,
+    "error": null,
+    "warning": null
+  },
+  "data": {
+    "locations": [
+      {
+        "lat": 54.55252,
+        "lon": 55.55252,
+        "name": "Some merchant",
+        "type": "Pharmacy",
+        "id": 10
+      },
+      {
+        "lat": 54.7766,
+        "lon": 55.555666,
+        "name": "Yet another merchant",
+        "type": "Pharmacy",
+        "id": 100
+      }
+    ],
+    "clusters": [
+      {
+        "type": "red",
+        "quantity": 15
+      }
+    ]
+  }
+}

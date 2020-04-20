@@ -1,10 +1,8 @@
 //
-//  DemoViewController.swift
-//  MagellanExample
-//
-//  Created by Iskander Foatov on 14.04.2020.
-//  Copyright © 2020 Iskander Foatov. All rights reserved.
-//
+/**
+* Copyright Soramitsu Co., Ltd. All Rights Reserved.
+* SPDX-License-Identifier: GPL-3.0
+*/
 
 import UIKit
 

@@ -9,13 +9,6 @@ import SoraUI
 import IQKeyboardManagerSwift
 
 
-private enum MapListState {
-    
-    case normal
-    case search
-    
-}
-
 final class MapListViewController: UIViewController {
     
     let presenter: MapListPresenterProtocol
@@ -27,20 +20,6 @@ final class MapListViewController: UIViewController {
     private let tableView = UITableView()
     private let closeButton = UIButton()
     private var categoriesView: UICollectionView!
-    private var categoriesConstraint: NSLayoutConstraint?
-    private var state: MapListState = .normal {
-        didSet {
-            tableView.reloadData()
-            categoriesConstraint?.constant =
-                state == .normal ? MapConstants.categoriesHeight : 0
-        }
-    }
-    
-    private var places: [Any] = [] {
-        didSet {
-            tableView.reloadData()
-        }
-    }
     
     init(presenter: MapListPresenterProtocol, style: MapListViewStyleProtocol = MapListViewStyle()) {
         self.presenter = presenter
@@ -79,7 +58,6 @@ final class MapListViewController: UIViewController {
         
         searchField.placeholder = L10n.MapListView.Search.placeholder
         searchField.addTarget(self, action: #selector(search(_:)), for: .editingChanged)
-//        searchField.addTarget(self, action: #selector(expand(_:)), for: .editingDidBegin)
         searchField.textColor = .black
         searchField.font = style.searchFieldFont
         searchField.textAlignment = .left
@@ -126,7 +104,6 @@ final class MapListViewController: UIViewController {
     
     private func layoutViews() {
         headerView.translatesAutoresizingMaskIntoConstraints = false
-        headerView.heightAnchor.constraint(equalToConstant: MapConstants.headerHeight).isActive = true
         headerView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
         headerView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
         headerView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
@@ -134,14 +111,14 @@ final class MapListViewController: UIViewController {
         panView.translatesAutoresizingMaskIntoConstraints = false
         panView.heightAnchor.constraint(equalToConstant: MapConstants.panHeight).isActive = true
         panView.widthAnchor.constraint(equalToConstant: 36).isActive = true
-        panView.topAnchor.constraint(equalTo: view.topAnchor, constant: MapConstants.panHeight).isActive = true
+        panView.topAnchor.constraint(equalTo: headerView.topAnchor, constant: MapConstants.panHeight).isActive = true
         panView.centerXAnchor.constraint(equalTo: headerView.centerXAnchor).isActive = true
 
         iconView.translatesAutoresizingMaskIntoConstraints = false
         iconView.topAnchor.constraint(equalTo: panView.bottomAnchor, constant: 20).isActive = true
         iconView.widthAnchor.constraint(equalToConstant: 16).isActive = true
         iconView.heightAnchor.constraint(equalToConstant: 16).isActive = true
-        iconView.leftAnchor.constraint(equalTo: headerView.leftAnchor).isActive = true
+        iconView.leftAnchor.constraint(equalTo: headerView.leftAnchor, constant: 20).isActive = true
         
         closeButton.translatesAutoresizingMaskIntoConstraints = false
         closeButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
@@ -154,25 +131,13 @@ final class MapListViewController: UIViewController {
         searchField.leftAnchor.constraint(equalTo: iconView.rightAnchor, constant: 12).isActive = true
         searchField.rightAnchor.constraint(equalTo: closeButton.leftAnchor, constant: -12).isActive = true
         searchField.heightAnchor.constraint(equalToConstant: 50)
-        
-        categoriesView.translatesAutoresizingMaskIntoConstraints = false
-        categoriesView.topAnchor.constraint(equalTo: tableView.topAnchor).isActive = true
-        categoriesView.leftAnchor.constraint(equalTo: tableView.leftAnchor).isActive = true
-        categoriesView.rightAnchor.constraint(equalTo: tableView.rightAnchor).isActive = true
-        categoriesConstraint = categoriesView.heightAnchor.constraint(equalToConstant: MapConstants.categoriesHeight)
-        categoriesConstraint?.isActive = true
+        searchField.bottomAnchor.constraint(equalTo: headerView.bottomAnchor, constant: -12).isActive = true
         
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
         tableView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
         tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         tableView.topAnchor.constraint(equalTo: headerView.bottomAnchor, constant: 8).isActive = true
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        presenter.reloadData()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -197,7 +162,7 @@ final class MapListViewController: UIViewController {
             
         }
         
-        let height = headerView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
+        let height = categoriesView.collectionViewLayout.collectionViewContentSize.height
         var headerFrame = headerView.frame
 
         if height != headerFrame.size.height {
@@ -213,17 +178,15 @@ final class MapListViewController: UIViewController {
     }
 
     @objc private func search(_ textfield: UITextField) {
-        if let text = textfield.text {
-//            presenter.search(text)
+        if let text = textfield.text, text.count > 3 {
+            presenter.serach(with: text)
         }
     }
     
     @objc private func dismiss(_ sender: Any) {
         if let text = searchField.text, !text.isEmpty {
             searchField.text = ""
-//            presenter.search("")
-        } else {
-//            presenter.dismiss()
+            presenter.serach(with: "")
         }
     }
     
@@ -233,18 +196,18 @@ final class MapListViewController: UIViewController {
 extension MapListViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return places.count
+        return presenter.places.count
     }
     
-    //swiftlint:disable force_cast
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: PlaceCell.reuseIdentifier) as! PlaceCell
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: PlaceCell.reuseIdentifier) as? PlaceCell else {
+            fatalError("dequeted cell is not PlaceCell type")
+        }
         
-//        cell.place = places[indexPath.row]
+        cell.place = presenter.places[indexPath.row]
         
         return cell
     }
-    //swiftlint:enable force_cast
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 110
@@ -258,7 +221,7 @@ extension MapListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: false)
         
-//        presenter.show(place: places[indexPath.row])
+        presenter.showDetails(place: presenter.places[indexPath.row])
     }
     
 }
@@ -270,17 +233,17 @@ extension MapListViewController: UICollectionViewDataSource {
         return presenter.categories.count
     }
     
-    //swiftlint:disable force_cast
     func collectionView(_ collectionView: UICollectionView,
                         cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CategoryCollectionCell.reuseIdentifier,
-                                                      for: indexPath) as! CategoryCollectionCell
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CategoryCollectionCell.reuseIdentifier,
+                                                            for: indexPath) as? CategoryCollectionCell else {
+                                                                fatalError("Could not deque catt of type CategoryCollectionCell")
+        }
 
         cell.category = presenter.categories[indexPath.row]
 
         return cell
     }
-    //swiftlint:enable force_cast
     
 }
 
@@ -288,19 +251,15 @@ extension MapListViewController: UICollectionViewDataSource {
 extension MapListViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//        let category = Category.allCases[indexPath.item]
-//        searchField.text = category.rawValue
-//        presenter.search(category.rawValue)
+        let category = presenter.categories[indexPath.row]
+        searchField.text = category.name
+        presenter.select(category: category.name)
     }
     
 }
 
 
 extension MapListViewController: UITextFieldDelegate {
-    
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-//        presenter.expand()
-    }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         search(textField)
@@ -313,15 +272,15 @@ extension MapListViewController: UITextFieldDelegate {
 
 extension MapListViewController: MapListViewProtocol {
     
-    func setCategories(_ categories: [Category]) {
-        categoriesView.reloadData()
+    func reloadData() {
+        if isViewLoaded
+            && view.window != nil {
+            categoriesView.reloadData()
+            tableView.reloadData()
+            view.setNeedsLayout()
+        }
     }
-    
-    
-    func set(places: [Place]) {
-        self.places = places
-    }
-    
+
 }
 
 

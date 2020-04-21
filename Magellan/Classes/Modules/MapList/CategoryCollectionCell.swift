@@ -38,8 +38,7 @@ final class CategoryCollectionCell: UICollectionViewCell {
         nameLabel.numberOfLines = 0
         nameLabel.textAlignment = .center
         nameLabel.textColor = .black
-        //TODO: set font
-//        nameLabel.font = .styleFont(for: .favoriteCard)
+        nameLabel.font = .styleFont(for: .favoriteCard)
         contentView.addSubview(nameLabel)
     }
     
@@ -61,8 +60,7 @@ final class CategoryCollectionCell: UICollectionViewCell {
         }
         
         nameLabel.text = category.name
-//        iconView.image = category.icon
+        iconView.image = UIImage(named: "map_\(category.name.lowercased())", in: Bundle.frameworkBundle, compatibleWith: nil)
     }
     
 }
-

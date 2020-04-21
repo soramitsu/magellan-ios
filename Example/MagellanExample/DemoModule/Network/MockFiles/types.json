@@ -6,17 +6,53 @@
     "warning": null
   },
   "data": [
-    {
-      "id": 9,
-      "name": "Pharmacy",
-      "createdTime": 1586840646.082,
-      "updatedTime": 1586840946.082
-    },
-    {
-      "id": 10,
-      "name": "Food",
-      "createdTime": 1586840646.082,
-      "updatedTime": 1586840946.082
-    }
+            {
+                "id": 1,
+                "name": "Bank",
+                "createdTime": 1586840646.082,
+                "updatedTime": 1586840946.082
+            },
+            {
+                "id": 2,
+                "name": "Services",
+                "createdTime": 1586840646.082,
+                "updatedTime": 1586840946.082
+            },
+            {
+                "id": 3,
+                "name": "Food",
+                "createdTime": 1586840646.082,
+                "updatedTime": 1586840946.082
+            },
+            {
+                "id": 4,
+                "name": "Supermarkets",
+                "createdTime": 1586840646.082,
+                "updatedTime": 1586840946.082
+            },
+            {
+                "id": 5,
+                "name": "Pharmacy",
+                "createdTime": 1586840646.082,
+                "updatedTime": 1586840946.082
+            },
+            {
+                "id": 6,
+                "name": "Entertainment",
+                "createdTime": 1586840646.082,
+                "updatedTime": 1586840946.082
+            },
+            {
+                "id": 7,
+                "name": "Education",
+                "createdTime": 1586840646.082,
+                "updatedTime": 1586840946.082
+            },
+            {
+                "id": 8,
+                "name": "Other",
+                "createdTime": 1586840646.082,
+                "updatedTime": 1586840946.082
+            }
   ]
 }

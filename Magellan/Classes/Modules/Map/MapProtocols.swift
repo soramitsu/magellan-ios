@@ -5,16 +5,24 @@
 */
 
 import Foundation
+import GoogleMaps
 
 protocol MapViewProtocol: class, ControllerBackedProtocol, Containable {
     var presenter: MapPresenterProtocol { get }
-}
-
-protocol MapPresenterProtocol {
-    var view: MapViewProtocol? { get set }
-    var delegate: MapCoordinatorProtocol? { get set }
-}
-
-protocol MapCoordinatorProtocol: CoordinatorProtocol {
+    var zoom: Int { get }
+    var coordinatesHash: String { get }
     
+    func set(bounds: GMSCoordinateBounds)
+    func show(place: PlaceViewModel)
+    func reloadData()
+    
+}
+
+protocol MapPresenterProtocol: AnyObject {
+    var mapView: MapViewProtocol? { get set }
+    var categories: [Category] { get }
+    var places: [PlaceViewModel] { get }
+
+    func showDetails(place: PlaceViewModel)
+    func loadPlaces()
 }

@@ -13,6 +13,9 @@ struct Place {
     let type: String
     let lat: Double
     let lon: Double
+}
+
+extension Place {
     var coordinates: Coordinates {
        return Coordinates(lat: lat, lon: lon)
     }

@@ -7,10 +7,10 @@
 import Foundation
 
 final class MapAssembly {
-    static func assembly(with resolver: ResolverProtocol) -> MapViewProtocol {
-        let presenter = MapPresenter()
-        let mapView = MapViewController(presenter: presenter)
-        presenter.view = mapView
+    static func assembly(with presenter: MapPresenterProtocol, resolver: ResolverProtocol) -> MapViewProtocol {
+        let markerFactory = resolver.markerFactory ?? MapMarkerDefaultFactory()
+        let mapView = MapViewController(presenter: presenter, markerFactory: markerFactory)
+        presenter.mapView = mapView
         
         return mapView
     }

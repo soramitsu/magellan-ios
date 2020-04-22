@@ -13,7 +13,7 @@ typealias PlaceInfoCompletionBlock = (Result<PlaceInfo, Error>) -> Void
 typealias PlacesCompletionBlock = (Result<PlacesResponse, Error>) -> Void
 
 
-protocol MagellanServicePrototcol {
+protocol MagellanServicePrototcol: AutoMockable {
     
     @discardableResult
     func getCategories(runCompletionIn queue: DispatchQueue, completion: @escaping CategoriesCompletionBlock) -> Operation

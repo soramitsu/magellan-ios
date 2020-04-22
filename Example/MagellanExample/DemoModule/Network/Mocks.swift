@@ -15,7 +15,7 @@ final class Mocks {
         mock(path: "/paymentservice/api/v1/merchants", filename: "placesList.json")
     }
     
-    private static func mock(path: String, filename: String) {
+    static func mock(path: String, filename: String) {
         stub(condition: isPath(path), response: responseStub(filename))
     }
     

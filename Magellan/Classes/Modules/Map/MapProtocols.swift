@@ -7,12 +7,11 @@
 import Foundation
 import GoogleMaps
 
-protocol MapViewProtocol: class, ControllerBackedProtocol, Containable {
+protocol MapViewProtocol: class, ControllerBackedProtocol, Containable, AutoMockable {
     var presenter: MapPresenterProtocol { get }
     var zoom: Int { get }
     var coordinatesHash: String { get }
     
-    func set(bounds: GMSCoordinateBounds)
     func show(place: PlaceViewModel)
     func reloadData()
     

@@ -3,7 +3,7 @@
 * SPDX-License-Identifier: GPL-3.0
 */
 
-protocol MapListViewProtocol: ControllerBackedProtocol {
+protocol MapListViewProtocol: ControllerBackedProtocol, AutoMockable {
     var presenter: MapListPresenterProtocol { get }
     func reloadData()
 }

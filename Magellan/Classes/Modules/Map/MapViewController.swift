@@ -149,17 +149,7 @@ extension MapViewController: MapViewProtocol {
         if let firstLocation = markers.first?.coordinates {
             var bounds = GMSCoordinateBounds(coordinate: firstLocation, coordinate: firstLocation)
             markers.forEach { bounds = bounds.includingCoordinate($0.coordinates) }
-            
-            var heightDiff: CGFloat = 0.0
-            if let origin = view.superview?.convert(view.frame.origin, to: nil) {
-                heightDiff = origin.y
-            }
-            
-            let bottomPadding =  MapConstants.listCompactHeight + heightDiff + Constants.markerPadding
-            mapView.moveCamera(GMSCameraUpdate.fit(bounds, with: UIEdgeInsets(top: Constants.markerPadding,
-                                                                              left: Constants.markerPadding,
-                                                                              bottom: bottomPadding,
-                                                                              right: Constants.markerPadding)))
+            set(bounds: bounds)
         }
     }
     

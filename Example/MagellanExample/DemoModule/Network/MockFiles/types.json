@@ -1,0 +1,22 @@
+{
+  "status": {
+    "code": 0,
+    "errorCode": null,
+    "error": null,
+    "warning": null
+  },
+  "data": [
+    {
+      "id": 9,
+      "name": "Pharmacy",
+      "createdTime": 1586840646.082,
+      "updatedTime": 1586840946.082
+    },
+    {
+      "id": 10,
+      "name": "Food",
+      "createdTime": 1586840646.082,
+      "updatedTime": 1586840946.082
+    }
+  ]
+}

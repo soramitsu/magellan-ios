@@ -1,0 +1,25 @@
+source 'https://github.com/CocoaPods/Specs.git'
+platform :ios, '9.0'
+inhibit_all_warnings!
+use_frameworks!
+
+target 'MagellanExample' do
+  pod 'Magellan', :path => '../'
+  pod 'SwiftLint', '= 0.31.0'
+  pod 'OHHTTPStubs/Swift', :inhibit_warnings => true
+  pod 'SwiftGen', :inhibit_warnings => true
+  pod 'SwiftGen'
+
+  target 'MagellanExampleTests' do
+    inherit! :search_paths
+
+      pod 'Cuckoo'
+      pod 'OHHTTPStubs/Swift'
+  end
+end
+
+post_install do |installer|
+  installer.pods_project.build_configuration_list.build_configurations.each do |configuration|
+    configuration.build_settings['CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES'] = 'YES'
+  end
+end

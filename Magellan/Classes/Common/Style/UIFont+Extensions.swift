@@ -54,7 +54,7 @@ extension UIFont {
     }
     
     private static func registerFont(with name: String, withExtension: String) throws {
-        let bundle = Bundle(for: MapListViewStyle.self)
+        let bundle = Bundle(for: DefaultMapListViewStyle.self)
         guard let fontURL = bundle.url(forResource: name, withExtension: withExtension) else {
             fatalError("Couldn't find font \(name)")
         }

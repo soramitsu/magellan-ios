@@ -21,7 +21,7 @@ final class MapListViewController: UIViewController {
     private let closeButton = UIButton()
     private var categoriesView: UICollectionView!
     
-    init(presenter: MapListPresenterProtocol, style: MapListViewStyleProtocol = MapListViewStyle()) {
+    init(presenter: MapListPresenterProtocol, style: MapListViewStyleProtocol) {
         self.presenter = presenter
         self.style = style
         super.init(nibName: nil, bundle: nil)
@@ -179,14 +179,14 @@ final class MapListViewController: UIViewController {
 
     @objc private func search(_ textfield: UITextField) {
         if let text = textfield.text, text.count > 3 {
-            presenter.serach(with: text)
+            presenter.search(with: text)
         }
     }
     
     @objc private func dismiss(_ sender: Any) {
         if let text = searchField.text, !text.isEmpty {
             searchField.text = ""
-            presenter.serach(with: "")
+            presenter.search(with: "")
         }
     }
     

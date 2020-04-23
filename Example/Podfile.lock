@@ -24,10 +24,12 @@ PODS:
   - GoogleMaps/Maps (3.8.0):
     - GoogleMaps/Base
   - IQKeyboardManagerSwift (6.5.5)
+  - libPhoneNumber-iOS (0.9.15)
   - Magellan (0.1.0):
     - Google-Maps-iOS-Utils
     - GoogleMaps
     - IQKeyboardManagerSwift
+    - libPhoneNumber-iOS
     - RobinHood (~> 2.3.0)
     - SoraFoundation/DateProcessing (~> 0.7.0)
     - SoraFoundation/Localization (~> 0.7.0)
@@ -105,6 +107,7 @@ SPEC REPOS:
     - Google-Maps-iOS-Utils
     - GoogleMaps
     - IQKeyboardManagerSwift
+    - libPhoneNumber-iOS
     - Nimble
     - OHHTTPStubs
     - Quick
@@ -126,7 +129,8 @@ SPEC CHECKSUMS:
   Google-Maps-iOS-Utils: f5d6ea55799d2ef47c113e1351b48e21cddd593c
   GoogleMaps: 7c8d66d70e4e8c300f43a7219d8fdaad7b325a9a
   IQKeyboardManagerSwift: 0fb93310284665245591f50f7a5e38de615960b7
-  Magellan: 872ef32bf099fae5af61ee08ea4f43553bb19f23
+  libPhoneNumber-iOS: 0a32a9525cf8744fe02c5206eb30d571e38f7d75
+  Magellan: c663349c02129bb5779c668ca53a17851ab248f4
   Nimble: a73af6ecd4c9106f434f3d55fc54570be3739e0b
   OHHTTPStubs: cb29d2a9d09a828ecb93349a2b0c64f99e0db89f
   Quick: 7fb19e13be07b5dfb3b90d4f9824c855a11af40e

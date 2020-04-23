@@ -22,7 +22,7 @@ class DashboardMapAssembly: DashboardMapAssemblyProtocol {
         dashboardMapController.content = mapView
         dashboardMapController.draggable = dragableView
         
-        let coordinator = DashboardMapCoordinator()
+        let coordinator = DashboardMapCoordinator(container: dashboardMapController, resolver: resolver)
         coordinator.presenter = presenter
         
         presenter.coordinator = coordinator

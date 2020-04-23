@@ -46,7 +46,7 @@ final class DashboardPresenterSpac: QuickSpec {
     }
     
     override func spec() {
-        describe("") {
+        describe("DashboardPresenter logic tests") {
             var presenter: DashboardMapPresenter!
             var coordinator: DashboardMapCoordinatorProtocolMock!
             var mapView: MapViewProtocolMock!
@@ -100,7 +100,7 @@ final class DashboardPresenterSpac: QuickSpec {
                     return BaseOperation<Void>()
                 }
                 
-                presenter.serach(with: "text")
+                presenter.search(with: "text")
                 expect(mapView.reloadDataCalled).to(beTrue())
                 expect(listView.reloadDataCalled).to(beTrue())
             }

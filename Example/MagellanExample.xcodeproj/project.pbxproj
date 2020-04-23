@@ -26,6 +26,8 @@
 		F8805F592450800F00C8BC30 /* AutoMockable.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8805F582450800E00C8BC30 /* AutoMockable.generated.swift */; };
 		F8C0AF642450691B0024A8DC /* MagellanServiceTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8C0AF632450691B0024A8DC /* MagellanServiceTest.swift */; };
 		F8C0AF6624506DE70024A8DC /* fail.json in Resources */ = {isa = PBXBuildFile; fileRef = F8C0AF6524506DE70024A8DC /* fail.json */; };
+		F8F238252451C39600E4945E /* LocationDetailPresenterSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8F238242451C39600E4945E /* LocationDetailPresenterSpec.swift */; };
+		F8F238272451C92900E4945E /* GeoflashTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8F238262451C92900E4945E /* GeoflashTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -66,6 +68,8 @@
 		F8B2027A2445D73500B449C9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F8C0AF632450691B0024A8DC /* MagellanServiceTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagellanServiceTest.swift; sourceTree = "<group>"; };
 		F8C0AF6524506DE70024A8DC /* fail.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = fail.json; sourceTree = "<group>"; };
+		F8F238242451C39600E4945E /* LocationDetailPresenterSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationDetailPresenterSpec.swift; sourceTree = "<group>"; };
+		F8F238262451C92900E4945E /* GeoflashTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoflashTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -194,6 +198,7 @@
 			isa = PBXGroup;
 			children = (
 				F8805F5624507D0600C8BC30 /* DashboardPresenterSpec.swift */,
+				F8F238242451C39600E4945E /* LocationDetailPresenterSpec.swift */,
 			);
 			path = Modules;
 			sourceTree = "<group>";
@@ -205,6 +210,7 @@
 				F8805F5524507CF000C8BC30 /* Modules */,
 				F8C0AF62245069020024A8DC /* Services */,
 				F8B2027A2445D73500B449C9 /* Info.plist */,
+				F8F238262451C92900E4945E /* GeoflashTests.swift */,
 			);
 			path = MagellanExampleTests;
 			sourceTree = "<group>";
@@ -478,6 +484,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				F8C0AF642450691B0024A8DC /* MagellanServiceTest.swift in Sources */,
+				F8F238272451C92900E4945E /* GeoflashTests.swift in Sources */,
+				F8F238252451C39600E4945E /* LocationDetailPresenterSpec.swift in Sources */,
 				F8805F5724507D0600C8BC30 /* DashboardPresenterSpec.swift in Sources */,
 				F8805F592450800F00C8BC30 /* AutoMockable.generated.swift in Sources */,
 			);

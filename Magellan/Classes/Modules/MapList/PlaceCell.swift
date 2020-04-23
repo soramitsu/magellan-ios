@@ -15,7 +15,7 @@ final class PlaceCell: UITableViewCell {
     private let timeLabel = UILabel()
     private let distanceLabel = UILabel()
     
-    var place: Place? {
+    var place: PlaceViewModel? {
         didSet {
             configureContent()
         }
@@ -39,27 +39,31 @@ final class PlaceCell: UITableViewCell {
     
     private func configureViews() {
         nameLabel.textColor = .black
-//        todo: set title
-//        nameLabel.decorateForTitle2()
+        nameLabel.font = .styleFont(for: .title2)
+        nameLabel.textAlignment = .center
+        nameLabel.numberOfLines = 0
         contentView.addSubview(nameLabel)
         
-//        categoryLabel.textColor = UIColor.Style.Text.announcement
-//        categoryLabel.font = .styleFont(for: .favoriteCard)
+        categoryLabel.textColor = UIColor.Style.Text.announcement
+        categoryLabel.font = .styleFont(for: .favoriteCard)
         contentView.addSubview(categoryLabel)
                 
-//        distanceLabel.textColor = UIColor.Style.Text.announcement
-//        distanceLabel.font = .styleFont(for: .favoriteCard)
+        distanceLabel.textColor = UIColor.Style.Text.announcement
+        distanceLabel.font = .styleFont(for: .favoriteCard)
         distanceLabel.textAlignment = .right
         contentView.addSubview(distanceLabel)
     }
     
     private func layoutViews() {
+        nameLabel.translatesAutoresizingMaskIntoConstraints = false
         nameLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 20).isActive = true
         nameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 20).isActive = true
         
+        categoryLabel.translatesAutoresizingMaskIntoConstraints = false
         categoryLabel.leftAnchor.constraint(equalTo: nameLabel.leftAnchor).isActive = true
         categoryLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 8).isActive = true
         
+        distanceLabel.translatesAutoresizingMaskIntoConstraints = false
         distanceLabel.leftAnchor.constraint(equalTo: nameLabel.leftAnchor).isActive = true
         distanceLabel.topAnchor.constraint(equalTo: categoryLabel.bottomAnchor, constant: 8).isActive = true
     }
@@ -70,13 +74,12 @@ final class PlaceCell: UITableViewCell {
         }
         
         nameLabel.text = place.name
-        categoryLabel.text = place.type
-//        timeLabel.text = place.openStatus
-//        timeLabel.textColor = place.open ? UIColor.Style.Text.mapOpened : UIColor.Style.Text.mapClosed
-//
-//        if place.distance != 0.0 {
-//            distanceLabel.text = String(format: "%.2f km", place.distance)
-//        }
+        categoryLabel.text = place.category
+
+        
+        if place.distance != 0.0 {
+            distanceLabel.text = String(format: "%.2f km", place.distance)
+        }
     }
     
 }

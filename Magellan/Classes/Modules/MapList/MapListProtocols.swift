@@ -3,20 +3,17 @@
 * SPDX-License-Identifier: GPL-3.0
 */
 
-protocol MapListViewProtocol: ControllerBackedProtocol {
+protocol MapListViewProtocol: ControllerBackedProtocol, AutoMockable {
     var presenter: MapListPresenterProtocol { get }
-    
-    func setCategories(_ categories: [Category])
-}
-
-protocol MapListPresenterProtocol {
-    var categories: [Category] { get }
-    var view: MapListViewProtocol? { get set }
-    var delegate: MapListCoordinatorProtocol? { get set }
-    
     func reloadData()
 }
 
-protocol MapListCoordinatorProtocol {
-    func showPlace(_ place: PlaceInfo)
+protocol MapListPresenterProtocol: AnyObject {
+    var categories: [Category] { get }
+    var places: [PlaceViewModel] { get }
+    var listView: MapListViewProtocol? { get set }
+    
+    func showDetails(place: PlaceViewModel)
+    func select(category: String)
+    func serach(with text: String)
 }

@@ -30,6 +30,7 @@ Library allow fast integration of Soramitsu Places.
   s.dependency 'GoogleMaps'
   s.dependency 'Google-Maps-iOS-Utils'
   s.dependency 'IQKeyboardManagerSwift'
+  s.dependency 'SVProgressHUD'
 
   s.test_spec do |ts|
     ts.source_files = 'Tests/**/*'

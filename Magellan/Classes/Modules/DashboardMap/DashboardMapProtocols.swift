@@ -6,18 +6,18 @@
 
 import Foundation
 
-protocol DashboardMapViewProtocol: class, ControllerBackedProtocol {
+protocol DashboardMapViewProtocol: class, ControllerBackedProtocol, Loadable, AutoMockable {
     var presenter: DashboardMapPresenterProtocol { get }
 }
 
-protocol DashboardMapPresenterProtocol {
+protocol DashboardMapPresenterProtocol: AnyObject {
     var view: DashboardMapViewProtocol? { get set }
 }
 
-protocol DashboardMapCoordinatorProtocol {
+protocol DashboardMapCoordinatorProtocol: AutoMockable {
     var presenter: DashboardMapPresenterProtocol? { get set }
-    var mapPresenter: MapPresenterProtocol? { get set }
-    var mapListPresenter: MapListPresenterProtocol? { get set }
+    
+    func showDetails(for placeInfo: PlaceInfo)
 }
 
 protocol DashboardMapAssemblyProtocol {

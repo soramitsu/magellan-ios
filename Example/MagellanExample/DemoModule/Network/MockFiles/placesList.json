@@ -7,25 +7,704 @@
   },
   "data": {
     "locations": [
-      {
-        "lat": 54.55252,
-        "lon": 55.55252,
-        "name": "Some merchant",
-        "type": "Pharmacy",
-        "id": 10
-      },
-      {
-        "lat": 54.7766,
-        "lon": 55.555666,
-        "name": "Yet another merchant",
-        "type": "Pharmacy",
-        "id": 100
-      }
+        {
+          "id": 0,
+          "name": "Cyclonica",
+          "type": "Education",
+          "lat": 45.751,
+          "lon": -12.876
+        },
+        {
+          "id": 1,
+          "name": "Delphide",
+          "type": "Services",
+          "lat": 55.069,
+          "lon": 136.234
+        },
+        {
+          "id": 2,
+          "name": "Ziore",
+          "type": "Pharmacy",
+          "lat": 26.555,
+          "lon": -131.666
+        },
+        {
+          "id": 3,
+          "name": "Comvey",
+          "type": "Other",
+          "lat": -71.418,
+          "lon": 58.449
+        },
+        {
+          "id": 4,
+          "name": "Senmao",
+          "type": "Services",
+          "lat": -21.669,
+          "lon": -100.727
+        },
+        {
+          "id": 5,
+          "name": "Terrasys",
+          "type": "Education",
+          "lat": -71.274,
+          "lon": 164.795
+        },
+        {
+          "id": 6,
+          "name": "Bunga",
+          "type": "Other",
+          "lat": -47.822,
+          "lon": 28.012
+        },
+        {
+          "id": 7,
+          "name": "Realysis",
+          "type": "Pharmacy",
+          "lat": -74.938,
+          "lon": 155.111
+        },
+        {
+          "id": 8,
+          "name": "Ziggles",
+          "type": "Bank",
+          "lat": -37.149,
+          "lon": 138.92
+        },
+        {
+          "id": 9,
+          "name": "Honotron",
+          "type": "Education",
+          "lat": 20.846,
+          "lon": 20.195
+        },
+        {
+          "id": 10,
+          "name": "Caxt",
+          "type": "Bank",
+          "lat": 46.277,
+          "lon": -116.992
+        },
+        {
+          "id": 11,
+          "name": "Tellifly",
+          "type": "Supermarkets",
+          "lat": -5.063,
+          "lon": -153.212
+        },
+        {
+          "id": 12,
+          "name": "Straloy",
+          "type": "Services",
+          "lat": -13.352,
+          "lon": 84.398
+        },
+        {
+          "id": 13,
+          "name": "Ozean",
+          "type": "Education",
+          "lat": -23.807,
+          "lon": -27.257
+        },
+        {
+          "id": 14,
+          "name": "Enthaze",
+          "type": "Education",
+          "lat": -48.743,
+          "lon": -109.933
+        },
+        {
+          "id": 15,
+          "name": "Isoswitch",
+          "type": "Supermarkets",
+          "lat": -3.817,
+          "lon": 121.5
+        },
+        {
+          "id": 16,
+          "name": "Edecine",
+          "type": "Entertainment",
+          "lat": 47.609,
+          "lon": -44.626
+        },
+        {
+          "id": 17,
+          "name": "Centrexin",
+          "type": "Pharmacy",
+          "lat": -42.274,
+          "lon": 134.309
+        },
+        {
+          "id": 18,
+          "name": "Chorizon",
+          "type": "Education",
+          "lat": 3.884,
+          "lon": -158.078
+        },
+        {
+          "id": 19,
+          "name": "Ontagene",
+          "type": "Entertainment",
+          "lat": 19.86,
+          "lon": 103.887
+        },
+        {
+          "id": 20,
+          "name": "Comtrak",
+          "type": "Entertainment",
+          "lat": 72.77,
+          "lon": -54.465
+        },
+        {
+          "id": 21,
+          "name": "Prismatic",
+          "type": "Entertainment",
+          "lat": -76.16,
+          "lon": 117.412
+        },
+        {
+          "id": 22,
+          "name": "Gushkool",
+          "type": "Bank",
+          "lat": -76.151,
+          "lon": -91.579
+        },
+        {
+          "id": 23,
+          "name": "Exoswitch",
+          "type": "Supermarkets",
+          "lat": -12.937,
+          "lon": -158.39
+        },
+        {
+          "id": 24,
+          "name": "Biotica",
+          "type": "Bank",
+          "lat": 19.753,
+          "lon": 26.473
+        },
+        {
+          "id": 25,
+          "name": "Zytrax",
+          "type": "Pharmacy",
+          "lat": -7.066,
+          "lon": -123.527
+        },
+        {
+          "id": 26,
+          "name": "Harmoney",
+          "type": "Education",
+          "lat": 62.745,
+          "lon": -124.438
+        },
+        {
+          "id": 27,
+          "name": "Extragene",
+          "type": "Pharmacy",
+          "lat": -52.488,
+          "lon": -155.255
+        },
+        {
+          "id": 28,
+          "name": "Tropolis",
+          "type": "Pharmacy",
+          "lat": 16.337,
+          "lon": 125.922
+        },
+        {
+          "id": 29,
+          "name": "Ultrasure",
+          "type": "Entertainment",
+          "lat": 35.714,
+          "lon": 110.981
+        },
+        {
+          "id": 30,
+          "name": "Quizka",
+          "type": "Pharmacy",
+          "lat": 67.859,
+          "lon": -127.596
+        },
+        {
+          "id": 31,
+          "name": "Mediot",
+          "type": "Pharmacy",
+          "lat": -10.879,
+          "lon": 89.058
+        },
+        {
+          "id": 32,
+          "name": "Koffee",
+          "type": "Services",
+          "lat": -4.217,
+          "lon": -65.467
+        },
+        {
+          "id": 33,
+          "name": "Nipaz",
+          "type": "Other",
+          "lat": 68.816,
+          "lon": 88.319
+        },
+        {
+          "id": 34,
+          "name": "Xsports",
+          "type": "Bank",
+          "lat": 10.474,
+          "lon": -0.047
+        },
+        {
+          "id": 35,
+          "name": "Lotron",
+          "type": "Pharmacy",
+          "lat": -14.575,
+          "lon": 22.255
+        },
+        {
+          "id": 36,
+          "name": "Vitricomp",
+          "type": "Education",
+          "lat": -3.306,
+          "lon": -163.229
+        },
+        {
+          "id": 37,
+          "name": "Zillan",
+          "type": "Other",
+          "lat": -50.198,
+          "lon": 111.056
+        },
+        {
+          "id": 38,
+          "name": "Miraclis",
+          "type": "Education",
+          "lat": 59.101,
+          "lon": 126.223
+        },
+        {
+          "id": 39,
+          "name": "Netropic",
+          "type": "Entertainment",
+          "lat": -70.072,
+          "lon": -21.477
+        },
+        {
+          "id": 40,
+          "name": "Unisure",
+          "type": "Pharmacy",
+          "lat": -15.046,
+          "lon": 165.006
+        },
+        {
+          "id": 41,
+          "name": "Zoxy",
+          "type": "Pharmacy",
+          "lat": -21.269,
+          "lon": -143.656
+        },
+        {
+          "id": 42,
+          "name": "Maxemia",
+          "type": "Supermarkets",
+          "lat": -76.457,
+          "lon": -50.813
+        },
+        {
+          "id": 43,
+          "name": "Slambda",
+          "type": "Services",
+          "lat": -19.998,
+          "lon": 18.672
+        },
+        {
+          "id": 44,
+          "name": "Valpreal",
+          "type": "Other",
+          "lat": -48.621,
+          "lon": 99.519
+        },
+        {
+          "id": 45,
+          "name": "Furnafix",
+          "type": "Supermarkets",
+          "lat": -21.457,
+          "lon": -40.866
+        },
+        {
+          "id": 46,
+          "name": "Springbee",
+          "type": "Education",
+          "lat": -17.059,
+          "lon": 44.37
+        },
+        {
+          "id": 47,
+          "name": "Quilm",
+          "type": "Education",
+          "lat": -81.241,
+          "lon": 107.115
+        },
+        {
+          "id": 48,
+          "name": "Eyeris",
+          "type": "Bank",
+          "lat": 31.816,
+          "lon": -115.125
+        },
+        {
+          "id": 49,
+          "name": "Geeky",
+          "type": "Services",
+          "lat": 23.505,
+          "lon": 109.739
+        },
+        {
+          "id": 50,
+          "name": "Eclipto",
+          "type": "Supermarkets",
+          "lat": -54.423,
+          "lon": 173.24
+        },
+        {
+          "id": 51,
+          "name": "Primordia",
+          "type": "Pharmacy",
+          "lat": -76.186,
+          "lon": 57.437
+        },
+        {
+          "id": 52,
+          "name": "Darwinium",
+          "type": "Other",
+          "lat": 23.091,
+          "lon": -41.353
+        },
+        {
+          "id": 53,
+          "name": "Futuris",
+          "type": "Education",
+          "lat": -12.804,
+          "lon": 28.433
+        },
+        {
+          "id": 54,
+          "name": "Kongle",
+          "type": "Bank",
+          "lat": -46.614,
+          "lon": -96.221
+        },
+        {
+          "id": 55,
+          "name": "Viocular",
+          "type": "Bank",
+          "lat": 61.718,
+          "lon": -100.502
+        },
+        {
+          "id": 56,
+          "name": "Podunk",
+          "type": "Services",
+          "lat": -34.833,
+          "lon": 77.761
+        },
+        {
+          "id": 57,
+          "name": "Songlines",
+          "type": "Other",
+          "lat": -50.6,
+          "lon": 114.647
+        },
+        {
+          "id": 58,
+          "name": "Cormoran",
+          "type": "Services",
+          "lat": 30.662,
+          "lon": -97.569
+        },
+        {
+          "id": 59,
+          "name": "Letpro",
+          "type": "Education",
+          "lat": -35.158,
+          "lon": -164.336
+        },
+        {
+          "id": 60,
+          "name": "Diginetic",
+          "type": "Supermarkets",
+          "lat": 32.1,
+          "lon": -95.12
+        },
+        {
+          "id": 61,
+          "name": "Calcu",
+          "type": "Services",
+          "lat": -30.341,
+          "lon": -17.204
+        },
+        {
+          "id": 62,
+          "name": "Perkle",
+          "type": "Services",
+          "lat": -47.695,
+          "lon": 162.029
+        },
+        {
+          "id": 63,
+          "name": "Lunchpad",
+          "type": "Services",
+          "lat": -53.218,
+          "lon": 101.43
+        },
+        {
+          "id": 64,
+          "name": "Dragbot",
+          "type": "Supermarkets",
+          "lat": -67.653,
+          "lon": 41.287
+        },
+        {
+          "id": 65,
+          "name": "Hotcakes",
+          "type": "Supermarkets",
+          "lat": -40.96,
+          "lon": 124.116
+        },
+        {
+          "id": 66,
+          "name": "Idealis",
+          "type": "Services",
+          "lat": -22.038,
+          "lon": 52.791
+        },
+        {
+          "id": 67,
+          "name": "Qnekt",
+          "type": "Education",
+          "lat": 25.556,
+          "lon": -115.789
+        },
+        {
+          "id": 68,
+          "name": "Atgen",
+          "type": "Other",
+          "lat": 72.409,
+          "lon": -122.446
+        },
+        {
+          "id": 69,
+          "name": "Slumberia",
+          "type": "Services",
+          "lat": 61.77,
+          "lon": 39.886
+        },
+        {
+          "id": 70,
+          "name": "Hometown",
+          "type": "Education",
+          "lat": 0.689,
+          "lon": 45.234
+        },
+        {
+          "id": 71,
+          "name": "Zensus",
+          "type": "Education",
+          "lat": 21.887,
+          "lon": 63.368
+        },
+        {
+          "id": 72,
+          "name": "Corecom",
+          "type": "Bank",
+          "lat": -26.218,
+          "lon": -89.312
+        },
+        {
+          "id": 73,
+          "name": "Geekology",
+          "type": "Entertainment",
+          "lat": 36.208,
+          "lon": 78.571
+        },
+        {
+          "id": 74,
+          "name": "Zillactic",
+          "type": "Pharmacy",
+          "lat": -71.079,
+          "lon": 26.704
+        },
+        {
+          "id": 75,
+          "name": "Medesign",
+          "type": "Other",
+          "lat": 65.014,
+          "lon": 60.913
+        },
+        {
+          "id": 76,
+          "name": "Quordate",
+          "type": "Entertainment",
+          "lat": 67.242,
+          "lon": 7.334
+        },
+        {
+          "id": 77,
+          "name": "Assistix",
+          "type": "Entertainment",
+          "lat": 52.644,
+          "lon": -120.713
+        },
+        {
+          "id": 78,
+          "name": "Senmei",
+          "type": "Education",
+          "lat": -9.744,
+          "lon": -111.906
+        },
+        {
+          "id": 79,
+          "name": "Nimon",
+          "type": "Education",
+          "lat": -1.23,
+          "lon": -126.255
+        },
+        {
+          "id": 80,
+          "name": "Yurture",
+          "type": "Bank",
+          "lat": 16.932,
+          "lon": -129.856
+        },
+        {
+          "id": 81,
+          "name": "Stucco",
+          "type": "Services",
+          "lat": 30.269,
+          "lon": 42.223
+        },
+        {
+          "id": 82,
+          "name": "Pasturia",
+          "type": "Entertainment",
+          "lat": -19.131,
+          "lon": -88.067
+        },
+        {
+          "id": 83,
+          "name": "Twiist",
+          "type": "Entertainment",
+          "lat": -56.929,
+          "lon": 58.987
+        },
+        {
+          "id": 84,
+          "name": "Kidgrease",
+          "type": "Other",
+          "lat": -39.455,
+          "lon": -69.269
+        },
+        {
+          "id": 85,
+          "name": "Unia",
+          "type": "Pharmacy",
+          "lat": -35.052,
+          "lon": -88.004
+        },
+        {
+          "id": 86,
+          "name": "Papricut",
+          "type": "Supermarkets",
+          "lat": 34.325,
+          "lon": 140.437
+        },
+        {
+          "id": 87,
+          "name": "Isoplex",
+          "type": "Pharmacy",
+          "lat": -39.645,
+          "lon": 34.303
+        },
+        {
+          "id": 88,
+          "name": "Strozen",
+          "type": "Services",
+          "lat": -28.123,
+          "lon": 72.802
+        },
+        {
+          "id": 89,
+          "name": "Bleendot",
+          "type": "Other",
+          "lat": -50.145,
+          "lon": 91.948
+        },
+        {
+          "id": 90,
+          "name": "Puria",
+          "type": "Services",
+          "lat": -28.705,
+          "lon": -75.471
+        },
+        {
+          "id": 91,
+          "name": "Bullzone",
+          "type": "Supermarkets",
+          "lat": 67.558,
+          "lon": 39.65
+        },
+        {
+          "id": 92,
+          "name": "Telequiet",
+          "type": "Services",
+          "lat": 67.322,
+          "lon": -32.978
+        },
+        {
+          "id": 93,
+          "name": "Ovium",
+          "type": "Supermarkets",
+          "lat": 50.422,
+          "lon": -163.357
+        },
+        {
+          "id": 94,
+          "name": "Zaj",
+          "type": "Services",
+          "lat": 27.983,
+          "lon": 129.588
+        },
+        {
+          "id": 95,
+          "name": "Handshake",
+          "type": "Other",
+          "lat": 28.469,
+          "lon": 59.27
+        },
+        {
+          "id": 96,
+          "name": "Premiant",
+          "type": "Supermarkets",
+          "lat": 69.149,
+          "lon": 92.039
+        },
+        {
+          "id": 97,
+          "name": "Fanfare",
+          "type": "Pharmacy",
+          "lat": 35.477,
+          "lon": -39.998
+        },
+        {
+          "id": 98,
+          "name": "Sarasonic",
+          "type": "Services",
+          "lat": -15.003,
+          "lon": -27.089
+        }
     ],
     "clusters": [
       {
         "type": "red",
-        "quantity": 15
+        "quantity": 90
       }
     ]
   }

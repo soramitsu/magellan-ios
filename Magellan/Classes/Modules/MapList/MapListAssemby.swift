@@ -9,12 +9,10 @@ import Foundation
 
 final class MapListAssembly {
     
-    static func assembly(with resolver: ResolverProtocol) -> UIViewController {
-        let service = MagellanService(operationFactory: resolver.networkOperationFactory)
-        let presenter = MapListPresenter(service: service)
+    static func assembly(with presenter: MapListPresenterProtocol, resolver: ResolverProtocol) -> MapListViewProtocol {
         let view = MapListViewController(presenter: presenter)
         
-        presenter.view = view
+        presenter.listView = view
         
         return view
     }

@@ -35,8 +35,6 @@ Library allow fast integration of Soramitsu Places.
 
   s.test_spec do |ts|
     ts.source_files = 'Tests/**/*'
-    ts.dependency 'Cuckoo'
-    ts.dependency 'OHHTTPStubs/Swift', '~> 8.0.0'
     ts.resources = ['Tests/**/*.json']
   end
 

@@ -53,7 +53,7 @@ final class DefaultMapDetailTableHelper: MapDetailTableHelperProtocol {
             items.append(MapDetailViewModel(title: L10n.Location.Details.phone,
                                               content: phone,
                                               action: { [weak self] in
-                                                self?.delegate?.hanlde(path: "tel://\(phone)")
+                                                self?.delegate?.hanlde(path: "tel://\(rawPhone)")
             }))
         }
 

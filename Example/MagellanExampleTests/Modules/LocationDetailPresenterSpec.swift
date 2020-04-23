@@ -6,12 +6,11 @@
 
 
 import Foundation
-import Nimble
-import Quick
+import XCTest
 @testable import Magellan
 @testable import MagellanExample
 
-final class LocationDetailPresenterSpec: QuickSpec {
+final class LocationDetailPresenterSpec: XCTestCase {
     
     var placeInfo: PlaceInfo {
         return PlaceInfo(id: 1,
@@ -28,32 +27,31 @@ final class LocationDetailPresenterSpec: QuickSpec {
                         distance: "dist")
     }
     
-    override func spec() {
-        describe("LocationDetail logic tests") {
-            
-            it("dismiss logic") {
-                let presenter = LocationDetailsPresenter(placeInfo: self.placeInfo)
-                let coordinator = LocationDetailsPresenterDelegateMock()
-                presenter.delegate = coordinator
-                
-                presenter.dismiss()
-                
-                expect(coordinator.dismissCalled).to(beTrue())
-            }
-            
-            it("table helper") {
-                let tableHelper = DefaultMapDetailTableHelper(place: self.placeInfo)
-                let tableHelperDelegate = MapDetailTableHelperDelegateMock()
-                tableHelper.delegate = tableHelperDelegate
-                
-                tableHelper.items.forEach {
-                    $0.action?()
-                }
-                
-                expect(tableHelperDelegate.hanldePathCallsCount).to(equal(3))
-            }
-            
-            
+    func testDismiss() {
+        // arrange
+        let presenter = LocationDetailsPresenter(placeInfo: self.placeInfo)
+        let coordinator = LocationDetailsPresenterDelegateMock()
+        presenter.delegate = coordinator
+        
+        // act
+        presenter.dismiss()
+        
+        // assert
+        XCTAssertTrue(coordinator.dismissCalled)
+    }
+    
+    func testTableHelper() {
+        // arrange
+        let tableHelper = DefaultMapDetailTableHelper(place: self.placeInfo)
+        let tableHelperDelegate = MapDetailTableHelperDelegateMock()
+        tableHelper.delegate = tableHelperDelegate
+        
+        // act
+        tableHelper.items.forEach {
+            $0.action?()
         }
+        
+        // assert
+        XCTAssertEqual(tableHelperDelegate.hanldePathCallsCount, 3)
     }
 }

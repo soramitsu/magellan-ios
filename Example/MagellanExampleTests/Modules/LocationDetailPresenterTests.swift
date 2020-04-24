@@ -10,7 +10,7 @@ import XCTest
 @testable import Magellan
 @testable import MagellanExample
 
-final class LocationDetailPresenterSpec: XCTestCase {
+final class LocationDetailPresenterTests: XCTestCase {
     
     var placeInfo: PlaceInfo {
         return PlaceInfo(id: 1,

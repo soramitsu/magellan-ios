@@ -20,7 +20,9 @@ final class DashboardMapCoordinator: DashboardMapCoordinatorProtocol {
         self.container = container
         self.resolver = resolver
     }
-    
+}
+
+extension DashboardMapCoordinator: MapCoordinatorProtocol {
     func showDetails(for placeInfo: PlaceInfo) {
         guard let navigation = dragableNavigation else {
             return

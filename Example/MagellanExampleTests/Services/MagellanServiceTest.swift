@@ -10,7 +10,7 @@ import XCTest
 @testable import Magellan
 @testable import MagellanExample
 
-typealias MCategory = Magellan.Category
+typealias MCategory = Magellan.PlaceCategory
 
 class MagellanServiceTest: XCTestCase {
     

@@ -12,7 +12,7 @@ final class CategoryCollectionCell: UICollectionViewCell {
     
     private let iconView = UIImageView()
     private let nameLabel = UILabel()
-    var category: Category? {
+    var category: PlaceCategory? {
         didSet {
             configureContent()
         }

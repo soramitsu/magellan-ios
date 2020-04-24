@@ -7,10 +7,10 @@
 
 import Foundation
 
-struct Category {
+struct PlaceCategory {
     let id: Int
     let name: String
 }
 
-extension Category: Equatable { }
-extension Category: Codable { }
+extension PlaceCategory: Equatable { }
+extension PlaceCategory: Codable { }

@@ -28,21 +28,6 @@ import AppKit
 class DashboardMapCoordinatorProtocolMock: DashboardMapCoordinatorProtocol {
     var presenter: DashboardMapPresenterProtocol?
 
-    //MARK: - showDetails
-
-    var showDetailsForCallsCount = 0
-    var showDetailsForCalled: Bool {
-        return showDetailsForCallsCount > 0
-    }
-    var showDetailsForReceivedPlaceInfo: PlaceInfo?
-    var showDetailsForClosure: ((PlaceInfo) -> Void)?
-
-    func showDetails(for placeInfo: PlaceInfo) {
-        showDetailsForCallsCount += 1
-        showDetailsForReceivedPlaceInfo = placeInfo
-        showDetailsForClosure?(placeInfo)
-    }
-
 }
 // MARK: -
 // MARK: -
@@ -164,6 +149,26 @@ class MagellanServicePrototcolMock: MagellanServicePrototcol {
 }
 // MARK: -
 // MARK: -
+class MapCoordinatorProtocolMock: MapCoordinatorProtocol {
+
+    //MARK: - showDetails
+
+    var showDetailsForCallsCount = 0
+    var showDetailsForCalled: Bool {
+        return showDetailsForCallsCount > 0
+    }
+    var showDetailsForReceivedPlaceInfo: PlaceInfo?
+    var showDetailsForClosure: ((PlaceInfo) -> Void)?
+
+    func showDetails(for placeInfo: PlaceInfo) {
+        showDetailsForCallsCount += 1
+        showDetailsForReceivedPlaceInfo = placeInfo
+        showDetailsForClosure?(placeInfo)
+    }
+
+}
+// MARK: -
+// MARK: -
 class MapDetailTableHelperDelegateMock: MapDetailTableHelperDelegate {
 
     //MARK: - hanlde
@@ -179,6 +184,75 @@ class MapDetailTableHelperDelegateMock: MapDetailTableHelperDelegate {
         hanldePathCallsCount += 1
         hanldePathReceivedPath = path
         hanldePathClosure?(path)
+    }
+
+}
+// MARK: -
+// MARK: -
+class MapListPresenterProtocolMock: MapListPresenterProtocol {
+    var categories: [PlaceCategory] = []
+    var places: [PlaceViewModel] = []
+    var view: MapListViewProtocol?
+    var mapInput: MapInputProtocol?
+
+    //MARK: - showDetails
+
+    var showDetailsPlaceCallsCount = 0
+    var showDetailsPlaceCalled: Bool {
+        return showDetailsPlaceCallsCount > 0
+    }
+    var showDetailsPlaceReceivedPlace: PlaceViewModel?
+    var showDetailsPlaceClosure: ((PlaceViewModel) -> Void)?
+
+    func showDetails(place: PlaceViewModel) {
+        showDetailsPlaceCallsCount += 1
+        showDetailsPlaceReceivedPlace = place
+        showDetailsPlaceClosure?(place)
+    }
+
+    //MARK: - select
+
+    var selectCategoryCallsCount = 0
+    var selectCategoryCalled: Bool {
+        return selectCategoryCallsCount > 0
+    }
+    var selectCategoryReceivedCategory: String?
+    var selectCategoryClosure: ((String) -> Void)?
+
+    func select(category: String) {
+        selectCategoryCallsCount += 1
+        selectCategoryReceivedCategory = category
+        selectCategoryClosure?(category)
+    }
+
+    //MARK: - search
+
+    var searchWithCallsCount = 0
+    var searchWithCalled: Bool {
+        return searchWithCallsCount > 0
+    }
+    var searchWithReceivedText: String?
+    var searchWithClosure: ((String) -> Void)?
+
+    func search(with text: String) {
+        searchWithCallsCount += 1
+        searchWithReceivedText = text
+        searchWithClosure?(text)
+    }
+
+    //MARK: - set
+
+    var setCategoriesPlacesCallsCount = 0
+    var setCategoriesPlacesCalled: Bool {
+        return setCategoriesPlacesCallsCount > 0
+    }
+    var setCategoriesPlacesReceivedArguments: (categories: [PlaceCategory], places: [PlaceViewModel])?
+    var setCategoriesPlacesClosure: (([PlaceCategory], [PlaceViewModel]) -> Void)?
+
+    func set(categories: [PlaceCategory], places: [PlaceViewModel]) {
+        setCategoriesPlacesCallsCount += 1
+        setCategoriesPlacesReceivedArguments = (categories: categories, places: places)
+        setCategoriesPlacesClosure?(categories, places)
     }
 
 }
@@ -217,22 +291,113 @@ class MapListViewProtocolMock: MapListViewProtocol {
 }
 // MARK: -
 // MARK: -
+class MapPresenterProtocolMock: MapPresenterProtocol {
+    var view: MapViewProtocol?
+    var coordinator: MapCoordinatorProtocol?
+    var listInput: MapListInputProtocol?
+    var categories: [PlaceCategory] = []
+    var places: [PlaceViewModel] = []
+    var position: Coordinates {
+        get { return underlyingPosition }
+        set(value) { underlyingPosition = value }
+    }
+    var underlyingPosition: Coordinates!
+
+    //MARK: - showDetails
+
+    var showDetailsPlaceCallsCount = 0
+    var showDetailsPlaceCalled: Bool {
+        return showDetailsPlaceCallsCount > 0
+    }
+    var showDetailsPlaceReceivedPlace: PlaceViewModel?
+    var showDetailsPlaceClosure: ((PlaceViewModel) -> Void)?
+
+    func showDetails(place: PlaceViewModel) {
+        showDetailsPlaceCallsCount += 1
+        showDetailsPlaceReceivedPlace = place
+        showDetailsPlaceClosure?(place)
+    }
+
+    //MARK: - loadCategories
+
+    var loadCategoriesCallsCount = 0
+    var loadCategoriesCalled: Bool {
+        return loadCategoriesCallsCount > 0
+    }
+    var loadCategoriesClosure: (() -> Void)?
+
+    func loadCategories() {
+        loadCategoriesCallsCount += 1
+        loadCategoriesClosure?()
+    }
+
+    //MARK: - select
+
+    var selectPlaceCallsCount = 0
+    var selectPlaceCalled: Bool {
+        return selectPlaceCallsCount > 0
+    }
+    var selectPlaceReceivedPlace: PlaceViewModel?
+    var selectPlaceClosure: ((PlaceViewModel) -> Void)?
+
+    func select(place: PlaceViewModel) {
+        selectPlaceCallsCount += 1
+        selectPlaceReceivedPlace = place
+        selectPlaceClosure?(place)
+    }
+
+    //MARK: - select
+
+    var selectCategoryCallsCount = 0
+    var selectCategoryCalled: Bool {
+        return selectCategoryCallsCount > 0
+    }
+    var selectCategoryReceivedCategory: String?
+    var selectCategoryClosure: ((String) -> Void)?
+
+    func select(category: String) {
+        selectCategoryCallsCount += 1
+        selectCategoryReceivedCategory = category
+        selectCategoryClosure?(category)
+    }
+
+    //MARK: - search
+
+    var searchWithCallsCount = 0
+    var searchWithCalled: Bool {
+        return searchWithCallsCount > 0
+    }
+    var searchWithReceivedText: String?
+    var searchWithClosure: ((String) -> Void)?
+
+    func search(with text: String) {
+        searchWithCallsCount += 1
+        searchWithReceivedText = text
+        searchWithClosure?(text)
+    }
+
+    //MARK: - reset
+
+    var resetCallsCount = 0
+    var resetCalled: Bool {
+        return resetCallsCount > 0
+    }
+    var resetClosure: (() -> Void)?
+
+    func reset() {
+        resetCallsCount += 1
+        resetClosure?()
+    }
+
+}
+// MARK: -
+// MARK: -
 class MapViewProtocolMock: MapViewProtocol {
     var presenter: MapPresenterProtocol {
         get { return underlyingPresenter }
         set(value) { underlyingPresenter = value }
     }
     var underlyingPresenter: MapPresenterProtocol!
-    var zoom: Int {
-        get { return underlyingZoom }
-        set(value) { underlyingZoom = value }
-    }
-    var underlyingZoom: Int!
-    var coordinatesHash: String {
-        get { return underlyingCoordinatesHash }
-        set(value) { underlyingCoordinatesHash = value }
-    }
-    var underlyingCoordinatesHash: String!
     var contentView: UIView {
         get { return underlyingContentView }
         set(value) { underlyingContentView = value }
@@ -263,6 +428,7 @@ class MapViewProtocolMock: MapViewProtocol {
         set(value) { underlyingController = value }
     }
     var underlyingController: UIViewController!
+    var loadingPresenter: UIViewController?
 
     //MARK: - show
 
@@ -306,6 +472,39 @@ class MapViewProtocolMock: MapViewProtocol {
         setContentInsetsAnimatedReceivedArguments = (contentInsets: contentInsets, animated: animated)
         setContentInsetsAnimatedClosure?(contentInsets, animated)
     }
+
+    //MARK: - showLoading
+
+    var showLoadingCallsCount = 0
+    var showLoadingCalled: Bool {
+        return showLoadingCallsCount > 0
+    }
+    var showLoadingClosure: (() -> Void)?
+
+    func showLoading() {
+        showLoadingCallsCount += 1
+        showLoadingClosure?()
+    }
+
+    //MARK: - hideLoading
+
+    var hideLoadingCallsCount = 0
+    var hideLoadingCalled: Bool {
+        return hideLoadingCallsCount > 0
+    }
+    var hideLoadingClosure: (() -> Void)?
+
+    func hideLoading() {
+        hideLoadingCallsCount += 1
+        hideLoadingClosure?()
+    }
+
+}
+// MARK: -
+// MARK: -
+class UserLocationServiceProtocolMock: UserLocationServiceProtocol {
+    var currentLocation: Coordinates?
+    var delegaet: UserLocationServiceDelegate?
 
 }
 // MARK: -

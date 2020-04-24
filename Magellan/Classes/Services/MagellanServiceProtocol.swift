@@ -8,7 +8,7 @@
 import Foundation
 import RobinHood
 
-typealias CategoriesCompletionBlock = (Result<[Category], Error>) -> Void
+typealias CategoriesCompletionBlock = (Result<[PlaceCategory], Error>) -> Void
 typealias PlaceInfoCompletionBlock = (Result<PlaceInfo, Error>) -> Void
 typealias PlacesCompletionBlock = (Result<PlacesResponse, Error>) -> Void
 

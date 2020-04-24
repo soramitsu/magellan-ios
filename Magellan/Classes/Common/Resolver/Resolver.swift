@@ -9,6 +9,9 @@ protocol ResolverProtocol {
     var locationDetailsViewStyle: LocationDetailsViewStyleProtocol? { get set }
     var locationDetailsTableHelperFactory: ((PlaceInfo) -> MapDetailTableHelperProtocol)? { get set }
     
+    var distanceFilter: Double { get set }
+    var defaultCoordinate: Coordinates { get set }
+    
     var networkOperationFactory: MiddlewareOperationFactoryProtocol { get }
     var markerFactory: MapMarkerFactoryProtocol? { get set }
 }
@@ -24,6 +27,9 @@ final class Resolver: ResolverProtocol {
     var mapListStyle: MapListViewStyleProtocol?
     var locationDetailsViewStyle: LocationDetailsViewStyleProtocol?
     var locationDetailsTableHelperFactory: ((PlaceInfo) -> MapDetailTableHelperProtocol)?
+    
+    var distanceFilter: Double = 50
+    var defaultCoordinate: Coordinates = Coordinates(lat: 11.5796669, lon: 104.7501013)
     
     let networkOperationFactory: MiddlewareOperationFactoryProtocol
     var markerFactory: MapMarkerFactoryProtocol?

@@ -43,7 +43,8 @@ final class MapViewController: UIViewController {
     
     override func loadView() {
         var mapView = GMSMapView()
-        camera = GMSCameraPosition.camera(withLatitude: 11.5796669, longitude: 104.7501013, zoom: 12.0)
+        let position = presenter.position
+        camera = GMSCameraPosition.camera(withLatitude: position.lat, longitude: position.lon, zoom: 12.0)
         mapView.camera = camera
         view = mapView
     }
@@ -51,11 +52,7 @@ final class MapViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let projection = mapView.projection.visibleRegion()
-        let topLeft = Coordinates(lat: projection.farLeft.latitude, lon: projection.farLeft.longitude)
-        let bottomRight = Coordinates(lat: projection.nearRight.latitude, lon: projection.nearRight.longitude)
-        // TODO: find out what is it zoom
-        presenter.loadPlaces()
+        presenter.loadCategories()
                 
         let iconGenerator = GMUDefaultClusterIconGenerator()
         let algorithm = GMUNonHierarchicalDistanceBasedAlgorithm()
@@ -126,15 +123,6 @@ extension MapViewController: GMUClusterRendererDelegate {
 }
 
 extension MapViewController: MapViewProtocol {
-    
-    var zoom: Int {
-        return Int(camera.zoom)
-    }
-    
-    var coordinatesHash: String {
-        return Geoflash.hash(latitude: camera.target.latitude, longitude: camera.target.longitude)
-    }
-    
     
     func reloadData() {
         if !isViewLoaded {

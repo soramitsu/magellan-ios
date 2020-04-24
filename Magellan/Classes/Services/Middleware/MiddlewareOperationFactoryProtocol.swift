@@ -15,7 +15,7 @@ protocol MiddlewareOperationFactoryProtocol {
 }
 
 extension MiddlewareOperationFactoryProtocol {
-    func fetchCategories() -> BaseOperation<[Category]> {
+    func fetchCategories() -> BaseOperation<[PlaceCategory]> {
         let path = networkResolver.urlTemplate(for: .categories)
         
         let requestFactory = BlockNetworkRequestFactory {
@@ -29,8 +29,8 @@ extension MiddlewareOperationFactoryProtocol {
             return request
         }
         
-        let resultFactory = AnyNetworkResultFactory<[Category]> { data in
-            let result = try self.decoder.decode(ResultData<[Category]>.self, from: data)
+        let resultFactory = AnyNetworkResultFactory<[PlaceCategory]> { data in
+            let result = try self.decoder.decode(ResultData<[PlaceCategory]>.self, from: data)
             
             if let error = self.error(for: result.status, requestType: .categories) {
                 throw error

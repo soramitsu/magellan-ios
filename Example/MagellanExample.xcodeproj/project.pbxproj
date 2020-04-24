@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		129409202C078714B1BBCEFB /* Pods_MagellanExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 56801847B7BF47C0BCC31F7D /* Pods_MagellanExample.framework */; };
 		9BC7147C1C3437DD239FE05E /* Pods_MagellanExampleTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DDB72B20DC1A39C92DD0763 /* Pods_MagellanExampleTests.framework */; };
+		F819F83E2452E0BE00A6284F /* MapPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F819F83D2452E0BE00A6284F /* MapPresenterTests.swift */; };
+		F819F8402452E42200A6284F /* MapListPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F819F83F2452E42200A6284F /* MapListPresenterTests.swift */; };
 		F82317752445D54F00D4B95F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F82317742445D54F00D4B95F /* AppDelegate.swift */; };
 		F82317792445D54F00D4B95F /* DemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F82317782445D54F00D4B95F /* DemoViewController.swift */; };
 		F823177E2445D55200D4B95F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F823177D2445D55200D4B95F /* Assets.xcassets */; };
@@ -22,12 +24,11 @@
 		F83F50E42446053B001AD397 /* DemoFactoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = F83F50E32446053B001AD397 /* DemoFactoryProtocol.swift */; };
 		F87C950224460B5D008CE9F2 /* EmptyDemo.swift in Sources */ = {isa = PBXBuildFile; fileRef = F87C950124460B5D008CE9F2 /* EmptyDemo.swift */; };
 		F87C950524460D84008CE9F2 /* EmptyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F87C950424460D84008CE9F2 /* EmptyViewController.swift */; };
-		F8805F5724507D0600C8BC30 /* DashboardPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8805F5624507D0600C8BC30 /* DashboardPresenterTests.swift */; };
 		F8805F592450800F00C8BC30 /* AutoMockable.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8805F582450800E00C8BC30 /* AutoMockable.generated.swift */; };
 		F8C0AF642450691B0024A8DC /* MagellanServiceTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8C0AF632450691B0024A8DC /* MagellanServiceTest.swift */; };
 		F8C0AF6624506DE70024A8DC /* fail.json in Resources */ = {isa = PBXBuildFile; fileRef = F8C0AF6524506DE70024A8DC /* fail.json */; };
 		F8F0583E2451F530001FFEB4 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F8F0583D2451F530001FFEB4 /* GoogleService-Info.plist */; };
-		F8F238252451C39600E4945E /* LocationDetailPresenterSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8F238242451C39600E4945E /* LocationDetailPresenterSpec.swift */; };
+		F8F238252451C39600E4945E /* LocationDetailPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8F238242451C39600E4945E /* LocationDetailPresenterTests.swift */; };
 		F8F238272451C92900E4945E /* GeoflashTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8F238262451C92900E4945E /* GeoflashTests.swift */; };
 /* End PBXBuildFile section */
 
@@ -48,6 +49,8 @@
 		7EC17DFAF7BEC5F1A3DA4E53 /* Pods-MagellanExampleTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MagellanExampleTests.debug.xcconfig"; path = "Target Support Files/Pods-MagellanExampleTests/Pods-MagellanExampleTests.debug.xcconfig"; sourceTree = "<group>"; };
 		9DDB72B20DC1A39C92DD0763 /* Pods_MagellanExampleTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MagellanExampleTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C7399C15A1205E50163651EB /* Pods-MagellanExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MagellanExample.debug.xcconfig"; path = "Target Support Files/Pods-MagellanExample/Pods-MagellanExample.debug.xcconfig"; sourceTree = "<group>"; };
+		F819F83D2452E0BE00A6284F /* MapPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapPresenterTests.swift; sourceTree = "<group>"; };
+		F819F83F2452E42200A6284F /* MapListPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapListPresenterTests.swift; sourceTree = "<group>"; };
 		F82317712445D54F00D4B95F /* MagellanExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MagellanExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F82317742445D54F00D4B95F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F82317782445D54F00D4B95F /* DemoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoViewController.swift; sourceTree = "<group>"; };
@@ -63,14 +66,13 @@
 		F83F50E32446053B001AD397 /* DemoFactoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoFactoryProtocol.swift; sourceTree = "<group>"; };
 		F87C950124460B5D008CE9F2 /* EmptyDemo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyDemo.swift; sourceTree = "<group>"; };
 		F87C950424460D84008CE9F2 /* EmptyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyViewController.swift; sourceTree = "<group>"; };
-		F8805F5624507D0600C8BC30 /* DashboardPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardPresenterTests.swift; sourceTree = "<group>"; };
 		F8805F582450800E00C8BC30 /* AutoMockable.generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AutoMockable.generated.swift; path = AutoGenerated/AutoMockable.generated.swift; sourceTree = "<group>"; };
 		F8B202762445D73500B449C9 /* MagellanExampleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MagellanExampleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F8B2027A2445D73500B449C9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = MagellanExampleTests/Info.plist; sourceTree = SOURCE_ROOT; };
 		F8C0AF632450691B0024A8DC /* MagellanServiceTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagellanServiceTest.swift; sourceTree = "<group>"; };
 		F8C0AF6524506DE70024A8DC /* fail.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = fail.json; sourceTree = "<group>"; };
 		F8F0583D2451F530001FFEB4 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		F8F238242451C39600E4945E /* LocationDetailPresenterSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationDetailPresenterSpec.swift; sourceTree = "<group>"; };
+		F8F238242451C39600E4945E /* LocationDetailPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationDetailPresenterTests.swift; sourceTree = "<group>"; };
 		F8F238262451C92900E4945E /* GeoflashTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoflashTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -200,8 +202,9 @@
 		F8805F5524507CF000C8BC30 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
-				F8805F5624507D0600C8BC30 /* DashboardPresenterTests.swift */,
-				F8F238242451C39600E4945E /* LocationDetailPresenterSpec.swift */,
+				F8F238242451C39600E4945E /* LocationDetailPresenterTests.swift */,
+				F819F83D2452E0BE00A6284F /* MapPresenterTests.swift */,
+				F819F83F2452E42200A6284F /* MapListPresenterTests.swift */,
 			);
 			path = Modules;
 			sourceTree = "<group>";
@@ -489,9 +492,10 @@
 			files = (
 				F8C0AF642450691B0024A8DC /* MagellanServiceTest.swift in Sources */,
 				F8F238272451C92900E4945E /* GeoflashTests.swift in Sources */,
-				F8F238252451C39600E4945E /* LocationDetailPresenterSpec.swift in Sources */,
-				F8805F5724507D0600C8BC30 /* DashboardPresenterTests.swift in Sources */,
+				F8F238252451C39600E4945E /* LocationDetailPresenterTests.swift in Sources */,
+				F819F8402452E42200A6284F /* MapListPresenterTests.swift in Sources */,
 				F8805F592450800F00C8BC30 /* AutoMockable.generated.swift in Sources */,
+				F819F83E2452E0BE00A6284F /* MapPresenterTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

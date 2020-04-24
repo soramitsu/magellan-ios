@@ -38,17 +38,16 @@ final class MapPresenterTests: XCTestCase {
     
     var placeInfo: PlaceInfo {
         return PlaceInfo(id: 1,
-                        name: "name",
-                        type: "type",
-                        coordinates: Coordinates(lat: 1, lon: 1),
-                        address: "addr",
-                        phoneNumber: "phone",
-                        openHours: "open",
-                        website: "website",
-                        facebook: "fb",
-                        logoUuid: "logoUiid",
-                        promoImageUuid: "promoUiid",
-                        distance: "dist")
+                name: "name",
+                type: "type",
+                coordinates: Coordinates(lat: 1, lon: 1),
+                address: "addr",
+                phoneNumber: "+855000000009",
+                website: "website",
+                facebook: "fb",
+                logoUuid: "logoUiid",
+                promoImageUuid: "promoUiid",
+                distance: "dist", workingSchdule: Schedule(opens24: true, workingDays: nil))
     }
     
     var defaultPosition: Coordinates {

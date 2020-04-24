@@ -53,21 +53,21 @@ final class LocationDetailsViewController: UIViewController, LocationDetailsView
         
         nameLabel.font = style.nameLabelFont
         nameLabel.numberOfLines = 0
-        nameLabel.text = presenter.place.name
+        nameLabel.text = presenter.title
         headerView.addSubview(nameLabel)
         
         categoryLabel.font = style.categoryLabelFont
-        categoryLabel.text = presenter.place.type
+        categoryLabel.text = presenter.category
         categoryLabel.textColor = style.categoryLabelTextColor
         headerView.addSubview(categoryLabel)
         
         // todo: fix this hardcode
-        workingHoursLabel.text = "Open until 18:00"
+        workingHoursLabel.text = presenter.workingStatus
         workingHoursLabel.font = style.workingHoursLabelFont
         workingHoursLabel.textColor = style.workingHoursLabelTextColor
         headerView.addSubview(workingHoursLabel)
         
-        distanceLabel.text = presenter.place.distance
+        distanceLabel.text = presenter.distance
         distanceLabel.font = style.distanceFont
         distanceLabel.textColor = style.distanceColor
         headerView.addSubview(distanceLabel)

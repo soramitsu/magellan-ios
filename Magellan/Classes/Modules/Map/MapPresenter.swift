@@ -78,7 +78,6 @@ final class MapPresenter: MapPresenterProtocol {
         
         view.showLoading()
         let placeRequest = PlacesRequest(location: coordinatesHash,
-                                         zoom: 6,
                                          search: search,
                                          category: category)
         getPlacesOperation?.cancel()

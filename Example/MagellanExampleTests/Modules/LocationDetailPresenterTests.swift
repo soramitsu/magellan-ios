@@ -19,12 +19,11 @@ final class LocationDetailPresenterTests: XCTestCase {
                         coordinates: Coordinates(lat: 1, lon: 1),
                         address: "addr",
                         phoneNumber: "+855000000009",
-                        openHours: "open",
                         website: "website",
                         facebook: "fb",
                         logoUuid: "logoUiid",
                         promoImageUuid: "promoUiid",
-                        distance: "dist")
+                        distance: "dist", workingSchdule: Schedule(opens24: true, workingDays: nil))
     }
     
     func testDismiss() {

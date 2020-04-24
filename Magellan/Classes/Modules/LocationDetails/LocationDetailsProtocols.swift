@@ -17,7 +17,10 @@ protocol LocationDetailsPresenterProtocol: class {
 
     var view: LocationDetailsViewProtocol? { get set }
     var delegate: LocationDetailsPresenterDelegate? { get set }
-    var place: PlaceInfo { get }
+    var title: String { get }
+    var category: String { get }
+    var distance: String { get }
+    var workingStatus: String { get }
     
     func dismiss()
     

@@ -24,6 +24,39 @@ final class LocationDetailsPresenter: NSObject {
 
 extension LocationDetailsPresenter: LocationDetailsPresenterProtocol {
     
+    var title: String {
+        return place.name
+    }
+    
+    var category: String {
+        return place.type
+    }
+    
+    var distance: String {
+        return place.distance
+    }
+    
+    var workingStatus: String {
+        if place.workingSchdule.opens24 {
+            return "Open"
+        }
+        
+        let date = Date()
+        let formatter = DateFormatter()
+        formatter.dateFormat = "EEEE"
+        let currentDay = formatter.string(from: date)
+        
+        guard let shcedule = place
+            .workingSchdule
+            .workingDays?
+            .first(where: { $0.day.lowercased() == currentDay.lowercased() }) else {
+                return "Closed"
+        }
+        
+        return "Working hours: \(shcedule.workingHours)"
+        
+    }
+    
     func dismiss() {
         delegate?.dismiss()
     }

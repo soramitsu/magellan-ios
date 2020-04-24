@@ -10,7 +10,6 @@ import Foundation
 public struct PlacesRequest: Codable {
     
     let location: String
-    let zoom: Int
     let search: String?
     let category: String?
     

@@ -1,3 +1,9 @@
 
 "MapListView.search.placeholder" = "Search by name...";
 "MapListView.nearbyplaces" = "Nearby places";
+
+"Location.Details.phone" = "Phone number";
+"Location.Details.website" = "Website";
+"Location.Details..fb" = "FB";
+"Location.Details..email" = "E-mail";
+"Location.Details.address" = "Address";

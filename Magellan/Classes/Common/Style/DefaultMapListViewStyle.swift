@@ -14,7 +14,7 @@ public protocol MapListViewStyleProtocol {
     var searchImage: UIImage? { get }
 }
 
-final class MapListViewStyle: MapListViewStyleProtocol {
+final class DefaultMapListViewStyle: MapListViewStyleProtocol {
     var viewBackgroundColor: UIColor = UIColor.Style.background
     var panViewBackgroundColor: UIColor = UIColor.Style.pan
     var searchFieldFont: UIFont = .styleFont(for: .body)

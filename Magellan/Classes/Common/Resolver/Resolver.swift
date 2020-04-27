@@ -4,6 +4,11 @@
 */
 
 protocol ResolverProtocol {
+    
+    var mapListStyle: MapListViewStyleProtocol? { get set }
+    var locationDetailsViewStyle: LocationDetailsViewStyleProtocol? { get set }
+    var locationDetailsTableHelperFactory: ((PlaceInfo) -> MapDetailTableHelperProtocol)? { get set }
+    
     var networkOperationFactory: MiddlewareOperationFactoryProtocol { get }
     var markerFactory: MapMarkerFactoryProtocol? { get set }
 }
@@ -15,6 +20,10 @@ extension ResolverProtocol {
 }
 
 final class Resolver: ResolverProtocol {
+    
+    var mapListStyle: MapListViewStyleProtocol?
+    var locationDetailsViewStyle: LocationDetailsViewStyleProtocol?
+    var locationDetailsTableHelperFactory: ((PlaceInfo) -> MapDetailTableHelperProtocol)?
     
     let networkOperationFactory: MiddlewareOperationFactoryProtocol
     var markerFactory: MapMarkerFactoryProtocol?

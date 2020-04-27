@@ -9,14 +9,13 @@ target 'MagellanExample' do
   pod 'OHHTTPStubs/Swift', :inhibit_warnings => true
   pod 'SwiftGen', :inhibit_warnings => true
   pod 'Sourcery'
+  pod 'Fabric'
+  pod 'Crashlytics'
+  pod 'Firebase/Analytics'
 
   target 'MagellanExampleTests' do
     inherit! :search_paths
-
-      pod 'Cuckoo'
       pod 'OHHTTPStubs/Swift'
-      pod 'Nimble'
-      pod 'Quick'
   end
 end
 

@@ -16,6 +16,19 @@ final class MapDetailCell: UITableViewCell {
     
     private let titleLabel = UILabel()
     private let contentLabel = UILabel()
+    
+    struct Style {
+        let titleFont: UIFont
+        let titleTextColor: UIColor
+        let contentFont: UIFont
+        let contentTextColor: UIColor
+    }
+    
+    var style: Style? {
+        didSet {
+            setStyle()
+        }
+    }
 
     var viewModel: MapDetailViewModel? {
         didSet {
@@ -40,15 +53,19 @@ final class MapDetailCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
+    private func setStyle() {
+        guard let style = style else {
+            return
+        }
+        titleLabel.font = style.titleFont
+        titleLabel.textColor = style.titleTextColor
+        contentLabel.font = style.contentFont
+        contentLabel.textColor = style.contentTextColor
+    }
     
     private func configureViews() {
-        titleLabel.font = .styleFont(for: .body)
-        titleLabel.textColor = UIColor.Style.Text.announcement
-        contentView.addSubview(titleLabel)
-        
-        contentLabel.font = .styleFont(for: .body)
         contentLabel.textAlignment = .right
-        contentLabel.textColor = UIColor.Style.Text.mapDetail
+        contentView.addSubview(titleLabel)
         contentLabel.numberOfLines = 0
         contentView.addSubview(contentLabel)
     }

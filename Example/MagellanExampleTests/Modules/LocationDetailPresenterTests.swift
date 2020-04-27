@@ -39,18 +39,17 @@ final class LocationDetailPresenterTests: XCTestCase {
         XCTAssertTrue(coordinator.dismissCalled)
     }
     
-    func testTableHelper() {
+    func testProperties() {
         // arrange
-        let tableHelper = DefaultMapDetailTableHelper(place: self.placeInfo)
-        let tableHelperDelegate = MapDetailTableHelperDelegateMock()
-        tableHelper.delegate = tableHelperDelegate
         
         // act
-        tableHelper.items.forEach {
-            $0.action?()
-        }
+        let presenter = LocationDetailsPresenter(placeInfo: self.placeInfo)
         
         // assert
-        XCTAssertEqual(tableHelperDelegate.hanldePathCallsCount, 3)
+        XCTAssertEqual(presenter.title, "name")
+        XCTAssertEqual(presenter.category, "type")
+        XCTAssertEqual(presenter.distance, "dist")
+        XCTAssertEqual(presenter.workingStatus, "Open")
+        XCTAssertEqual(presenter.items.count, 4)
     }
 }

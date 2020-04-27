@@ -5,9 +5,7 @@
 
 protocol ResolverProtocol {
     
-    var mapListStyle: MapListViewStyleProtocol? { get set }
-    var locationDetailsViewStyle: LocationDetailsViewStyleProtocol? { get set }
-    var locationDetailsTableHelperFactory: ((PlaceInfo) -> MapDetailTableHelperProtocol)? { get set }
+    var style: MagellanStyleProtocol { get }
     
     var distanceFilter: Double { get set }
     var defaultCoordinate: Coordinates { get set }
@@ -24,9 +22,7 @@ extension ResolverProtocol {
 
 final class Resolver: ResolverProtocol {
     
-    var mapListStyle: MapListViewStyleProtocol?
-    var locationDetailsViewStyle: LocationDetailsViewStyleProtocol?
-    var locationDetailsTableHelperFactory: ((PlaceInfo) -> MapDetailTableHelperProtocol)?
+    var style: MagellanStyleProtocol
     
     var distanceFilter: Double = 50
     var defaultCoordinate: Coordinates = Coordinates(lat: 11.5796669, lon: 104.7501013)
@@ -34,8 +30,10 @@ final class Resolver: ResolverProtocol {
     let networkOperationFactory: MiddlewareOperationFactoryProtocol
     var markerFactory: MapMarkerFactoryProtocol?
     
-    init(networkOperationFactory: MiddlewareOperationFactoryProtocol) {
+    init(networkOperationFactory: MiddlewareOperationFactoryProtocol,
+         style: MagellanStyleProtocol = DefaultMagellanStyle()) {
         self.networkOperationFactory = networkOperationFactory
+        self.style = style
     }
     
 }

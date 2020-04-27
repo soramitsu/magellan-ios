@@ -169,26 +169,6 @@ class MapCoordinatorProtocolMock: MapCoordinatorProtocol {
 }
 // MARK: -
 // MARK: -
-class MapDetailTableHelperDelegateMock: MapDetailTableHelperDelegate {
-
-    //MARK: - hanlde
-
-    var hanldePathCallsCount = 0
-    var hanldePathCalled: Bool {
-        return hanldePathCallsCount > 0
-    }
-    var hanldePathReceivedPath: String?
-    var hanldePathClosure: ((String) -> Void)?
-
-    func hanlde(path: String) {
-        hanldePathCallsCount += 1
-        hanldePathReceivedPath = path
-        hanldePathClosure?(path)
-    }
-
-}
-// MARK: -
-// MARK: -
 class MapListPresenterProtocolMock: MapListPresenterProtocol {
     var categories: [PlaceCategory] = []
     var places: [PlaceViewModel] = []

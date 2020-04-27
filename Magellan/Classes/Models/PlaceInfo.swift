@@ -13,7 +13,7 @@ struct Schedule: Codable, Equatable {
     
 }
 
-struct WorkingDay: Codable, Equatable {
+struct WorkingDay: WorkingStatusProtocol, Codable, Equatable {
     
     struct Time: Codable, Equatable {
         let hour: Int
@@ -24,11 +24,39 @@ struct WorkingDay: Codable, Equatable {
     let opens: Time
     let closes: Time
     
+    var currentDate: Date {
+        return Date()
+    }
+    
+    var opensMinutes: String {
+        opens.minutes < 10 ? "0\(opens.minutes)" : "\(opens.minutes)"
+    }
+    
+    var closesMinutes: String {
+        closes.minutes < 10 ? "0\(closes.minutes)" : "\(closes.minutes)"
+    }
+    
+    var opensTime: String {
+        return "\(opens.hour):\(opensMinutes)"
+    }
+    var closesTime: String {
+        return "\(closes.hour):\(closesMinutes)"
+    }
+    
     var workingHours: String {
-        let opensMinutes = opens.minutes < 10 ? "0\(opens.minutes)" : "\(opens.minutes)"
-        let closesMinutes = closes.minutes < 10 ? "0\(closes.minutes)" : "\(closes.minutes)"
         return "\(opens.hour):\(opensMinutes) - \(closes.hour):\(closesMinutes)"
     }
+    
+    var opensTimeInterval: TimeInterval {
+        let seconds = Int64(opens.hour * 60 * 60 + opens.minutes * 60)
+        return TimeInterval(integerLiteral: seconds)
+    }
+    
+    var closesTimeInterval: TimeInterval {
+        let seconds = Int64(closes.hour * 60 * 60 + closes.minutes * 60)
+        return TimeInterval(integerLiteral: Int64(seconds))
+    }
+    
 }
 
 struct PlaceInfo {
@@ -45,6 +73,41 @@ struct PlaceInfo {
     let promoImageUuid: String
     let distance: String
     let workingSchdule : Schedule
+}
+
+extension PlaceInfo {
+    
+    var currentWorkingDay: WorkingDay? {
+        return workingSchdule
+            .workingDays?
+            .first(where: { $0.day.lowercased() == Date().currentDay.lowercased() })
+    }
+    
+    var isOpen: Bool {
+        
+        if workingSchdule.opens24 {
+            return true
+        }
+        
+        if let currentWorkingDay = currentWorkingDay {
+            return currentWorkingDay.isOpen
+        }
+        
+        return false
+        
+    }
+    
+    var workingStatus: String {
+        if workingSchdule.opens24 {
+            return L10n.Location.Details.Status.open
+        }
+        
+        if let currentWorkingDay = currentWorkingDay {
+            return currentWorkingDay.status
+        }
+        
+        return L10n.Location.Details.Status.closed
+    }
 }
 
 extension PlaceInfo: Codable { }

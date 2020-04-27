@@ -11,7 +11,7 @@ final class MapListAssembly {
     
     static func assembly(with resolver: ResolverProtocol) -> MapListViewProtocol {
         let presenter = MapListPresenter()
-        let view = MapListViewController(presenter: presenter, style: resolver.mapListStyle ?? DefaultMapListViewStyle())
+        let view = MapListViewController(presenter: presenter, style: resolver.style)
         
         presenter.view = view
         

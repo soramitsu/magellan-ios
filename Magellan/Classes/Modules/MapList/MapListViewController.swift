@@ -12,7 +12,7 @@ import IQKeyboardManagerSwift
 final class MapListViewController: UIViewController {
     
     let presenter: MapListPresenterProtocol
-    private let style: MapListViewStyleProtocol
+    private let style: MagellanStyleProtocol
     private let headerView = UIView()
     private let panView = UIView()
     private let iconView = UIImageView(image: nil)
@@ -21,7 +21,15 @@ final class MapListViewController: UIViewController {
     private let closeButton = UIButton()
     private var categoriesView: UICollectionView!
     
-    init(presenter: MapListPresenterProtocol, style: MapListViewStyleProtocol) {
+    private lazy var placeCellStyle: PlaceCell.Style = {
+        PlaceCell.Style(nameFont: style.header1Font,
+                categoryFont: style.bodyRegularFont,
+                categoryTextColor: style.bodyTextColor,
+                distanceFont: style.bodyBoldFont,
+                distanceColor: style.firstColor)
+    }()
+    
+    init(presenter: MapListPresenterProtocol, style: MagellanStyleProtocol) {
         self.presenter = presenter
         self.style = style
         super.init(nibName: nil, bundle: nil)
@@ -33,7 +41,7 @@ final class MapListViewController: UIViewController {
     
     override func loadView() {
         let view = UIView()
-        view.backgroundColor = style.viewBackgroundColor
+        view.backgroundColor = style.backgroundColor
         self.view = view
         
         view.layer.cornerRadius = 10
@@ -49,8 +57,8 @@ final class MapListViewController: UIViewController {
         headerView.backgroundColor = .white
         view.addSubview(headerView)
         
-        panView.backgroundColor = style.panViewBackgroundColor
-        panView.layer.cornerRadius = MapConstants.panHeight / 2
+        panView.backgroundColor = style.panColor
+        panView.layer.cornerRadius = style.panHeight / 2
         headerView.addSubview(panView)
         
         iconView.contentMode = .scaleAspectFit
@@ -59,7 +67,7 @@ final class MapListViewController: UIViewController {
         searchField.placeholder = L10n.MapListView.Search.placeholder
         searchField.addTarget(self, action: #selector(search(_:)), for: .editingChanged)
         searchField.textColor = .black
-        searchField.font = style.searchFieldFont
+        searchField.font = style.header2Font
         searchField.textAlignment = .left
         searchField.clearButtonMode = .never
         searchField.borderStyle = .none
@@ -68,7 +76,7 @@ final class MapListViewController: UIViewController {
         
         closeButton.setTitle("✕", for: .normal)
         closeButton.setTitleColor(.black, for: .normal)
-        closeButton.titleLabel?.font = style.closeButtonTitleLabelFont
+        closeButton.titleLabel?.font = style.header1Font
         closeButton.addTarget(self, action: #selector(dismiss(_:)), for: .touchUpInside)
         headerView.addSubview(closeButton)
     }
@@ -96,7 +104,7 @@ final class MapListViewController: UIViewController {
         tableView.register(PlaceCell.self, forCellReuseIdentifier: PlaceCell.reuseIdentifier)
         tableView.dataSource = self as UITableViewDataSource
         tableView.delegate = self as UITableViewDelegate
-        tableView.separatorInset = style.tableViewSeparatorInset
+        tableView.separatorInset = style.tableSeparatorInsets
         tableView.tableHeaderView = categoriesView
         tableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 1))
         view.addSubview(tableView)
@@ -205,6 +213,7 @@ extension MapListViewController: UITableViewDataSource {
         }
         
         cell.place = presenter.places[indexPath.row]
+        cell.style = placeCellStyle
         
         return cell
     }
@@ -241,6 +250,7 @@ extension MapListViewController: UICollectionViewDataSource {
         }
 
         cell.category = presenter.categories[indexPath.row]
+        cell.style = CategoryCollectionCell.Style(nameFont: style.smallFont, nameTextColor: style.bodyTextColor)
 
         return cell
     }

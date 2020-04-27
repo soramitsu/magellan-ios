@@ -21,6 +21,32 @@ final class PlaceCell: UITableViewCell {
         }
     }
     
+    final class Style {
+        let nameFont: UIFont
+        let categoryFont: UIFont
+        let categoryTextColor: UIColor
+        let distanceFont: UIFont
+        let distanceColor: UIColor
+        
+        init(nameFont: UIFont,
+             categoryFont: UIFont,
+             categoryTextColor: UIColor,
+             distanceFont: UIFont,
+             distanceColor: UIColor) {
+            self.nameFont = nameFont
+            self.categoryFont = categoryFont
+            self.categoryTextColor = categoryTextColor
+            self.distanceFont = distanceFont
+            self.distanceColor = distanceColor
+        }
+    }
+    
+    var style: Style? {
+        didSet {
+            setStyle()
+        }
+    }
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: .default, reuseIdentifier: reuseIdentifier)
         backgroundColor = .clear
@@ -39,19 +65,25 @@ final class PlaceCell: UITableViewCell {
     
     private func configureViews() {
         nameLabel.textColor = .black
-        nameLabel.font = .styleFont(for: .title2)
         nameLabel.textAlignment = .center
         nameLabel.numberOfLines = 0
         contentView.addSubview(nameLabel)
         
-        categoryLabel.textColor = UIColor.Style.Text.announcement
-        categoryLabel.font = .styleFont(for: .favoriteCard)
         contentView.addSubview(categoryLabel)
                 
-        distanceLabel.textColor = UIColor.Style.Text.announcement
-        distanceLabel.font = .styleFont(for: .favoriteCard)
         distanceLabel.textAlignment = .right
         contentView.addSubview(distanceLabel)
+    }
+    
+    private func setStyle() {
+        guard let style = style else {
+            return
+        }
+        nameLabel.font = style.nameFont
+        categoryLabel.textColor = style.categoryTextColor
+        categoryLabel.font = style.categoryFont
+        distanceLabel.textColor = style.distanceColor
+        distanceLabel.font = style.distanceFont
     }
     
     private func layoutViews() {

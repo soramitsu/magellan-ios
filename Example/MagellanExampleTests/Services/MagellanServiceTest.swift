@@ -21,11 +21,6 @@ class MagellanServiceTest: XCTestCase {
         return MagellanService(operationFactory: middleware)
     }()
     
-    
-    
-    //        mock(path: "/paymentservice/api/v1/merchants/{placeId}", filename: "placeInfo.json")
-    //        mock(path: "/paymentservice/api/v1/merchants", filename: "placesList.json")
-    
     func testCategoriesSuccess() {
         Mocks.mock(path: "/paymentservice/api/v1/merchants/types", filename: "types.json")
         let expectation = XCTestExpectation()

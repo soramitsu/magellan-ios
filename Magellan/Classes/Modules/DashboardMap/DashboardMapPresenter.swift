@@ -99,7 +99,7 @@ extension DashboardMapPresenter: MapListPresenterProtocol {
         loadPlaces(category: category, search: nil)
     }
     
-    func serach(with text: String) {
+    func search(with text: String) {
         loadPlaces(category: nil, search: text)
     }
 }

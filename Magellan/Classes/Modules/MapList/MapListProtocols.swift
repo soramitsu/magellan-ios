@@ -15,5 +15,5 @@ protocol MapListPresenterProtocol: AnyObject {
     
     func showDetails(place: PlaceViewModel)
     func select(category: String)
-    func serach(with text: String)
+    func search(with text: String)
 }

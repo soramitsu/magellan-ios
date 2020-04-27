@@ -93,6 +93,24 @@ class DashboardMapViewProtocolMock: DashboardMapViewProtocol {
 }
 // MARK: -
 // MARK: -
+class LocationDetailsPresenterDelegateMock: LocationDetailsPresenterDelegate {
+
+    //MARK: - dismiss
+
+    var dismissCallsCount = 0
+    var dismissCalled: Bool {
+        return dismissCallsCount > 0
+    }
+    var dismissClosure: (() -> Void)?
+
+    func dismiss() {
+        dismissCallsCount += 1
+        dismissClosure?()
+    }
+
+}
+// MARK: -
+// MARK: -
 class MagellanServicePrototcolMock: MagellanServicePrototcol {
 
     //MARK: - getCategories
@@ -141,6 +159,26 @@ class MagellanServicePrototcolMock: MagellanServicePrototcol {
         getPlacesWithRunCompletionInCompletionCallsCount += 1
         getPlacesWithRunCompletionInCompletionReceivedArguments = (request: request, queue: queue, completion: completion)
         return getPlacesWithRunCompletionInCompletionClosure.map({ $0(request, queue, completion) }) ?? getPlacesWithRunCompletionInCompletionReturnValue
+    }
+
+}
+// MARK: -
+// MARK: -
+class MapDetailTableHelperDelegateMock: MapDetailTableHelperDelegate {
+
+    //MARK: - hanlde
+
+    var hanldePathCallsCount = 0
+    var hanldePathCalled: Bool {
+        return hanldePathCallsCount > 0
+    }
+    var hanldePathReceivedPath: String?
+    var hanldePathClosure: ((String) -> Void)?
+
+    func hanlde(path: String) {
+        hanldePathCallsCount += 1
+        hanldePathReceivedPath = path
+        hanldePathClosure?(path)
     }
 
 }

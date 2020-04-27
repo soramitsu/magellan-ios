@@ -11,6 +11,22 @@ public enum L10n {
 
     static var sharedLanguage: MagellanLanguage = MagellanLanguage.defaultLanguage
 
+    public enum Location {
+
+        public enum Details {
+            /// E-mail
+            public static var email: String { return localize("Location.Details..email") }
+            /// FB
+            public static var fb: String { return localize("Location.Details..fb") }
+            /// Address
+            public static var address: String { return localize("Location.Details.address") }
+            /// Phone number
+            public static var phone: String { return localize("Location.Details.phone") }
+            /// Website
+            public static var website: String { return localize("Location.Details.website") }
+        }
+    }
+
     public enum MapListView {
         /// Nearby places
         public static var nearbyplaces: String { return localize("MapListView.nearbyplaces") }

@@ -33,9 +33,4 @@ Library allow fast integration of Soramitsu Places.
   s.dependency 'SVProgressHUD'
   s.dependency 'libPhoneNumber-iOS'
 
-  s.test_spec do |ts|
-    ts.source_files = 'Tests/**/*'
-    ts.resources = ['Tests/**/*.json']
-  end
-
 end

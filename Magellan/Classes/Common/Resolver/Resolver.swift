@@ -31,7 +31,7 @@ final class Resolver: ResolverProtocol {
     var markerFactory: MapMarkerFactoryProtocol?
     
     init(networkOperationFactory: MiddlewareOperationFactoryProtocol,
-         style: MagellanStyleProtocol = DefaultMagellanStyle()) {
+         style: MagellanStyleProtocol) {
         self.networkOperationFactory = networkOperationFactory
         self.style = style
     }

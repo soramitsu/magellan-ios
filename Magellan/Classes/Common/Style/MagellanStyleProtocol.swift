@@ -23,24 +23,21 @@ public protocol MagellanStyleProtocol {
     var headerBackgroundColor: UIColor { get }
     var panColor: UIColor { get }
     var tableSeparatorInsets: UIEdgeInsets { get }
-    var panHeight: CGFloat { get }
     var panWidth: CGFloat { get }
     var offset: CGFloat { get }
     var sideOffset: CGFloat { get }
     var buttonSideSize: CGFloat { get }
-    var searchImage: UIImage? { get }
     
 }
 
 final class DefaultMagellanStyle: MagellanStyleProtocol {
+    let header1Font: UIFont = UIFont.systemFont(ofSize: 19, weight: .bold)
+    let header2Font: UIFont = UIFont.systemFont(ofSize: 15, weight: .bold)
+    let header3Font: UIFont = UIFont.systemFont(ofSize: 15, weight: .bold)
     
-    let header1Font: UIFont = UIFont(name: "GTEestiProText-Medium", size: 19)!
-    let header2Font: UIFont = UIFont(name: "GTEestiProDisplay-Regular", size: 15)!
-    let header3Font: UIFont = UIFont(name: "GTEestiProText-Regular", size: 15)!
-    
-    let bodyRegularFont: UIFont = UIFont(name: "GTEestiProText-Regular", size: 13)!
-    let bodyBoldFont: UIFont = UIFont(name: "GTEestiProDisplay-Regular", size: 13)!
-    let smallFont: UIFont = UIFont(name: "GTEestiProText-Regular", size: 15)!
+    let bodyRegularFont: UIFont = UIFont.systemFont(ofSize: 13, weight: .regular)
+    let bodyBoldFont: UIFont = UIFont.systemFont(ofSize: 13, weight: .bold)
+    let smallFont: UIFont = UIFont.systemFont(ofSize: 12, weight: .regular)
     
     let bodyTextColor: UIColor = UIColor(red: 0.539, green: 0.539, blue: 0.539, alpha: 1)
     let headerTextColor: UIColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
@@ -51,15 +48,10 @@ final class DefaultMagellanStyle: MagellanStyleProtocol {
     let headerBackgroundColor: UIColor = .white
     let panColor: UIColor = UIColor(red: 0.867, green: 0.867, blue: 0.867, alpha: 1)
     let tableSeparatorInsets: UIEdgeInsets = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
-    let panHeight: CGFloat = MapConstants.panHeight
+
     let panWidth: CGFloat = 36
     let offset: CGFloat = 4
     let sideOffset: CGFloat = 20
     let buttonSideSize: CGFloat = 40
-    
-    
-    lazy var searchImage: UIImage? = {
-        return UIImage(named: "search", in: Bundle.frameworkBundle, compatibleWith: nil)
-    }()
 
 }

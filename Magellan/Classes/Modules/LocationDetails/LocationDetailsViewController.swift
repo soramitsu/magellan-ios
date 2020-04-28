@@ -45,7 +45,7 @@ final class LocationDetailsViewController: UIViewController, LocationDetailsView
         view.addSubview(headerView)
         
         panView.backgroundColor = style.panColor
-        panView.layer.cornerRadius = style.panHeight / 2
+        panView.layer.cornerRadius = MapConstants.panHeight / 2
         headerView.addSubview(panView)
         
         nameLabel.font = style.header1Font
@@ -95,9 +95,9 @@ final class LocationDetailsViewController: UIViewController, LocationDetailsView
         headerView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
         
         panView.translatesAutoresizingMaskIntoConstraints = false
-        panView.heightAnchor.constraint(equalToConstant: style.panHeight).isActive = true
+        panView.heightAnchor.constraint(equalToConstant: MapConstants.panHeight).isActive = true
         panView.widthAnchor.constraint(equalToConstant: style.panWidth).isActive = true
-        panView.topAnchor.constraint(equalTo: headerView.topAnchor, constant: style.panHeight).isActive = true
+        panView.topAnchor.constraint(equalTo: headerView.topAnchor, constant: MapConstants.panHeight).isActive = true
         panView.centerXAnchor.constraint(equalTo: headerView.centerXAnchor).isActive = true
         
         nameLabel.translatesAutoresizingMaskIntoConstraints = false

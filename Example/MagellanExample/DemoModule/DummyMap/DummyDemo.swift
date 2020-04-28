@@ -13,10 +13,13 @@ class DummyDemo: DemoFactoryProtocol {
     }
     
     func setupDemo(with completionBlock: @escaping DemoCompletionBlock) throws -> UIViewController {
+        UIFont.registerFonts()
         let testKey = "AIzaSyA-hfkkknmSEx4BR1WsnlrydPpgYncnKkg"
         let baseUrl = URL(string: "https://pgateway1.s1.dev.bakong.soramitsu.co.jp")!
         let networkResolver = NetworkResolver(baseUrl: baseUrl)
         Mocks.mockAPI()
-        return MaggelanBuilder(key: testKey).build(networkResolver: networkResolver)
+        return MaggelanBuilder(key: testKey)
+            .with(style: DummyDemoMagellanStyle())
+            .build(networkResolver: networkResolver)
     }
 }

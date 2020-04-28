@@ -8,17 +8,20 @@ import GoogleMaps
 
 public protocol MaggelanBuilderProtocol {
     func build(networkResolver: MagellanNetworkResolverProtocol) throws -> UIViewController
+    
+    @discardableResult
+    func with(style: MagellanStyleProtocol) -> Self
 }
 
 public final class MaggelanBuilder {
     
     private let apiKey: String
+    private var style: MagellanStyleProtocol?
     
     /// Initializator
     /// - Parameter key: google mpas api key
     public init(key: String) {
         apiKey = key
-        UIFont.registerFonts()
     }
 }
 
@@ -28,8 +31,14 @@ extension MaggelanBuilder: MaggelanBuilderProtocol {
         
         let networkOperationFactory = MiddlewareOperationFactory(networkResolver: networkResolver)
         
-        let resolver = Resolver(networkOperationFactory: networkOperationFactory)
+        let resolver = Resolver(networkOperationFactory: networkOperationFactory,
+                                style: self.style ?? DefaultMagellanStyle())
         
         return DashboardMapAssembly.assembly(with: resolver)
+    }
+    
+    public func with(style: MagellanStyleProtocol) -> Self {
+        self.style = style
+        return self
     }
 }

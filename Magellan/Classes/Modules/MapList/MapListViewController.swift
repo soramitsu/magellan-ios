@@ -47,7 +47,7 @@ final class MapListViewController: UIViewController {
         view.layer.cornerRadius = 10
         view.layer.masksToBounds = true
         
-        iconView.image = style.searchImage
+        iconView.image = UIImage(named: "search", in: nil, compatibleWith: nil)
         
         configureViews()
         layoutViews()
@@ -58,7 +58,7 @@ final class MapListViewController: UIViewController {
         view.addSubview(headerView)
         
         panView.backgroundColor = style.panColor
-        panView.layer.cornerRadius = style.panHeight / 2
+        panView.layer.cornerRadius = MapConstants.panHeight / 2
         headerView.addSubview(panView)
         
         iconView.contentMode = .scaleAspectFit

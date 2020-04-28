@@ -12,6 +12,10 @@ final class MapAssembly {
         let presenter = MapPresenter(service: resolver.networkService,
                                      locationService: locationService,
                                      defaultPosition: resolver.defaultCoordinate)
+        
+        presenter.alertManager = resolver.alertManager
+        presenter.defaultAlertMessage = resolver.defaultAlertMessage
+        
         let markerFactory = resolver.markerFactory ?? MapMarkerDefaultFactory()
         let mapView = MapViewController(presenter: presenter, markerFactory: markerFactory)
         presenter.view = mapView

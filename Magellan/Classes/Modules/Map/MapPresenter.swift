@@ -9,6 +9,8 @@ import Foundation
 
 final class MapPresenter: MapPresenterProtocol {
     
+    var alertManager: AlertManagerProtocol?
+    var defaultAlertMessage: MessageProtocol?
     var view: MapViewProtocol?
     weak var coordinator: MapCoordinatorProtocol?
     weak var output: MapOutputProtocol?
@@ -67,7 +69,11 @@ final class MapPresenter: MapPresenterProtocol {
                 self?.locationService.delegaet = self
                 self?.loadPlaces()
             case .failure(let error):
+                self?.view?.hideLoading()
                 self?.categories = []
+                self?.tryShowDefaultAlert {
+                    self?.loadCategories()
+                }
             }
         }
     }
@@ -89,7 +95,9 @@ final class MapPresenter: MapPresenterProtocol {
             self?.view?.hideLoading()
             switch result {
             case .failure(let error):
-                print(error)
+                self?.tryShowDefaultAlert {
+                    self?.loadPlaces(category: category, search: search)
+                }
             case .success(let response):
                 self?.places = response.locations.flatMap({PlaceViewModel(place: $0)})
             }
@@ -108,7 +116,9 @@ final class MapPresenter: MapPresenterProtocol {
                 self.view?.show(place: place)
                 self.coordinator?.showDetails(for: info)
             case .failure(let error):
-                print(error)
+                self.tryShowDefaultAlert { [weak self] in
+                    self?.showDetails(place: place)
+                }
             }
         }
     }
@@ -117,6 +127,20 @@ final class MapPresenter: MapPresenterProtocol {
         loadPlaces(category: nil, search: nil)
     }
     
+    private func tryShowDefaultAlert(retryAction: @escaping () -> Void) {
+        guard let alertManager = alertManager,
+            let controller = view?.controller else {
+            return
+        }
+        alertManager.showAlert(viewController: controller,
+                               title: defaultAlertMessage?.title ?? L10n.Error.Default.title,
+                               message: defaultAlertMessage?.message ?? L10n.Error.Default.message,
+                               actions: [(L10n.cancel, .cancel), (L10n.retry, .default)]) { number in
+                                if number == 1 {
+                                    retryAction()
+                                }
+        }
+    }
 }
 
 extension MapPresenter: MapListOutputProtocol {

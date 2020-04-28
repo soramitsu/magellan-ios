@@ -6,6 +6,8 @@
 protocol ResolverProtocol {
     
     var style: MagellanStyleProtocol { get }
+    var alertManager: AlertManagerProtocol? { get }
+    var defaultAlertMessage: MessageProtocol? { get }
     
     var distanceFilter: Double { get set }
     var defaultCoordinate: Coordinates { get set }
@@ -23,6 +25,8 @@ extension ResolverProtocol {
 final class Resolver: ResolverProtocol {
     
     var style: MagellanStyleProtocol
+    var alertManager: AlertManagerProtocol?
+    var defaultAlertMessage: MessageProtocol?
     
     var distanceFilter: Double = 50
     var defaultCoordinate: Coordinates = Coordinates(lat: 11.5796669, lon: 104.7501013)

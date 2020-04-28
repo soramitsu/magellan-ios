@@ -14,27 +14,31 @@ final class MapListPresenter: MapListPresenterProtocol {
     
     var view: MapListViewProtocol?
     
-    weak var mapInput: MapInputProtocol?
+    weak var output: MapListOutputProtocol?
     
     func showDetails(place: PlaceViewModel) {
-        mapInput?.select(place: place)
+        output?.select(place: place)
     }
     
     func select(category: String) {
-        mapInput?.select(category: category)
+        output?.select(category: category)
     }
     
     func search(with text: String) {
-        mapInput?.search(with: text)
+        output?.search(with: text)
     }
     
     
 }
 
-extension MapListPresenter: MapListInputProtocol {
-    func set(categories: [PlaceCategory], places: [PlaceViewModel]) {
+extension MapListPresenter: MapOutputProtocol {
+    func didUpdate(categories: [PlaceCategory]) {
         self.categories = categories
+        view?.reloadCategories()
+    }
+    
+    func didUpdate(places: [PlaceViewModel]) {
         self.places = places
-        view?.reloadData()
+        view?.reloadPlaces()
     }
 }

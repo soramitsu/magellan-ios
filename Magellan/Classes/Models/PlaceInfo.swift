@@ -20,7 +20,17 @@ struct WorkingDay: WorkingStatusProtocol, Codable, Equatable {
         let minutes: Int
     }
     
-    let day: String
+    enum Day: Int, Codable {
+        case Monday = 1
+        case Tuesday = 2
+        case Wednesday = 3
+        case Thursday = 4
+        case Friday = 5
+        case Saturday = 6
+        case Sunday = 0
+    }
+    
+    let day: Day
     let opens: Time
     let closes: Time
     
@@ -54,7 +64,7 @@ struct WorkingDay: WorkingStatusProtocol, Codable, Equatable {
     
     var closesTimeInterval: TimeInterval {
         let seconds = Int64(closes.hour * 60 * 60 + closes.minutes * 60)
-        return TimeInterval(integerLiteral: Int64(seconds))
+        return TimeInterval(integerLiteral: seconds)
     }
     
 }
@@ -67,25 +77,27 @@ struct PlaceInfo {
     let coordinates: Coordinates
     let address: String
     let phoneNumber: String
+    let region: String
     let website: String
     let facebook: String
     let logoUuid: String
     let promoImageUuid: String
     let distance: String
-    let workingSchdule : Schedule
+    let workingSchedule : Schedule
 }
 
 extension PlaceInfo {
     
     var currentWorkingDay: WorkingDay? {
-        return workingSchdule
+        let weekDayNumber = Calendar.current.component(.weekday, from: Date()) - 1
+        return workingSchedule
             .workingDays?
-            .first(where: { $0.day.lowercased() == Date().currentDay.lowercased() })
+            .first(where: { $0.day.rawValue == weekDayNumber })
     }
     
     var isOpen: Bool {
         
-        if workingSchdule.opens24 {
+        if workingSchedule.opens24 {
             return true
         }
         
@@ -98,7 +110,7 @@ extension PlaceInfo {
     }
     
     var workingStatus: String {
-        if workingSchdule.opens24 {
+        if workingSchedule.opens24 {
             return L10n.Location.Details.Status.open
         }
         

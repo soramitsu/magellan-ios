@@ -43,7 +43,7 @@ final class PlaceCell: UITableViewCell {
     
     var style: Style? {
         didSet {
-            setStyle()
+            applyStyle()
         }
     }
     
@@ -75,7 +75,7 @@ final class PlaceCell: UITableViewCell {
         contentView.addSubview(distanceLabel)
     }
     
-    private func setStyle() {
+    private func applyStyle() {
         guard let style = style else {
             return
         }

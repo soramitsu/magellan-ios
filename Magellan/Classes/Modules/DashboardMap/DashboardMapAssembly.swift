@@ -28,8 +28,8 @@ class DashboardMapAssembly: DashboardMapAssemblyProtocol {
 
         mapView.presenter.coordinator = coordinator
         
-        mapView.presenter.listInput = mapListView.presenter
-        mapListView.presenter.mapInput = mapView.presenter
+        mapView.presenter.output = mapListView.presenter
+        mapListView.presenter.output = mapView.presenter
         
         
         return dashboardMapController

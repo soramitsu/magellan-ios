@@ -39,11 +39,12 @@ final class MapListPresenterTests: XCTestCase {
         coordinates: Coordinates(lat: 1, lon: 1),
         address: "addr",
         phoneNumber: "+855000000009",
+        region: "KH",
         website: "website",
         facebook: "fb",
         logoUuid: "logoUiid",
         promoImageUuid: "promoUiid",
-        distance: "dist", workingSchdule: Schedule(opens24: true, workingDays: nil))
+        distance: "dist", workingSchedule: Schedule(opens24: true, workingDays: nil))
     }
     
     var defaultPosition: Coordinates {
@@ -56,7 +57,7 @@ final class MapListPresenterTests: XCTestCase {
         view = MapListViewProtocolMock()
         presenter = MapListPresenter()
         presenter.view = view
-        presenter.mapInput = mapPresenter
+        presenter.output = mapPresenter
     }
     
     override func tearDown() {
@@ -98,10 +99,12 @@ final class MapListPresenterTests: XCTestCase {
         let items = places.compactMap { PlaceViewModel(place: $0) }
         
         // act
-        presenter.set(categories: categoties, places: items)
+        presenter.didUpdate(categories: categoties)
+        presenter.didUpdate(places: items)
         
         // assert
-        XCTAssertTrue(view.reloadDataCalled)
+        XCTAssertTrue(view.reloadCategoriesCalled)
+        XCTAssertTrue(view.reloadPlacesCalled)
     }
     
 }

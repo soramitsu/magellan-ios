@@ -173,7 +173,7 @@ class MapListPresenterProtocolMock: MapListPresenterProtocol {
     var categories: [PlaceCategory] = []
     var places: [PlaceViewModel] = []
     var view: MapListViewProtocol?
-    var mapInput: MapInputProtocol?
+    var output: MapListOutputProtocol?
 
     //MARK: - showDetails
 
@@ -220,19 +220,34 @@ class MapListPresenterProtocolMock: MapListPresenterProtocol {
         searchWithClosure?(text)
     }
 
-    //MARK: - set
+    //MARK: - didUpdate
 
-    var setCategoriesPlacesCallsCount = 0
-    var setCategoriesPlacesCalled: Bool {
-        return setCategoriesPlacesCallsCount > 0
+    var didUpdateCategoriesCallsCount = 0
+    var didUpdateCategoriesCalled: Bool {
+        return didUpdateCategoriesCallsCount > 0
     }
-    var setCategoriesPlacesReceivedArguments: (categories: [PlaceCategory], places: [PlaceViewModel])?
-    var setCategoriesPlacesClosure: (([PlaceCategory], [PlaceViewModel]) -> Void)?
+    var didUpdateCategoriesReceivedCategories: [PlaceCategory]?
+    var didUpdateCategoriesClosure: (([PlaceCategory]) -> Void)?
 
-    func set(categories: [PlaceCategory], places: [PlaceViewModel]) {
-        setCategoriesPlacesCallsCount += 1
-        setCategoriesPlacesReceivedArguments = (categories: categories, places: places)
-        setCategoriesPlacesClosure?(categories, places)
+    func didUpdate(categories: [PlaceCategory]) {
+        didUpdateCategoriesCallsCount += 1
+        didUpdateCategoriesReceivedCategories = categories
+        didUpdateCategoriesClosure?(categories)
+    }
+
+    //MARK: - didUpdate
+
+    var didUpdatePlacesCallsCount = 0
+    var didUpdatePlacesCalled: Bool {
+        return didUpdatePlacesCallsCount > 0
+    }
+    var didUpdatePlacesReceivedPlaces: [PlaceViewModel]?
+    var didUpdatePlacesClosure: (([PlaceViewModel]) -> Void)?
+
+    func didUpdate(places: [PlaceViewModel]) {
+        didUpdatePlacesCallsCount += 1
+        didUpdatePlacesReceivedPlaces = places
+        didUpdatePlacesClosure?(places)
     }
 
 }
@@ -255,17 +270,30 @@ class MapListViewProtocolMock: MapListViewProtocol {
     }
     var underlyingController: UIViewController!
 
-    //MARK: - reloadData
+    //MARK: - reloadPlaces
 
-    var reloadDataCallsCount = 0
-    var reloadDataCalled: Bool {
-        return reloadDataCallsCount > 0
+    var reloadPlacesCallsCount = 0
+    var reloadPlacesCalled: Bool {
+        return reloadPlacesCallsCount > 0
     }
-    var reloadDataClosure: (() -> Void)?
+    var reloadPlacesClosure: (() -> Void)?
 
-    func reloadData() {
-        reloadDataCallsCount += 1
-        reloadDataClosure?()
+    func reloadPlaces() {
+        reloadPlacesCallsCount += 1
+        reloadPlacesClosure?()
+    }
+
+    //MARK: - reloadCategories
+
+    var reloadCategoriesCallsCount = 0
+    var reloadCategoriesCalled: Bool {
+        return reloadCategoriesCallsCount > 0
+    }
+    var reloadCategoriesClosure: (() -> Void)?
+
+    func reloadCategories() {
+        reloadCategoriesCallsCount += 1
+        reloadCategoriesClosure?()
     }
 
 }
@@ -274,7 +302,7 @@ class MapListViewProtocolMock: MapListViewProtocol {
 class MapPresenterProtocolMock: MapPresenterProtocol {
     var view: MapViewProtocol?
     var coordinator: MapCoordinatorProtocol?
-    var listInput: MapListInputProtocol?
+    var output: MapOutputProtocol?
     var categories: [PlaceCategory] = []
     var places: [PlaceViewModel] = []
     var position: Coordinates {

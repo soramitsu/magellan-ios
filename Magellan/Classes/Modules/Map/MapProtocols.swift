@@ -15,11 +15,11 @@ protocol MapViewProtocol: class, ControllerBackedProtocol, Containable, Loadable
     
 }
 
-protocol MapPresenterProtocol: MapInputProtocol, AutoMockable {
+protocol MapPresenterProtocol: MapListOutputProtocol, AutoMockable {
     
     var view: MapViewProtocol? { get set }
     var coordinator: MapCoordinatorProtocol? { get set }
-    var listInput: MapListInputProtocol? { get set }
+    var output: MapOutputProtocol? { get set }
     var categories: [PlaceCategory] { get }
     var places: [PlaceViewModel] { get }
     var position: Coordinates { get }
@@ -32,11 +32,8 @@ protocol MapCoordinatorProtocol: AnyObject, AutoMockable {
     func showDetails(for placeInfo: PlaceInfo)
 }
 
-protocol MapInputProtocol: AnyObject {
-    
-    func select(place: PlaceViewModel)
-    func select(category: String)
-    func search(with text: String)
-    func reset()
-    
+protocol MapOutputProtocol: AnyObject {
+    func didUpdate(categories: [PlaceCategory])
+    func didUpdate(places: [PlaceViewModel])
 }
+

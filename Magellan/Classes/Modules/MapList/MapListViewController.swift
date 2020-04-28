@@ -282,7 +282,15 @@ extension MapListViewController: UITextFieldDelegate {
 
 extension MapListViewController: MapListViewProtocol {
     
-    func reloadData() {
+    func reloadPlaces() {
+        if isViewLoaded
+            && view.window != nil {
+            tableView.reloadData()
+            view.setNeedsLayout()
+        }
+    }
+    
+    func reloadCategories() {
         if isViewLoaded
             && view.window != nil {
             categoriesView.reloadData()
@@ -290,7 +298,6 @@ extension MapListViewController: MapListViewProtocol {
             view.setNeedsLayout()
         }
     }
-
 }
 
 

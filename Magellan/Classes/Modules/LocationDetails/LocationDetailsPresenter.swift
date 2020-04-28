@@ -8,7 +8,7 @@ import MessageUI
 import SafariServices
 
 
-final class LocationDetailsPresenter: NSObject {
+final class LocationDetailsPresenter {
     
     weak var view: LocationDetailsViewProtocol?
     weak var delegate: LocationDetailsPresenterDelegate?
@@ -17,12 +17,11 @@ final class LocationDetailsPresenter: NSObject {
 
     init(placeInfo: PlaceInfo) {
         place = placeInfo
-        super.init()
         setupContent()
     }
     
     func setupContent() {
-        if let phone = place.phoneNumber.formattedPhone(region: "KH"), !phone.isEmpty {
+        if let phone = place.phoneNumber.formattedPhone(region: place.region), !phone.isEmpty {
             let rawPhone = place.phoneNumber
             items.append(MapDetailViewModel(title: L10n.Location.Details.phone,
                                               content: phone,

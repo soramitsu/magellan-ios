@@ -177,7 +177,7 @@ extension LocationDetailsViewController: UITableViewDataSource {
         let labelInset: CGFloat = isAdaptiveHeightDecreased ? 20 : 50
         if let addressModel = model as? MapAddressViewModel {
             let descriptionHeight = addressModel.description
-                .height(for: UIScreen.main.bounds.width - 2 * labelInset,
+                .height(for: max(0, tableView.bounds.width - 2 * labelInset),
                         font: style.bodyRegularFont)
             return MapAddressCell.baseHeight + descriptionHeight
         }

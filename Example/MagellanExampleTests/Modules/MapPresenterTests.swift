@@ -43,11 +43,12 @@ final class MapPresenterTests: XCTestCase {
                 coordinates: Coordinates(lat: 1, lon: 1),
                 address: "addr",
                 phoneNumber: "+855000000009",
+                region: "KH",
                 website: "website",
                 facebook: "fb",
                 logoUuid: "logoUiid",
                 promoImageUuid: "promoUiid",
-                distance: "dist", workingSchdule: Schedule(opens24: true, workingDays: nil))
+                distance: "dist", workingSchedule: Schedule(opens24: true, workingDays: nil))
     }
     
     var defaultPosition: Coordinates {
@@ -68,7 +69,7 @@ final class MapPresenterTests: XCTestCase {
         
         presenter.view = mapView
         presenter.coordinator = coordinator
-        presenter.listInput = listPresenter
+        presenter.output = listPresenter
         
         mapView.presenter = presenter
     }
@@ -96,7 +97,7 @@ final class MapPresenterTests: XCTestCase {
         
         // assert
         XCTAssertTrue(mapView.reloadDataCalled)
-        XCTAssertTrue(listPresenter.setCategoriesPlacesCalled)
+        XCTAssertTrue(listPresenter.didUpdatePlacesCalled)
     }
     
     func testLoadCategories() {
@@ -115,7 +116,7 @@ final class MapPresenterTests: XCTestCase {
         
         // assert
         XCTAssertTrue(mapView.reloadDataCalled)
-        XCTAssertTrue(listPresenter.setCategoriesPlacesCalled)
+        XCTAssertTrue(listPresenter.didUpdatePlacesCalled)
     }
     
     func testReset() {
@@ -130,7 +131,7 @@ final class MapPresenterTests: XCTestCase {
         
         // assert
         XCTAssertTrue(mapView.reloadDataCalled)
-        XCTAssertTrue(listPresenter.setCategoriesPlacesCalled)
+        XCTAssertTrue(listPresenter.didUpdatePlacesCalled)
     }
     
     func testSelectCategory() {
@@ -145,7 +146,7 @@ final class MapPresenterTests: XCTestCase {
         
         // assert
         XCTAssertTrue(mapView.reloadDataCalled)
-        XCTAssertTrue(listPresenter.setCategoriesPlacesCalled)
+        XCTAssertTrue(listPresenter.didUpdatePlacesCalled)
     }
     
     func testSearch() {
@@ -160,7 +161,7 @@ final class MapPresenterTests: XCTestCase {
         
         // assert
         XCTAssertTrue(mapView.reloadDataCalled)
-        XCTAssertTrue(listPresenter.setCategoriesPlacesCalled)
+        XCTAssertTrue(listPresenter.didUpdatePlacesCalled)
     }
     
     func testShowDetails() {

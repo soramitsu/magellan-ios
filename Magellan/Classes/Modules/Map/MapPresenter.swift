@@ -11,7 +11,7 @@ final class MapPresenter: MapPresenterProtocol {
     
     var view: MapViewProtocol?
     weak var coordinator: MapCoordinatorProtocol?
-    weak var listInput: MapListInputProtocol?
+    weak var output: MapOutputProtocol?
     var service: MagellanServicePrototcol
     private var locationService: UserLocationServiceProtocol
     
@@ -19,11 +19,15 @@ final class MapPresenter: MapPresenterProtocol {
     private var currentCategory: String?
     private var currentSearchText: String?
     
-    private(set) var categories: [PlaceCategory] = []
+    private(set) var categories: [PlaceCategory] = [] {
+        didSet {
+            output?.didUpdate(categories: categories)
+        }
+    }
     private(set) var places: [PlaceViewModel] = [] {
         didSet {
             view?.reloadData()
-            listInput?.set(categories: categories, places: places)
+            output?.didUpdate(places: places)
         }
     }
     
@@ -115,7 +119,7 @@ final class MapPresenter: MapPresenterProtocol {
     
 }
 
-extension MapPresenter: MapInputProtocol {
+extension MapPresenter: MapListOutputProtocol {
     
     func select(place: PlaceViewModel) {
         showDetails(place: place)

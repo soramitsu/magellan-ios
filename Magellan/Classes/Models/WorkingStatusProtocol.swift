@@ -36,7 +36,7 @@ extension WorkingStatusProtocol {
     }
     
     var isOpen: Bool {
-        if intervalFromDayBegins > opensTimeInterval
+        if intervalFromDayBegins >= opensTimeInterval
             && intervalFromDayBegins < closesTimeInterval {
             return true
         }
@@ -49,7 +49,7 @@ extension WorkingStatusProtocol {
             return ""
         }
         
-        if intervalFromDayBegins > opensTimeInterval
+        if intervalFromDayBegins >= opensTimeInterval
             && intervalFromDayBegins < closesTimeInterval {
             return L10n.Location.Details.Status.openTill(closesTime)
         } else if intervalFromDayBegins < opensTimeInterval {

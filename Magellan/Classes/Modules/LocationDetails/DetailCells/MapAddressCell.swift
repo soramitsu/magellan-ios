@@ -35,7 +35,7 @@ final class MapAddressCell: UITableViewCell {
     
     var style: Style? {
         didSet {
-            setStyle()
+            applyStyle()
         }
     }
     
@@ -75,7 +75,7 @@ final class MapAddressCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func setStyle() {
+    private func applyStyle() {
         guard let style = style else {
             return
         }

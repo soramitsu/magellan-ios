@@ -25,7 +25,7 @@ final class CategoryCollectionCell: UICollectionViewCell {
     
     var style: Style? {
         didSet {
-            setStyle()
+            applyStyle()
         }
     }
     
@@ -52,7 +52,7 @@ final class CategoryCollectionCell: UICollectionViewCell {
         contentView.addSubview(nameLabel)
     }
     
-    private func setStyle() {
+    private func applyStyle() {
         guard let style = style else {
             return
         }

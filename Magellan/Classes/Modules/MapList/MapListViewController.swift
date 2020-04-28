@@ -47,7 +47,7 @@ final class MapListViewController: UIViewController {
         view.layer.cornerRadius = 10
         view.layer.masksToBounds = true
         
-        iconView.image = UIImage(named: "search", in: nil, compatibleWith: nil)
+        iconView.image = UIImage(named: "search", in: Bundle.frameworkBundle, compatibleWith: nil)
         
         configureViews()
         layoutViews()

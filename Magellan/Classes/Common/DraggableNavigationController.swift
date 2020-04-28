@@ -9,16 +9,6 @@ import UIKit
 
 final class DraggableNavigationController: BarHidingNavigationController {
     
-    private struct Constants {
-        static let panHeight: CGFloat = 6
-        static let draggableProgressStart: Double = 0.2
-        static let draggableProgressFinal: Double = 1.0
-        static let triggerProgressThreshold: Double = 0.8
-        static var categoriesHeight: CGFloat {
-            UIScreen.main.bounds.width / 2
-        }
-    }
-    
     weak var draggableDelegate: DraggableDelegate?
     private var draggableState: DraggableState = .compact
     

@@ -4,13 +4,12 @@
 */
 
 import UIKit
+import SoraUI
 
-
-final class LocationDetailsViewController: UIViewController, LocationDetailsViewProtocol {
+final class LocationDetailsViewController: UIViewController, LocationDetailsViewProtocol, AdaptiveDesignable {
     
-    private let style: LocationDetailsViewStyleProtocol
+    private let style: MagellanStyleProtocol
     var presenter: LocationDetailsPresenterProtocol
-    private let tableHelper: MapDetailTableHelperProtocol
     
     private let closeButton = UIButton()
     private let tableView = UITableView()
@@ -22,11 +21,9 @@ final class LocationDetailsViewController: UIViewController, LocationDetailsView
     private let distanceLabel = UILabel()
         
     init(presenter: LocationDetailsPresenterProtocol,
-         style: LocationDetailsViewStyleProtocol,
-         tableHelper: MapDetailTableHelperProtocol) {
+         style: MagellanStyleProtocol) {
         self.presenter = presenter
         self.style = style
-        self.tableHelper = tableHelper
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -36,7 +33,7 @@ final class LocationDetailsViewController: UIViewController, LocationDetailsView
     
     override func loadView() {
         let view = UIView()
-        view.backgroundColor = style.viewBackgroundColor
+        view.backgroundColor = style.backgroundColor
         self.view = view
         
         configureViews()
@@ -44,48 +41,48 @@ final class LocationDetailsViewController: UIViewController, LocationDetailsView
     }
     
     fileprivate func configureHeader() {
-        headerView.backgroundColor = style.headerViewBackgroundColor
+        headerView.backgroundColor = style.headerBackgroundColor
         view.addSubview(headerView)
         
-        panView.backgroundColor = style.panViewBackgroundColor
-        panView.layer.cornerRadius = style.panViewCornerRadius
+        panView.backgroundColor = style.panColor
+        panView.layer.cornerRadius = style.panHeight / 2
         headerView.addSubview(panView)
         
-        nameLabel.font = style.nameLabelFont
+        nameLabel.font = style.header1Font
         nameLabel.numberOfLines = 0
-        nameLabel.text = presenter.place.name
+        nameLabel.text = presenter.title
         headerView.addSubview(nameLabel)
         
-        categoryLabel.font = style.categoryLabelFont
-        categoryLabel.text = presenter.place.type
-        categoryLabel.textColor = style.categoryLabelTextColor
+        categoryLabel.font = style.bodyRegularFont
+        categoryLabel.text = presenter.category
+        categoryLabel.textColor = style.bodyTextColor
         headerView.addSubview(categoryLabel)
         
-        // todo: fix this hardcode
-        workingHoursLabel.text = "Open until 18:00"
-        workingHoursLabel.font = style.workingHoursLabelFont
-        workingHoursLabel.textColor = style.workingHoursLabelTextColor
+        workingHoursLabel.text = presenter.workingStatus
+        workingHoursLabel.font = style.bodyBoldFont
+        workingHoursLabel.textColor = presenter.isOpen ? style.firstColor : style.secondColor
         headerView.addSubview(workingHoursLabel)
         
-        distanceLabel.text = presenter.place.distance
-        distanceLabel.font = style.distanceFont
-        distanceLabel.textColor = style.distanceColor
+        distanceLabel.text = presenter.distance
+        distanceLabel.font = style.bodyBoldFont
+        distanceLabel.textColor = style.bodyTextColor
         headerView.addSubview(distanceLabel)
         
         closeButton.setTitle("✕", for: .normal)
         closeButton.setTitleColor(.black, for: .normal)
-        closeButton.titleLabel?.font = .styleFont(for: .title2)
+        closeButton.titleLabel?.font = style.header1Font
         closeButton.addTarget(self, action: #selector(dismiss(_:)), for: .touchUpInside)
         headerView.addSubview(closeButton)
     }
     
     private func configureViews() {
         configureHeader()
-        
-        tableHelper.cellsInUse.forEach { self.tableView.register($0, forCellReuseIdentifier: $0.reuseIdentifier) }
+    
+        tableView.register(MapDetailCell.self, forCellReuseIdentifier: MapDetailCell.reuseIdentifier)
+        tableView.register(MapAddressCell.self, forCellReuseIdentifier: MapAddressCell.reuseIdentifier)
         tableView.delegate = self as UITableViewDelegate
         tableView.dataSource = self as UITableViewDataSource
-        tableView.separatorInset = style.separatorInsets
+        tableView.separatorInset = style.tableSeparatorInsets
         tableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 1))
         view.addSubview(tableView)
     }
@@ -144,20 +141,48 @@ final class LocationDetailsViewController: UIViewController, LocationDetailsView
 extension LocationDetailsViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return tableHelper.items.count
+        return presenter.items.count
     }
     
     //swiftlint:disable next force_try
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let model = tableHelper.items[indexPath.row]
+        let model = presenter.items[indexPath.row]
         
-        return try! tableHelper.cell(for: model, in: tableView, indexPath: indexPath)
+        switch model {
+        case is MapAddressViewModel:
+            let cell = tableView.dequeueReusableCell(withIdentifier: MapAddressCell.reuseIdentifier,
+                                                     for: indexPath) as! MapAddressCell
+            cell.viewModel = (model as! MapAddressViewModel)
+            cell.style = MapAddressCell.Style(titleFont: style.bodyBoldFont,
+                                              addressFont: style.bodyBoldFont,
+                                              addressTextColor: style.secondColor)
+            return cell
+        case is MapDetailViewModel:
+            let cell = tableView.dequeueReusableCell(withIdentifier: MapDetailCell.reuseIdentifier,
+                                                     for: indexPath) as! MapDetailCell
+            cell.viewModel = (model as! MapDetailViewModel)
+            cell.style = MapDetailCell.Style(titleFont: style.bodyBoldFont,
+                                             titleTextColor: style.bodyTextColor,
+                                             contentFont: style.bodyBoldFont,
+                                             contentTextColor: style.secondColor)
+            return cell
+        default:
+            return UITableViewCell()
+        }
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        let model = tableHelper.items[indexPath.row]
+        let model = presenter.items[indexPath.row]
         
-        return tableHelper.height(for: model)
+        let labelInset: CGFloat = isAdaptiveHeightDecreased ? 20 : 50
+        if let addressModel = model as? MapAddressViewModel {
+            let descriptionHeight = addressModel.description
+                .height(for: max(0, tableView.bounds.width - 2 * labelInset),
+                        font: style.bodyRegularFont)
+            return MapAddressCell.baseHeight + descriptionHeight
+        }
+        
+        return 48
     }
     
 }
@@ -166,7 +191,7 @@ extension LocationDetailsViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        if let model = tableHelper.items[indexPath.row] as? MapDetailViewModel {
+        if let model = presenter.items[indexPath.row] as? MapDetailViewModel {
             model.action?()
         }
     }

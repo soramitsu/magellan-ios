@@ -5,15 +5,26 @@
 
 protocol MapListViewProtocol: ControllerBackedProtocol, AutoMockable {
     var presenter: MapListPresenterProtocol { get }
-    func reloadData()
+    func reloadPlaces()
+    func reloadCategories()
 }
 
-protocol MapListPresenterProtocol: AnyObject {
-    var categories: [Category] { get }
+protocol MapListPresenterProtocol: MapOutputProtocol, AutoMockable {
+    var categories: [PlaceCategory] { get }
     var places: [PlaceViewModel] { get }
-    var listView: MapListViewProtocol? { get set }
+    var view: MapListViewProtocol? { get set }
+    var output: MapListOutputProtocol? { get set }
     
     func showDetails(place: PlaceViewModel)
     func select(category: String)
     func search(with text: String)
+}
+
+protocol MapListOutputProtocol: AnyObject {
+    
+    func select(place: PlaceViewModel)
+    func select(category: String)
+    func search(with text: String)
+    func reset()
+    
 }

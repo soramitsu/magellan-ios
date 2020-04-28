@@ -12,12 +12,11 @@ protocol DashboardMapViewProtocol: class, ControllerBackedProtocol, Loadable, Au
 
 protocol DashboardMapPresenterProtocol: AnyObject {
     var view: DashboardMapViewProtocol? { get set }
+    var coordinator: DashboardMapCoordinatorProtocol? { get set }
 }
 
 protocol DashboardMapCoordinatorProtocol: AutoMockable {
     var presenter: DashboardMapPresenterProtocol? { get set }
-    
-    func showDetails(for placeInfo: PlaceInfo)
 }
 
 protocol DashboardMapAssemblyProtocol {

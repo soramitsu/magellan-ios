@@ -7,3 +7,8 @@
 "Location.Details..fb" = "FB";
 "Location.Details..email" = "E-mail";
 "Location.Details.address" = "Address";
+"Location.Details.Status.Open" = "Open";
+"Location.Details.Status.Closed" = "Closed";
+"Location.Details.Status.workingHours" = "Working hours: %@";
+"Location.Details.Status.OpenTill" = "Open till %@";
+"Location.Details.Status.ClosedTill" = "Closed till %@";

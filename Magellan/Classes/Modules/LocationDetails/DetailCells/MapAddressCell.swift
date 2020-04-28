@@ -27,6 +27,18 @@ final class MapAddressCell: UITableViewCell {
     private let titleLabel = UILabel()
     private let addressLabel = UILabel()
     
+    struct Style {
+        let titleFont: UIFont
+        let addressFont: UIFont
+        let addressTextColor: UIColor
+    }
+    
+    var style: Style? {
+        didSet {
+            applyStyle()
+        }
+    }
+    
     var viewModel: MapAddressViewModel? {
         didSet {
             configureContent()
@@ -41,12 +53,9 @@ final class MapAddressCell: UITableViewCell {
         selectedBackgroundView = selectedBackground
         
         titleLabel.textColor = .black
-        titleLabel.font = .styleFont(for: .body)
         contentView.addSubview(titleLabel)
         
-        addressLabel.font = .styleFont(for: .body)
         addressLabel.numberOfLines = 0
-        addressLabel.textColor = UIColor.Style.Text.mapDetail
         contentView.addSubview(addressLabel)
     
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -66,6 +75,14 @@ final class MapAddressCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    private func applyStyle() {
+        guard let style = style else {
+            return
+        }
+        titleLabel.font = style.titleFont
+        addressLabel.font = style.addressFont
+        addressLabel.textColor = style.addressTextColor
+    }
     private func configureContent() {
         guard let viewModel = viewModel else {
             return

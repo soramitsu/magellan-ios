@@ -8,21 +8,84 @@ import MessageUI
 import SafariServices
 
 
-final class LocationDetailsPresenter: NSObject {
+final class LocationDetailsPresenter {
     
     weak var view: LocationDetailsViewProtocol?
     weak var delegate: LocationDetailsPresenterDelegate?
     let place: PlaceInfo
+    private(set) var items: [MapDetailViewModelProtocol] = []
 
     init(placeInfo: PlaceInfo) {
         place = placeInfo
-        super.init()
+        setupContent()
     }
     
+    func setupContent() {
+        if let phone = place.phoneNumber.formattedPhone(region: place.region), !phone.isEmpty {
+            let rawPhone = place.phoneNumber
+            items.append(MapDetailViewModel(title: L10n.Location.Details.phone,
+                                              content: phone,
+                                              action: { [weak self] in
+                                                self?.handle(path: "tel://\(rawPhone)")
+            }))
+        }
+
+        if !place.website.isEmpty {
+            let website = place.website
+            items.append(MapDetailViewModel(title: L10n.Location.Details.website,
+                                              content: place.website,
+                                              action: { [weak self] in
+                                                self?.handle(path: website)
+            }))
+        }
+
+        if !place.facebook.isEmpty {
+            let fb = place.facebook
+            items.append(MapDetailViewModel(title: L10n.Location.Details.fb,
+                                              content: place.facebook,
+                                              action: { [weak self] in
+                                                self?.handle(path: fb)
+            }))
+        }
+
+        if !place.address.isEmpty {
+            items.append(MapAddressViewModel(title: L10n.Location.Details.address,
+                                               description: place.address))
+        }
+        
+
+    }
+    
+    func handle(path: String) {
+        guard let view = view else {
+            return
+        }
+        handle(path: path, on: view.controller)
+    }
 }
 
 
 extension LocationDetailsPresenter: LocationDetailsPresenterProtocol {
+    
+    var title: String {
+        return place.name
+    }
+    
+    var category: String {
+        return place.type
+    }
+    
+    var distance: String {
+        return place.distance
+    }
+    
+    var workingStatus: String {
+        place.workingStatus
+    }
+    
+    var isOpen: Bool {
+        place.isOpen
+    }
     
     func dismiss() {
         delegate?.dismiss()
@@ -30,38 +93,4 @@ extension LocationDetailsPresenter: LocationDetailsPresenterProtocol {
     
 }
 
-extension LocationDetailsPresenter: MapDetailTableHelperDelegate {
-    
-    func hanlde(path: String) {
-        guard let url = URL(string: path) else {
-            return
-        }
-        if ["http", "https"].contains(url.scheme?.lowercased() ?? "") {
-            guard let controller = view?.controller else {
-                return
-            }
-            controller.present(SFSafariViewController(url: url), animated: true, completion: nil)
-            return
-        }
-        
-        if UIApplication.shared.canOpenURL(url) {
-            if #available(iOS 10, *) {
-                UIApplication.shared.open(url)
-            } else {
-                UIApplication.shared.openURL(url)
-            }
-        }
-    }
-    
-}
-
-
-extension LocationDetailsPresenter: MFMailComposeViewControllerDelegate {
-    
-    func mailComposeController(_ controller: MFMailComposeViewController,
-                               didFinishWith result: MFMailComposeResult,
-                               error: Error?) {
-        controller.dismiss(animated: true, completion: nil)
-    }
-    
-}
+extension LocationDetailsPresenter: UrlHandlerProtocol { }

@@ -9,10 +9,11 @@ import Foundation
 
 final class MapListAssembly {
     
-    static func assembly(with presenter: MapListPresenterProtocol, resolver: ResolverProtocol) -> MapListViewProtocol {
-        let view = MapListViewController(presenter: presenter, style: resolver.mapListStyle ?? DefaultMapListViewStyle())
+    static func assembly(with resolver: ResolverProtocol) -> MapListViewProtocol {
+        let presenter = MapListPresenter()
+        let view = MapListViewController(presenter: presenter, style: resolver.style)
         
-        presenter.listView = view
+        presenter.view = view
         
         return view
     }

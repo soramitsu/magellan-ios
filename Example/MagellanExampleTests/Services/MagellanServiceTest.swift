@@ -10,7 +10,7 @@ import XCTest
 @testable import Magellan
 @testable import MagellanExample
 
-typealias MCategory = Magellan.Category
+typealias MCategory = Magellan.PlaceCategory
 
 class MagellanServiceTest: XCTestCase {
     
@@ -61,7 +61,7 @@ class MagellanServiceTest: XCTestCase {
         Mocks.mock(path: "/paymentservice/api/v1/merchants", filename: "placesList.json")
         let expectation = XCTestExpectation()
         var value: PlacesResponse? = nil
-        let request = PlacesRequest(location: "geoHash", zoom: 10, search: nil, category: nil)
+        let request = PlacesRequest(location: "geoHash", search: nil, category: nil)
         
         magellanService.getPlaces(with: request, runCompletionIn: DispatchQueue.main) { result in
             switch result {
@@ -81,7 +81,7 @@ class MagellanServiceTest: XCTestCase {
         Mocks.mock(path: "/paymentservice/api/v1/merchants", filename: "fail.json")
         let expectation = XCTestExpectation()
         var expError: Error? = nil
-        let request = PlacesRequest(location: "geoHash", zoom: 10, search: nil, category: nil)
+        let request = PlacesRequest(location: "geoHash", search: nil, category: nil)
         
         magellanService.getPlaces(with: request, runCompletionIn: DispatchQueue.main) { result in
             switch result {

@@ -24,6 +24,25 @@ public enum L10n {
             public static var phone: String { return localize("Location.Details.phone") }
             /// Website
             public static var website: String { return localize("Location.Details.website") }
+
+            public enum Status {
+                /// Closed
+                public static var closed: String { return localize("Location.Details.Status.Closed") }
+                /// Closed till %@
+                public static func closedTill(_ p1: String) -> String {
+                    return localize("Location.Details.Status.ClosedTill", p1)
+                }
+                /// Open
+                public static var `open`: String { return localize("Location.Details.Status.Open") }
+                /// Open till %@
+                public static func openTill(_ p1: String) -> String {
+                    return localize("Location.Details.Status.OpenTill", p1)
+                }
+                /// Working hours: %@
+                public static func workingHours(_ p1: String) -> String {
+                    return localize("Location.Details.Status.workingHours", p1)
+                }
+            }
         }
     }
 

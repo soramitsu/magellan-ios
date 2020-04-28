@@ -7,10 +7,14 @@
 import Foundation
 
 final class MapAssembly {
-    static func assembly(with presenter: MapPresenterProtocol, resolver: ResolverProtocol) -> MapViewProtocol {
+    static func assembly(with resolver: ResolverProtocol) -> MapViewProtocol {
+        let locationService = UserLocationService(distanceFilter: resolver.distanceFilter)
+        let presenter = MapPresenter(service: resolver.networkService,
+                                     locationService: locationService,
+                                     defaultPosition: resolver.defaultCoordinate)
         let markerFactory = resolver.markerFactory ?? MapMarkerDefaultFactory()
         let mapView = MapViewController(presenter: presenter, markerFactory: markerFactory)
-        presenter.mapView = mapView
+        presenter.view = mapView
         
         return mapView
     }

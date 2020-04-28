@@ -10,7 +10,7 @@ import XCTest
 @testable import Magellan
 @testable import MagellanExample
 
-final class LocationDetailPresenterSpec: XCTestCase {
+final class LocationDetailPresenterTests: XCTestCase {
     
     var placeInfo: PlaceInfo {
         return PlaceInfo(id: 1,
@@ -19,12 +19,12 @@ final class LocationDetailPresenterSpec: XCTestCase {
                         coordinates: Coordinates(lat: 1, lon: 1),
                         address: "addr",
                         phoneNumber: "+855000000009",
-                        openHours: "open",
+                        region: "KH",
                         website: "website",
                         facebook: "fb",
                         logoUuid: "logoUiid",
                         promoImageUuid: "promoUiid",
-                        distance: "dist")
+                        distance: "dist", workingSchedule: Schedule(opens24: true, workingDays: nil))
     }
     
     func testDismiss() {
@@ -40,18 +40,17 @@ final class LocationDetailPresenterSpec: XCTestCase {
         XCTAssertTrue(coordinator.dismissCalled)
     }
     
-    func testTableHelper() {
+    func testProperties() {
         // arrange
-        let tableHelper = DefaultMapDetailTableHelper(place: self.placeInfo)
-        let tableHelperDelegate = MapDetailTableHelperDelegateMock()
-        tableHelper.delegate = tableHelperDelegate
         
         // act
-        tableHelper.items.forEach {
-            $0.action?()
-        }
+        let presenter = LocationDetailsPresenter(placeInfo: self.placeInfo)
         
         // assert
-        XCTAssertEqual(tableHelperDelegate.hanldePathCallsCount, 3)
+        XCTAssertEqual(presenter.title, "name")
+        XCTAssertEqual(presenter.category, "type")
+        XCTAssertEqual(presenter.distance, "dist")
+        XCTAssertEqual(presenter.workingStatus, "Open")
+        XCTAssertEqual(presenter.items.count, 4)
     }
 }

@@ -10,7 +10,7 @@ import libPhoneNumber_iOS
 
 extension String {
     
-    func height(for width: CGFloat, font: UIFont = .styleFont(for: .body)) -> CGFloat {
+    func height(for width: CGFloat, font: UIFont) -> CGFloat {
         let constraintRect = CGSize(width: width, height: .greatestFiniteMagnitude)
         let boundingBox = self.boundingRect(with: constraintRect,
                                             options: .usesLineFragmentOrigin,
@@ -20,7 +20,7 @@ extension String {
         return ceil(boundingBox.height)
     }
     
-    func width(for height: CGFloat, font: UIFont = .styleFont(for: .body)) -> CGFloat {
+    func width(for height: CGFloat, font: UIFont) -> CGFloat {
         let constraintRect = CGSize(width: .greatestFiniteMagnitude, height: height)
         let boundingBox = self.boundingRect(with: constraintRect,
                                             options: .usesLineFragmentOrigin,

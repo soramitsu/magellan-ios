@@ -10,11 +10,22 @@ import UIKit
 
 final class CategoryCollectionCell: UICollectionViewCell {
     
+    struct Style {
+        let nameFont: UIFont
+        let nameTextColor: UIColor
+    }
+    
     private let iconView = UIImageView()
     private let nameLabel = UILabel()
-    var category: Category? {
+    var category: PlaceCategory? {
         didSet {
             configureContent()
+        }
+    }
+    
+    var style: Style? {
+        didSet {
+            applyStyle()
         }
     }
     
@@ -38,8 +49,15 @@ final class CategoryCollectionCell: UICollectionViewCell {
         nameLabel.numberOfLines = 0
         nameLabel.textAlignment = .center
         nameLabel.textColor = .black
-        nameLabel.font = .styleFont(for: .favoriteCard)
         contentView.addSubview(nameLabel)
+    }
+    
+    private func applyStyle() {
+        guard let style = style else {
+            return
+        }
+        nameLabel.font = style.nameFont
+        nameLabel.textColor = style.nameTextColor
     }
     
     private func layoutViews() {

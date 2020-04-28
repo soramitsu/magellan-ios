@@ -289,7 +289,6 @@
 			buildConfigurationList = F82317852445D55200D4B95F /* Build configuration list for PBXNativeTarget "MagellanExample" */;
 			buildPhases = (
 				904C9AAE62479055401009DA /* [CP] Check Pods Manifest.lock */,
-				F8AAB043244DD7BF0023D992 /* SwiftGen */,
 				F8805F52245073B000C8BC30 /* Sourcery */,
 				F823176D2445D54F00D4B95F /* Sources */,
 				F823176E2445D54F00D4B95F /* Frameworks */,
@@ -486,24 +485,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n$PODS_ROOT/Sourcery/bin/sourcery\n";
-		};
-		F8AAB043244DD7BF0023D992 /* SwiftGen */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = SwiftGen;
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\"$PODS_ROOT\"/SwiftGen/bin/swiftgen\n";
 		};
 		FE8EDB92D4704F50628C0043 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;

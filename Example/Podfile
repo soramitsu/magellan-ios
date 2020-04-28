@@ -7,7 +7,6 @@ target 'MagellanExample' do
   pod 'Magellan', :path => '../'
   pod 'SwiftLint', '= 0.31.0'
   pod 'OHHTTPStubs/Swift', :inhibit_warnings => true
-  pod 'SwiftGen', :inhibit_warnings => true
   pod 'Sourcery'
   pod 'Fabric'
   pod 'Crashlytics'

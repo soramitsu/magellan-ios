@@ -152,7 +152,6 @@ PODS:
   - SoraUI/Skrull (1.8.9)
   - Sourcery (0.17.0)
   - SVProgressHUD (2.2.5)
-  - SwiftGen (6.1.0)
   - SwiftLint (0.31.0)
 
 DEPENDENCIES:
@@ -162,7 +161,6 @@ DEPENDENCIES:
   - Magellan (from `../`)
   - OHHTTPStubs/Swift
   - Sourcery
-  - SwiftGen
   - SwiftLint (= 0.31.0)
 
 SPEC REPOS:
@@ -192,7 +190,6 @@ SPEC REPOS:
     - SoraUI
     - Sourcery
     - SVProgressHUD
-    - SwiftGen
     - SwiftLint
 
 EXTERNAL SOURCES:
@@ -216,7 +213,7 @@ SPEC CHECKSUMS:
   GoogleUtilities: ad0f3b691c67909d03a3327cc205222ab8f42e0e
   IQKeyboardManagerSwift: 0fb93310284665245591f50f7a5e38de615960b7
   libPhoneNumber-iOS: 0a32a9525cf8744fe02c5206eb30d571e38f7d75
-  Magellan: 4be090009b4ec9813edda67908697916764515bc
+  Magellan: ea0e1ba6ec4a0077c6f51836f062a920ae212064
   nanopb: 18003b5e52dab79db540fe93fe9579f399bd1ccd
   OHHTTPStubs: cb29d2a9d09a828ecb93349a2b0c64f99e0db89f
   PromisesObjC: c119f3cd559f50b7ae681fa59dc1acd19173b7e6
@@ -226,9 +223,8 @@ SPEC CHECKSUMS:
   SoraUI: 9bad0ba56d2f3cf67eb812f2d2fc56b8fd0aa39b
   Sourcery: 3ed61be7c8a1218fce349266139379dba477efe0
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
-  SwiftGen: f872ca75cbd17bf7103c17f13dcfa0d9a15667b0
   SwiftLint: 7a0227733d786395817373b2d0ca799fd0093ff3
 
-PODFILE CHECKSUM: e124c4a95d2c790900418b544b08f46a6d1afe5e
+PODFILE CHECKSUM: 6b337d7249373db9898f7d94fa1e822165f18530
 
 COCOAPODS: 1.9.1

@@ -82,13 +82,7 @@ extension L10n {
     fileprivate static func getFormat(for key: String, localization: String) -> String {
         let bundle = Bundle(for: BundleLoadHelper.self)
 
-        guard
-            let path = bundle.path(forResource: localization, ofType: "lproj"),
-            let langBundle = Bundle(path: path) else {
-                return ""
-        }
-
-        return NSLocalizedString(key, tableName: nil, bundle: langBundle, value: "", comment: "")
+        return NSLocalizedString(key, tableName: nil, bundle: Bundle.frameworkBundle ?? Bundle.main, value: "", comment: "")
     }
 
 }

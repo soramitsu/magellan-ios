@@ -152,6 +152,7 @@ PODS:
   - SoraUI/Skrull (1.8.9)
   - Sourcery (0.17.0)
   - SVProgressHUD (2.2.5)
+  - SwiftGen (6.1.0)
   - SwiftLint (0.31.0)
 
 DEPENDENCIES:
@@ -161,6 +162,7 @@ DEPENDENCIES:
   - Magellan (from `../`)
   - OHHTTPStubs/Swift
   - Sourcery
+  - SwiftGen
   - SwiftLint (= 0.31.0)
 
 SPEC REPOS:
@@ -190,6 +192,7 @@ SPEC REPOS:
     - SoraUI
     - Sourcery
     - SVProgressHUD
+    - SwiftGen
     - SwiftLint
 
 EXTERNAL SOURCES:
@@ -223,8 +226,9 @@ SPEC CHECKSUMS:
   SoraUI: 9bad0ba56d2f3cf67eb812f2d2fc56b8fd0aa39b
   Sourcery: 3ed61be7c8a1218fce349266139379dba477efe0
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
+  SwiftGen: f872ca75cbd17bf7103c17f13dcfa0d9a15667b0
   SwiftLint: 7a0227733d786395817373b2d0ca799fd0093ff3
 
-PODFILE CHECKSUM: 6b337d7249373db9898f7d94fa1e822165f18530
+PODFILE CHECKSUM: e124c4a95d2c790900418b544b08f46a6d1afe5e
 
 COCOAPODS: 1.9.1

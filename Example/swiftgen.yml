@@ -1,0 +1,9 @@
+strings:
+  inputs: ../Magellan/Assets/en.lproj/Localizable.strings
+  outputs:
+    templatePath: ../Magellan/Templates/L10n.stencil
+    output: ../Magellan/Classes/Common/Localization/L10n.swift
+    params:
+      enumName: L10n
+      publicAccess: 1
+      noComments: 0

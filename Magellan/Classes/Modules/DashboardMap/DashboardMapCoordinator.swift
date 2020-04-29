@@ -9,11 +9,11 @@ import Foundation
 
 final class DashboardMapCoordinator: DashboardMapCoordinatorProtocol {
     
-    let container: DashboardMapViewController
+    weak var container: DashboardMapViewController?
     let resolver: ResolverProtocol
     var presenter: DashboardMapPresenterProtocol?
     var dragableNavigation: DraggableNavigationController? {
-        return container.draggable as? DraggableNavigationController
+        return container?.draggable as? DraggableNavigationController
     }
     
     init(container: DashboardMapViewController, resolver: ResolverProtocol) {

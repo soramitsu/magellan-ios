@@ -12,7 +12,7 @@ final class MapListPresenter: MapListPresenterProtocol {
     var categories: [PlaceCategory] = []
     var places: [PlaceViewModel] = []
     
-    var view: MapListViewProtocol?
+    weak var view: MapListViewProtocol?
     weak var delegate: MapListPresenterDelegate?
     weak var output: MapListOutputProtocol?
     

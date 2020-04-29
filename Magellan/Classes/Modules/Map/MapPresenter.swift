@@ -11,7 +11,7 @@ final class MapPresenter: MapPresenterProtocol {
     
     var alertManager: AlertManagerProtocol?
     var defaultAlertMessage: MessageProtocol?
-    var view: MapViewProtocol?
+    weak var view: MapViewProtocol?
     weak var coordinator: MapCoordinatorProtocol?
     weak var output: MapOutputProtocol?
     var service: MagellanServicePrototcol

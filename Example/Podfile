@@ -12,6 +12,7 @@ target 'MagellanExample' do
   pod 'Fabric'
   pod 'Crashlytics'
   pod 'Firebase/Analytics'
+  pod 'libPhoneNumber-iOS'
 
   target 'MagellanExampleTests' do
     inherit! :search_paths

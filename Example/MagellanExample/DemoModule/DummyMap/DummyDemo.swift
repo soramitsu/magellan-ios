@@ -21,6 +21,7 @@ class DummyDemo: DemoFactoryProtocol {
         return MaggelanBuilder(key: testKey)
             .with(style: DummyDemoMagellanStyle())
             .with(alertManager: AlertManager())
+            .with(phoneFormatter: MagellanPhoneFormatter())
             .build(networkResolver: networkResolver)
     }
 }

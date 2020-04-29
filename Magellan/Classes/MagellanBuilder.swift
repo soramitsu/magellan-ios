@@ -17,6 +17,9 @@ public protocol MaggelanBuilderProtocol {
     
     @discardableResult
     func with(defaultAlertMessage: MessageProtocol) -> Self
+    
+    @discardableResult
+    func with(phoneFormatter: PhoneFormatterProtocol) -> Self
 }
 
 public final class MaggelanBuilder {
@@ -25,6 +28,7 @@ public final class MaggelanBuilder {
     private var style: MagellanStyleProtocol?
     private var alertManager: AlertManagerProtocol?
     private var defaultAlertMessage: MessageProtocol?
+    private var phoneFormatter: PhoneFormatterProtocol?
     
     /// Initializator
     /// - Parameter key: google mpas api key
@@ -42,6 +46,7 @@ extension MaggelanBuilder: MaggelanBuilderProtocol {
         let resolver = Resolver(networkOperationFactory: networkOperationFactory,
                                 style: self.style ?? DefaultMagellanStyle())
         resolver.alertManager = alertManager
+        resolver.phoneFormatter = phoneFormatter
         
         return DashboardMapAssembly.assembly(with: resolver)
     }
@@ -58,6 +63,11 @@ extension MaggelanBuilder: MaggelanBuilderProtocol {
     
     public func with(defaultAlertMessage: MessageProtocol) -> Self {
         self.defaultAlertMessage = defaultAlertMessage
+        return self
+    }
+    
+    public func with(phoneFormatter: PhoneFormatterProtocol) -> Self {
+        self.phoneFormatter = phoneFormatter
         return self
     }
 }

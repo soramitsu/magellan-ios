@@ -6,7 +6,6 @@
 
 
 import Foundation
-import libPhoneNumber_iOS
 
 extension String {
     
@@ -30,17 +29,4 @@ extension String {
         return ceil(boundingBox.width)
     }
     
-}
-
-extension String {
-    
-    func formattedPhone(region: String) -> String? {
-        let phoneUtil = NBPhoneNumberUtil()
-        
-        guard let phoneNumber = try? phoneUtil.parse(self, defaultRegion: region) else {
-            return nil
-        }
-
-        return try? phoneUtil.format(phoneNumber, numberFormat: .INTERNATIONAL)
-    }
 }

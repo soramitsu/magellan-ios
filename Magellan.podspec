@@ -29,6 +29,5 @@ Library allow fast integration of Soramitsu Places.
   s.dependency 'GoogleMaps'
   s.dependency 'Google-Maps-iOS-Utils'
   s.dependency 'SVProgressHUD'
-  s.dependency 'libPhoneNumber-iOS'
 
 end

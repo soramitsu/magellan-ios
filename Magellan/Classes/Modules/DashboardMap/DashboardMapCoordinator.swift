@@ -39,3 +39,15 @@ extension DashboardMapCoordinator: LocationDetailsPresenterDelegate {
         dragableNavigation?.popViewController(animated: false)
     }
 }
+
+extension DashboardMapCoordinator: MapListPresenterDelegate {
+    
+    func collapseList() {
+        dragableNavigation?.draggableDelegate?.wantsTransit(to: .compact, animating: true)
+    }
+    
+    func expandList() {
+        dragableNavigation?.draggableDelegate?.wantsTransit(to: .full, animating: true)
+    }
+    
+}

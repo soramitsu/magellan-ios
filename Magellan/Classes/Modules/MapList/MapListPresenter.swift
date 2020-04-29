@@ -13,7 +13,7 @@ final class MapListPresenter: MapListPresenterProtocol {
     var places: [PlaceViewModel] = []
     
     var view: MapListViewProtocol?
-    
+    weak var delegate: MapListPresenterDelegate?
     weak var output: MapListOutputProtocol?
     
     func showDetails(place: PlaceViewModel) {
@@ -28,7 +28,13 @@ final class MapListPresenter: MapListPresenterProtocol {
         output?.search(with: text)
     }
     
+    func dismiss() {
+        delegate?.collapseList()
+    }
     
+    func expand() {
+        delegate?.expandList()
+    }
 }
 
 extension MapListPresenter: MapOutputProtocol {

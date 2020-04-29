@@ -14,10 +14,21 @@ protocol MapListPresenterProtocol: MapOutputProtocol, AutoMockable {
     var places: [PlaceViewModel] { get }
     var view: MapListViewProtocol? { get set }
     var output: MapListOutputProtocol? { get set }
+    var delegate: MapListPresenterDelegate? { get set }
     
     func showDetails(place: PlaceViewModel)
     func select(category: String)
     func search(with text: String)
+    
+    func dismiss()
+    func expand()
+}
+
+protocol MapListPresenterDelegate: AnyObject {
+    
+    func collapseList()
+    func expandList()
+    
 }
 
 protocol MapListOutputProtocol: AnyObject {

@@ -6,8 +6,7 @@
 
 import UIKit
 import SoraUI
-import IQKeyboardManagerSwift
-
+import SoraFoundation
 
 final class MapListViewController: UIViewController {
     
@@ -20,6 +19,7 @@ final class MapListViewController: UIViewController {
     private let tableView = UITableView()
     private let closeButton = UIButton()
     private var categoriesView: UICollectionView!
+    private var keyboardHandler = KeyboardHandler()
     
     private lazy var placeCellStyle: PlaceCell.Style = {
         PlaceCell.Style(nameFont: style.header1Font,
@@ -51,6 +51,7 @@ final class MapListViewController: UIViewController {
         
         configureViews()
         layoutViews()
+        configureKeyboardHandler()
     }
     
     fileprivate func configureHeader() {
@@ -148,18 +149,14 @@ final class MapListViewController: UIViewController {
         tableView.topAnchor.constraint(equalTo: headerView.bottomAnchor, constant: 8).isActive = true
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        IQKeyboardManager.shared.enable = false
-        IQKeyboardManager.shared.enableAutoToolbar = false
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        
-        IQKeyboardManager.shared.enable = true
-        IQKeyboardManager.shared.enableAutoToolbar = true
+    private func configureKeyboardHandler() {
+        keyboardHandler.animateOnFrameChange = { [weak self] frame in
+            guard self?.view.window != nil else {
+                return
+            }
+            let bottomInset = frame.origin.y < UIScreen.main.bounds.size.height - 1 ? frame.size.height : 0
+            self?.tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: bottomInset, right: 0)
+        }
     }
     
     override func viewDidLayoutSubviews() {
@@ -195,6 +192,8 @@ final class MapListViewController: UIViewController {
         if let text = searchField.text, !text.isEmpty {
             searchField.text = ""
             presenter.search(with: "")
+        } else {
+            presenter.dismiss()
         }
     }
     
@@ -270,6 +269,10 @@ extension MapListViewController: UICollectionViewDelegate {
 
 
 extension MapListViewController: UITextFieldDelegate {
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        presenter.expand()
+    }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         search(textField)

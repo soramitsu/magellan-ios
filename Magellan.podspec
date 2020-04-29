@@ -28,7 +28,6 @@ Library allow fast integration of Soramitsu Places.
   s.dependency 'SoraFoundation/Localization', '~> 0.7.0'
   s.dependency 'GoogleMaps'
   s.dependency 'Google-Maps-iOS-Utils'
-  s.dependency 'IQKeyboardManagerSwift'
   s.dependency 'SVProgressHUD'
   s.dependency 'libPhoneNumber-iOS'
 

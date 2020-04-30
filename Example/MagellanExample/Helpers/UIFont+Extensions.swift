@@ -20,7 +20,7 @@ extension UIFont {
     }
     
     private static func registerFont(with name: String, withExtension: String) throws {
-        let bundle = Bundle(for: DefaultMagellanStyle.self)
+        let bundle = Bundle(for: DemoViewController.self)
         guard let fontURL = bundle.url(forResource: name, withExtension: withExtension) else {
             fatalError("Couldn't find font \(name)")
         }

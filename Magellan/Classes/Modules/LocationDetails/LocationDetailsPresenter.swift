@@ -13,16 +13,19 @@ final class LocationDetailsPresenter {
     weak var view: LocationDetailsViewProtocol?
     weak var delegate: LocationDetailsPresenterDelegate?
     let place: PlaceInfo
+    let formatter: PhoneFormatterProtocol?
     private(set) var items: [MapDetailViewModelProtocol] = []
 
-    init(placeInfo: PlaceInfo) {
+    init(placeInfo: PlaceInfo, phoneFormatter: PhoneFormatterProtocol? = nil) {
         place = placeInfo
+        formatter = phoneFormatter
         setupContent()
     }
     
     func setupContent() {
-        if let phone = place.phoneNumber.formattedPhone(region: place.region), !phone.isEmpty {
+        if !place.phoneNumber.isEmpty {
             let rawPhone = place.phoneNumber
+            let phone = formatter?.formattedPhoneNumber(with: rawPhone, region: place.region) ?? rawPhone
             items.append(MapDetailViewModel(title: L10n.Location.Details.phone,
                                               content: phone,
                                               action: { [weak self] in

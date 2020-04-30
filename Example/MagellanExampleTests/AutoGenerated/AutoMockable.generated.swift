@@ -174,6 +174,7 @@ class MapListPresenterProtocolMock: MapListPresenterProtocol {
     var places: [PlaceViewModel] = []
     var view: MapListViewProtocol?
     var output: MapListOutputProtocol?
+    var delegate: MapListPresenterDelegate?
 
     //MARK: - showDetails
 
@@ -218,6 +219,32 @@ class MapListPresenterProtocolMock: MapListPresenterProtocol {
         searchWithCallsCount += 1
         searchWithReceivedText = text
         searchWithClosure?(text)
+    }
+
+    //MARK: - dismiss
+
+    var dismissCallsCount = 0
+    var dismissCalled: Bool {
+        return dismissCallsCount > 0
+    }
+    var dismissClosure: (() -> Void)?
+
+    func dismiss() {
+        dismissCallsCount += 1
+        dismissClosure?()
+    }
+
+    //MARK: - expand
+
+    var expandCallsCount = 0
+    var expandCalled: Bool {
+        return expandCallsCount > 0
+    }
+    var expandClosure: (() -> Void)?
+
+    func expand() {
+        expandCallsCount += 1
+        expandClosure?()
     }
 
     //MARK: - didUpdate

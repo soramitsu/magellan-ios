@@ -30,6 +30,7 @@ class DashboardMapAssembly: DashboardMapAssemblyProtocol {
         
         mapView.presenter.output = mapListView.presenter
         mapListView.presenter.output = mapView.presenter
+        mapListView.presenter.delegate = coordinator
         
         
         return dashboardMapController

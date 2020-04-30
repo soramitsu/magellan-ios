@@ -9,11 +9,11 @@ import Foundation
 
 final class DashboardMapCoordinator: DashboardMapCoordinatorProtocol {
     
-    let container: DashboardMapViewController
+    weak var container: DashboardMapViewController?
     let resolver: ResolverProtocol
     var presenter: DashboardMapPresenterProtocol?
     var dragableNavigation: DraggableNavigationController? {
-        return container.draggable as? DraggableNavigationController
+        return container?.draggable as? DraggableNavigationController
     }
     
     init(container: DashboardMapViewController, resolver: ResolverProtocol) {
@@ -38,4 +38,16 @@ extension DashboardMapCoordinator: LocationDetailsPresenterDelegate {
     func dismiss() {
         dragableNavigation?.popViewController(animated: false)
     }
+}
+
+extension DashboardMapCoordinator: MapListPresenterDelegate {
+    
+    func collapseList() {
+        dragableNavigation?.draggableDelegate?.wantsTransit(to: .compact, animating: true)
+    }
+    
+    func expandList() {
+        dragableNavigation?.draggableDelegate?.wantsTransit(to: .full, animating: true)
+    }
+    
 }

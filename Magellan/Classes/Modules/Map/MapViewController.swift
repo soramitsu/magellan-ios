@@ -74,7 +74,12 @@ final class MapViewController: UIViewController {
             heightDiff = origin.y
         }
         
-        preferredContentHeight = view.frame.height - MapConstants.listCompactHeight - heightDiff
+        if #available(iOS 11.0, *) {
+            preferredContentHeight = view.frame.height - view.safeAreaInsets.bottom - MapConstants.listCompactHeight - heightDiff
+        } else {
+            preferredContentHeight = view.frame.height - MapConstants.listCompactHeight - heightDiff
+        }
+        
         
         observable.observers.forEach {
             $0.observer?.didChangePreferredContentHeight(to: preferredContentHeight)

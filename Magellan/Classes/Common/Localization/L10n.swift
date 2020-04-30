@@ -10,6 +10,20 @@ import Foundation
 public enum L10n {
 
     static var sharedLanguage: MagellanLanguage = MagellanLanguage.defaultLanguage
+    /// Cancel
+    public static var cancel: String { return localize("Cancel") }
+    /// Retry
+    public static var retry: String { return localize("Retry") }
+
+    public enum Error {
+
+        public enum Default {
+            /// An error occured, please try again
+            public static var message: String { return localize("Error.Default.Message") }
+            /// Ooops
+            public static var title: String { return localize("Error.Default.Title") }
+        }
+    }
 
     public enum Location {
 
@@ -68,13 +82,7 @@ extension L10n {
     fileprivate static func getFormat(for key: String, localization: String) -> String {
         let bundle = Bundle(for: BundleLoadHelper.self)
 
-        guard
-            let path = bundle.path(forResource: localization, ofType: "lproj"),
-            let langBundle = Bundle(path: path) else {
-                return ""
-        }
-
-        return NSLocalizedString(key, tableName: nil, bundle: langBundle, value: "", comment: "")
+        return NSLocalizedString(key, tableName: nil, bundle: Bundle.frameworkBundle ?? Bundle.main, value: "", comment: "")
     }
 
 }

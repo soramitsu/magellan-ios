@@ -83,13 +83,10 @@ PODS:
     - GoogleUtilities/Logger
   - GoogleUtilities/UserDefaults (6.5.2):
     - GoogleUtilities/Logger
-  - IQKeyboardManagerSwift (6.5.5)
   - libPhoneNumber-iOS (0.9.15)
   - Magellan (0.1.0):
     - Google-Maps-iOS-Utils
     - GoogleMaps
-    - IQKeyboardManagerSwift
-    - libPhoneNumber-iOS
     - RobinHood (~> 2.3.0)
     - SoraFoundation/DateProcessing (~> 0.7.0)
     - SoraFoundation/Localization (~> 0.7.0)
@@ -159,6 +156,7 @@ DEPENDENCIES:
   - Crashlytics
   - Fabric
   - Firebase/Analytics
+  - libPhoneNumber-iOS
   - Magellan (from `../`)
   - OHHTTPStubs/Swift
   - Sourcery
@@ -181,7 +179,6 @@ SPEC REPOS:
     - GoogleDataTransportCCTSupport
     - GoogleMaps
     - GoogleUtilities
-    - IQKeyboardManagerSwift
     - libPhoneNumber-iOS
     - nanopb
     - OHHTTPStubs
@@ -214,9 +211,8 @@ SPEC CHECKSUMS:
   GoogleDataTransportCCTSupport: 2d7e609f8c5af1a33d7d59053e6f8cba59365df5
   GoogleMaps: 7c8d66d70e4e8c300f43a7219d8fdaad7b325a9a
   GoogleUtilities: ad0f3b691c67909d03a3327cc205222ab8f42e0e
-  IQKeyboardManagerSwift: 0fb93310284665245591f50f7a5e38de615960b7
   libPhoneNumber-iOS: 0a32a9525cf8744fe02c5206eb30d571e38f7d75
-  Magellan: 4be090009b4ec9813edda67908697916764515bc
+  Magellan: 47513d7c32ec3297a73b0f4fdf6f9fec02a01ac9
   nanopb: 18003b5e52dab79db540fe93fe9579f399bd1ccd
   OHHTTPStubs: cb29d2a9d09a828ecb93349a2b0c64f99e0db89f
   PromisesObjC: c119f3cd559f50b7ae681fa59dc1acd19173b7e6
@@ -229,6 +225,6 @@ SPEC CHECKSUMS:
   SwiftGen: f872ca75cbd17bf7103c17f13dcfa0d9a15667b0
   SwiftLint: 7a0227733d786395817373b2d0ca799fd0093ff3
 
-PODFILE CHECKSUM: e124c4a95d2c790900418b544b08f46a6d1afe5e
+PODFILE CHECKSUM: 1d2d004a226db9fd47d950a07df05739d1ce78d6
 
 COCOAPODS: 1.9.1

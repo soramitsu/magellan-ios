@@ -112,7 +112,7 @@ final class MapPresenterTests: XCTestCase {
         }
         
         // act
-        presenter.loadCategories()
+        presenter.load()
         
         // assert
         XCTAssertTrue(mapView.reloadDataCalled)

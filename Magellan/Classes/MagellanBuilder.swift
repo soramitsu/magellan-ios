@@ -13,22 +13,18 @@ public protocol MaggelanBuilderProtocol {
     func with(style: MagellanStyleProtocol) -> Self
     
     @discardableResult
-    func with(alertManager: AlertManagerProtocol) -> Self
-    
-    @discardableResult
-    func with(defaultAlertMessage: MessageProtocol) -> Self
-    
-    @discardableResult
     func with(phoneFormatter: PhoneFormatterProtocol) -> Self
+    
+    @discardableResult
+    func with(errorViewFactory: ErrorViewFactoryProtocol) -> Self
 }
 
 public final class MaggelanBuilder {
     
     private let apiKey: String
     private var style: MagellanStyleProtocol?
-    private var alertManager: AlertManagerProtocol?
-    private var defaultAlertMessage: MessageProtocol?
     private var phoneFormatter: PhoneFormatterProtocol?
+    private var errorViewFactory: ErrorViewFactoryProtocol?
     
     /// Initializator
     /// - Parameter key: google mpas api key
@@ -45,8 +41,8 @@ extension MaggelanBuilder: MaggelanBuilderProtocol {
         
         let resolver = Resolver(networkOperationFactory: networkOperationFactory,
                                 style: self.style ?? DefaultMagellanStyle())
-        resolver.alertManager = alertManager
         resolver.phoneFormatter = phoneFormatter
+        resolver.errorViewFactory = errorViewFactory
         
         return DashboardMapAssembly.assembly(with: resolver)
     }
@@ -56,18 +52,13 @@ extension MaggelanBuilder: MaggelanBuilderProtocol {
         return self
     }
     
-    public func with(alertManager: AlertManagerProtocol) -> Self {
-        self.alertManager = alertManager
-        return self
-    }
-    
-    public func with(defaultAlertMessage: MessageProtocol) -> Self {
-        self.defaultAlertMessage = defaultAlertMessage
-        return self
-    }
-    
     public func with(phoneFormatter: PhoneFormatterProtocol) -> Self {
         self.phoneFormatter = phoneFormatter
+        return self
+    }
+    
+    public func with(errorViewFactory: ErrorViewFactoryProtocol) -> Self{
+        self.errorViewFactory = errorViewFactory
         return self
     }
 }

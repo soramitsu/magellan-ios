@@ -277,6 +277,21 @@ class MapListPresenterProtocolMock: MapListPresenterProtocol {
         didUpdatePlacesClosure?(places)
     }
 
+    //MARK: - loadingComplete
+
+    var loadingCompleteWithRetryClosureCallsCount = 0
+    var loadingCompleteWithRetryClosureCalled: Bool {
+        return loadingCompleteWithRetryClosureCallsCount > 0
+    }
+    var loadingCompleteWithRetryClosureReceivedArguments: (error: Error?, retryClosure: () -> Void)?
+    var loadingCompleteWithRetryClosureClosure: ((Error?, @escaping () -> Void) -> Void)?
+
+    func loadingComplete(with error: Error?, retryClosure: @escaping () -> Void) {
+        loadingCompleteWithRetryClosureCallsCount += 1
+        loadingCompleteWithRetryClosureReceivedArguments = (error: error, retryClosure: retryClosure)
+        loadingCompleteWithRetryClosureClosure?(error, retryClosure)
+    }
+
 }
 // MARK: -
 // MARK: -
@@ -323,6 +338,21 @@ class MapListViewProtocolMock: MapListViewProtocol {
         reloadCategoriesClosure?()
     }
 
+    //MARK: - showErrorState
+
+    var showErrorStateCallsCount = 0
+    var showErrorStateCalled: Bool {
+        return showErrorStateCallsCount > 0
+    }
+    var showErrorStateReceivedRetryClosure: (() -> Void)?
+    var showErrorStateClosure: ((@escaping () -> Void) -> Void)?
+
+    func showErrorState(_ retryClosure: @escaping () -> Void) {
+        showErrorStateCallsCount += 1
+        showErrorStateReceivedRetryClosure = retryClosure
+        showErrorStateClosure?(retryClosure)
+    }
+
 }
 // MARK: -
 // MARK: -
@@ -353,17 +383,17 @@ class MapPresenterProtocolMock: MapPresenterProtocol {
         showDetailsPlaceClosure?(place)
     }
 
-    //MARK: - loadCategories
+    //MARK: - load
 
-    var loadCategoriesCallsCount = 0
-    var loadCategoriesCalled: Bool {
-        return loadCategoriesCallsCount > 0
+    var loadCallsCount = 0
+    var loadCalled: Bool {
+        return loadCallsCount > 0
     }
-    var loadCategoriesClosure: (() -> Void)?
+    var loadClosure: (() -> Void)?
 
-    func loadCategories() {
-        loadCategoriesCallsCount += 1
-        loadCategoriesClosure?()
+    func load() {
+        loadCallsCount += 1
+        loadClosure?()
     }
 
     //MARK: - select

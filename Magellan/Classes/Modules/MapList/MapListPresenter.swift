@@ -47,4 +47,8 @@ extension MapListPresenter: MapOutputProtocol {
         self.places = places
         view?.reloadPlaces()
     }
+    
+    func loadingComplete(with error: Error?, retryClosure: @escaping () -> Void) {
+        view?.showErrorState(retryClosure)
+    }
 }

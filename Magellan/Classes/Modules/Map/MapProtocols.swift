@@ -25,7 +25,7 @@ protocol MapPresenterProtocol: MapListOutputProtocol, AutoMockable {
     var position: Coordinates { get }
 
     func showDetails(place: PlaceViewModel)
-    func loadCategories()
+    func load()
 }
 
 protocol MapCoordinatorProtocol: AnyObject, AutoMockable {
@@ -35,5 +35,6 @@ protocol MapCoordinatorProtocol: AnyObject, AutoMockable {
 protocol MapOutputProtocol: AnyObject {
     func didUpdate(categories: [PlaceCategory])
     func didUpdate(places: [PlaceViewModel])
+    func loadingComplete(with error: Error?, retryClosure: @escaping () -> Void)
 }
 

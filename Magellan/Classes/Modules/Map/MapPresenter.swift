@@ -7,10 +7,12 @@
 
 import Foundation
 
+enum MapError: Error {
+    case loadingError
+}
+
 final class MapPresenter: MapPresenterProtocol {
     
-    var alertManager: AlertManagerProtocol?
-    var defaultAlertMessage: MessageProtocol?
     weak var view: MapViewProtocol?
     weak var coordinator: MapCoordinatorProtocol?
     weak var output: MapOutputProtocol?
@@ -60,21 +62,50 @@ final class MapPresenter: MapPresenterProtocol {
         self.defaultPosition = defaultPosition
     }
     
-    func loadCategories() {
+    func load() {
         view?.showLoading()
+        
+        let dispatchGroup = DispatchGroup()
+        
+        dispatchGroup.enter()
         service.getCategories(runCompletionIn: DispatchQueue.main) { [weak self] result in
             switch result {
             case .success(let categories):
                 self?.categories = categories
-                self?.locationService.delegaet = self
-                self?.loadPlaces()
             case .failure(let error):
-                self?.view?.hideLoading()
-                self?.categories = []
-                self?.tryShowDefaultAlert {
-                    self?.loadCategories()
+                break
+            }
+            dispatchGroup.leave()
+        }
+        
+        let placeRequest = PlacesRequest(location: coordinatesHash,
+                                         search: nil,
+                                         category: nil)
+        var getPlacesResult: [Place]? = nil
+        dispatchGroup.enter()
+        service.getPlaces(with: placeRequest, runCompletionIn: DispatchQueue.main) { [weak self] result in
+            switch result {
+            case .success(let responce):
+                self?.places = responce.locations.flatMap({PlaceViewModel(place: $0)})
+            default:
+                break
+            }
+            dispatchGroup.leave()
+        }
+        
+        dispatchGroup.notify(queue: DispatchQueue.main) { [weak self] in
+            guard let self = self else {
+                return
+            }
+            self.view?.hideLoading()
+            if self.places.isEmpty
+             || self.categories.isEmpty {
+                self.output?.loadingComplete(with: MapError.loadingError) { [weak self] in
+                    self?.load()
                 }
             }
+            
+            self.locationService.delegaet = self
         }
     }
     
@@ -95,7 +126,7 @@ final class MapPresenter: MapPresenterProtocol {
             self?.view?.hideLoading()
             switch result {
             case .failure(let error):
-                self?.tryShowDefaultAlert {
+                self?.output?.loadingComplete(with: error) { [weak self] in
                     self?.loadPlaces(category: category, search: search)
                 }
             case .success(let response):
@@ -116,7 +147,7 @@ final class MapPresenter: MapPresenterProtocol {
                 self.view?.show(place: place)
                 self.coordinator?.showDetails(for: info)
             case .failure(let error):
-                self.tryShowDefaultAlert { [weak self] in
+                self.output?.loadingComplete(with: error) { [weak self] in
                     self?.showDetails(place: place)
                 }
             }
@@ -125,21 +156,6 @@ final class MapPresenter: MapPresenterProtocol {
     
     func loadPlaces() {
         loadPlaces(category: nil, search: nil)
-    }
-    
-    private func tryShowDefaultAlert(retryAction: @escaping () -> Void) {
-        guard let alertManager = alertManager,
-            let controller = view?.controller else {
-            return
-        }
-        alertManager.showAlert(viewController: controller,
-                               title: defaultAlertMessage?.title ?? L10n.Error.Default.title,
-                               message: defaultAlertMessage?.message ?? L10n.Error.Default.message,
-                               actions: [(L10n.cancel, .cancel), (L10n.retry, .default)]) { number in
-                                if number == 1 {
-                                    retryAction()
-                                }
-        }
     }
 }
 

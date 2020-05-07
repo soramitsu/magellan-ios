@@ -20,8 +20,8 @@ class DummyDemo: DemoFactoryProtocol {
         Mocks.mockAPI()
         return MaggelanBuilder(key: testKey)
             .with(style: DummyDemoMagellanStyle())
-            .with(alertManager: AlertManager())
             .with(phoneFormatter: MagellanPhoneFormatter())
+            .with(errorViewFactory: MagellanErrorViewFactory())
             .build(networkResolver: networkResolver)
     }
 }

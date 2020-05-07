@@ -20,6 +20,8 @@ final class MapListViewController: UIViewController {
     private let closeButton = UIButton()
     private var categoriesView: UICollectionView!
     private var keyboardHandler = KeyboardHandler()
+    var erroViewFactory: ErrorViewFactoryProtocol?
+    private var errorView: UIView?
     
     private lazy var placeCellStyle: PlaceCell.Style = {
         PlaceCell.Style(nameFont: style.header1Font,
@@ -288,6 +290,9 @@ extension MapListViewController: MapListViewProtocol {
     func reloadPlaces() {
         if isViewLoaded
             && view.window != nil {
+            errorView?.removeFromSuperview()
+            tableView.isHidden = false
+            headerView.isHidden = false
             tableView.reloadData()
             view.setNeedsLayout()
         }
@@ -296,10 +301,31 @@ extension MapListViewController: MapListViewProtocol {
     func reloadCategories() {
         if isViewLoaded
             && view.window != nil {
+            errorView?.removeFromSuperview()
+            tableView.isHidden = false
+            headerView.isHidden = false
             categoriesView.reloadData()
             tableView.reloadData()
             view.setNeedsLayout()
         }
+    }
+    
+    func showErrorState(_ retryClosure: @escaping () -> Void) {
+        guard let errorView = erroViewFactory?.errorView(with: retryClosure) else {
+            return
+        }
+        tableView.isHidden = true
+        headerView.isHidden = true
+
+        
+        view.addSubview(errorView)
+        
+        errorView.translatesAutoresizingMaskIntoConstraints = false
+        errorView.topAnchor.constraint(equalTo: view.topAnchor, constant: 16).isActive = true
+        errorView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+        errorView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
+        
+        self.errorView = errorView
     }
 }
 

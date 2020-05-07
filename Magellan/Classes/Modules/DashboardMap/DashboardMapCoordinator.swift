@@ -11,7 +11,7 @@ final class DashboardMapCoordinator: DashboardMapCoordinatorProtocol {
     
     weak var container: DashboardMapViewController?
     let resolver: ResolverProtocol
-    var presenter: DashboardMapPresenterProtocol?
+    weak var presenter: DashboardMapPresenterProtocol?
     var dragableNavigation: DraggableNavigationController? {
         return container?.draggable as? DraggableNavigationController
     }

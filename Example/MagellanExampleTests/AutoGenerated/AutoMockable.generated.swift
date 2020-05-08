@@ -146,6 +146,22 @@ class MagellanServicePrototcolMock: MagellanServicePrototcol {
         return getPlacesWithRunCompletionInCompletionClosure.map({ $0(request, queue, completion) }) ?? getPlacesWithRunCompletionInCompletionReturnValue
     }
 
+    //MARK: - getCategoriesAndPlaces
+
+    var getCategoriesAndPlacesWithRunCompletionInCompletionCallsCount = 0
+    var getCategoriesAndPlacesWithRunCompletionInCompletionCalled: Bool {
+        return getCategoriesAndPlacesWithRunCompletionInCompletionCallsCount > 0
+    }
+    var getCategoriesAndPlacesWithRunCompletionInCompletionReceivedArguments: (request: PlacesRequest, queue: DispatchQueue, completion: CategoriesAndPlacesBlock)?
+    var getCategoriesAndPlacesWithRunCompletionInCompletionReturnValue: Operation!
+    var getCategoriesAndPlacesWithRunCompletionInCompletionClosure: ((PlacesRequest, DispatchQueue, @escaping CategoriesAndPlacesBlock) -> Operation)?
+
+    func getCategoriesAndPlaces(with request: PlacesRequest, runCompletionIn queue: DispatchQueue, completion: @escaping CategoriesAndPlacesBlock) -> Operation {
+        getCategoriesAndPlacesWithRunCompletionInCompletionCallsCount += 1
+        getCategoriesAndPlacesWithRunCompletionInCompletionReceivedArguments = (request: request, queue: queue, completion: completion)
+        return getCategoriesAndPlacesWithRunCompletionInCompletionClosure.map({ $0(request, queue, completion) }) ?? getCategoriesAndPlacesWithRunCompletionInCompletionReturnValue
+    }
+
 }
 // MARK: -
 // MARK: -

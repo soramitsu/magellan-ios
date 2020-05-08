@@ -115,6 +115,31 @@ extension MiddlewareOperationFactoryProtocol {
         return operation
     }
     
+    func fetchCategoriesAndPlaces(with request: PlacesRequest) -> BaseOperation<([PlaceCategory], PlacesResponse)> {
+        let categoriesOperation = fetchCategories()
+        let placesOperation = fetchPlaces(with: request)
+        
+        let sumOperation: BaseOperation<([PlaceCategory], PlacesResponse)> = ClosureOperation {
+            guard let categoriesResult = categoriesOperation.result,
+                let placesResult = placesOperation.result else {
+                    throw MagellanServiceError.noResult
+            }
+            switch (categoriesResult, placesResult) {
+            case (.success(let categories), .success(let places)):
+                return (categories, places)
+            case (.failure(let categoriesError), _):
+                throw categoriesError
+            case (_, .failure(let placesError)):
+                throw placesError
+            }
+        }
+        
+        sumOperation.addDependency(categoriesOperation)
+        sumOperation.addDependency(placesOperation)
+        
+        return sumOperation
+    }
+    
     private func error(for status: StatusData,  requestType: MagellanRequestType) -> Error? {
         if status.isSuccess {
             return nil

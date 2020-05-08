@@ -102,12 +102,8 @@ final class MapPresenterTests: XCTestCase {
     
     func testLoadCategories() {
         // arrange
-        service.getPlacesWithRunCompletionInCompletionClosure = { _, _, completion in
-            completion(.success(PlacesResponse(locations: self.places, clusters: [])))
-            return BaseOperation<Void>()
-        }
-        service.getCategoriesRunCompletionInCompletionClosure = { _, completion in
-            completion(.success(self.categoties))
+        service.getCategoriesAndPlacesWithRunCompletionInCompletionClosure = { _, _, completion in
+            completion(.success((self.categoties, PlacesResponse(locations: self.places, clusters: []))))
             return BaseOperation<Void>()
         }
         

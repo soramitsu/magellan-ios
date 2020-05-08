@@ -65,48 +65,27 @@ final class MapPresenter: MapPresenterProtocol {
     func load() {
         view?.showLoading()
         
-        let dispatchGroup = DispatchGroup()
-        
-        dispatchGroup.enter()
-        service.getCategories(runCompletionIn: DispatchQueue.main) { [weak self] result in
-            switch result {
-            case .success(let categories):
-                self?.categories = categories
-            case .failure(let error):
-                break
-            }
-            dispatchGroup.leave()
-        }
         
         let placeRequest = PlacesRequest(location: coordinatesHash,
                                          search: nil,
                                          category: nil)
-        var getPlacesResult: [Place]? = nil
-        dispatchGroup.enter()
-        service.getPlaces(with: placeRequest, runCompletionIn: DispatchQueue.main) { [weak self] result in
-            switch result {
-            case .success(let responce):
-                self?.places = responce.locations.flatMap({PlaceViewModel(place: $0)})
-            default:
-                break
-            }
-            dispatchGroup.leave()
+        service.getCategoriesAndPlaces(with: placeRequest,
+                                       runCompletionIn: DispatchQueue.main) { [weak self] result in
+                                        guard let self = self else {
+                                            return
+                                        }
+                                        switch result {
+                                        case .success(let tuple):
+                                            self.categories = tuple.0
+                                            self.places = tuple.1.locations.compactMap { PlaceViewModel(place: $0) }
+                                        default:
+                                            self.output?.loadingComplete(with: MapError.loadingError, retryClosure: { [weak self] in
+                                                self?.load()
+                                            })
+                                        }
+                                        self.view?.hideLoading()
         }
-        
-        dispatchGroup.notify(queue: DispatchQueue.main) { [weak self] in
-            guard let self = self else {
-                return
-            }
-            self.view?.hideLoading()
-            if self.places.isEmpty
-             || self.categories.isEmpty {
-                self.output?.loadingComplete(with: MapError.loadingError) { [weak self] in
-                    self?.load()
-                }
-            }
-            
-            self.locationService.delegaet = self
-        }
+
     }
     
     func loadPlaces(category: String?,

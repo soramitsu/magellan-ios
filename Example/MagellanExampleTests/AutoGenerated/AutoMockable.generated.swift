@@ -182,11 +182,25 @@ class MapCoordinatorProtocolMock: MapCoordinatorProtocol {
         showDetailsForClosure?(placeInfo)
     }
 
+    //MARK: - showCategoriesFilter
+
+    var showCategoriesFilterCategoriesFilterOutputCallsCount = 0
+    var showCategoriesFilterCategoriesFilterOutputCalled: Bool {
+        return showCategoriesFilterCategoriesFilterOutputCallsCount > 0
+    }
+    var showCategoriesFilterCategoriesFilterOutputReceivedArguments: (categories: [PlaceCategory], filter: Set<PlaceCategory>, output: CategoriesFilterOutputProtocol?)?
+    var showCategoriesFilterCategoriesFilterOutputClosure: (([PlaceCategory], Set<PlaceCategory>, CategoriesFilterOutputProtocol?) -> Void)?
+
+    func showCategoriesFilter(categories: [PlaceCategory], filter: Set<PlaceCategory>, output: CategoriesFilterOutputProtocol?) {
+        showCategoriesFilterCategoriesFilterOutputCallsCount += 1
+        showCategoriesFilterCategoriesFilterOutputReceivedArguments = (categories: categories, filter: filter, output: output)
+        showCategoriesFilterCategoriesFilterOutputClosure?(categories, filter, output)
+    }
+
 }
 // MARK: -
 // MARK: -
 class MapListPresenterProtocolMock: MapListPresenterProtocol {
-    var categories: [PlaceCategory] = []
     var places: [PlaceViewModel] = []
     var view: MapListViewProtocol?
     var output: MapListOutputProtocol?
@@ -205,21 +219,6 @@ class MapListPresenterProtocolMock: MapListPresenterProtocol {
         showDetailsPlaceCallsCount += 1
         showDetailsPlaceReceivedPlace = place
         showDetailsPlaceClosure?(place)
-    }
-
-    //MARK: - select
-
-    var selectCategoryCallsCount = 0
-    var selectCategoryCalled: Bool {
-        return selectCategoryCallsCount > 0
-    }
-    var selectCategoryReceivedCategory: String?
-    var selectCategoryClosure: ((String) -> Void)?
-
-    func select(category: String) {
-        selectCategoryCallsCount += 1
-        selectCategoryReceivedCategory = category
-        selectCategoryClosure?(category)
     }
 
     //MARK: - search
@@ -261,21 +260,6 @@ class MapListPresenterProtocolMock: MapListPresenterProtocol {
     func expand() {
         expandCallsCount += 1
         expandClosure?()
-    }
-
-    //MARK: - didUpdate
-
-    var didUpdateCategoriesCallsCount = 0
-    var didUpdateCategoriesCalled: Bool {
-        return didUpdateCategoriesCallsCount > 0
-    }
-    var didUpdateCategoriesReceivedCategories: [PlaceCategory]?
-    var didUpdateCategoriesClosure: (([PlaceCategory]) -> Void)?
-
-    func didUpdate(categories: [PlaceCategory]) {
-        didUpdateCategoriesCallsCount += 1
-        didUpdateCategoriesReceivedCategories = categories
-        didUpdateCategoriesClosure?(categories)
     }
 
     //MARK: - didUpdate
@@ -383,6 +367,7 @@ class MapPresenterProtocolMock: MapPresenterProtocol {
         set(value) { underlyingPosition = value }
     }
     var underlyingPosition: Coordinates!
+    var myLocation: Coordinates?
 
     //MARK: - showDetails
 
@@ -412,6 +397,19 @@ class MapPresenterProtocolMock: MapPresenterProtocol {
         loadClosure?()
     }
 
+    //MARK: - showFilter
+
+    var showFilterCallsCount = 0
+    var showFilterCalled: Bool {
+        return showFilterCallsCount > 0
+    }
+    var showFilterClosure: (() -> Void)?
+
+    func showFilter() {
+        showFilterCallsCount += 1
+        showFilterClosure?()
+    }
+
     //MARK: - select
 
     var selectPlaceCallsCount = 0
@@ -425,21 +423,6 @@ class MapPresenterProtocolMock: MapPresenterProtocol {
         selectPlaceCallsCount += 1
         selectPlaceReceivedPlace = place
         selectPlaceClosure?(place)
-    }
-
-    //MARK: - select
-
-    var selectCategoryCallsCount = 0
-    var selectCategoryCalled: Bool {
-        return selectCategoryCallsCount > 0
-    }
-    var selectCategoryReceivedCategory: String?
-    var selectCategoryClosure: ((String) -> Void)?
-
-    func select(category: String) {
-        selectCategoryCallsCount += 1
-        selectCategoryReceivedCategory = category
-        selectCategoryClosure?(category)
     }
 
     //MARK: - search

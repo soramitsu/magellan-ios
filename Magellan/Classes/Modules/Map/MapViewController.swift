@@ -26,6 +26,12 @@ final class MapViewController: UIViewController {
     private var camera: GMSCameraPosition!
     private var clusterManager: GMUClusterManager!
     
+    
+    private var myPlaceButton = UIButton()
+    private var filterButton = UIButton()
+    private var filterTopConstraint: NSLayoutConstraint?
+    private var positionButton = UIButton()
+    
     var mapView: GMSMapView {
         return view as! GMSMapView
     }
@@ -43,6 +49,7 @@ final class MapViewController: UIViewController {
     
     override func loadView() {
         var mapView = GMSMapView()
+        mapView.isMyLocationEnabled = true
         let position = presenter.position
         camera = GMSCameraPosition.camera(withLatitude: position.lat, longitude: position.lon, zoom: 12.0)
         mapView.camera = camera
@@ -51,6 +58,7 @@ final class MapViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupButtons()
         
         presenter.load()
                 
@@ -80,12 +88,72 @@ final class MapViewController: UIViewController {
             preferredContentHeight = view.frame.height - MapConstants.listCompactHeight - heightDiff
         }
         
+         if let filterTopConstraint = filterTopConstraint,
+            filterTopConstraint.constant != preferredContentHeight - 20 {
+            filterTopConstraint.constant = preferredContentHeight - 20
+            filterTopConstraint.isActive = true
+        }
         
         observable.observers.forEach {
             $0.observer?.didChangePreferredContentHeight(to: preferredContentHeight)
         }
     }
     
+    private func setupButtons() {
+        let side: CGFloat = 32
+        
+        let setupShadow: (CALayer) -> Void = { item in
+            item.cornerRadius = side / 2
+            item.shadowColor = UIColor.black.withAlphaComponent(0.36).cgColor
+            item.shadowRadius = 3
+            item.shadowOffset = CGSize(width: 0, height: 3)
+            item.shadowOpacity = 1
+        }
+        
+        guard let filterImage = UIImage(named: "filter", in: Bundle.frameworkBundle, compatibleWith: nil),
+            let myPlace = UIImage(named: "gps_locate_me", in: Bundle.frameworkBundle, compatibleWith: nil) else {
+                fatalError("Can not load images from fraimwork bundle")
+        }
+        filterButton.backgroundColor = .white
+        filterButton.setImage(filterImage, for: .normal)
+        setupShadow(filterButton.layer)
+        
+        view.addSubview(filterButton)
+        filterButton.translatesAutoresizingMaskIntoConstraints = false
+        filterButton.widthAnchor.constraint(equalToConstant: side).isActive = true
+        filterButton.heightAnchor.constraint(equalToConstant: side).isActive = true
+        filterButton.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 10).isActive = true
+        filterTopConstraint = filterButton.topAnchor.constraint(equalTo: view.topAnchor)
+        filterButton.addTarget(nil, action: #selector(tapFilter), for: .touchUpInside)
+        
+        
+        myPlaceButton.backgroundColor = .white
+        myPlaceButton.setImage(myPlace, for: .normal)
+        setupShadow(myPlaceButton.layer)
+        
+        view.addSubview(myPlaceButton)
+        myPlaceButton.translatesAutoresizingMaskIntoConstraints = false
+        myPlaceButton.widthAnchor.constraint(equalToConstant: side).isActive = true
+        myPlaceButton.heightAnchor.constraint(equalToConstant: side).isActive = true
+        myPlaceButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -10).isActive = true
+        myPlaceButton.centerYAnchor.constraint(equalTo: filterButton.centerYAnchor).isActive = true
+        myPlaceButton.addTarget(nil, action: #selector(showMyPosition), for: .touchUpInside)
+    }
+    
+    @objc
+    private func tapFilter() {
+        presenter.showFilter()
+    }
+    
+    @objc
+    private func showMyPosition() {
+        guard let myLocation = presenter.myLocation else {
+            return
+        }
+
+        var cameraUpdate = GMSCameraUpdate.setTarget(myLocation.coreLocationCoordinates, zoom: 12)
+        mapView.moveCamera(cameraUpdate)
+    }
 }
 
 extension MapViewController: GMUClusterManagerDelegate {

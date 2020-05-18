@@ -9,7 +9,6 @@ import Foundation
 
 final class MapListPresenter: MapListPresenterProtocol {
     
-    var categories: [PlaceCategory] = []
     var places: [PlaceViewModel] = []
     
     weak var view: MapListViewProtocol?
@@ -18,10 +17,6 @@ final class MapListPresenter: MapListPresenterProtocol {
     
     func showDetails(place: PlaceViewModel) {
         output?.select(place: place)
-    }
-    
-    func select(category: String) {
-        output?.select(category: category)
     }
     
     func search(with text: String) {
@@ -38,11 +33,6 @@ final class MapListPresenter: MapListPresenterProtocol {
 }
 
 extension MapListPresenter: MapOutputProtocol {
-    func didUpdate(categories: [PlaceCategory]) {
-        self.categories = categories
-        view?.reloadCategories()
-    }
-    
     func didUpdate(places: [PlaceViewModel]) {
         self.places = places
         view?.reloadPlaces()

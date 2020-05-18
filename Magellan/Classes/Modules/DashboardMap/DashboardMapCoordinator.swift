@@ -32,6 +32,16 @@ extension DashboardMapCoordinator: MapCoordinatorProtocol {
         navigation.popToRootViewController(animated: false)
         navigation.pushViewController(detailsView.controller, animated: false)
     }
+    
+    func showCategoriesFilter(categories: [PlaceCategory], filter: Set<PlaceCategory>, output: CategoriesFilterOutputProtocol?) {
+        let filterView = CategoriesFilterAssembly.assemble(with: resolver,
+                                                           filter: filter,
+                                                           categories: categories)
+        filterView.presenter.output = output
+        let controller = filterView.controller
+        controller.modalPresentationStyle = .overCurrentContext
+        container?.present(controller, animated: true, completion: nil)
+    }
 }
 
 extension DashboardMapCoordinator: LocationDetailsPresenterDelegate {

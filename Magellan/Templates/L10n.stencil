@@ -65,7 +65,7 @@ extension {{enumName}} {
     fileprivate static func getFormat(for key: String, localization: String) -> String {
         let bundle = Bundle(for: BundleLoadHelper.self)
 
-        return NSLocalizedString(key, tableName: nil, bundle: Bundle.frameworkBundle ?? Bundle.main, value: "", comment: "")
+        return NSLocalizedString(key, tableName: nil, bundle: Bundle.frameworkBundle, value: "", comment: "")
     }
 
 }

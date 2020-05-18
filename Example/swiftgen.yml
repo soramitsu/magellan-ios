@@ -1,5 +1,5 @@
 strings:
-  inputs: ../Magellan/Assets/en.lproj/Localizable.strings
+  inputs: ../Magellan/Assets/Lang/en.lproj/Localizable.strings
   outputs:
     templatePath: ../Magellan/Templates/L10n.stencil
     output: ../Magellan/Classes/Common/Localization/L10n.swift

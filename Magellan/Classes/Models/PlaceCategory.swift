@@ -14,3 +14,16 @@ struct PlaceCategory {
 
 extension PlaceCategory: Equatable { }
 extension PlaceCategory: Codable { }
+
+extension PlaceCategory: Hashable { }
+extension PlaceCategory: Comparable {
+    
+    static func < (lhs: Self, rhs: Self) -> Bool {
+        return lhs.id < rhs.id
+    }
+    
+    static func <= (lhs: Self, rhs: Self) -> Bool {
+        return lhs.id <= rhs.id
+    }
+    
+}

@@ -78,14 +78,6 @@ final class MapListPresenterTests: XCTestCase {
         XCTAssertTrue(mapPresenter.selectPlaceCalled)
     }
     
-    func testSelectCategory() {
-        // act
-        presenter.select(category: "category")
-        
-        // assert
-        XCTAssertTrue(mapPresenter.selectCategoryCalled)
-    }
-    
     func testSearch() {
         // act
         presenter.search(with: "text")
@@ -99,11 +91,9 @@ final class MapListPresenterTests: XCTestCase {
         let items = places.compactMap { PlaceViewModel(place: $0) }
         
         // act
-        presenter.didUpdate(categories: categoties)
         presenter.didUpdate(places: items)
         
         // assert
-        XCTAssertTrue(view.reloadCategoriesCalled)
         XCTAssertTrue(view.reloadPlacesCalled)
     }
     

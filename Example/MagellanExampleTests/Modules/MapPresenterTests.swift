@@ -129,22 +129,6 @@ final class MapPresenterTests: XCTestCase {
         XCTAssertTrue(mapView.reloadDataCalled)
         XCTAssertTrue(listPresenter.didUpdatePlacesCalled)
     }
-    
-    func testSelectCategory() {
-        // arrange
-        service.getPlacesWithRunCompletionInCompletionClosure = { _, _, completion in
-            completion(.success(PlacesResponse(locations: self.places, clusters: [])))
-            return BaseOperation<Void>()
-        }
-        
-        // act
-        presenter.select(category: "category")
-        
-        // assert
-        XCTAssertTrue(mapView.reloadDataCalled)
-        XCTAssertTrue(listPresenter.didUpdatePlacesCalled)
-    }
-    
     func testSearch() {
         // arrange
         service.getPlacesWithRunCompletionInCompletionClosure = { _, _, completion in

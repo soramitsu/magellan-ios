@@ -223,17 +223,6 @@ extension MapListViewController: MapListViewProtocol {
         }
     }
     
-    func reloadCategories() {
-        if isViewLoaded
-            && view.window != nil {
-            errorView?.removeFromSuperview()
-            tableView.isHidden = false
-            headerView.isHidden = false
-            tableView.reloadData()
-            view.setNeedsLayout()
-        }
-    }
-    
     func showErrorState(_ retryClosure: @escaping () -> Void) {
         guard let errorView = erroViewFactory?.errorView(with: retryClosure) else {
             return

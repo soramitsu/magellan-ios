@@ -325,19 +325,6 @@ class MapListViewProtocolMock: MapListViewProtocol {
         reloadPlacesClosure?()
     }
 
-    //MARK: - reloadCategories
-
-    var reloadCategoriesCallsCount = 0
-    var reloadCategoriesCalled: Bool {
-        return reloadCategoriesCallsCount > 0
-    }
-    var reloadCategoriesClosure: (() -> Void)?
-
-    func reloadCategories() {
-        reloadCategoriesCallsCount += 1
-        reloadCategoriesClosure?()
-    }
-
     //MARK: - showErrorState
 
     var showErrorStateCallsCount = 0

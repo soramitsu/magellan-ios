@@ -9,8 +9,9 @@ import Foundation
 
 public struct PlacesRequest: Codable {
     
-    let location: String
+    let topLeft: String
+    let bottomRight: String
     let search: String?
-    let category: String?
+    let categories: [String]
     
 }

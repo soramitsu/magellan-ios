@@ -25,6 +25,13 @@ public enum L10n {
         }
     }
 
+    public enum Filter {
+        /// Reset
+        public static var reset: String { return localize("Filter.Reset") }
+        /// Filter
+        public static var title: String { return localize("Filter.title") }
+    }
+
     public enum Location {
 
         public enum Details {
@@ -82,7 +89,7 @@ extension L10n {
     fileprivate static func getFormat(for key: String, localization: String) -> String {
         let bundle = Bundle(for: BundleLoadHelper.self)
 
-        return NSLocalizedString(key, tableName: nil, bundle: Bundle.frameworkBundle ?? Bundle.main, value: "", comment: "")
+        return NSLocalizedString(key, tableName: nil, bundle: Bundle.frameworkBundle, value: "", comment: "")
     }
 
 }

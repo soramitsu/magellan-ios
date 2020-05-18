@@ -18,7 +18,6 @@ final class MapListViewController: UIViewController {
     private let searchField = UITextField()
     private let tableView = UITableView()
     private let closeButton = UIButton()
-    private var categoriesView: UICollectionView!
     private var keyboardHandler = KeyboardHandler()
     var erroViewFactory: ErrorViewFactoryProtocol?
     private var errorView: UIView?
@@ -84,31 +83,13 @@ final class MapListViewController: UIViewController {
         headerView.addSubview(closeButton)
     }
     
-    private func configureCategories() {
-        let layout = UICollectionViewFlowLayout()
-        let width = UIScreen.main.bounds.width / 4
-        layout.itemSize = CGSize(width: width, height: width)
-        layout.minimumLineSpacing = 0
-        layout.minimumInteritemSpacing = 0
-        
-        categoriesView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        categoriesView.dataSource = self
-        categoriesView.delegate = self
-        categoriesView.backgroundColor = .white
-        categoriesView.register(CategoryCollectionCell.self,
-                                forCellWithReuseIdentifier: CategoryCollectionCell.reuseIdentifier)
-    }
-    
     private func configureViews() {
         configureHeader()
-        
-        configureCategories()
         
         tableView.register(PlaceCell.self, forCellReuseIdentifier: PlaceCell.reuseIdentifier)
         tableView.dataSource = self as UITableViewDataSource
         tableView.delegate = self as UITableViewDelegate
         tableView.separatorInset = style.tableSeparatorInsets
-        tableView.tableHeaderView = categoriesView
         tableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 1))
         view.addSubview(tableView)
     }
@@ -148,7 +129,7 @@ final class MapListViewController: UIViewController {
         tableView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
         tableView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
         tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-        tableView.topAnchor.constraint(equalTo: headerView.bottomAnchor, constant: 8).isActive = true
+        tableView.topAnchor.constraint(equalTo: headerView.bottomAnchor, constant: 1).isActive = true
     }
     
     private func configureKeyboardHandler() {
@@ -159,29 +140,6 @@ final class MapListViewController: UIViewController {
             let bottomInset = frame.origin.y < UIScreen.main.bounds.size.height - 1 ? frame.size.height : 0
             self?.tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: bottomInset, right: 0)
         }
-    }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        
-        guard let headerView = tableView.tableHeaderView else {
-            return
-            
-        }
-        
-        let height = categoriesView.collectionViewLayout.collectionViewContentSize.height
-        var headerFrame = headerView.frame
-
-        if height != headerFrame.size.height {
-            headerFrame.size.height = height
-            headerFrame.size.width = view.frame.width
-            headerView.frame = headerFrame
-            tableView.tableHeaderView = headerView
-            
-            tableView.setNeedsLayout()
-        }
-
-        headerView.translatesAutoresizingMaskIntoConstraints = true
     }
 
     @objc private func search(_ textfield: UITextField) {
@@ -237,39 +195,6 @@ extension MapListViewController: UITableViewDelegate {
 }
 
 
-extension MapListViewController: UICollectionViewDataSource {
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return presenter.categories.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView,
-                        cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CategoryCollectionCell.reuseIdentifier,
-                                                            for: indexPath) as? CategoryCollectionCell else {
-                                                                fatalError("Could not deque catt of type CategoryCollectionCell")
-        }
-
-        cell.category = presenter.categories[indexPath.row]
-        cell.style = CategoryCollectionCell.Style(nameFont: style.smallFont, nameTextColor: style.bodyTextColor)
-
-        return cell
-    }
-    
-}
-
-
-extension MapListViewController: UICollectionViewDelegate {
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let category = presenter.categories[indexPath.row]
-        searchField.text = category.name
-        presenter.select(category: category.name)
-    }
-    
-}
-
-
 extension MapListViewController: UITextFieldDelegate {
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
@@ -304,7 +229,6 @@ extension MapListViewController: MapListViewProtocol {
             errorView?.removeFromSuperview()
             tableView.isHidden = false
             headerView.isHidden = false
-            categoriesView.reloadData()
             tableView.reloadData()
             view.setNeedsLayout()
         }

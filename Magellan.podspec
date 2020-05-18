@@ -17,7 +17,7 @@ Library allow fast integration of Soramitsu Places.
   s.swift_version = '5.0'
   s.static_framework = true
   s.source_files = 'Magellan/Classes/**/*.swift'
-  s.ios.resource_bundle = { 'Magellan' => ['Magellan/Assets/*.xcassets' , 'Magellan/Assets/**/*'] }
+  s.ios.resource_bundle = { 'Magellan' => ['Magellan/Assets/*.xcassets' , 'Magellan/Assets/Lang/**/*'] }
 
 
   s.frameworks = 'UIKit', 'CoreImage'

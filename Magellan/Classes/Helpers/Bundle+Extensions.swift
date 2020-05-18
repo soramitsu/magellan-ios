@@ -8,12 +8,13 @@
 import Foundation
 
 extension Bundle {
-    static var frameworkBundle: Bundle? {
+    static var frameworkBundle: Bundle {
         let frameworkBundle = Bundle(for: MagellanService.self)
-        guard let bundleURL = frameworkBundle.resourceURL?.appendingPathComponent("Magellan.bundle") else {
-            return nil
+        guard let bundleURL = frameworkBundle.resourceURL?.appendingPathComponent("Magellan.bundle"),
+            let result = Bundle(url: bundleURL) else {
+            fatalError("cannot load magellan framework bundle")
         }
         
-        return Bundle(url: bundleURL)
+        return result
     }
 }

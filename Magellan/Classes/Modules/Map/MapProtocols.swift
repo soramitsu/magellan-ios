@@ -23,17 +23,20 @@ protocol MapPresenterProtocol: MapListOutputProtocol, AutoMockable {
     var categories: [PlaceCategory] { get }
     var places: [PlaceViewModel] { get }
     var position: Coordinates { get }
+    var myLocation: Coordinates? { get }
 
     func showDetails(place: PlaceViewModel)
     func load()
+    
+    func showFilter()
 }
 
 protocol MapCoordinatorProtocol: AnyObject, AutoMockable {
     func showDetails(for placeInfo: PlaceInfo)
+    func showCategoriesFilter(categories: [PlaceCategory], filter: Set<PlaceCategory>, output: CategoriesFilterOutputProtocol?)
 }
 
 protocol MapOutputProtocol: AnyObject {
-    func didUpdate(categories: [PlaceCategory])
     func didUpdate(places: [PlaceViewModel])
     func loadingComplete(with error: Error?, retryClosure: @escaping () -> Void)
 }

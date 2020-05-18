@@ -20,14 +20,21 @@ final class MapPresenter: MapPresenterProtocol {
     private var locationService: UserLocationServiceProtocol
     
     private weak var getPlacesOperation: Operation?
-    private var currentCategory: String?
     private var currentSearchText: String?
     
     private(set) var categories: [PlaceCategory] = [] {
         didSet {
-            output?.didUpdate(categories: categories)
+            whiteFilter = Set(categories)
         }
     }
+    private(set) var whiteFilter: Set<PlaceCategory> = [] {
+        didSet {
+            if oldValue.count != 0 {
+                loadPlaces(search: currentSearchText)
+            }
+        }
+    }
+    
     private(set) var places: [PlaceViewModel] = [] {
         didSet {
             view?.reloadData()
@@ -40,7 +47,7 @@ final class MapPresenter: MapPresenterProtocol {
         if let currentPosition = locationService.currentLocation {
             return Geoflash.hash(latitude: currentPosition.lat,
                                  longitude: currentPosition.lon,
-                                 precision: 12)
+                                 precision: 5)
         }
         return Geoflash.hash(latitude: position.lat,
                              longitude: position.lon,
@@ -52,6 +59,10 @@ final class MapPresenter: MapPresenterProtocol {
             return currentPosition
         }
         return defaultPosition
+    }
+    
+    var myLocation: Coordinates? {
+        return locationService.currentLocation
     }
     
     init(service: MagellanServicePrototcol,
@@ -66,9 +77,7 @@ final class MapPresenter: MapPresenterProtocol {
         view?.showLoading()
         
         
-        let placeRequest = PlacesRequest(location: coordinatesHash,
-                                         search: nil,
-                                         category: nil)
+        let placeRequest = PlacesRequest(topLeft: coordinatesHash, bottomRight: coordinatesHash, search: nil, categories: [])
         service.getCategoriesAndPlaces(with: placeRequest,
                                        runCompletionIn: DispatchQueue.main) { [weak self] result in
                                         guard let self = self else {
@@ -88,25 +97,21 @@ final class MapPresenter: MapPresenterProtocol {
 
     }
     
-    func loadPlaces(category: String?,
-                    search: String?) {
+    func loadPlaces(search: String?) {
         guard let view = view else {
             return
         }
-        currentCategory = category
         currentSearchText = search
         
         view.showLoading()
-        let placeRequest = PlacesRequest(location: coordinatesHash,
-                                         search: search,
-                                         category: category)
+        let placeRequest = PlacesRequest(topLeft: coordinatesHash, bottomRight: coordinatesHash, search: search, categories: whiteFilter.flatMap{ $0.name } )
         getPlacesOperation?.cancel()
         getPlacesOperation = service.getPlaces(with: placeRequest, runCompletionIn: DispatchQueue.main) { [weak self] result in
             self?.view?.hideLoading()
             switch result {
             case .failure(let error):
                 self?.output?.loadingComplete(with: error) { [weak self] in
-                    self?.loadPlaces(category: category, search: search)
+                    self?.loadPlaces(search: search)
                 }
             case .success(let response):
                 self?.places = response.locations.flatMap({PlaceViewModel(place: $0)})
@@ -134,7 +139,11 @@ final class MapPresenter: MapPresenterProtocol {
     }
     
     func loadPlaces() {
-        loadPlaces(category: nil, search: nil)
+        loadPlaces(search: nil)
+    }
+    
+    func showFilter() {
+        coordinator?.showCategoriesFilter(categories: categories, filter: whiteFilter, output: self)
     }
 }
 
@@ -144,12 +153,8 @@ extension MapPresenter: MapListOutputProtocol {
         showDetails(place: place)
     }
     
-    func select(category: String) {
-        loadPlaces(category: category, search: nil)
-    }
-    
     func search(with text: String) {
-        loadPlaces(category: nil, search: text)
+        loadPlaces(search: text)
     }
     
     func reset() {
@@ -160,6 +165,12 @@ extension MapPresenter: MapListOutputProtocol {
 
 extension MapPresenter: UserLocationServiceDelegate {
     func userLocationDidUpdate() {
-        loadPlaces(category: currentCategory, search: currentSearchText)
+        loadPlaces(search: currentSearchText)
+    }
+}
+
+extension MapPresenter: CategoriesFilterOutputProtocol {
+    func categoriesFilter(_ filter: Set<PlaceCategory>) {
+        whiteFilter = filter
     }
 }

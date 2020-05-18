@@ -17,4 +17,5 @@
 "Error.Default.Message" = "An error occured, please try again";
 "Retry" = "Retry";
 "Cancel" = "Cancel";
-
+"Filter.title" = "Filter";
+"Filter.Reset" = "Reset";

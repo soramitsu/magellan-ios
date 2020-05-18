@@ -11,14 +11,12 @@ protocol MapListViewProtocol: ControllerBackedProtocol, AutoMockable {
 }
 
 protocol MapListPresenterProtocol: MapOutputProtocol, AutoMockable {
-    var categories: [PlaceCategory] { get }
     var places: [PlaceViewModel] { get }
     var view: MapListViewProtocol? { get set }
     var output: MapListOutputProtocol? { get set }
     var delegate: MapListPresenterDelegate? { get set }
     
     func showDetails(place: PlaceViewModel)
-    func select(category: String)
     func search(with text: String)
     
     func dismiss()
@@ -35,7 +33,6 @@ protocol MapListPresenterDelegate: AnyObject {
 protocol MapListOutputProtocol: AnyObject {
     
     func select(place: PlaceViewModel)
-    func select(category: String)
     func search(with text: String)
     func reset()
     

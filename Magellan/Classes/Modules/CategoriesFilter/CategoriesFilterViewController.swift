@@ -15,6 +15,10 @@ final class CategoriesFilterViewController: UIViewController {
     }
     
     let presenter: CategoriesFilterPresenterProtocol
+    var dismissInteractionController: UIPercentDrivenInteractiveTransition?
+    fileprivate lazy var animatedTransitioning: CategoriesFilterAnimatedTransitioning = {
+       return CategoriesFilterAnimatedTransitioning()
+    }()
     
     private let style: MagellanStyleProtocol
     private var containerView: UIView!
@@ -36,6 +40,7 @@ final class CategoriesFilterViewController: UIViewController {
         self.presenter = presenter
         self.style = style
         super.init(nibName: nil, bundle: nil)
+        self.transitioningDelegate = self
     }
     
     required init?(coder: NSCoder) {
@@ -44,16 +49,11 @@ final class CategoriesFilterViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupTapGesture()
         configureUI()
         setupConstraints()
         setupPanGesture()
-        setupTapGesture()
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        UIView.animate(withDuration: MapConstants.contentAnimationDuration) {
-            self.view.backgroundColor = Constants.backgroundColor.withAlphaComponent(Constants.backgroundAlpha)
-        }
+        
     }
     
     private func configureUI() {
@@ -139,6 +139,7 @@ final class CategoriesFilterViewController: UIViewController {
         tableView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor).isActive = true
     }
     
+    
     private func setupPanGesture() {
         let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePan(sender:)))
         panGesture.minimumNumberOfTouches = 1
@@ -147,7 +148,8 @@ final class CategoriesFilterViewController: UIViewController {
     }
     
     private func setupTapGesture() {
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(close))
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(close(sender:)))
+        tapGesture.delegate = self
         view.addGestureRecognizer(tapGesture)
     }
     
@@ -156,49 +158,34 @@ final class CategoriesFilterViewController: UIViewController {
     }
     
     @objc
-    private func close() {
-        let delta = self.containerView.bounds.height
-        UIView.animate(withDuration: MapConstants.contentAnimationDuration, animations: {
-            self.view.backgroundColor = Constants.backgroundColor.withAlphaComponent(0)
-            self.containerView.transform = CGAffineTransform(translationX: 0, y: delta)
-            self.tableView.transform = CGAffineTransform(translationX: 0, y: delta)
-        }) { isCompleate in
-            if isCompleate {
-             self.dismiss(animated: false, completion: nil)
-            }
-        }
+    private func close(sender: UITapGestureRecognizer) {
+        self.dismiss(animated: true, completion: nil)
     }
     
-    private var gestureStartOriginY: CGFloat = .zero
     @objc
     private func handlePan(sender: UIPanGestureRecognizer) {
+        let percentThreshold: CGFloat = 0.3
+
+        let translation = sender.translation(in: view)
+        let verticalMovement = translation.y / view.bounds.height
+        let downwardMovement = fmaxf(Float(verticalMovement), 0.0)
+        let downwardMovementPercent = fminf(downwardMovement, 1.0)
+        let progress = CGFloat(downwardMovementPercent)
+        
         switch sender.state {
         case .began:
-            gestureStartOriginY = sender.location(in: view).y
+            dismissInteractionController = UIPercentDrivenInteractiveTransition()
+            dismiss(animated: true, completion: nil)
         case .changed:
-            let delta = sender.location(in: view).y - gestureStartOriginY
-            if delta <= 0 {
-                return
-            }
-            let aplha: CGFloat = Constants.backgroundAlpha - delta / 1000
-            UIView.animate(withDuration: MapConstants.contentAnimationDuration) {
-                self.view.backgroundColor = Constants.backgroundColor.withAlphaComponent(aplha)
-                self.containerView.transform = CGAffineTransform(translationX: 0, y: delta)
-                self.tableView.transform = CGAffineTransform(translationX: 0, y: delta)
-            }
+            dismissInteractionController?.update(progress)
+        case .cancelled:
+            dismissInteractionController?.cancel()
         case .ended:
-            let delta = sender.location(in: view).y - gestureStartOriginY
-            if delta < 100 {
-                UIView.animate(withDuration: MapConstants.contentAnimationDuration) {
-                    self.view.backgroundColor = Constants.backgroundColor.withAlphaComponent(Constants.backgroundAlpha)
-                    self.containerView.transform = .identity
-                    self.tableView.transform = .identity
-                }
+            if progress > percentThreshold {
+                dismissInteractionController?.finish()
             } else {
-                presenter.dismiss()
-                self.dismiss(animated: false, completion: nil)
+                dismissInteractionController?.cancel()
             }
-            gestureStartOriginY = .zero
         default:
             break
         }
@@ -245,4 +232,98 @@ extension CategoriesFilterViewController: CategoriesFilterViewProtocol {
         tableView.reloadData()
     }
     
+}
+
+extension CategoriesFilterViewController: UIGestureRecognizerDelegate {
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+        return touch.location(in: containerView).y < 0
+    }
+}
+
+extension CategoriesFilterViewController: UIViewControllerTransitioningDelegate {
+    
+    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        animatedTransitioning.presenting = true
+        return animatedTransitioning
+    }
+    
+    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        animatedTransitioning.presenting = false
+        return animatedTransitioning
+    }
+    
+    func interactionControllerForDismissal(using animator: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
+        return dismissInteractionController
+    }
+    
+}
+
+fileprivate class CategoriesFilterAnimatedTransitioning: NSObject {
+    private var transitionView: UIView!
+    var presenting: Bool = false
+}
+
+extension CategoriesFilterAnimatedTransitioning: UIViewControllerAnimatedTransitioning {
+    
+    func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
+        return MapConstants.contentAnimationDuration
+    }
+    
+    func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
+        guard
+            let fromVC = transitionContext.viewController(forKey: .from),
+            let toVC = transitionContext.viewController(forKey: .to)
+            else {
+                return
+        }
+        let containerView = transitionContext.containerView
+        let containerFrame = transitionContext.containerView.frame
+        var toViewStartFrame = transitionContext.initialFrame(for: toVC)
+        let toViewFinalFrame = transitionContext.finalFrame(for: toVC)
+        var fromViewFinalFrame = transitionContext.finalFrame(for: fromVC)
+        
+        if (presenting) {
+            transitionView = UIView(frame: containerFrame)
+            transitionView.backgroundColor = UIColor.black
+            transitionView.alpha = 0
+            
+            containerView.addSubview(transitionView)
+            containerView.addSubview(toVC.view)
+            toViewStartFrame.origin.x = 0;
+            toViewStartFrame.origin.y = containerFrame.size.height;
+            toVC.view.frame = toViewStartFrame
+        } else {
+            fromViewFinalFrame = CGRect(x: 0,
+                                        y: containerFrame.size.height,
+                                        width: toVC.view.frame.size.width,
+                                        height: toVC.view.frame.size.height);
+            
+        }
+
+
+        UIView.animate(withDuration: transitionDuration(using: transitionContext),
+                       animations: {
+                        if self.presenting {
+                            self.transitionView.alpha = 0.4
+                            toVC.view.frame = toViewFinalFrame
+                        } else {
+                            self.transitionView.alpha = 0
+                            fromVC.view.frame = fromViewFinalFrame
+                        }
+        }) { _ in
+            let success = !transitionContext.transitionWasCancelled
+            
+            if !self.presenting && success {
+                fromVC.view.removeFromSuperview()
+                self.transitionView.removeFromSuperview()
+            }
+            
+            if self.presenting && !success {
+                toVC.view.removeFromSuperview()
+                self.transitionView.removeFromSuperview()
+            }
+            
+            transitionContext.completeTransition(success)
+        }
+    }
 }

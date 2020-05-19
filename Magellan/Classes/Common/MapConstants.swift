@@ -20,4 +20,5 @@ struct MapConstants {
         headerHeight + headerOffset + categoriesHeight
     }
     
+    static let contentAnimationDuration: TimeInterval = 0.25
 }

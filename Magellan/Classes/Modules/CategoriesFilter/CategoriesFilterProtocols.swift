@@ -19,7 +19,6 @@ protocol CategoriesFilterPresenterProtocol: AnyObject {
     var output: CategoriesFilterOutputProtocol? { get set }
     
     func viewModel(_ index: Int) -> CategoryFilterViewModel
-    func isSelected(_ index: Int) -> Bool
     func deselect(with index: Int)
     func select(with index: Int)
     func resetFilter()

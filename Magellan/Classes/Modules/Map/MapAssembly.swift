@@ -14,7 +14,7 @@ final class MapAssembly {
                                      defaultPosition: resolver.defaultCoordinate)
         
         let markerFactory = resolver.markerFactory ?? MapMarkerDefaultFactory()
-        let mapView = MapViewController(presenter: presenter, markerFactory: markerFactory)
+        let mapView = MapViewController(presenter: presenter, markerFactory: markerFactory, style: resolver.style)
         presenter.view = mapView
         
         return mapView

@@ -5,6 +5,7 @@
 */
 
 import UIKit
+import SoraUI
 import GoogleMaps
 import GoogleMapsUtils
 
@@ -18,6 +19,7 @@ final class MapViewController: UIViewController {
     
     let presenter: MapPresenterProtocol
     let markerFactory: MapMarkerFactoryProtocol
+    let style: MagellanStyleProtocol
     
     var preferredContentHeight: CGFloat = 0
     var observable = ViewModelObserverContainer<ContainableObserver>()
@@ -27,8 +29,8 @@ final class MapViewController: UIViewController {
     private var clusterManager: GMUClusterManager!
     
     
-    private var myPlaceButton = UIButton()
-    private var filterButton = UIButton()
+    private var myPlaceButton = RoundedButton()
+    private var filterButton = RoundedButton()
     private var filterTopConstraint: NSLayoutConstraint?
     private var positionButton = UIButton()
     
@@ -37,9 +39,11 @@ final class MapViewController: UIViewController {
     }
     
     init(presenter: MapPresenterProtocol,
-         markerFactory: MapMarkerFactoryProtocol) {
+         markerFactory: MapMarkerFactoryProtocol,
+         style: MagellanStyleProtocol) {
         self.presenter = presenter
         self.markerFactory = markerFactory
+        self.style = style
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -100,41 +104,36 @@ final class MapViewController: UIViewController {
     }
     
     private func setupButtons() {
-        let side: CGFloat = 32
-        
-        let setupShadow: (CALayer) -> Void = { item in
-            item.cornerRadius = side / 2
-            item.shadowColor = UIColor.black.withAlphaComponent(0.36).cgColor
-            item.shadowRadius = 3
-            item.shadowOffset = CGSize(width: 0, height: 3)
-            item.shadowOpacity = 1
-        }
+        let side = style.roundedButtonSideSize
         
         guard let filterImage = UIImage(named: "filter", in: Bundle.frameworkBundle, compatibleWith: nil),
-            let myPlace = UIImage(named: "gps_locate_me", in: Bundle.frameworkBundle, compatibleWith: nil) else {
+            let myPlaceImage = UIImage(named: "gps_locate_me", in: Bundle.frameworkBundle, compatibleWith: nil) else {
                 fatalError("Can not load images from fraimwork bundle")
         }
-        filterButton.backgroundColor = .white
-        filterButton.setImage(filterImage, for: .normal)
-        setupShadow(filterButton.layer)
+        
+        filterButton.contentInsets = UIEdgeInsets(top: 10, left: 10, bottom: 8, right: 8)
+        filterButton.imageWithTitleView?.iconImage = filterImage
+        filterButton.imageWithTitleView?.spacingBetweenLabelAndIcon = 0
+        filterButton.roundedBackgroundView?.cornerRadius = side / 2
+        filterButton.roundedBackgroundView?.shadowOpacity = 0.36
+        filterButton.roundedBackgroundView?.shadowOffset = CGSize(width: 0, height: 2)
         
         view.addSubview(filterButton)
         filterButton.translatesAutoresizingMaskIntoConstraints = false
-        filterButton.widthAnchor.constraint(equalToConstant: side).isActive = true
-        filterButton.heightAnchor.constraint(equalToConstant: side).isActive = true
         filterButton.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 10).isActive = true
         filterTopConstraint = filterButton.topAnchor.constraint(equalTo: view.topAnchor)
         filterButton.addTarget(nil, action: #selector(tapFilter), for: .touchUpInside)
         
         
-        myPlaceButton.backgroundColor = .white
-        myPlaceButton.setImage(myPlace, for: .normal)
-        setupShadow(myPlaceButton.layer)
+        myPlaceButton.contentInsets = UIEdgeInsets(top: 10, left: 10, bottom: 8, right: 8)
+        myPlaceButton.imageWithTitleView?.iconImage = myPlaceImage
+        myPlaceButton.imageWithTitleView?.spacingBetweenLabelAndIcon = 0
+        myPlaceButton.roundedBackgroundView?.cornerRadius = side / 2
+        myPlaceButton.roundedBackgroundView?.shadowOpacity = 0.36
+        myPlaceButton.roundedBackgroundView?.shadowOffset = CGSize(width: 0, height: 2)
         
         view.addSubview(myPlaceButton)
         myPlaceButton.translatesAutoresizingMaskIntoConstraints = false
-        myPlaceButton.widthAnchor.constraint(equalToConstant: side).isActive = true
-        myPlaceButton.heightAnchor.constraint(equalToConstant: side).isActive = true
         myPlaceButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -10).isActive = true
         myPlaceButton.centerYAnchor.constraint(equalTo: filterButton.centerYAnchor).isActive = true
         myPlaceButton.addTarget(nil, action: #selector(showMyPosition), for: .touchUpInside)

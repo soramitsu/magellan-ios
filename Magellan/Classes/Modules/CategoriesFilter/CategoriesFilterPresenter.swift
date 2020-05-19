@@ -35,11 +35,9 @@ extension CategoriesFilterPresenter: CategoriesFilterPresenterProtocol {
     }
     
     func viewModel(_ index: Int) -> CategoryFilterViewModel {
-        return CategoryFilterViewModel(category: categories[index])
-    }
-    
-    func isSelected(_ index: Int) -> Bool {
-        return filter.contains(categories[index])
+        let item = categories[index]
+        return CategoryFilterViewModel(category: item,
+                                       isSelected: filter.contains(item))
     }
     
     func select(with index: Int) {

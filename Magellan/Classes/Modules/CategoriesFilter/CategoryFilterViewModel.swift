@@ -11,6 +11,8 @@ struct CategoryFilterViewModel {
 
     private let category: PlaceCategory
     
+    var isSelected: Bool
+    
     var name: String {
         return category.name
     }
@@ -27,8 +29,9 @@ struct CategoryFilterViewModel {
         return image
     }
     
-    init(category: PlaceCategory) {
+    init(category: PlaceCategory, isSelected: Bool) {
         self.category = category
+        self.isSelected = isSelected
     }
     
 }

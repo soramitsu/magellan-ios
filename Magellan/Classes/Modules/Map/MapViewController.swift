@@ -111,7 +111,6 @@ final class MapViewController: UIViewController {
                 fatalError("Can not load images from fraimwork bundle")
         }
         
-        filterButton.contentInsets = UIEdgeInsets(top: 10, left: 10, bottom: 8, right: 8)
         filterButton.imageWithTitleView?.iconImage = filterImage
         filterButton.imageWithTitleView?.spacingBetweenLabelAndIcon = 0
         filterButton.roundedBackgroundView?.cornerRadius = side / 2
@@ -125,7 +124,6 @@ final class MapViewController: UIViewController {
         filterButton.addTarget(nil, action: #selector(tapFilter), for: .touchUpInside)
         
         
-        myPlaceButton.contentInsets = UIEdgeInsets(top: 10, left: 10, bottom: 8, right: 8)
         myPlaceButton.imageWithTitleView?.iconImage = myPlaceImage
         myPlaceButton.imageWithTitleView?.spacingBetweenLabelAndIcon = 0
         myPlaceButton.roundedBackgroundView?.cornerRadius = side / 2

@@ -51,7 +51,7 @@ final class CategoriesFilterViewController: UIViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        UIView.animate(withDuration: 0.3) {
+        UIView.animate(withDuration: MapConstants.contentAnimationDuration) {
             self.view.backgroundColor = Constants.backgroundColor.withAlphaComponent(Constants.backgroundAlpha)
         }
     }
@@ -157,11 +157,14 @@ final class CategoriesFilterViewController: UIViewController {
     
     @objc
     private func close() {
+        let delta = self.containerView.bounds.height
         UIView.animate(withDuration: MapConstants.contentAnimationDuration, animations: {
             self.view.backgroundColor = Constants.backgroundColor.withAlphaComponent(0)
+            self.containerView.transform = CGAffineTransform(translationX: 0, y: delta)
+            self.tableView.transform = CGAffineTransform(translationX: 0, y: delta)
         }) { isCompleate in
             if isCompleate {
-             self.dismiss(animated: true, completion: nil)
+             self.dismiss(animated: false, completion: nil)
             }
         }
     }

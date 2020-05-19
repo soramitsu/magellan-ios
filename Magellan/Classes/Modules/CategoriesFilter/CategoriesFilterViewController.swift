@@ -9,6 +9,11 @@ import UIKit
 
 final class CategoriesFilterViewController: UIViewController {
     
+    private struct Constants {
+        static let backgroundAlpha: CGFloat = 0.4
+        static let backgroundColor: UIColor = .black
+    }
+    
     let presenter: CategoriesFilterPresenterProtocol
     
     private let style: MagellanStyleProtocol
@@ -47,7 +52,7 @@ final class CategoriesFilterViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         UIView.animate(withDuration: 0.3) {
-            self.view.backgroundColor = UIColor.black.withAlphaComponent(0.4)
+            self.view.backgroundColor = Constants.backgroundColor.withAlphaComponent(Constants.backgroundAlpha)
         }
     }
     
@@ -153,7 +158,7 @@ final class CategoriesFilterViewController: UIViewController {
     @objc
     private func close() {
         UIView.animate(withDuration: MapConstants.contentAnimationDuration, animations: {
-            self.view.backgroundColor = UIColor.black.withAlphaComponent(0)
+            self.view.backgroundColor = Constants.backgroundColor.withAlphaComponent(0)
         }) { isCompleate in
             if isCompleate {
              self.dismiss(animated: true, completion: nil)
@@ -172,7 +177,9 @@ final class CategoriesFilterViewController: UIViewController {
             if delta <= 0 {
                 return
             }
+            let aplha: CGFloat = Constants.backgroundAlpha - delta / 1000
             UIView.animate(withDuration: MapConstants.contentAnimationDuration) {
+                self.view.backgroundColor = Constants.backgroundColor.withAlphaComponent(aplha)
                 self.containerView.transform = CGAffineTransform(translationX: 0, y: delta)
                 self.tableView.transform = CGAffineTransform(translationX: 0, y: delta)
             }
@@ -180,6 +187,7 @@ final class CategoriesFilterViewController: UIViewController {
             let delta = sender.location(in: view).y - gestureStartOriginY
             if delta < 100 {
                 UIView.animate(withDuration: MapConstants.contentAnimationDuration) {
+                    self.view.backgroundColor = Constants.backgroundColor.withAlphaComponent(Constants.backgroundAlpha)
                     self.containerView.transform = .identity
                     self.tableView.transform = .identity
                 }
@@ -192,7 +200,6 @@ final class CategoriesFilterViewController: UIViewController {
             break
         }
     }
-
 }
 
 extension CategoriesFilterViewController: UITableViewDataSource {

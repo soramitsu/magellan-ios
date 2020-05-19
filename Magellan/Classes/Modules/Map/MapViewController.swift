@@ -111,11 +111,17 @@ final class MapViewController: UIViewController {
                 fatalError("Can not load images from fraimwork bundle")
         }
         
+        let setupClosure: (RoundedButton) -> Void = { item in
+            item.roundedBackgroundView?.cornerRadius = side / 2
+            item.roundedBackgroundView?.shadowOpacity = 0.36
+            item.roundedBackgroundView?.shadowOffset = CGSize(width: 0, height: 2)
+            item.roundedBackgroundView?.fillColor = .white
+            item.roundedBackgroundView?.highlightedFillColor = .white
+            item.changesContentOpacityWhenHighlighted = true
+        }
+        
         filterButton.imageWithTitleView?.iconImage = filterImage
-        filterButton.imageWithTitleView?.spacingBetweenLabelAndIcon = 0
-        filterButton.roundedBackgroundView?.cornerRadius = side / 2
-        filterButton.roundedBackgroundView?.shadowOpacity = 0.36
-        filterButton.roundedBackgroundView?.shadowOffset = CGSize(width: 0, height: 2)
+        setupClosure(filterButton)
         
         view.addSubview(filterButton)
         filterButton.translatesAutoresizingMaskIntoConstraints = false
@@ -125,10 +131,7 @@ final class MapViewController: UIViewController {
         
         
         myPlaceButton.imageWithTitleView?.iconImage = myPlaceImage
-        myPlaceButton.imageWithTitleView?.spacingBetweenLabelAndIcon = 0
-        myPlaceButton.roundedBackgroundView?.cornerRadius = side / 2
-        myPlaceButton.roundedBackgroundView?.shadowOpacity = 0.36
-        myPlaceButton.roundedBackgroundView?.shadowOffset = CGSize(width: 0, height: 2)
+        setupClosure(myPlaceButton)
         
         view.addSubview(myPlaceButton)
         myPlaceButton.translatesAutoresizingMaskIntoConstraints = false

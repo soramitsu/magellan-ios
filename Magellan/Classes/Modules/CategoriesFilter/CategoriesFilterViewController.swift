@@ -42,6 +42,7 @@ final class CategoriesFilterViewController: UIViewController {
         configureUI()
         setupConstraints()
         setupPanGesture()
+        setupTapGesture()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -140,28 +141,45 @@ final class CategoriesFilterViewController: UIViewController {
         headerView.addGestureRecognizer(panGesture)
     }
     
+    private func setupTapGesture() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(close))
+        view.addGestureRecognizer(tapGesture)
+    }
+    
     @objc func reset() {
         presenter.resetFilter()
     }
     
-    private var deltaTransform: CGFloat = .zero
+    @objc
+    private func close() {
+        UIView.animate(withDuration: MapConstants.contentAnimationDuration, animations: {
+            self.view.backgroundColor = UIColor.black.withAlphaComponent(0)
+        }) { isCompleate in
+            if isCompleate {
+             self.dismiss(animated: true, completion: nil)
+            }
+        }
+    }
+    
+    private var gestureStartOriginY: CGFloat = .zero
     @objc
     private func handlePan(sender: UIPanGestureRecognizer) {
-        let viewTranslation = sender.translation(in: view)
-        deltaTransform += viewTranslation.y
-        if deltaTransform < 0 {
-            return
-        }
         switch sender.state {
+        case .began:
+            gestureStartOriginY = sender.location(in: view).y
         case .changed:
-            
-            UIView.animate(withDuration: 0.1) {
-                self.containerView.transform = CGAffineTransform(translationX: 0, y: viewTranslation.y)
-                self.tableView.transform = CGAffineTransform(translationX: 0, y: viewTranslation.y)
+            let delta = sender.location(in: view).y - gestureStartOriginY
+            if delta <= 0 {
+                return
+            }
+            UIView.animate(withDuration: MapConstants.contentAnimationDuration) {
+                self.containerView.transform = CGAffineTransform(translationX: 0, y: delta)
+                self.tableView.transform = CGAffineTransform(translationX: 0, y: delta)
             }
         case .ended:
-            if viewTranslation.y < 100 {
-                UIView.animate(withDuration: 0.1) {
+            let delta = sender.location(in: view).y - gestureStartOriginY
+            if delta < 100 {
+                UIView.animate(withDuration: MapConstants.contentAnimationDuration) {
                     self.containerView.transform = .identity
                     self.tableView.transform = .identity
                 }
@@ -169,7 +187,7 @@ final class CategoriesFilterViewController: UIViewController {
                 presenter.dismiss()
                 self.dismiss(animated: false, completion: nil)
             }
-            deltaTransform = 0
+            gestureStartOriginY = .zero
         default:
             break
         }
@@ -185,9 +203,13 @@ extension CategoriesFilterViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: CategoryFilterTableCell.reuseIdentifier, for: indexPath) as! CategoryFilterTableCell
+        let viewModel = presenter.viewModel(indexPath.row)
         
-        cell.viewModel = presenter.viewModel(indexPath.row)
         cell.style = cellStyle
+        cell.viewModel = viewModel
+        if viewModel.isSelected {
+            tableView.selectRow(at: indexPath, animated: false, scrollPosition: .none)
+        }
         
         return cell
     }
@@ -204,12 +226,6 @@ extension CategoriesFilterViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         presenter.select(with: indexPath.row)
-    }
-    
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if presenter.isSelected(indexPath.row) {
-            tableView.selectRow(at: indexPath, animated: false, scrollPosition: .none)
-        }
     }
 }
 

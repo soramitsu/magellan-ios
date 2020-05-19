@@ -32,5 +32,5 @@ final class DummyDemoMagellanStyle: MagellanStyleProtocol {
     let offset: CGFloat = 4
     let sideOffset: CGFloat = 20
     let buttonSideSize: CGFloat = 40
-
+    let roundedButtonSideSize: CGFloat = 32
 }

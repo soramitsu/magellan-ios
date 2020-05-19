@@ -27,7 +27,7 @@ public protocol MagellanStyleProtocol {
     var offset: CGFloat { get }
     var sideOffset: CGFloat { get }
     var buttonSideSize: CGFloat { get }
-    
+    var roundedButtonSideSize: CGFloat { get }
 }
 
 final class DefaultMagellanStyle: MagellanStyleProtocol {
@@ -53,5 +53,5 @@ final class DefaultMagellanStyle: MagellanStyleProtocol {
     let offset: CGFloat = 4
     let sideOffset: CGFloat = 20
     let buttonSideSize: CGFloat = 40
-
+    let roundedButtonSideSize: CGFloat = 32
 }

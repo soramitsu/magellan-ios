@@ -63,6 +63,13 @@ final class MapViewController: UIViewController {
         setupButtons()
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        NSObject.cancelPreviousPerformRequests(withTarget: self,
+                                               selector: #selector(positionDidChange),
+                                               object: nil)
+    }
+    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         

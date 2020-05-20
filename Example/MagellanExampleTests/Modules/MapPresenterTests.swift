@@ -67,6 +67,10 @@ final class MapPresenterTests: XCTestCase {
                                  locationService: locationService,
                                  defaultPosition: self.defaultPosition)
         
+        presenter.currentSearchText = "text"
+        presenter.currentTopLeft = Coordinates(lat: 1, lon: 1)
+        presenter.currentBottomRight = Coordinates(lat: 2, lon: 2)
+        
         presenter.view = mapView
         presenter.coordinator = coordinator
         presenter.output = listPresenter
@@ -100,19 +104,36 @@ final class MapPresenterTests: XCTestCase {
         XCTAssertTrue(listPresenter.didUpdatePlacesCalled)
     }
     
+    func testLocationUpdateIfNeeded() {
+        // arrange
+        locationService.currentLocation = Coordinates(lat: 1, lon: 1)
+        service.getPlacesWithRunCompletionInCompletionClosure = { _, _, completion in
+            completion(.success(PlacesResponse(locations: self.places, clusters: [])))
+            return BaseOperation<Void>()
+        }
+        presenter.currentTopLeft = nil
+        presenter.currentBottomRight = nil
+        
+        // act
+        presenter.userLocationDidUpdate()
+        
+        // assert
+        XCTAssertFalse(mapView.reloadDataCalled)
+        XCTAssertFalse(listPresenter.didUpdatePlacesCalled)
+    }
+    
     func testLoadCategories() {
         // arrange
-        service.getCategoriesAndPlacesWithRunCompletionInCompletionClosure = { _, _, completion in
-            completion(.success((self.categoties, PlacesResponse(locations: self.places, clusters: []))))
+        service.getCategoriesRunCompletionInCompletionClosure = { _, completion in
+            completion(.success(self.categoties))
             return BaseOperation<Void>()
         }
         
         // act
-        presenter.load()
+        presenter.loadCategories()
         
         // assert
-        XCTAssertTrue(mapView.reloadDataCalled)
-        XCTAssertTrue(listPresenter.didUpdatePlacesCalled)
+        XCTAssertFalse(mapView.reloadDataCalled)
     }
     
     func testReset() {

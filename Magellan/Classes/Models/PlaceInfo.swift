@@ -69,7 +69,7 @@ struct WorkingDay: WorkingStatusProtocol, Codable, Equatable {
     
 }
 
-struct PlaceInfo {
+struct PlaceInfo: Coordinated {
     
     let id: Int
     let name: String

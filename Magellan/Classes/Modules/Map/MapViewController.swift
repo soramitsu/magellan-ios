@@ -7,7 +7,6 @@
 import UIKit
 import SoraUI
 import GoogleMaps
-import GoogleMapsUtils
 
 final class MapViewController: UIViewController {
     
@@ -24,9 +23,8 @@ final class MapViewController: UIViewController {
     var preferredContentHeight: CGFloat = 0
     var observable = ViewModelObserverContainer<ContainableObserver>()
     
-    private var markers: [PlaceViewModel] = []
     private var camera: GMSCameraPosition!
-    private var clusterManager: GMUClusterManager!
+    private var timer: Timer?
     
     
     private var myPlaceButton = RoundedButton()
@@ -55,23 +53,15 @@ final class MapViewController: UIViewController {
         var mapView = GMSMapView()
         mapView.isMyLocationEnabled = true
         let position = presenter.position
-        camera = GMSCameraPosition.camera(withLatitude: position.lat, longitude: position.lon, zoom: 12.0)
+        camera = GMSCameraPosition.camera(withLatitude: position.lat, longitude: position.lon, zoom: 8.0)
         mapView.camera = camera
+        mapView.delegate = self
         view = mapView
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupButtons()
-        
-        presenter.load()
-                
-        let iconGenerator = GMUDefaultClusterIconGenerator()
-        let algorithm = GMUNonHierarchicalDistanceBasedAlgorithm()
-        let renderer = GMUDefaultClusterRenderer(mapView: mapView, clusterIconGenerator: iconGenerator)
-        renderer.delegate = self
-        clusterManager = GMUClusterManager(map: mapView, algorithm: algorithm, renderer: renderer)
-        clusterManager.setDelegate(self, mapDelegate: self)
     }
     
     override func viewDidLayoutSubviews() {
@@ -101,6 +91,11 @@ final class MapViewController: UIViewController {
         observable.observers.forEach {
             $0.observer?.didChangePreferredContentHeight(to: preferredContentHeight)
         }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        presenter.loadCategories()
     }
     
     private func setupButtons() {
@@ -151,23 +146,10 @@ final class MapViewController: UIViewController {
             return
         }
 
-        var cameraUpdate = GMSCameraUpdate.setTarget(myLocation.coreLocationCoordinates, zoom: 12)
+        var cameraUpdate = GMSCameraUpdate.setTarget(myLocation.coreLocationCoordinates, zoom: 9)
         mapView.moveCamera(cameraUpdate)
     }
 }
-
-extension MapViewController: GMUClusterManagerDelegate {
-    
-    func clusterManager(_ clusterManager: GMUClusterManager, didTap cluster: GMUCluster) -> Bool {
-        let newCamera = GMSCameraPosition.camera(withTarget: cluster.position, zoom: mapView.camera.zoom + 1)
-        let update = GMSCameraUpdate.setCamera(newCamera)
-        mapView.moveCamera(update)
-        
-        return true
-    }
-    
-}
-
 
 extension MapViewController: GMSMapViewDelegate {
     
@@ -180,17 +162,22 @@ extension MapViewController: GMSMapViewDelegate {
         return true
     }
     
-}
-
-
-extension MapViewController: GMUClusterRendererDelegate {
+    func mapView(_ mapView: GMSMapView, didChange position: GMSCameraPosition) {
+        timer?.invalidate()
+        timer = Timer(timeInterval: 3.0,
+                      target: self,
+                      selector: #selector(positionDidChange),
+                      userInfo: nil,
+                      repeats: false)
+        RunLoop.current.add(timer!, forMode: .common)
+    }
     
-    func renderer(_ renderer: GMUClusterRenderer, markerFor object: Any) -> GMSMarker? {
-        guard let place = object as? PlaceViewModel else {
-            return nil
-        }
-        
-        return markerFactory.marker(for: place)
+    @objc
+    func positionDidChange() {
+        print(timer?.userInfo)
+        let region = mapView.projection.visibleRegion()
+        presenter.loadPlaces(topLeft: region.farLeft.coordinates,
+                             bottomRight: region.nearRight.coordinates)
     }
     
 }
@@ -202,41 +189,26 @@ extension MapViewController: MapViewProtocol {
             return
         }
         mapView.clear()
-        markers = presenter.places
-        clusterManager.clearItems()
-        clusterManager.add(markers)
-        clusterManager.cluster()
         
-        if let firstLocation = markers.first?.coordinates {
-            var bounds = GMSCoordinateBounds(coordinate: firstLocation, coordinate: firstLocation)
-            markers.forEach { bounds = bounds.includingCoordinate($0.coordinates) }
-            set(bounds: bounds)
-        }
-    }
-    
-    func set(bounds: GMSCoordinateBounds) {
-        if !isViewLoaded {
-            return
+        presenter.places.forEach {
+            self.markerFactory.marker(place: $0).map = self.mapView
         }
         
-        var heightDiff: CGFloat = 0.0
-        if let origin = view.superview?.convert(view.frame.origin, to: nil) {
-            heightDiff = origin.y
+        presenter.clusters.forEach {
+            self.markerFactory.marker(cluster: $0).map = self.mapView
         }
-        
-        let bottomPadding =  MapConstants.listCompactHeight + heightDiff + Constants.markerPadding
-        mapView.moveCamera(GMSCameraUpdate.fit(bounds, with: UIEdgeInsets(top: Constants.markerPadding,
-                                                                          left: Constants.markerPadding,
-                                                                          bottom: bottomPadding,
-                                                                          right: Constants.markerPadding)))
     }
     
     func show(place: PlaceViewModel) {
         if !isViewLoaded {
             return
         }
-        let camera = GMSCameraUpdate.setTarget(place.coordinates, zoom: 18)
+        let camera = GMSCameraUpdate.setTarget(place.coordinates.coreLocationCoordinates, zoom: 12)
         mapView.moveCamera(camera)
+    }
+    
+    func set(isLoading: Bool) {
+        UIApplication.shared.isNetworkActivityIndicatorVisible = isLoading
     }
 }
 

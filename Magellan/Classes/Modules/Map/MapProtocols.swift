@@ -10,9 +10,9 @@ import GoogleMaps
 protocol MapViewProtocol: class, ControllerBackedProtocol, Containable, Loadable, AutoMockable {
     var presenter: MapPresenterProtocol { get }
     
+    func set(isLoading: Bool)
     func show(place: PlaceViewModel)
     func reloadData()
-    
 }
 
 protocol MapPresenterProtocol: MapListOutputProtocol, AutoMockable {
@@ -22,11 +22,13 @@ protocol MapPresenterProtocol: MapListOutputProtocol, AutoMockable {
     var output: MapOutputProtocol? { get set }
     var categories: [PlaceCategory] { get }
     var places: [PlaceViewModel] { get }
+    var clusters: [ClusterViewModel] { get }
     var position: Coordinates { get }
     var myLocation: Coordinates? { get }
 
     func showDetails(place: PlaceViewModel)
-    func load()
+    func loadCategories()
+    func loadPlaces(topLeft:Coordinates, bottomRight: Coordinates)
     
     func showFilter()
 }

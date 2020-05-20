@@ -20,7 +20,9 @@ final class MapPresenter: MapPresenterProtocol {
     private var locationService: UserLocationServiceProtocol
     
     private weak var getPlacesOperation: Operation?
-    private var currentSearchText: String?
+    var currentSearchText: String?
+    var currentTopLeft: Coordinates?
+    var currentBottomRight: Coordinates?
     
     private(set) var categories: [PlaceCategory] = [] {
         didSet {
@@ -30,29 +32,20 @@ final class MapPresenter: MapPresenterProtocol {
     private(set) var whiteFilter: Set<PlaceCategory> = [] {
         didSet {
             if oldValue.count != 0 {
-                loadPlaces(search: currentSearchText)
+                reloadIfNeeded(search: currentSearchText)
             }
         }
     }
     
     private(set) var places: [PlaceViewModel] = [] {
         didSet {
-            view?.reloadData()
             output?.didUpdate(places: places)
         }
     }
+    private(set) var clusters: [ClusterViewModel] = []
     
     private let defaultPosition: Coordinates
-    var coordinatesHash: String {
-        if let currentPosition = locationService.currentLocation {
-            return Geoflash.hash(latitude: currentPosition.lat,
-                                 longitude: currentPosition.lon,
-                                 precision: 5)
-        }
-        return Geoflash.hash(latitude: position.lat,
-                             longitude: position.lon,
-                             precision: 12)
-    }
+
     
     var position: Coordinates {
         if let currentPosition = locationService.currentLocation {
@@ -73,48 +66,50 @@ final class MapPresenter: MapPresenterProtocol {
         self.defaultPosition = defaultPosition
     }
     
-    func load() {
-        view?.showLoading()
-        
-        
-        let placeRequest = PlacesRequest(topLeft: coordinatesHash, bottomRight: coordinatesHash, search: nil, categories: [])
-        service.getCategoriesAndPlaces(with: placeRequest,
-                                       runCompletionIn: DispatchQueue.main) { [weak self] result in
-                                        guard let self = self else {
-                                            return
-                                        }
-                                        switch result {
-                                        case .success(let tuple):
-                                            self.categories = tuple.0
-                                            self.places = tuple.1.locations.compactMap { PlaceViewModel(place: $0) }
-                                        default:
-                                            self.output?.loadingComplete(with: MapError.loadingError, retryClosure: { [weak self] in
-                                                self?.load()
-                                            })
-                                        }
-                                        self.view?.hideLoading()
+    func loadCategories() {
+        if !categories.isEmpty {
+            return
         }
-
+        
+        view?.showLoading()
+        service.getCategories(runCompletionIn: DispatchQueue.main) { [weak self] result in
+            guard let self = self else {
+                return
+            }
+            switch result {
+            case .success(let items):
+                self.categories = items
+            default:
+                self.output?.loadingComplete(with: MapError.loadingError, retryClosure: { [weak self] in
+                    self?.loadCategories()
+                })
+            }
+            self.view?.hideLoading()
+        }
     }
     
-    func loadPlaces(search: String?) {
+    func loadPlaces(topLeft: Coordinates, bottomRight: Coordinates) {
+        loadPlaces(topLeft: topLeft, bottomRight: bottomRight, search: currentSearchText)
+    }
+    
+    func loadPlaces(topLeft: Coordinates, bottomRight: Coordinates, search: String?) {
         guard let view = view else {
             return
         }
         currentSearchText = search
         
-        view.showLoading()
-        let placeRequest = PlacesRequest(topLeft: coordinatesHash, bottomRight: coordinatesHash, search: search, categories: whiteFilter.flatMap{ $0.name } )
+        let placeRequest = PlacesRequest(topLeft: topLeft, bottomRight: bottomRight, search: search, categories: whiteFilter.flatMap{ $0.name } )
         getPlacesOperation?.cancel()
         getPlacesOperation = service.getPlaces(with: placeRequest, runCompletionIn: DispatchQueue.main) { [weak self] result in
-            self?.view?.hideLoading()
             switch result {
             case .failure(let error):
                 self?.output?.loadingComplete(with: error) { [weak self] in
-                    self?.loadPlaces(search: search)
+                    self?.loadPlaces(topLeft: topLeft, bottomRight: bottomRight, search: search)
                 }
             case .success(let response):
-                self?.places = response.locations.flatMap({PlaceViewModel(place: $0)})
+                self?.places = response.locations.compactMap { PlaceViewModel(place: $0) }
+                self?.clusters = response.clusters.compactMap { ClusterViewModel(cluster: $0) }
+                self?.view?.reloadData()
             }
         }
     }
@@ -138,9 +133,15 @@ final class MapPresenter: MapPresenterProtocol {
         }
     }
     
-    func loadPlaces() {
-        loadPlaces(search: nil)
+    func reloadIfNeeded(search: String?) {
+        guard let currentTopLeft = currentTopLeft,
+            let currentBottomRight = currentBottomRight else {
+                return
+        }
+        loadPlaces(topLeft: currentTopLeft, bottomRight: currentBottomRight, search: search)
     }
+    
+    
     
     func showFilter() {
         coordinator?.showCategoriesFilter(categories: categories, filter: whiteFilter, output: self)
@@ -154,18 +155,18 @@ extension MapPresenter: MapListOutputProtocol {
     }
     
     func search(with text: String) {
-        loadPlaces(search: text)
+        reloadIfNeeded(search: text)
     }
     
     func reset() {
-        loadPlaces()
+        reloadIfNeeded(search: nil)
     }
 
 }
 
 extension MapPresenter: UserLocationServiceDelegate {
     func userLocationDidUpdate() {
-        loadPlaces(search: currentSearchText)
+        reloadIfNeeded(search: currentSearchText)
     }
 }
 

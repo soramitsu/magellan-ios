@@ -7,9 +7,15 @@
 
 import Foundation
 
-struct Cluster {
+struct Cluster: Coordinated {
     let type: String // can be enum, ask backend developer
     let quantity: Int
+    let lat: Double
+    let lon: Double
+    
+    var coordinates: Coordinates {
+        return Coordinates(lat: lat, lon: lon)
+    }
 }
 
 extension Cluster: Codable { }

@@ -79,23 +79,4 @@ extension MagellanService: MagellanServicePrototcol {
         return operation
     }
     
-    func getCategoriesAndPlaces(with request: PlacesRequest, runCompletionIn queue: DispatchQueue, completion: @escaping CategoriesAndPlacesBlock) -> Operation {
-        let operation = operationFactory.fetchCategoriesAndPlaces(with: request)
-        
-        operation.completionBlock = {
-            queue.async {
-                guard let result = operation.result else {
-                    completion(.failure(MagellanServiceError.noResult))
-                    return
-                }
-                completion(result)
-            }
-        }
-        
-        operationQueue.addOperations(operation.dependencies, waitUntilFinished: false)
-        operationQueue.addOperation(operation)
-        
-        return operation
-    }
-    
 }

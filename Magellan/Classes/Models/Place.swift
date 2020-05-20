@@ -15,7 +15,7 @@ struct Place {
     let lon: Double
 }
 
-extension Place {
+extension Place: Coordinated {
     var coordinates: Coordinates {
        return Coordinates(lat: lat, lon: lon)
     }

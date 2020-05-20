@@ -11,7 +11,6 @@ import RobinHood
 typealias CategoriesCompletionBlock = (Result<[PlaceCategory], Error>) -> Void
 typealias PlaceInfoCompletionBlock = (Result<PlaceInfo, Error>) -> Void
 typealias PlacesCompletionBlock = (Result<PlacesResponse, Error>) -> Void
-typealias CategoriesAndPlacesBlock = (Result<([PlaceCategory], PlacesResponse), Error>) -> Void
 
 
 protocol MagellanServicePrototcol: AutoMockable {
@@ -24,7 +23,4 @@ protocol MagellanServicePrototcol: AutoMockable {
     
     @discardableResult
     func getPlaces(with request: PlacesRequest, runCompletionIn queue: DispatchQueue, completion: @escaping PlacesCompletionBlock) -> Operation
-    
-    @discardableResult
-    func getCategoriesAndPlaces(with request: PlacesRequest, runCompletionIn queue: DispatchQueue, completion: @escaping CategoriesAndPlacesBlock) -> Operation
 }

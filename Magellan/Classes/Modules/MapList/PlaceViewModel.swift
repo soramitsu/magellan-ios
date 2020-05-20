@@ -9,7 +9,7 @@ import Foundation
 import CoreLocation
 import GoogleMapsUtils
 
-class PlaceViewModel: NSObject {
+class PlaceViewModel: NSObject, Coordinated {
     
     let place: Place
     var currentLocation: CLLocation?
@@ -34,8 +34,8 @@ class PlaceViewModel: NSObject {
         return place.coordinates.location.distance(from: currentLocation) / 1000
     }
     
-    var coordinates: CLLocationCoordinate2D {
-        return place.coordinates.coreLocationCoordinates
+    var coordinates: Coordinates {
+        return place.coordinates
     }
     
     init(place: Place) {
@@ -44,7 +44,7 @@ class PlaceViewModel: NSObject {
     
 }
 
-extension PlaceViewModel: GMUClusterItem{
+extension PlaceViewModel: GMUClusterItem {
     var position: CLLocationCoordinate2D {
         return place.coordinates.coreLocationCoordinates
     }

@@ -33,6 +33,7 @@ final class MapListPresenter: MapListPresenterProtocol {
 }
 
 extension MapListPresenter: MapOutputProtocol {
+    
     func didUpdate(places: [PlaceViewModel]) {
         self.places = places
         view?.reloadPlaces()

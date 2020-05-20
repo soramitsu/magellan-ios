@@ -10,19 +10,20 @@ import GoogleMaps
 
 protocol MapMarkerFactoryProtocol {
     
-    func marker(for place: PlaceViewModel) -> GMSMarker
+    func marker(place viewModel: PlaceViewModel) -> GMSMarker
     func image(for category: String) -> UIImage?
     
+    func marker(cluster viewModel: ClusterViewModel) -> GMSMarker
 }
 
 final class MapMarkerDefaultFactory: MapMarkerFactoryProtocol {
     
-    func marker(for place: PlaceViewModel) -> GMSMarker {
+    func marker(place viewModel: PlaceViewModel) -> GMSMarker {
         let marker = GMSMarker()
-        marker.title = place.name
-        marker.snippet = place.category
-        marker.position = place.coordinates
-        if let iconImage = image(for: place.category) {
+        marker.title = viewModel.name
+        marker.snippet = viewModel.category
+        marker.position = viewModel.position
+        if let iconImage = image(for: viewModel.category) {
             let iconView = UIImageView(image: iconImage)
             iconView.contentMode = .scaleAspectFit
             iconView.translatesAutoresizingMaskIntoConstraints = false
@@ -30,16 +31,34 @@ final class MapMarkerDefaultFactory: MapMarkerFactoryProtocol {
             iconView.widthAnchor.constraint(equalToConstant: 30).isActive = true
             marker.iconView = iconView
         }
-        marker.userData = place
+        marker.userData = viewModel
         
         return marker
     }
     
     func image(for category: String) -> UIImage? {
-        if let image = UIImage(named: category, in: Bundle.frameworkBundle, compatibleWith: nil) {
-            return image
+        guard let image = UIImage(named: "map_\(category.lowercased())", in: Bundle.frameworkBundle, compatibleWith: nil) else {
+            return UIImage(named: "map_other", in: Bundle.frameworkBundle, compatibleWith: nil)!
         }
-        return UIImage(named: "map_other", in: Bundle.frameworkBundle, compatibleWith: nil)
+        
+        return image
     }
     
+    func marker(cluster viewModel: ClusterViewModel) -> GMSMarker {
+        let countLabel = UILabel(frame: CGRect(origin: .zero, size: CGSize(width: 32, height: 32)))
+        countLabel.text = viewModel.title
+        countLabel.textColor = .gray
+        countLabel.backgroundColor = UIColor(red: 0.176, green: 0.161, blue: 0.149, alpha: 0.8)
+        countLabel.textAlignment = .center
+        countLabel.layer.cornerRadius = 32 / 2
+        countLabel.layer.masksToBounds = true
+        countLabel.textColor = .white
+        
+        let marker = GMSMarker()
+        marker.userData = viewModel
+        marker.iconView = countLabel
+        marker.position = viewModel.coordinates.coreLocationCoordinates
+        
+        return marker
+    }
 }

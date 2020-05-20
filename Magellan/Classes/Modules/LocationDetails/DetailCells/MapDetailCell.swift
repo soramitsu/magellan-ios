@@ -11,11 +11,13 @@ final class MapDetailCell: UITableViewCell {
     
     private struct Constants {
         static let sideOffset: CGFloat = 16
+        static let offset: CGFloat = 7
         static let contentOffset: CGFloat = 20
     }
     
     private let titleLabel = UILabel()
     private let contentLabel = UILabel()
+    private let iconView = UIImageView()
     
     struct Style {
         let titleFont: UIFont
@@ -30,7 +32,7 @@ final class MapDetailCell: UITableViewCell {
         }
     }
 
-    var viewModel: MapDetailViewModel? {
+    var viewModel: MapDetailViewModelProtocol? {
         didSet {
             configureContent()
         }
@@ -67,7 +69,11 @@ final class MapDetailCell: UITableViewCell {
         contentLabel.textAlignment = .right
         contentView.addSubview(titleLabel)
         contentLabel.numberOfLines = 0
+        contentLabel.textAlignment = .right
         contentView.addSubview(contentLabel)
+        
+        iconView.contentMode = .scaleAspectFit
+        contentView.addSubview(iconView)
     }
     
     private func layoutViews() {
@@ -77,9 +83,12 @@ final class MapDetailCell: UITableViewCell {
         titleLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor).isActive = true
         
         contentLabel.translatesAutoresizingMaskIntoConstraints = false
-        contentLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -Constants.sideOffset).isActive = true
-        contentLabel.leftAnchor.constraint(equalTo: titleLabel.rightAnchor, constant: 20).isActive = true
+        contentLabel.rightAnchor.constraint(equalTo: iconView.leftAnchor, constant: -Constants.offset).isActive = true
         contentLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor).isActive = true
+        
+        iconView.translatesAutoresizingMaskIntoConstraints = false
+        iconView.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -Constants.sideOffset).isActive = true
+        iconView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor).isActive = true
     }
     
     private func configureContent() {
@@ -88,6 +97,7 @@ final class MapDetailCell: UITableViewCell {
         }
         titleLabel.text = viewModel.title
         contentLabel.text = viewModel.content
+        iconView.image = viewModel.image
     }
     
 }

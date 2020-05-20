@@ -148,16 +148,16 @@ extension LocationDetailsViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let model = presenter.items[indexPath.row]
         
-        switch model {
-        case is MapAddressViewModel:
+        switch model.type {
+        case .address:
             let cell = tableView.dequeueReusableCell(withIdentifier: MapAddressCell.reuseIdentifier,
                                                      for: indexPath) as! MapAddressCell
-            cell.viewModel = (model as! MapAddressViewModel)
+            cell.viewModel = model
             cell.style = MapAddressCell.Style(titleFont: style.bodyBoldFont,
                                               addressFont: style.bodyBoldFont,
                                               addressTextColor: style.secondColor)
             return cell
-        case is MapDetailViewModel:
+        default:
             let cell = tableView.dequeueReusableCell(withIdentifier: MapDetailCell.reuseIdentifier,
                                                      for: indexPath) as! MapDetailCell
             cell.viewModel = (model as! MapDetailViewModel)
@@ -166,23 +166,22 @@ extension LocationDetailsViewController: UITableViewDataSource {
                                              contentFont: style.bodyBoldFont,
                                              contentTextColor: style.secondColor)
             return cell
-        default:
-            return UITableViewCell()
         }
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         let model = presenter.items[indexPath.row]
         
-        let labelInset: CGFloat = isAdaptiveHeightDecreased ? 20 : 50
-        if let addressModel = model as? MapAddressViewModel {
-            let descriptionHeight = addressModel.description
-                .height(for: max(0, tableView.bounds.width - 2 * labelInset),
-                        font: style.bodyRegularFont)
-            return MapAddressCell.baseHeight + descriptionHeight
+        if model.type != .address {
+            return 48
         }
         
-        return 48
+        let labelInset: CGFloat = isAdaptiveHeightDecreased ? 20 : 50
+        let descriptionHeight = model.content
+            .height(for: max(0, tableView.bounds.width - 2 * labelInset),
+                    font: style.bodyRegularFont)
+        
+        return MapAddressCell.baseHeight + descriptionHeight
     }
     
 }

@@ -4,9 +4,10 @@
 
 "Location.Details.phone" = "Phone number";
 "Location.Details.website" = "Website";
-"Location.Details..fb" = "FB";
-"Location.Details..email" = "E-mail";
+"Location.Details.fb" = "FB";
+"Location.Details.email" = "E-mail";
 "Location.Details.address" = "Address";
+"Location.Details.workingHours" = "Working hours";
 "Location.Details.Status.Open" = "Open";
 "Location.Details.Status.Closed" = "Closed";
 "Location.Details.Status.workingHours" = "Working hours: %@";

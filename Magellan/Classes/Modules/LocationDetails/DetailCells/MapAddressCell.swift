@@ -39,7 +39,7 @@ final class MapAddressCell: UITableViewCell {
         }
     }
     
-    var viewModel: MapAddressViewModel? {
+    var viewModel: MapDetailViewModelProtocol? {
         didSet {
             configureContent()
         }
@@ -88,7 +88,7 @@ final class MapAddressCell: UITableViewCell {
             return
         }
         titleLabel.text = viewModel.title
-        addressLabel.text = viewModel.description
+            addressLabel.text = viewModel.content
     }
     
 }

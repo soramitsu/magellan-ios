@@ -24,7 +24,6 @@ final class MapViewController: UIViewController {
     var observable = ViewModelObserverContainer<ContainableObserver>()
     
     private var camera: GMSCameraPosition!
-    private var timer: Timer?
     
     
     private var myPlaceButton = RoundedButton()
@@ -163,18 +162,12 @@ extension MapViewController: GMSMapViewDelegate {
     }
     
     func mapView(_ mapView: GMSMapView, didChange position: GMSCameraPosition) {
-        timer?.invalidate()
-        timer = Timer(timeInterval: 3.0,
-                      target: self,
-                      selector: #selector(positionDidChange),
-                      userInfo: nil,
-                      repeats: false)
-        RunLoop.current.add(timer!, forMode: .common)
+        NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(positionDidChange), object: nil)
+        perform(#selector(positionDidChange), with: nil, afterDelay: 3.0, inModes: [.common])
     }
     
     @objc
     func positionDidChange() {
-        print(timer?.userInfo)
         let region = mapView.projection.visibleRegion()
         presenter.loadPlaces(topLeft: region.farLeft.coordinates,
                              bottomRight: region.nearRight.coordinates)
@@ -208,7 +201,7 @@ extension MapViewController: MapViewProtocol {
     }
     
     func set(isLoading: Bool) {
-        UIApplication.shared.isNetworkActivityIndicatorVisible = isLoading
+        // todo: show loading indicator
     }
 }
 

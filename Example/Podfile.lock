@@ -147,7 +147,6 @@ PODS:
   - SoraUI/PinView (1.8.9):
     - SoraUI/Controls
   - SoraUI/Skrull (1.8.9)
-  - Sourcery (0.17.0)
   - SVProgressHUD (2.2.5)
   - SwiftGen (6.1.0)
   - SwiftLint (0.31.0)
@@ -159,7 +158,6 @@ DEPENDENCIES:
   - libPhoneNumber-iOS
   - Magellan (from `../`)
   - OHHTTPStubs/Swift
-  - Sourcery
   - SwiftGen
   - SwiftLint (= 0.31.0)
 
@@ -187,7 +185,6 @@ SPEC REPOS:
     - SoraFoundation
     - SoraKeystore
     - SoraUI
-    - Sourcery
     - SVProgressHUD
     - SwiftGen
     - SwiftLint
@@ -220,11 +217,10 @@ SPEC CHECKSUMS:
   SoraFoundation: adeb5d9756236db69c76712e0e57df9bcc324c59
   SoraKeystore: 408a26aafda780fc3005b20ab336791832b5419e
   SoraUI: 9bad0ba56d2f3cf67eb812f2d2fc56b8fd0aa39b
-  Sourcery: 3ed61be7c8a1218fce349266139379dba477efe0
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
   SwiftGen: f872ca75cbd17bf7103c17f13dcfa0d9a15667b0
   SwiftLint: 7a0227733d786395817373b2d0ca799fd0093ff3
 
-PODFILE CHECKSUM: 1d2d004a226db9fd47d950a07df05739d1ce78d6
+PODFILE CHECKSUM: 777735567c117f1e0dcc2beddab5a667210b9e52
 
 COCOAPODS: 1.9.1

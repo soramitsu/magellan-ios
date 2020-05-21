@@ -22,3 +22,9 @@ extension Coordinates {
         return CLLocationCoordinate2D(latitude: lat, longitude: lon)
     }
 }
+
+extension CLLocationCoordinate2D: Coordinated {
+    var coordinates: Coordinates {
+        return Coordinates(lat: latitude, lon: longitude)
+    }
+}

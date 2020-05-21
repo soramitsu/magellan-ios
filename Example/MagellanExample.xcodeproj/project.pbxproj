@@ -485,7 +485,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n$PODS_ROOT/Sourcery/bin/sourcery\n";
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nSourcery\n";
 		};
 		F8C81BBE246EA830004603A9 /* SwiftGen */ = {
 			isa = PBXShellScriptBuildPhase;

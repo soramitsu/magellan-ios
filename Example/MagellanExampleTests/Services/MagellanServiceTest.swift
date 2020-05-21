@@ -61,7 +61,7 @@ class MagellanServiceTest: XCTestCase {
         Mocks.mock(path: "/paymentservice/api/v1/merchants", filename: "placesList.json")
         let expectation = XCTestExpectation()
         var value: PlacesResponse? = nil
-        let request = PlacesRequest(topLeft: "geoHash", bottomRight: "geoHash", search: nil, categories: [])
+        let request = PlacesRequest(topLeft: Coordinates(lat: 1, lon: 1), bottomRight: Coordinates(lat: 1, lon: 1), search: nil, categories: [])
         
         magellanService.getPlaces(with: request, runCompletionIn: DispatchQueue.main) { result in
             switch result {
@@ -81,7 +81,7 @@ class MagellanServiceTest: XCTestCase {
         Mocks.mock(path: "/paymentservice/api/v1/merchants", filename: "fail.json")
         let expectation = XCTestExpectation()
         var expError: Error? = nil
-        let request = PlacesRequest(topLeft: "geoHash", bottomRight: "geoHash", search: nil, categories: [])
+        let request = PlacesRequest(topLeft: Coordinates(lat: 1, lon: 1), bottomRight: Coordinates(lat: 1, lon: 1), search: nil, categories: [])
         
         magellanService.getPlaces(with: request, runCompletionIn: DispatchQueue.main) { result in
             switch result {

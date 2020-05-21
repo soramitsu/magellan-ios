@@ -159,7 +159,10 @@ final class CategoriesFilterViewController: UIViewController {
     
     @objc
     private func close(sender: UITapGestureRecognizer) {
-        self.dismiss(animated: true, completion: nil)
+        let presenter = self.presenter
+        self.dismiss(animated: true) {
+            presenter.dismiss()
+        }
     }
     
     @objc
@@ -175,7 +178,10 @@ final class CategoriesFilterViewController: UIViewController {
         switch sender.state {
         case .began:
             dismissInteractionController = UIPercentDrivenInteractiveTransition()
-            dismiss(animated: true, completion: nil)
+            let presenter = self.presenter
+            self.dismiss(animated: true) {
+                presenter.dismiss()
+            }
         case .changed:
             dismissInteractionController?.update(progress)
         case .cancelled:

@@ -1,4 +1,4 @@
-// Generated using Sourcery 0.17.0 — https://github.com/krzysztofzablocki/Sourcery
+// Generated using Sourcery 0.18.0 — https://github.com/krzysztofzablocki/Sourcery
 // DO NOT EDIT
 
 // swiftlint:disable line_length
@@ -144,22 +144,6 @@ class MagellanServicePrototcolMock: MagellanServicePrototcol {
         getPlacesWithRunCompletionInCompletionCallsCount += 1
         getPlacesWithRunCompletionInCompletionReceivedArguments = (request: request, queue: queue, completion: completion)
         return getPlacesWithRunCompletionInCompletionClosure.map({ $0(request, queue, completion) }) ?? getPlacesWithRunCompletionInCompletionReturnValue
-    }
-
-    //MARK: - getCategoriesAndPlaces
-
-    var getCategoriesAndPlacesWithRunCompletionInCompletionCallsCount = 0
-    var getCategoriesAndPlacesWithRunCompletionInCompletionCalled: Bool {
-        return getCategoriesAndPlacesWithRunCompletionInCompletionCallsCount > 0
-    }
-    var getCategoriesAndPlacesWithRunCompletionInCompletionReceivedArguments: (request: PlacesRequest, queue: DispatchQueue, completion: CategoriesAndPlacesBlock)?
-    var getCategoriesAndPlacesWithRunCompletionInCompletionReturnValue: Operation!
-    var getCategoriesAndPlacesWithRunCompletionInCompletionClosure: ((PlacesRequest, DispatchQueue, @escaping CategoriesAndPlacesBlock) -> Operation)?
-
-    func getCategoriesAndPlaces(with request: PlacesRequest, runCompletionIn queue: DispatchQueue, completion: @escaping CategoriesAndPlacesBlock) -> Operation {
-        getCategoriesAndPlacesWithRunCompletionInCompletionCallsCount += 1
-        getCategoriesAndPlacesWithRunCompletionInCompletionReceivedArguments = (request: request, queue: queue, completion: completion)
-        return getCategoriesAndPlacesWithRunCompletionInCompletionClosure.map({ $0(request, queue, completion) }) ?? getCategoriesAndPlacesWithRunCompletionInCompletionReturnValue
     }
 
 }
@@ -349,6 +333,7 @@ class MapPresenterProtocolMock: MapPresenterProtocol {
     var output: MapOutputProtocol?
     var categories: [PlaceCategory] = []
     var places: [PlaceViewModel] = []
+    var clusters: [ClusterViewModel] = []
     var position: Coordinates {
         get { return underlyingPosition }
         set(value) { underlyingPosition = value }
@@ -371,17 +356,32 @@ class MapPresenterProtocolMock: MapPresenterProtocol {
         showDetailsPlaceClosure?(place)
     }
 
-    //MARK: - load
+    //MARK: - loadCategories
 
-    var loadCallsCount = 0
-    var loadCalled: Bool {
-        return loadCallsCount > 0
+    var loadCategoriesCallsCount = 0
+    var loadCategoriesCalled: Bool {
+        return loadCategoriesCallsCount > 0
     }
-    var loadClosure: (() -> Void)?
+    var loadCategoriesClosure: (() -> Void)?
 
-    func load() {
-        loadCallsCount += 1
-        loadClosure?()
+    func loadCategories() {
+        loadCategoriesCallsCount += 1
+        loadCategoriesClosure?()
+    }
+
+    //MARK: - loadPlaces
+
+    var loadPlacesTopLeftBottomRightCallsCount = 0
+    var loadPlacesTopLeftBottomRightCalled: Bool {
+        return loadPlacesTopLeftBottomRightCallsCount > 0
+    }
+    var loadPlacesTopLeftBottomRightReceivedArguments: (topLeft: Coordinates, bottomRight: Coordinates)?
+    var loadPlacesTopLeftBottomRightClosure: ((Coordinates, Coordinates) -> Void)?
+
+    func loadPlaces(topLeft:Coordinates, bottomRight: Coordinates) {
+        loadPlacesTopLeftBottomRightCallsCount += 1
+        loadPlacesTopLeftBottomRightReceivedArguments = (topLeft: topLeft, bottomRight: bottomRight)
+        loadPlacesTopLeftBottomRightClosure?(topLeft, bottomRight)
     }
 
     //MARK: - showFilter
@@ -480,6 +480,21 @@ class MapViewProtocolMock: MapViewProtocol {
     }
     var underlyingController: UIViewController!
     var loadingPresenter: UIViewController?
+
+    //MARK: - set
+
+    var setIsLoadingCallsCount = 0
+    var setIsLoadingCalled: Bool {
+        return setIsLoadingCallsCount > 0
+    }
+    var setIsLoadingReceivedIsLoading: Bool?
+    var setIsLoadingClosure: ((Bool) -> Void)?
+
+    func set(isLoading: Bool) {
+        setIsLoadingCallsCount += 1
+        setIsLoadingReceivedIsLoading = isLoading
+        setIsLoadingClosure?(isLoading)
+    }
 
     //MARK: - show
 

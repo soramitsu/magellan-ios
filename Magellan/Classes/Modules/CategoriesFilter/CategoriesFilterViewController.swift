@@ -30,9 +30,9 @@ final class CategoriesFilterViewController: UIViewController {
     
     private lazy var cellStyle: CategoryFilterTableCell.Style = {
         return CategoryFilterTableCell.Style(titleFont: self.style.header2Font,
-                                            titleColor: self.style.headerTextColor,
-                                            countFont: self.style.header3Font,
-                                            countColor: self.style.backgroundColor,
+                                             titleColor: self.style.darkTextColor,
+                                            countFont: self.style.header2Font,
+                                            countColor: self.style.disabledGrayColor,
                                             selectedImage: UIImage(named: "checkmark", in: Bundle.frameworkBundle, compatibleWith: nil)!)
     }()
     
@@ -58,21 +58,21 @@ final class CategoriesFilterViewController: UIViewController {
     
     private func configureUI() {
         containerView = UIView()
-        containerView.backgroundColor = style.headerBackgroundColor
+        containerView.backgroundColor = style.mainBGColor
         headerView = UIView()
         
-        headerView.layer.cornerRadius = 10
-        headerView.backgroundColor = style.headerBackgroundColor
+        headerView.layer.cornerRadius = style.topOffset
+        headerView.backgroundColor = style.mainBGColor
         
         panView = UIView()
-        panView.backgroundColor = style.panColor
+        panView.backgroundColor = style.panBGColor
         panView.layer.cornerRadius = MapConstants.panHeight / 2
         headerView.addSubview(panView)
         
         titleLabel = UILabel()
         titleLabel.text = L10n.Filter.title
         titleLabel.font = style.header1Font
-        titleLabel.textColor = style.headerTextColor
+        titleLabel.textColor = style.headerColor
         headerView.addSubview(titleLabel)
         
         resetButton = UIButton(type: .custom)
@@ -89,7 +89,7 @@ final class CategoriesFilterViewController: UIViewController {
         tableView.showsVerticalScrollIndicator = false
         tableView.dataSource = self
         tableView.delegate = self
-        tableView.backgroundColor = style.headerBackgroundColor
+        tableView.backgroundColor = style.mainBGColor
         tableView.separatorStyle = .none
         tableView.allowsMultipleSelection = true
         view.addSubview(tableView)
@@ -102,7 +102,7 @@ final class CategoriesFilterViewController: UIViewController {
         containerView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         
         headerView.translatesAutoresizingMaskIntoConstraints = false
-        headerView.topAnchor.constraint(equalTo: containerView.topAnchor, constant: -10).isActive = true
+        headerView.topAnchor.constraint(equalTo: containerView.topAnchor, constant: -style.topOffset).isActive = true
         headerView.leftAnchor.constraint(equalTo: containerView.leftAnchor).isActive = true
         headerView.rightAnchor.constraint(equalTo: containerView.rightAnchor).isActive = true
         headerView.bottomAnchor.constraint(equalTo: tableView.topAnchor).isActive = true
@@ -114,16 +114,16 @@ final class CategoriesFilterViewController: UIViewController {
         panView.centerXAnchor.constraint(equalTo: headerView.centerXAnchor).isActive = true
         
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        titleLabel.topAnchor.constraint(equalTo: headerView.topAnchor, constant: 16).isActive = true
-        titleLabel.leftAnchor.constraint(equalTo: headerView.leftAnchor, constant: 20).isActive = true
-        titleLabel.bottomAnchor.constraint(equalTo: headerView.bottomAnchor, constant: -16).isActive = true
+        titleLabel.topAnchor.constraint(equalTo: headerView.topAnchor, constant: style.doubleOffset).isActive = true
+        titleLabel.leftAnchor.constraint(equalTo: headerView.leftAnchor, constant: style.sideOffset).isActive = true
+        titleLabel.bottomAnchor.constraint(equalTo: headerView.bottomAnchor, constant: -style.doubleOffset).isActive = true
         
         resetButton.translatesAutoresizingMaskIntoConstraints = false
         resetButton.centerYAnchor.constraint(equalTo: titleLabel.centerYAnchor).isActive = true
-        resetButton.rightAnchor.constraint(equalTo: headerView.rightAnchor, constant: -20).isActive = true
+        resetButton.rightAnchor.constraint(equalTo: headerView.rightAnchor, constant: -style.sideOffset).isActive = true
         
         let separatorView = UIView()
-        separatorView.backgroundColor = style.backgroundColor
+        separatorView.backgroundColor = style.sectionsDeviderBGColor
         headerView.addSubview(separatorView)
         separatorView.translatesAutoresizingMaskIntoConstraints = false
         separatorView.bottomAnchor.constraint(equalTo: headerView.bottomAnchor).isActive = true

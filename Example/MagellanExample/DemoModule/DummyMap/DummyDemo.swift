@@ -19,7 +19,6 @@ class DummyDemo: DemoFactoryProtocol {
         let networkResolver = NetworkResolver(baseUrl: baseUrl)
         Mocks.mockAPI()
         return MaggelanBuilder(key: testKey)
-            .with(style: DummyDemoMagellanStyle())
             .with(phoneFormatter: MagellanPhoneFormatter())
             .with(errorViewFactory: MagellanErrorViewFactory())
             .build(networkResolver: networkResolver)

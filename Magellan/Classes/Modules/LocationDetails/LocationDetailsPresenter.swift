@@ -26,25 +26,25 @@ final class LocationDetailsPresenter {
         if !place.phoneNumber.isEmpty {
             let rawPhone = place.phoneNumber
             let phone = formatter?.formattedPhoneNumber(with: rawPhone, region: place.region) ?? rawPhone
-            items.append(MapDetailViewModel(title: L10n.Location.Details.phone,
-                                              content: phone,
-                                              action: { [weak self] in
+            items.append(MapDetailViewModel(type: .phone,
+                                            content: phone,
+                                            action: { [weak self] in
                                                 self?.handle(path: "tel://\(rawPhone)")
             }))
         }
 
         if !place.website.isEmpty {
             let website = place.website
-            items.append(MapDetailViewModel(title: L10n.Location.Details.website,
-                                              content: place.website,
-                                              action: { [weak self] in
+            items.append(MapDetailViewModel(type: .website,
+                                            content: place.website,
+                                            action: { [weak self] in
                                                 self?.handle(path: website)
             }))
         }
 
         if !place.facebook.isEmpty {
             let fb = place.facebook
-            items.append(MapDetailViewModel(title: L10n.Location.Details.fb,
+            items.append(MapDetailViewModel(type: .facebook,
                                               content: place.facebook,
                                               action: { [weak self] in
                                                 self?.handle(path: fb)
@@ -52,8 +52,14 @@ final class LocationDetailsPresenter {
         }
 
         if !place.address.isEmpty {
-            items.append(MapAddressViewModel(title: L10n.Location.Details.address,
-                                               description: place.address))
+            items.append(MapDetailViewModel(type: .address,
+                                            content: place.address,
+                                            action: nil))
+        }
+        if let workingHours = place.currentWorkingDay?.workingHours {
+            items.append(MapDetailViewModel(type: .workingHours,
+                                            content: workingHours,
+                                            action: nil))
         }
         
 
@@ -75,6 +81,9 @@ extension LocationDetailsPresenter: LocationDetailsPresenterProtocol {
     }
     
     var category: String {
+        if !place.address.isEmpty {
+            return "\(place.type) · \(place.address)"
+        }
         return place.type
     }
     

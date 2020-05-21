@@ -23,17 +23,20 @@ final class PlaceCell: UITableViewCell {
     
     final class Style {
         let nameFont: UIFont
+        let nameColor: UIColor
         let categoryFont: UIFont
         let categoryTextColor: UIColor
         let distanceFont: UIFont
         let distanceColor: UIColor
         
         init(nameFont: UIFont,
+             nameColor: UIColor,
              categoryFont: UIFont,
              categoryTextColor: UIColor,
              distanceFont: UIFont,
              distanceColor: UIColor) {
             self.nameFont = nameFont
+            self.nameColor = nameColor
             self.categoryFont = categoryFont
             self.categoryTextColor = categoryTextColor
             self.distanceFont = distanceFont
@@ -80,6 +83,7 @@ final class PlaceCell: UITableViewCell {
             return
         }
         nameLabel.font = style.nameFont
+        nameLabel.textColor = style.nameColor
         categoryLabel.textColor = style.categoryTextColor
         categoryLabel.font = style.categoryFont
         distanceLabel.textColor = style.distanceColor

@@ -35,16 +35,20 @@ public enum L10n {
     public enum Location {
 
         public enum Details {
-            /// E-mail
-            public static var email: String { return localize("Location.Details..email") }
-            /// FB
-            public static var fb: String { return localize("Location.Details..fb") }
             /// Address
             public static var address: String { return localize("Location.Details.address") }
+            /// E-mail
+            public static var email: String { return localize("Location.Details.email") }
+            /// FB
+            public static var fb: String { return localize("Location.Details.fb") }
+            /// Information
+            public static var information: String { return localize("Location.Details.Information") }
             /// Phone number
             public static var phone: String { return localize("Location.Details.phone") }
             /// Website
             public static var website: String { return localize("Location.Details.website") }
+            /// Working hours
+            public static var workingHours: String { return localize("Location.Details.workingHours") }
 
             public enum Status {
                 /// Closed

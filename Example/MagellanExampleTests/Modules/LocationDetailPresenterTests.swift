@@ -48,7 +48,7 @@ final class LocationDetailPresenterTests: XCTestCase {
         
         // assert
         XCTAssertEqual(presenter.title, "name")
-        XCTAssertEqual(presenter.category, "type")
+        XCTAssertEqual(presenter.category, "type · addr")
         XCTAssertEqual(presenter.distance, "dist")
         XCTAssertEqual(presenter.workingStatus, "Open")
         XCTAssertEqual(presenter.items.count, 4)

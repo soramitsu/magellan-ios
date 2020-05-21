@@ -10,11 +10,12 @@ import UIKit
 final class MapAddressCell: UITableViewCell {
     
     private struct Constants {
-        static let titleTopOffset: CGFloat = 8
-        static let labelInset: CGFloat = 16
-        static let descriptionTopOffset: CGFloat = 6
-        static let descriptionBottomInset: CGFloat = 6
-        static let titleHeight: CGFloat = 24
+        static let titleHeight: CGFloat = 16
+        static let titleTopOffset: CGFloat = 17
+        static let labelInset: CGFloat = 20
+        static let descriptionTopOffset: CGFloat = 15
+        static let descriptionBottomInset: CGFloat = 16
+        static let offset: CGFloat = 10
     }
     
     static var baseHeight: CGFloat {
@@ -26,9 +27,11 @@ final class MapAddressCell: UITableViewCell {
     
     private let titleLabel = UILabel()
     private let addressLabel = UILabel()
+    private let iconView = UIImageView()
     
     struct Style {
         let titleFont: UIFont
+        let titleColor: UIColor
         let addressFont: UIFont
         let addressTextColor: UIColor
     }
@@ -57,18 +60,26 @@ final class MapAddressCell: UITableViewCell {
         
         addressLabel.numberOfLines = 0
         contentView.addSubview(addressLabel)
+        
+        iconView.contentMode = .scaleAspectFit
+        contentView.addSubview(iconView)
     
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        titleLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant:  -Constants.labelInset).isActive = true
         titleLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant:  Constants.labelInset).isActive = true
         titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant:  Constants.titleTopOffset).isActive = true
-        titleLabel.heightAnchor.constraint(equalToConstant: Constants.titleHeight).isActive = true
         
         addressLabel.translatesAutoresizingMaskIntoConstraints = false
-        addressLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant:  Constants.labelInset).isActive = true
-        addressLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant:  -Constants.labelInset).isActive = true
+        addressLabel.leftAnchor.constraint(equalTo: titleLabel.leftAnchor).isActive = true
         addressLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant:  Constants.descriptionTopOffset).isActive = true
+        addressLabel.rightAnchor.constraint(equalTo: iconView.leftAnchor, constant:  -Constants.offset).isActive = true
         addressLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant:  -Constants.descriptionBottomInset).isActive = true
+        
+        iconView.translatesAutoresizingMaskIntoConstraints = false
+        iconView.topAnchor.constraint(equalTo: addressLabel.topAnchor).isActive = true
+        iconView.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -Constants.labelInset).isActive = true
+        iconView.heightAnchor.constraint(equalToConstant: Constants.descriptionBottomInset).isActive = true
+        iconView.widthAnchor.constraint(equalTo: iconView.heightAnchor).isActive = true
+
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -80,6 +91,7 @@ final class MapAddressCell: UITableViewCell {
             return
         }
         titleLabel.font = style.titleFont
+        titleLabel.textColor = style.titleColor
         addressLabel.font = style.addressFont
         addressLabel.textColor = style.addressTextColor
     }
@@ -88,7 +100,8 @@ final class MapAddressCell: UITableViewCell {
             return
         }
         titleLabel.text = viewModel.title
-            addressLabel.text = viewModel.content
+        addressLabel.text = viewModel.content
+        iconView.image = viewModel.image
     }
     
 }

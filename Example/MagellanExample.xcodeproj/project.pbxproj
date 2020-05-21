@@ -24,7 +24,6 @@
 		F838F0592449980E00F34627 /* placesList.json in Resources */ = {isa = PBXBuildFile; fileRef = F838F0582449980E00F34627 /* placesList.json */; };
 		F83F50E42446053B001AD397 /* DemoFactoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = F83F50E32446053B001AD397 /* DemoFactoryProtocol.swift */; };
 		F8524D84245836E20091ED5F /* UIFont+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8524D83245836E20091ED5F /* UIFont+Extensions.swift */; };
-		F8524D86245837600091ED5F /* DummyDemoMagellanStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8524D85245837600091ED5F /* DummyDemoMagellanStyle.swift */; };
 		F8524D8E2458380C0091ED5F /* GTEestiProDisplay-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = F8524D872458380B0091ED5F /* GTEestiProDisplay-Medium.otf */; };
 		F8524D8F2458380C0091ED5F /* GTEestiProDisplay-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = F8524D882458380B0091ED5F /* GTEestiProDisplay-Bold.otf */; };
 		F8524D902458380C0091ED5F /* GothamPro.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F8524D892458380B0091ED5F /* GothamPro.ttf */; };
@@ -78,7 +77,6 @@
 		F838F0582449980E00F34627 /* placesList.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = placesList.json; sourceTree = "<group>"; };
 		F83F50E32446053B001AD397 /* DemoFactoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoFactoryProtocol.swift; sourceTree = "<group>"; };
 		F8524D83245836E20091ED5F /* UIFont+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Extensions.swift"; sourceTree = "<group>"; };
-		F8524D85245837600091ED5F /* DummyDemoMagellanStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DummyDemoMagellanStyle.swift; sourceTree = "<group>"; };
 		F8524D872458380B0091ED5F /* GTEestiProDisplay-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "GTEestiProDisplay-Medium.otf"; sourceTree = "<group>"; };
 		F8524D882458380B0091ED5F /* GTEestiProDisplay-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "GTEestiProDisplay-Bold.otf"; sourceTree = "<group>"; };
 		F8524D892458380B0091ED5F /* GothamPro.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = GothamPro.ttf; sourceTree = "<group>"; };
@@ -179,7 +177,6 @@
 			isa = PBXGroup;
 			children = (
 				F83422ED2448736400E0C685 /* DummyDemo.swift */,
-				F8524D85245837600091ED5F /* DummyDemoMagellanStyle.swift */,
 				F85DF3702462E43400BB977B /* MagellanErrorViewFactory.swift */,
 			);
 			path = DummyMap;
@@ -537,7 +534,6 @@
 				F83F50E42446053B001AD397 /* DemoFactoryProtocol.swift in Sources */,
 				F86E8E3B245968940082219D /* MagellanPhoneFormatter.swift in Sources */,
 				F838F050244992A100F34627 /* NetworkResolver.swift in Sources */,
-				F8524D86245837600091ED5F /* DummyDemoMagellanStyle.swift in Sources */,
 				F82317792445D54F00D4B95F /* DemoViewController.swift in Sources */,
 				F838F0522449968600F34627 /* Mocks.swift in Sources */,
 				F85DF3712462E43400BB977B /* MagellanErrorViewFactory.swift in Sources */,

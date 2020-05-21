@@ -41,6 +41,8 @@ public enum L10n {
             public static var email: String { return localize("Location.Details.email") }
             /// FB
             public static var fb: String { return localize("Location.Details.fb") }
+            /// Information
+            public static var information: String { return localize("Location.Details.Information") }
             /// Phone number
             public static var phone: String { return localize("Location.Details.phone") }
             /// Website

@@ -14,20 +14,20 @@ final class MapListViewController: UIViewController {
     private let style: MagellanStyleProtocol
     private let headerView = UIView()
     private let panView = UIView()
-    private let iconView = UIImageView(image: nil)
     private let searchField = UITextField()
+    private let searchContainer = UIView()
     private let tableView = UITableView()
-    private let closeButton = UIButton()
     private var keyboardHandler = KeyboardHandler()
     var erroViewFactory: ErrorViewFactoryProtocol?
     private var errorView: UIView?
     
     private lazy var placeCellStyle: PlaceCell.Style = {
         PlaceCell.Style(nameFont: style.header1Font,
-                categoryFont: style.bodyRegularFont,
-                categoryTextColor: style.bodyTextColor,
-                distanceFont: style.bodyBoldFont,
-                distanceColor: style.firstColor)
+                        nameColor: style.headerColor,
+                        categoryFont: style.bodyFont,
+                        categoryTextColor: style.descriptionTextColor,
+                        distanceFont: style.bodyFont,
+                        distanceColor: style.grayTextColor)
     }()
     
     init(presenter: MapListPresenterProtocol, style: MagellanStyleProtocol) {
@@ -42,13 +42,11 @@ final class MapListViewController: UIViewController {
     
     override func loadView() {
         let view = UIView()
-        view.backgroundColor = style.backgroundColor
+        view.backgroundColor = style.sectionsDeviderBGColor
         self.view = view
         
         view.layer.cornerRadius = 10
         view.layer.masksToBounds = true
-        
-        iconView.image = UIImage(named: "search", in: Bundle.frameworkBundle, compatibleWith: nil)
         
         configureViews()
         layoutViews()
@@ -56,37 +54,34 @@ final class MapListViewController: UIViewController {
     }
     
     fileprivate func configureHeader() {
-        headerView.backgroundColor = .white
+        headerView.backgroundColor = style.mainBGColor
         view.addSubview(headerView)
         
-        panView.backgroundColor = style.panColor
+        panView.backgroundColor = style.panBGColor
         panView.layer.cornerRadius = MapConstants.panHeight / 2
         headerView.addSubview(panView)
         
-        iconView.contentMode = .scaleAspectFit
-        headerView.addSubview(iconView)
+        searchContainer.backgroundColor = style.sectionsDeviderBGColor
+        searchContainer.layer.cornerRadius = style.sideOffset
+        headerView.addSubview(searchContainer)
         
         searchField.placeholder = L10n.MapListView.Search.placeholder
         searchField.addTarget(self, action: #selector(search(_:)), for: .editingChanged)
-        searchField.textColor = .black
+        searchField.textColor = style.mediumGrayTextColor
         searchField.font = style.header2Font
         searchField.textAlignment = .left
-        searchField.clearButtonMode = .never
+        searchField.clearButtonMode = .whileEditing
         searchField.borderStyle = .none
+        searchField.backgroundColor = .clear
         searchField.delegate = self
-        headerView.addSubview(searchField)
-        
-        closeButton.setTitle("✕", for: .normal)
-        closeButton.setTitleColor(.black, for: .normal)
-        closeButton.titleLabel?.font = style.header1Font
-        closeButton.addTarget(self, action: #selector(dismiss(_:)), for: .touchUpInside)
-        headerView.addSubview(closeButton)
+        searchContainer.addSubview(searchField)
     }
     
     private func configureViews() {
         configureHeader()
         
         tableView.register(PlaceCell.self, forCellReuseIdentifier: PlaceCell.reuseIdentifier)
+        tableView.backgroundColor = style.mainBGColor
         tableView.dataSource = self as UITableViewDataSource
         tableView.delegate = self as UITableViewDelegate
         tableView.separatorInset = style.tableSeparatorInsets
@@ -102,33 +97,26 @@ final class MapListViewController: UIViewController {
         
         panView.translatesAutoresizingMaskIntoConstraints = false
         panView.heightAnchor.constraint(equalToConstant: MapConstants.panHeight).isActive = true
-        panView.widthAnchor.constraint(equalToConstant: 36).isActive = true
+        panView.widthAnchor.constraint(equalToConstant: style.panWidth).isActive = true
         panView.topAnchor.constraint(equalTo: headerView.topAnchor, constant: MapConstants.panHeight).isActive = true
         panView.centerXAnchor.constraint(equalTo: headerView.centerXAnchor).isActive = true
-
-        iconView.translatesAutoresizingMaskIntoConstraints = false
-        iconView.topAnchor.constraint(equalTo: panView.bottomAnchor, constant: 20).isActive = true
-        iconView.widthAnchor.constraint(equalToConstant: 16).isActive = true
-        iconView.heightAnchor.constraint(equalToConstant: 16).isActive = true
-        iconView.leftAnchor.constraint(equalTo: headerView.leftAnchor, constant: 20).isActive = true
         
-        closeButton.translatesAutoresizingMaskIntoConstraints = false
-        closeButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
-        closeButton.widthAnchor.constraint(equalToConstant: 40).isActive = true
-        closeButton.topAnchor.constraint(equalTo: headerView.topAnchor, constant: 12).isActive = true
-        closeButton.rightAnchor.constraint(equalTo: headerView.rightAnchor, constant: -12).isActive = true
+        searchContainer.translatesAutoresizingMaskIntoConstraints = false
+        searchContainer.topAnchor.constraint(equalTo: headerView.topAnchor, constant: style.doubleOffset).isActive = true
+        searchContainer.bottomAnchor.constraint(equalTo: headerView.bottomAnchor, constant: -style.doubleOffset).isActive = true
+        searchContainer.leftAnchor.constraint(equalTo: headerView.leftAnchor, constant: style.doubleOffset).isActive = true
+        searchContainer.rightAnchor.constraint(equalTo: headerView.rightAnchor, constant: -style.doubleOffset).isActive = true
 
         searchField.translatesAutoresizingMaskIntoConstraints = false
-        searchField.centerYAnchor.constraint(equalTo: iconView.centerYAnchor).isActive = true
-        searchField.leftAnchor.constraint(equalTo: iconView.rightAnchor, constant: 12).isActive = true
-        searchField.rightAnchor.constraint(equalTo: closeButton.leftAnchor, constant: -12).isActive = true
-        searchField.heightAnchor.constraint(equalToConstant: 50)
-        searchField.bottomAnchor.constraint(equalTo: headerView.bottomAnchor, constant: -12).isActive = true
+        searchField.topAnchor.constraint(equalTo: searchContainer.topAnchor, constant: style.topOffset).isActive = true
+        searchField.bottomAnchor.constraint(equalTo: searchContainer.bottomAnchor, constant: -style.topOffset).isActive = true
+        searchField.leftAnchor.constraint(equalTo: searchContainer.leftAnchor, constant: style.sideOffset).isActive = true
+        searchField.rightAnchor.constraint(equalTo: searchContainer.rightAnchor, constant: -style.sideOffset).isActive = true
         
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
         tableView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
-        tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -1).isActive = true
         tableView.topAnchor.constraint(equalTo: headerView.bottomAnchor, constant: 1).isActive = true
     }
     

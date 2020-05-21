@@ -10,9 +10,8 @@ import UIKit
 final class MapDetailCell: UITableViewCell {
     
     private struct Constants {
-        static let sideOffset: CGFloat = 16
+        static let sideOffset: CGFloat = 20
         static let offset: CGFloat = 7
-        static let contentOffset: CGFloat = 20
     }
     
     private let titleLabel = UILabel()

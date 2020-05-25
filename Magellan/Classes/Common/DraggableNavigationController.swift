@@ -35,9 +35,10 @@ extension DraggableNavigationController: Draggable {
     func set(dragableState: DraggableState, animated: Bool) {
         self.draggableState = dragableState
         
-        if draggableState == .compact {
+        if draggableState != .full {
             view.endEditing(true)
         }
+        draggableDelegate?.wantsTransit(to: dragableState, animating: animated)
     }
     
     func set(contentInsets: UIEdgeInsets, for state: DraggableState) {

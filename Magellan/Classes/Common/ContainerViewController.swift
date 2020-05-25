@@ -233,6 +233,12 @@ class ContainerViewController: UIViewController, AdaptiveDesignable {
                           y: MapConstants.draggableOffset,
                           width: containerSize.width,
                           height: containerSize.height - MapConstants.draggableOffset - containerOrigin.y)
+        case .min:
+            let height: CGFloat = 67
+            return CGRect(x: 0.0,
+                          y: containerSize.height - height,
+                            width: containerSize.width,
+                            height: 67)
         }
 
     }
@@ -294,11 +300,12 @@ class ContainerViewController: UIViewController, AdaptiveDesignable {
     private func updateAnimationProgress(draggableFrame: CGRect) {
         if let draggable = draggable {
             switch draggableState {
-            case .compact:
+            case .compact, .min:
                 shadowView.alpha = CGFloat(draggableProgress) * Constants.draggableMaxShadowAlpha
             case .full:
                 shadowView.alpha = CGFloat(1.0 - draggableProgress) * Constants.draggableMaxShadowAlpha
             }
+            
 
             draggable.animate(progress: draggableProgress,
                               from: draggableState,
@@ -349,7 +356,7 @@ class ContainerViewController: UIViewController, AdaptiveDesignable {
                 draggable.draggableView.layoutIfNeeded()
 
                 switch state {
-                case .compact:
+                case .compact, .min:
                     self.shadowView.alpha = 0.0
                 case .full:
                     self.shadowView.alpha = Constants.draggableMaxShadowAlpha
@@ -398,6 +405,8 @@ extension ContainerViewController: DraggableDelegate {
                     shadowView.removeFromSuperview()
                 case .full:
                     setupShadowView()
+                case .min:
+                    break
                 }
             }
         }

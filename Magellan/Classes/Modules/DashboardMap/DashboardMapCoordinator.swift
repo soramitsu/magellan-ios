@@ -26,9 +26,8 @@ final class DashboardMapCoordinator: DashboardMapCoordinatorProtocol {
 
 extension DashboardMapCoordinator: MapCoordinatorProtocol {
     func showDetails(for placeInfo: PlaceInfo) {
-        guard let navigation = dragableNavigation else {
-            return
-        }
+        dragableNavigation?.set(dragableState: .min, animated: true)
+        
         let detailsView = LocationDetailsAssembly.assemble(placeInfo: placeInfo, resolver: resolver)
         detailsView.presenter.delegate = self
         
@@ -52,6 +51,7 @@ extension DashboardMapCoordinator: MapCoordinatorProtocol {
 
 extension DashboardMapCoordinator: LocationDetailsPresenterDelegate {
     func dismiss() {
+        dragableNavigation?.set(dragableState: .compact, animated: true)
         modalTransition = nil
     }
 }

@@ -35,6 +35,7 @@ protocol Containable: class {
 
 
 enum DraggableState {
+    case min
     case compact
     case full
 
@@ -43,6 +44,8 @@ enum DraggableState {
         case .compact:
             return .full
         case .full:
+            return .compact
+        case .min:
             return .compact
         }
     }

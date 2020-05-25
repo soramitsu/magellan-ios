@@ -45,6 +45,11 @@ final class LocationDetailsViewController: UIViewController, LocationDetailsView
         layoutViews()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: view.frame.origin.y, right: 0)
+    }
+    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
 

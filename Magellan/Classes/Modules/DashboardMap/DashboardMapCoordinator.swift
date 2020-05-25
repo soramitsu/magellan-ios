@@ -16,6 +16,8 @@ final class DashboardMapCoordinator: DashboardMapCoordinatorProtocol {
         return container?.draggable as? DraggableNavigationController
     }
     
+    var modalTransition: ModalDraggableTransition?
+    
     init(container: DashboardMapViewController, resolver: ResolverProtocol) {
         self.container = container
         self.resolver = resolver
@@ -29,8 +31,12 @@ extension DashboardMapCoordinator: MapCoordinatorProtocol {
         }
         let detailsView = LocationDetailsAssembly.assemble(placeInfo: placeInfo, resolver: resolver)
         detailsView.presenter.delegate = self
-        navigation.popToRootViewController(animated: false)
-        navigation.pushViewController(detailsView.controller, animated: false)
+        
+        let controller = detailsView.controller
+        modalTransition = ModalDraggableTransition()
+        controller.transitioningDelegate = modalTransition
+        controller.modalPresentationStyle = .custom
+        container?.present(controller, animated: true, completion: nil)
     }
     
     func showCategoriesFilter(categories: [PlaceCategory], filter: Set<PlaceCategory>, output: CategoriesFilterOutputProtocol?) {
@@ -46,7 +52,7 @@ extension DashboardMapCoordinator: MapCoordinatorProtocol {
 
 extension DashboardMapCoordinator: LocationDetailsPresenterDelegate {
     func dismiss() {
-        dragableNavigation?.popViewController(animated: false)
+        modalTransition = nil
     }
 }
 

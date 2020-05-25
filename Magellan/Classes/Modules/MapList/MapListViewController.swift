@@ -226,6 +226,7 @@ extension MapListViewController: MapListViewProtocol {
         errorView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
         errorView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
         
+        self.errorView?.removeFromSuperview()
         self.errorView = errorView
     }
 }

@@ -11,7 +11,6 @@ final class LocationDetailsViewController: UIViewController, LocationDetailsView
     private let style: MagellanStyleProtocol
     var presenter: LocationDetailsPresenterProtocol
     
-    private let closeButton = UIButton()
     private let tableView = UITableView()
     private let tableHeaderView = UIView()
     
@@ -64,10 +63,14 @@ final class LocationDetailsViewController: UIViewController, LocationDetailsView
     }
     
     fileprivate func configureHeader() {
+        view.layer.masksToBounds = true
+        view.layer.cornerRadius = style.topOffset
         tableHeaderView.backgroundColor = style.mainBGColor
         
         headerView.backgroundColor = style.mainBGColor
         view.addSubview(headerView)
+        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePan(gesture:)))
+        headerView.addGestureRecognizer(panGesture)
         
         panView.backgroundColor = style.panBGColor
         panView.layer.cornerRadius = MapConstants.panHeight / 2
@@ -93,12 +96,6 @@ final class LocationDetailsViewController: UIViewController, LocationDetailsView
         distanceLabel.textColor = style.grayTextColor
         tableHeaderView.addSubview(distanceLabel)
         
-        closeButton.setTitle("✕", for: .normal)
-        closeButton.setTitleColor(.black, for: .normal)
-        closeButton.titleLabel?.font = style.header1Font
-        closeButton.addTarget(self, action: #selector(dismiss(_:)), for: .touchUpInside)
-        tableHeaderView.addSubview(closeButton)
-        
         separatorView.backgroundColor = style.sectionsDeviderBGColor
         tableHeaderView.addSubview(separatorView)
         
@@ -116,6 +113,7 @@ final class LocationDetailsViewController: UIViewController, LocationDetailsView
         tableView.delegate = self as UITableViewDelegate
         tableView.dataSource = self as UITableViewDataSource
         tableView.separatorInset = style.tableSeparatorInsets
+        tableView.showsVerticalScrollIndicator = false
         tableView.tableHeaderView = tableHeaderView
         tableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 1))
         view.addSubview(tableView)
@@ -140,14 +138,8 @@ final class LocationDetailsViewController: UIViewController, LocationDetailsView
         
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
         nameLabel.leftAnchor.constraint(equalTo: tableHeaderView.leftAnchor, constant: style.sideOffset).isActive = true
-        nameLabel.rightAnchor.constraint(equalTo: closeButton.leftAnchor, constant: -style.sideOffset).isActive = true
+        nameLabel.rightAnchor.constraint(equalTo: tableHeaderView.rightAnchor, constant: -style.sideOffset).isActive = true
         nameLabel.topAnchor.constraint(equalTo: tableHeaderView.topAnchor).isActive = true
-        
-        closeButton.translatesAutoresizingMaskIntoConstraints = false
-        closeButton.widthAnchor.constraint(equalToConstant: style.buttonSideSize).isActive = true
-        closeButton.heightAnchor.constraint(equalToConstant: style.buttonSideSize).isActive = true
-        closeButton.rightAnchor.constraint(equalTo: tableHeaderView.rightAnchor, constant: -style.sideOffset).isActive = true
-        closeButton.centerYAnchor.constraint(equalTo: nameLabel.centerYAnchor).isActive = true
         
         categoryLabel.translatesAutoresizingMaskIntoConstraints = false
         categoryLabel.leftAnchor.constraint(equalTo: nameLabel.leftAnchor).isActive = true
@@ -178,11 +170,43 @@ final class LocationDetailsViewController: UIViewController, LocationDetailsView
         tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         tableView.topAnchor.constraint(equalTo: headerView.bottomAnchor).isActive = true
     }
-   
-    @objc private func dismiss(_ sender: Any) {
-        presenter.dismiss()
+    
+    private var startedHeight: CGFloat = 0
+    @objc private func handlePan(gesture: UIPanGestureRecognizer) {
+        switch gesture.state {
+        case .began:
+            startedHeight = gesture.translation(in: view).y
+        case .changed:
+            let newY = gesture.translation(in: view).y
+            let delta = newY - startedHeight
+            startedHeight = newY
+            let newOrigin = CGPoint(x: view.frame.origin.x, y: view.frame.origin.y + delta)
+            if view.bounds.height - newOrigin.y < preferredContentHeight - 20 {
+                dismiss(animated: true) {
+                    self.presenter.dismiss()
+                }
+                return
+            }
+            let targetFrame = CGRect(x: 0,
+                                     y: view.frame.origin.y + delta,
+                                     width: view.bounds.width,
+                                     height: view.bounds.height)
+            animate(with: targetFrame)
+        case .cancelled:
+            view.transform = .identity
+        default:
+            break
+        }
     }
+    
+    private func animate(with frame: CGRect) {
+        UIView.beginAnimations(nil, context: nil)
 
+        view.frame = frame
+        tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: frame.origin.y, right: 0)
+
+        UIView.commitAnimations()
+    }
 }
 
 
@@ -244,6 +268,22 @@ extension LocationDetailsViewController: UITableViewDelegate {
         }
     }
     
+}
+
+extension LocationDetailsViewController: ModalDraggable {
+    var preferredContentHeight: CGFloat {
+        guard let keyWindow = UIApplication.shared.keyWindow else {
+            return 280
+        }
+        var height = keyWindow.bounds.size.height / 3
+        if #available(iOS 11, *) {
+            height -= keyWindow.safeAreaInsets.top
+        } else {
+            height -= UIApplication.shared.statusBarFrame.height
+        }
+        
+        return height
+    }
 }
 
 extension LocationDetailsViewController: NavigationBarHiding {}

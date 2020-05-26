@@ -82,6 +82,7 @@ final class MapPresenter: MapPresenterProtocol {
             default:
                 self.output?.loadingComplete(with: MapError.loadingError, retryClosure: { [weak self] in
                     self?.loadCategories()
+                    self?.reloadIfNeeded(search: self?.currentSearchText)
                 })
             }
             self.view?.hideLoading()
@@ -104,6 +105,7 @@ final class MapPresenter: MapPresenterProtocol {
             switch result {
             case .failure(let error):
                 self?.output?.loadingComplete(with: error) { [weak self] in
+                    self?.loadCategories()
                     self?.loadPlaces(topLeft: topLeft, bottomRight: bottomRight, search: search)
                 }
             case .success(let response):

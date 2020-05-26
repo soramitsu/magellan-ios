@@ -265,10 +265,6 @@ class ContainerViewController: UIViewController, AdaptiveDesignable {
             }
 
             gestureStartOriginY = recognizer.location(in: draggable.draggableView.superview).y
-
-            if draggable.canDrag(from: draggableState) {
-                updateAnimationProgress(draggableFrame: draggable.draggableView.frame)
-            }
         case .changed:
             let newY = recognizer.location(in: draggable.draggableView.superview).y
             let translation = newY - gestureStartOriginY

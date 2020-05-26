@@ -207,8 +207,15 @@ final class LocationDetailsViewController: UIViewController, LocationDetailsView
                                      width: view.bounds.width,
                                      height: view.bounds.height)
             animate(with: targetFrame)
-        case .cancelled:
-            view.transform = .identity
+        case .cancelled, .ended:
+            if isBeingDismissed {
+                return
+            }
+            let currentVisibleHeight = view.bounds.height - view.frame.origin.y
+            let height = currentVisibleHeight - preferredContentHeight <= maxContentHeight - currentVisibleHeight ? preferredContentHeight : maxContentHeight
+            let newOrigin = view.frame.height - height
+            let frame = CGRect(x: 0, y: newOrigin, width: view.bounds.width, height: view.bounds.height)
+            animate(with: frame)
         default:
             break
         }
@@ -298,6 +305,20 @@ extension LocationDetailsViewController: ModalDraggable {
         }
         
         return height
+    }
+    
+    var maxContentHeight: CGFloat {
+        var topOffset: CGFloat = 0
+        if #available(iOS 11.0, *) {
+            topOffset += view.safeAreaInsets.top
+            topOffset += view.safeAreaInsets.bottom
+        } else {
+            topOffset += UIApplication.shared.statusBarFrame.size.height
+        }
+        guard let keyWindow = UIApplication.shared.keyWindow else {
+            return 280
+        }
+        return keyWindow.bounds.height - topOffset - MapConstants.draggableOffset
     }
 }
 

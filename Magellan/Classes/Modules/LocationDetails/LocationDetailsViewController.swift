@@ -6,6 +6,7 @@
 import UIKit
 import SoraUI
 
+
 final class LocationDetailsViewController: UIViewController, LocationDetailsViewProtocol, AdaptiveDesignable {
     
     private let style: MagellanStyleProtocol
@@ -24,6 +25,8 @@ final class LocationDetailsViewController: UIViewController, LocationDetailsView
     private let distanceLabel = UILabel()
     private let separatorView = UIView()
     private let informationLabel = UILabel()
+    private var modalView: UIView?
+    weak var overlayedView: UIView?
         
     init(presenter: LocationDetailsPresenterProtocol,
          style: MagellanStyleProtocol) {
@@ -47,6 +50,13 @@ final class LocationDetailsViewController: UIViewController, LocationDetailsView
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        if let overlayedView = overlayedView,
+            modalView == nil {
+            let frame = CGRect(x: 0, y: 0, width: view.bounds.width, height: view.frame.origin.y)
+            let modal = ModalView(frame: frame)
+            modal.blockedView = overlayedView
+            view.superview?.insertSubview(modal, at: 0)
+        }
         tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: view.frame.origin.y, right: 0)
     }
     

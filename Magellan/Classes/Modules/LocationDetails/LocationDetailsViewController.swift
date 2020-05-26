@@ -84,8 +84,6 @@ final class LocationDetailsViewController: UIViewController, LocationDetailsView
         
         headerView.backgroundColor = style.mainBGColor
         view.addSubview(headerView)
-        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePan(gesture:)))
-        headerView.addGestureRecognizer(panGesture)
         
         panView.backgroundColor = style.panBGColor
         panView.layer.cornerRadius = MapConstants.panHeight / 2
@@ -185,50 +183,6 @@ final class LocationDetailsViewController: UIViewController, LocationDetailsView
         tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         tableView.topAnchor.constraint(equalTo: headerView.bottomAnchor).isActive = true
     }
-    
-    private var startedHeight: CGFloat = 0
-    @objc private func handlePan(gesture: UIPanGestureRecognizer) {
-        switch gesture.state {
-        case .began:
-            startedHeight = gesture.translation(in: view).y
-        case .changed:
-            let newY = gesture.translation(in: view).y
-            let delta = newY - startedHeight
-            startedHeight = newY
-            let newOrigin = CGPoint(x: view.frame.origin.x, y: view.frame.origin.y + delta)
-            if view.bounds.height - newOrigin.y < preferredContentHeight - 20 {
-                dismiss(animated: true) {
-                    self.presenter.dismiss()
-                }
-                return
-            }
-            let targetFrame = CGRect(x: 0,
-                                     y: view.frame.origin.y + delta,
-                                     width: view.bounds.width,
-                                     height: view.bounds.height)
-            animate(with: targetFrame)
-        case .cancelled, .ended:
-            if isBeingDismissed {
-                return
-            }
-            let currentVisibleHeight = view.bounds.height - view.frame.origin.y
-            let height = currentVisibleHeight - preferredContentHeight <= maxContentHeight - currentVisibleHeight ? preferredContentHeight : maxContentHeight
-            let newOrigin = view.frame.height - height
-            let frame = CGRect(x: 0, y: newOrigin, width: view.bounds.width, height: view.bounds.height)
-            animate(with: frame)
-        default:
-            break
-        }
-    }
-    
-    private func animate(with frame: CGRect) {
-        UIView.beginAnimations(nil, context: nil)
-
-        view.frame = frame
-        tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: frame.origin.y, right: 0)
-
-        UIView.commitAnimations()
-    }
 }
 
 
@@ -293,7 +247,18 @@ extension LocationDetailsViewController: UITableViewDelegate {
 }
 
 extension LocationDetailsViewController: ModalDraggable {
-    var preferredContentHeight: CGFloat {
+
+    func dismiss() {
+        dismiss(animated: true) {
+            self.presenter.dismiss()
+        }
+    }
+    
+    var draggableView: UIView {
+        return headerView
+    }
+    
+    var compactHeight: CGFloat {
         guard let keyWindow = UIApplication.shared.keyWindow else {
             return 280
         }
@@ -307,7 +272,7 @@ extension LocationDetailsViewController: ModalDraggable {
         return height
     }
     
-    var maxContentHeight: CGFloat {
+    var fullHeight: CGFloat {
         var topOffset: CGFloat = 0
         if #available(iOS 11.0, *) {
             topOffset += view.safeAreaInsets.top
@@ -319,6 +284,10 @@ extension LocationDetailsViewController: ModalDraggable {
             return 280
         }
         return keyWindow.bounds.height - topOffset - MapConstants.draggableOffset
+    }
+    
+    func viewWillChangeFrame(to frame: CGRect) {
+        tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: frame.origin.y, right: 0)
     }
 }
 

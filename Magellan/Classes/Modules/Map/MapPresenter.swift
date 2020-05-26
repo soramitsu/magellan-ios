@@ -23,6 +23,7 @@ final class MapPresenter: MapPresenterProtocol {
     var currentSearchText: String?
     var currentTopLeft: Coordinates?
     var currentBottomRight: Coordinates?
+    var currentZoom: Int?
     
     private(set) var categories: [PlaceCategory] = [] {
         didSet {
@@ -89,24 +90,28 @@ final class MapPresenter: MapPresenterProtocol {
         }
     }
     
-    func loadPlaces(topLeft: Coordinates, bottomRight: Coordinates) {
-        loadPlaces(topLeft: topLeft, bottomRight: bottomRight, search: currentSearchText)
+    func loadPlaces(topLeft: Coordinates, bottomRight: Coordinates, zoom: Int) {
+        loadPlaces(topLeft: topLeft, bottomRight: bottomRight, zoom: zoom, search: currentSearchText)
     }
     
-    func loadPlaces(topLeft: Coordinates, bottomRight: Coordinates, search: String?) {
+    func loadPlaces(topLeft: Coordinates, bottomRight: Coordinates, zoom: Int, search: String?) {
         guard let view = view else {
             return
         }
         currentSearchText = search
         
-        let placeRequest = PlacesRequest(topLeft: topLeft, bottomRight: bottomRight, search: search, categories: whiteFilter.flatMap{ $0.name } )
+        let placeRequest = PlacesRequest(topLeft: topLeft,
+                                         bottomRight: bottomRight,
+                                         search: search,
+                                         categories: whiteFilter.flatMap{ $0.name },
+                                         zoom: zoom )
         getPlacesOperation?.cancel()
         getPlacesOperation = service.getPlaces(with: placeRequest, runCompletionIn: DispatchQueue.main) { [weak self] result in
             switch result {
             case .failure(let error):
                 self?.output?.loadingComplete(with: error) { [weak self] in
                     self?.loadCategories()
-                    self?.loadPlaces(topLeft: topLeft, bottomRight: bottomRight, search: search)
+                    self?.loadPlaces(topLeft: topLeft, bottomRight: bottomRight, zoom: zoom, search: search)
                 }
             case .success(let response):
                 self?.places = response.locations.compactMap { PlaceViewModel(place: $0) }
@@ -114,6 +119,10 @@ final class MapPresenter: MapPresenterProtocol {
                 self?.view?.reloadData()
             }
         }
+        
+        currentZoom = zoom
+        currentTopLeft = topLeft
+        currentBottomRight = bottomRight
     }
     
     func showDetails(place: PlaceViewModel) {
@@ -137,10 +146,11 @@ final class MapPresenter: MapPresenterProtocol {
     
     func reloadIfNeeded(search: String?) {
         guard let currentTopLeft = currentTopLeft,
-            let currentBottomRight = currentBottomRight else {
+            let currentBottomRight = currentBottomRight,
+            let currentZoom = currentZoom else {
                 return
         }
-        loadPlaces(topLeft: currentTopLeft, bottomRight: currentBottomRight, search: search)
+        loadPlaces(topLeft: currentTopLeft, bottomRight: currentBottomRight, zoom: currentZoom, search: search)
     }
     
     

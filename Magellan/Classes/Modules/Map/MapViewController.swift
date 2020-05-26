@@ -176,8 +176,10 @@ extension MapViewController: GMSMapViewDelegate {
     @objc
     func positionDidChange() {
         let region = mapView.projection.visibleRegion()
+        let zoom = Int(mapView.camera.zoom)
         presenter.loadPlaces(topLeft: region.farLeft.coordinates,
-                             bottomRight: region.nearRight.coordinates)
+                             bottomRight: region.nearRight.coordinates,
+                             zoom: zoom)
     }
     
 }

@@ -371,17 +371,17 @@ class MapPresenterProtocolMock: MapPresenterProtocol {
 
     //MARK: - loadPlaces
 
-    var loadPlacesTopLeftBottomRightCallsCount = 0
-    var loadPlacesTopLeftBottomRightCalled: Bool {
-        return loadPlacesTopLeftBottomRightCallsCount > 0
+    var loadPlacesTopLeftBottomRightZoomCallsCount = 0
+    var loadPlacesTopLeftBottomRightZoomCalled: Bool {
+        return loadPlacesTopLeftBottomRightZoomCallsCount > 0
     }
-    var loadPlacesTopLeftBottomRightReceivedArguments: (topLeft: Coordinates, bottomRight: Coordinates)?
-    var loadPlacesTopLeftBottomRightClosure: ((Coordinates, Coordinates) -> Void)?
+    var loadPlacesTopLeftBottomRightZoomReceivedArguments: (topLeft: Coordinates, bottomRight: Coordinates, zoom: Int)?
+    var loadPlacesTopLeftBottomRightZoomClosure: ((Coordinates, Coordinates, Int) -> Void)?
 
-    func loadPlaces(topLeft:Coordinates, bottomRight: Coordinates) {
-        loadPlacesTopLeftBottomRightCallsCount += 1
-        loadPlacesTopLeftBottomRightReceivedArguments = (topLeft: topLeft, bottomRight: bottomRight)
-        loadPlacesTopLeftBottomRightClosure?(topLeft, bottomRight)
+    func loadPlaces(topLeft:Coordinates, bottomRight: Coordinates, zoom: Int) {
+        loadPlacesTopLeftBottomRightZoomCallsCount += 1
+        loadPlacesTopLeftBottomRightZoomReceivedArguments = (topLeft: topLeft, bottomRight: bottomRight, zoom: zoom)
+        loadPlacesTopLeftBottomRightZoomClosure?(topLeft, bottomRight, zoom)
     }
 
     //MARK: - showFilter

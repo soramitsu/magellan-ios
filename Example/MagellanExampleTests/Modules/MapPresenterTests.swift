@@ -97,11 +97,14 @@ final class MapPresenterTests: XCTestCase {
         }
         
         // act
+        presenter.loadPlaces(topLeft: Coordinates(lat: 1, lon: 1),
+                             bottomRight: Coordinates(lat: 2, lon: 2),
+                             zoom: 3)
         presenter.userLocationDidUpdate()
         
         // assert
-        XCTAssertTrue(mapView.reloadDataCalled)
-        XCTAssertTrue(listPresenter.didUpdatePlacesCalled)
+        XCTAssertEqual(mapView.reloadDataCallsCount, 2)
+        XCTAssertEqual(listPresenter.didUpdatePlacesCallsCount, 2)
     }
     
     func testLocationUpdateIfNeeded() {
@@ -144,11 +147,14 @@ final class MapPresenterTests: XCTestCase {
         }
         
         // act
+        presenter.loadPlaces(topLeft: Coordinates(lat: 1, lon: 1),
+                             bottomRight: Coordinates(lat: 2, lon: 2),
+                             zoom: 3)
         presenter.reset()
         
         // assert
-        XCTAssertTrue(mapView.reloadDataCalled)
-        XCTAssertTrue(listPresenter.didUpdatePlacesCalled)
+        XCTAssertEqual(mapView.reloadDataCallsCount, 2)
+        XCTAssertEqual(listPresenter.didUpdatePlacesCallsCount, 2)
     }
     func testSearch() {
         // arrange
@@ -158,11 +164,14 @@ final class MapPresenterTests: XCTestCase {
         }
         
         // act
+        presenter.loadPlaces(topLeft: Coordinates(lat: 1, lon: 1),
+                             bottomRight: Coordinates(lat: 2, lon: 2),
+                             zoom: 3)
         presenter.search(with: "text")
         
         // assert
-        XCTAssertTrue(mapView.reloadDataCalled)
-        XCTAssertTrue(listPresenter.didUpdatePlacesCalled)
+        XCTAssertEqual(mapView.reloadDataCallsCount, 2)
+        XCTAssertEqual(listPresenter.didUpdatePlacesCallsCount, 2)
     }
     
     func testShowDetails() {

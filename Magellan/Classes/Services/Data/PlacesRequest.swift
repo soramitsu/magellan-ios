@@ -13,5 +13,6 @@ public struct PlacesRequest: Codable {
     let bottomRight: Coordinates
     let search: String?
     let categories: [String]
+    let zoom: Int 
     
 }

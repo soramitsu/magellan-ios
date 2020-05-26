@@ -47,33 +47,6 @@ class DashboardMapViewProtocolMock: DashboardMapViewProtocol {
         set(value) { underlyingController = value }
     }
     var underlyingController: UIViewController!
-    var loadingPresenter: UIViewController?
-
-    //MARK: - showLoading
-
-    var showLoadingCallsCount = 0
-    var showLoadingCalled: Bool {
-        return showLoadingCallsCount > 0
-    }
-    var showLoadingClosure: (() -> Void)?
-
-    func showLoading() {
-        showLoadingCallsCount += 1
-        showLoadingClosure?()
-    }
-
-    //MARK: - hideLoading
-
-    var hideLoadingCallsCount = 0
-    var hideLoadingCalled: Bool {
-        return hideLoadingCallsCount > 0
-    }
-    var hideLoadingClosure: (() -> Void)?
-
-    func hideLoading() {
-        hideLoadingCallsCount += 1
-        hideLoadingClosure?()
-    }
 
 }
 // MARK: -
@@ -481,19 +454,19 @@ class MapViewProtocolMock: MapViewProtocol {
     var underlyingController: UIViewController!
     var loadingPresenter: UIViewController?
 
-    //MARK: - set
+    //MARK: - setFilterButton
 
-    var setIsLoadingCallsCount = 0
-    var setIsLoadingCalled: Bool {
-        return setIsLoadingCallsCount > 0
+    var setFilterButtonHiddenCallsCount = 0
+    var setFilterButtonHiddenCalled: Bool {
+        return setFilterButtonHiddenCallsCount > 0
     }
-    var setIsLoadingReceivedIsLoading: Bool?
-    var setIsLoadingClosure: ((Bool) -> Void)?
+    var setFilterButtonHiddenReceivedHidden: Bool?
+    var setFilterButtonHiddenClosure: ((Bool) -> Void)?
 
-    func set(isLoading: Bool) {
-        setIsLoadingCallsCount += 1
-        setIsLoadingReceivedIsLoading = isLoading
-        setIsLoadingClosure?(isLoading)
+    func setFilterButton(hidden: Bool) {
+        setFilterButtonHiddenCallsCount += 1
+        setFilterButtonHiddenReceivedHidden = hidden
+        setFilterButtonHiddenClosure?(hidden)
     }
 
     //MARK: - show

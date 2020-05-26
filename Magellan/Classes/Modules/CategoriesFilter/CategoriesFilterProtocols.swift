@@ -8,7 +8,7 @@
 import Foundation
 
 protocol CategoriesFilterCoordinatorProtocol: AnyObject {
-    
+    func dismiss()
 }
 
 protocol CategoriesFilterPresenterProtocol: AnyObject {

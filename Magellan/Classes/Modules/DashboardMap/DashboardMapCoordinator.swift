@@ -17,6 +17,7 @@ final class DashboardMapCoordinator: DashboardMapCoordinatorProtocol {
     }
     
     var modalTransition: ModalDraggableTransition?
+    var modalDismissableTransition: ModalDismissableTransition?
     weak var mapView: ControllerBackedProtocol?
     
     init(container: DashboardMapViewController, resolver: ResolverProtocol) {
@@ -52,19 +53,24 @@ extension DashboardMapCoordinator: MapCoordinatorProtocol {
         let filterView = CategoriesFilterAssembly.assemble(with: resolver,
                                                            filter: filter,
                                                            categories: categories)
+        
+        filterView.presenter.coordinator = self
         filterView.presenter.output = output
         let controller = filterView.controller
-        controller.modalPresentationStyle = .overCurrentContext
+        modalDismissableTransition = ModalDismissableTransition()
+        controller.transitioningDelegate = modalDismissableTransition
+        controller.modalPresentationStyle = .custom
         container?.present(controller, animated: true, completion: nil)
     }
-}
-
-extension DashboardMapCoordinator: LocationDetailsPresenterDelegate {
+    
     func dismiss() {
         dragableNavigation?.set(dragableState: .compact, animated: true)
         modalTransition = nil
     }
 }
+
+extension DashboardMapCoordinator: LocationDetailsPresenterDelegate { }
+extension DashboardMapCoordinator: CategoriesFilterCoordinatorProtocol { }
 
 extension DashboardMapCoordinator: MapListPresenterDelegate {
     

@@ -10,7 +10,7 @@ import GoogleMaps
 protocol MapViewProtocol: class, ControllerBackedProtocol, Containable, Loadable, AutoMockable {
     var presenter: MapPresenterProtocol { get }
     
-    func set(isLoading: Bool)
+    func setFilterButton(hidden: Bool)
     func show(place: PlaceViewModel)
     func reloadData()
 }

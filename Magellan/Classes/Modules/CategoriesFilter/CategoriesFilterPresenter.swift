@@ -32,6 +32,7 @@ extension CategoriesFilterPresenter: CategoriesFilterPresenterProtocol {
     
     func dismiss() {
         output?.categoriesFilter(filter)
+        coordinator?.dismiss()
     }
     
     func viewModel(_ index: Int) -> CategoryFilterViewModel {

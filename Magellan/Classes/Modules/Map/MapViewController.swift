@@ -122,6 +122,7 @@ final class MapViewController: UIViewController {
         }
         
         filterButton.imageWithTitleView?.iconImage = filterImage
+        filterButton.isHidden = true
         setupClosure(filterButton)
         
         view.addSubview(filterButton)
@@ -185,6 +186,12 @@ extension MapViewController: GMSMapViewDelegate {
 }
 
 extension MapViewController: MapViewProtocol {
+    
+    func setFilterButton(hidden: Bool) {
+        UIView.animate(withDuration: MapConstants.contentAnimationDuration) {
+            self.filterButton.isHidden = hidden
+        }
+    }
     
     func reloadData() {
         if !isViewLoaded {

@@ -6,7 +6,7 @@
 
 import Foundation
 
-protocol DashboardMapViewProtocol: class, ControllerBackedProtocol, Loadable, AutoMockable {
+protocol DashboardMapViewProtocol: class, ControllerBackedProtocol, AutoMockable {
     var presenter: DashboardMapPresenterProtocol { get }
 }
 

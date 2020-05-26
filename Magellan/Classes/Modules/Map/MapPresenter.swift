@@ -72,7 +72,7 @@ final class MapPresenter: MapPresenterProtocol {
             return
         }
         
-        view?.showLoading()
+        view?.setFilterButton(hidden: true)
         service.getCategories(runCompletionIn: DispatchQueue.main) { [weak self] result in
             guard let self = self else {
                 return
@@ -86,7 +86,7 @@ final class MapPresenter: MapPresenterProtocol {
                     self?.reloadIfNeeded(search: self?.currentSearchText)
                 })
             }
-            self.view?.hideLoading()
+            self.view?.setFilterButton(hidden: false)
         }
     }
     

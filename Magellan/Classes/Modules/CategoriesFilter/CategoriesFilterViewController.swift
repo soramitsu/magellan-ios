@@ -15,10 +15,6 @@ final class CategoriesFilterViewController: UIViewController {
     }
     
     let presenter: CategoriesFilterPresenterProtocol
-    var dismissInteractionController: UIPercentDrivenInteractiveTransition?
-    fileprivate lazy var animatedTransitioning: CategoriesFilterAnimatedTransitioning = {
-       return CategoriesFilterAnimatedTransitioning()
-    }()
     
     private let style: MagellanStyleProtocol
     private var containerView: UIView!
@@ -40,7 +36,6 @@ final class CategoriesFilterViewController: UIViewController {
         self.presenter = presenter
         self.style = style
         super.init(nibName: nil, bundle: nil)
-        self.transitioningDelegate = self
     }
     
     required init?(coder: NSCoder) {
@@ -52,8 +47,6 @@ final class CategoriesFilterViewController: UIViewController {
         setupTapGesture()
         configureUI()
         setupConstraints()
-        setupPanGesture()
-        
     }
     
     private func configureUI() {
@@ -139,14 +132,6 @@ final class CategoriesFilterViewController: UIViewController {
         tableView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor).isActive = true
     }
     
-    
-    private func setupPanGesture() {
-        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePan(sender:)))
-        panGesture.minimumNumberOfTouches = 1
-        panGesture.maximumNumberOfTouches = 1
-        headerView.addGestureRecognizer(panGesture)
-    }
-    
     private func setupTapGesture() {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(close(sender:)))
         tapGesture.delegate = self
@@ -160,41 +145,11 @@ final class CategoriesFilterViewController: UIViewController {
     @objc
     private func close(sender: UITapGestureRecognizer) {
         let presenter = self.presenter
-        self.dismiss(animated: true) {
+        // #crunch animated dismiss will not call completion block of animation if UIViewControllerInteractiveTransitioning of transitionDelegate exist
+        self.dismiss(animated: false) {
             presenter.dismiss()
         }
-    }
-    
-    @objc
-    private func handlePan(sender: UIPanGestureRecognizer) {
-        let percentThreshold: CGFloat = 0.3
 
-        let translation = sender.translation(in: view)
-        let verticalMovement = translation.y / view.bounds.height
-        let downwardMovement = fmaxf(Float(verticalMovement), 0.0)
-        let downwardMovementPercent = fminf(downwardMovement, 1.0)
-        let progress = CGFloat(downwardMovementPercent)
-        
-        switch sender.state {
-        case .began:
-            dismissInteractionController = UIPercentDrivenInteractiveTransition()
-            let presenter = self.presenter
-            self.dismiss(animated: true) {
-                presenter.dismiss()
-            }
-        case .changed:
-            dismissInteractionController?.update(progress)
-        case .cancelled:
-            dismissInteractionController?.cancel()
-        case .ended:
-            if progress > percentThreshold {
-                dismissInteractionController?.finish()
-            } else {
-                dismissInteractionController?.cancel()
-            }
-        default:
-            break
-        }
     }
 }
 
@@ -246,90 +201,14 @@ extension CategoriesFilterViewController: UIGestureRecognizerDelegate {
     }
 }
 
-extension CategoriesFilterViewController: UIViewControllerTransitioningDelegate {
+extension CategoriesFilterViewController: ModalDismissable {
     
-    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        animatedTransitioning.presenting = true
-        return animatedTransitioning
+    var draggableView: UIView {
+        return headerView
     }
     
-    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        animatedTransitioning.presenting = false
-        return animatedTransitioning
+    func didDismiss() {
+        presenter.dismiss()
     }
     
-    func interactionControllerForDismissal(using animator: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
-        return dismissInteractionController
-    }
-    
-}
-
-fileprivate class CategoriesFilterAnimatedTransitioning: NSObject {
-    private var transitionView: UIView!
-    var presenting: Bool = false
-}
-
-extension CategoriesFilterAnimatedTransitioning: UIViewControllerAnimatedTransitioning {
-    
-    func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
-        return MapConstants.contentAnimationDuration
-    }
-    
-    func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
-        guard
-            let fromVC = transitionContext.viewController(forKey: .from),
-            let toVC = transitionContext.viewController(forKey: .to)
-            else {
-                return
-        }
-        let containerView = transitionContext.containerView
-        let containerFrame = transitionContext.containerView.frame
-        var toViewStartFrame = transitionContext.initialFrame(for: toVC)
-        let toViewFinalFrame = transitionContext.finalFrame(for: toVC)
-        var fromViewFinalFrame = transitionContext.finalFrame(for: fromVC)
-        
-        if (presenting) {
-            transitionView = UIView(frame: containerFrame)
-            transitionView.backgroundColor = UIColor.black
-            transitionView.alpha = 0
-            
-            containerView.addSubview(transitionView)
-            containerView.addSubview(toVC.view)
-            toViewStartFrame.origin.x = 0;
-            toViewStartFrame.origin.y = containerFrame.size.height;
-            toVC.view.frame = toViewStartFrame
-        } else {
-            fromViewFinalFrame = CGRect(x: 0,
-                                        y: containerFrame.size.height,
-                                        width: toVC.view.frame.size.width,
-                                        height: toVC.view.frame.size.height);
-            
-        }
-
-
-        UIView.animate(withDuration: transitionDuration(using: transitionContext),
-                       animations: {
-                        if self.presenting {
-                            self.transitionView.alpha = 0.4
-                            toVC.view.frame = toViewFinalFrame
-                        } else {
-                            self.transitionView.alpha = 0
-                            fromVC.view.frame = fromViewFinalFrame
-                        }
-        }) { _ in
-            let success = !transitionContext.transitionWasCancelled
-            
-            if !self.presenting && success {
-                fromVC.view.removeFromSuperview()
-                self.transitionView.removeFromSuperview()
-            }
-            
-            if self.presenting && !success {
-                toVC.view.removeFromSuperview()
-                self.transitionView.removeFromSuperview()
-            }
-            
-            transitionContext.completeTransition(success)
-        }
-    }
 }

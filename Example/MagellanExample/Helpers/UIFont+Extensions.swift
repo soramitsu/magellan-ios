@@ -10,13 +10,11 @@ import UIKit
 extension UIFont {
     
     static func registerFonts() {
-        let items = ["GTEestiProText-Medium" ,"GTEestiProText-Regular", "GTEestiProText-Book", "GTEestiProDisplay-Bold", "GTEestiProDisplay-Medium", "GTEestiProDisplay-Regular"]
+        let items = ["Sora-Bold" ,"Sora-ExtraBold", "Sora-ExtraLight", "Sora-Light", "Sora-Regular", "Sora-SemiBold", "Sora-Thin"]
         
         for fontName in items {
             try? UIFont.registerFont(with: fontName, withExtension: "otf")
         }
-        
-        try? UIFont.registerFont(with: "GothamPro", withExtension: "ttf")
     }
     
     private static func registerFont(with name: String, withExtension: String) throws {
@@ -34,12 +32,7 @@ extension UIFont {
         }
 
         var error: Unmanaged<CFError>?
-        let success = CTFontManagerRegisterGraphicsFont(font, &error)
-        guard success else {
-            fatalError("Error registering font: maybe it was already registered.")
-            print("Error registering font: maybe it was already registered.")
-            
-        }
+        let _ = CTFontManagerRegisterGraphicsFont(font, &error)
     }
     
 }

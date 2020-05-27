@@ -87,10 +87,12 @@ class ModalDismissablePresentationViewController: UIPresentationController {
         switch gesture.state {
         case .began:
             dismissInteractionController = UIPercentDrivenInteractiveTransition()
+            dismissInteractionController?.completionSpeed = CGFloat(CATransaction.animationDuration())
             modalDismissable.dismiss(animated: true) {
                 modalDismissable.didDismiss()
             }
         case .changed:
+            print(progress)
             dismissInteractionController?.update(progress)
         case .cancelled:
             dismissInteractionController?.cancel()
@@ -114,7 +116,7 @@ class ModalDismissableAnimatedTransitioning: NSObject, UIViewControllerAnimatedT
     var presenting: Bool = true
     
     func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
-        return MapConstants.contentAnimationDuration
+        return CATransaction.animationDuration()
     }
     
     func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
@@ -157,8 +159,7 @@ class ModalDismissableAnimatedTransitioning: NSObject, UIViewControllerAnimatedT
                             self.transitionView.alpha = 0
                             fromVC.view.frame = fromViewFinalFrame
                         }
-        }) { wtf in
-            print(wtf)
+        }) { _ in
             let success = !transitionContext.transitionWasCancelled
             
             if !self.presenting && success {

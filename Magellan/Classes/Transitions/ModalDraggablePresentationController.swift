@@ -20,6 +20,13 @@ protocol ModalDraggable {
 
 class ModalDraggablePresentationViewController: UIPresentationController {
     
+    weak var underlyingView: UIView?
+    private lazy var modalView: ModalView = {
+        let view = ModalView(frame: UIScreen.main.bounds)
+        view.blockedView = underlyingView
+        return view
+    }()
+    
     var modalDraggable: ModalDraggable? {
         presentedViewController as? ModalDraggable
     }
@@ -41,6 +48,7 @@ class ModalDraggablePresentationViewController: UIPresentationController {
     
     override func presentationTransitionWillBegin() {
         super.presentationTransitionWillBegin()
+        containerView?.addSubview(modalView)
         containerView?.addSubview(presentedView!)
         if let modalDraggable = modalDraggable {
             let gesture = UIPanGestureRecognizer(target: self, action: #selector(handlePan(gesture:)))
@@ -64,8 +72,9 @@ class ModalDraggablePresentationViewController: UIPresentationController {
            startedHeight = newY
            let newOrigin = CGPoint(x: view.frame.origin.x, y: view.frame.origin.y + delta)
            if view.bounds.height - newOrigin.y < modalDraggable.compactHeight - 20 {
-            modalDraggable.dismiss()
-               return
+                modalDraggable.dismiss()
+                modalView.removeFromSuperview()
+                return
            }
            let targetFrame = CGRect(x: 0,
                                     y: view.frame.origin.y + delta,

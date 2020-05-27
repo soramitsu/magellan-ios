@@ -92,7 +92,6 @@ class ModalDismissablePresentationViewController: UIPresentationController {
                 modalDismissable.didDismiss()
             }
         case .changed:
-            print(progress)
             dismissInteractionController?.update(progress)
         case .cancelled:
             dismissInteractionController?.cancel()

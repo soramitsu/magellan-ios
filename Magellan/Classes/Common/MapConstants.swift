@@ -12,7 +12,7 @@ struct MapConstants {
     static let panHeight: CGFloat = 6
     static let headerHeight: CGFloat = 64
     static let headerOffset: CGFloat = 8
-    static let draggableOffset: CGFloat = 30
+    static let draggableOffset: CGFloat = 10
     static var categoriesHeight: CGFloat {
         UIScreen.main.bounds.width / 2
     }

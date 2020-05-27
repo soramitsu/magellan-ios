@@ -230,7 +230,7 @@ class ContainerViewController: UIViewController, AdaptiveDesignable {
                           height: compactHeight)
         case .full:
             return CGRect(x: 0.0,
-                          y: MapConstants.draggableOffset,
+                          y: MapConstants.draggableOffset + inheritedInsets.top,
                           width: containerSize.width,
                           height: containerSize.height - MapConstants.draggableOffset - containerOrigin.y)
         case .min:

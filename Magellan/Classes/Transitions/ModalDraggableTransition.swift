@@ -9,8 +9,12 @@ import UIKit
 
 class ModalDraggableTransition: NSObject, UIViewControllerTransitioningDelegate {
     
+    weak var underlyingView: UIView?
+    
     func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
-        return ModalDraggablePresentationViewController(presentedViewController: presented, presenting: presenting ?? source)
+        let controller = ModalDraggablePresentationViewController(presentedViewController: presented, presenting: presenting ?? source)
+        controller.underlyingView = underlyingView
+        return controller
     }
     
 }

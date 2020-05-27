@@ -31,12 +31,12 @@ extension DashboardMapCoordinator: MapCoordinatorProtocol {
         dragableNavigation?.set(dragableState: .min, animated: true)
         
         let detailsView = LocationDetailsAssembly.assemble(placeInfo: placeInfo,
-                                                           resolver: resolver,
-                                                           overlayedView: mapView?.controller.view)
+                                                           resolver: resolver)
         detailsView.presenter.delegate = self
         
         let controller = detailsView.controller
         modalTransition = ModalDraggableTransition()
+        modalTransition?.underlyingView = mapView?.controller.view
         controller.transitioningDelegate = modalTransition
         controller.modalPresentationStyle = .custom
         

@@ -25,8 +25,6 @@ final class LocationDetailsViewController: UIViewController, LocationDetailsView
     private let distanceLabel = UILabel()
     private let separatorView = UIView()
     private let informationLabel = UILabel()
-    private var modalView: UIView?
-    weak var overlayedView: UIView?
         
     init(presenter: LocationDetailsPresenterProtocol,
          style: MagellanStyleProtocol) {
@@ -50,13 +48,6 @@ final class LocationDetailsViewController: UIViewController, LocationDetailsView
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        if let overlayedView = overlayedView,
-            modalView == nil {
-            let frame = CGRect(x: 0, y: 0, width: view.bounds.width, height: view.frame.origin.y)
-            let modal = ModalView(frame: frame)
-            modal.blockedView = overlayedView
-            view.superview?.insertSubview(modal, at: 0)
-        }
         tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: view.frame.origin.y, right: 0)
     }
     
@@ -275,8 +266,7 @@ extension LocationDetailsViewController: ModalDraggable {
     var fullHeight: CGFloat {
         var topOffset: CGFloat = 0
         if #available(iOS 11.0, *) {
-            topOffset += view.safeAreaInsets.top
-            topOffset += view.safeAreaInsets.bottom
+            topOffset += UIApplication.shared.keyWindow?.safeAreaInsets.top ?? 0
         } else {
             topOffset += UIApplication.shared.statusBarFrame.size.height
         }

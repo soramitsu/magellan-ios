@@ -145,11 +145,9 @@ final class CategoriesFilterViewController: UIViewController {
     @objc
     private func close(sender: UITapGestureRecognizer) {
         let presenter = self.presenter
-        // #crunch animated dismiss will not call completion block of animation if UIViewControllerInteractiveTransitioning of transitionDelegate exist
-        self.dismiss(animated: false) {
+        presentingViewController?.dismiss(animated: true, completion: {
             presenter.dismiss()
-        }
-
+        })
     }
 }
 

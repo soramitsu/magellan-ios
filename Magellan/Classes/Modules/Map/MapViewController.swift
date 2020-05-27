@@ -89,8 +89,8 @@ final class MapViewController: UIViewController {
         }
         
          if let filterTopConstraint = filterTopConstraint,
-            filterTopConstraint.constant != preferredContentHeight - 20 {
-            filterTopConstraint.constant = preferredContentHeight - 20
+            filterTopConstraint.constant != preferredContentHeight - 30 {
+            filterTopConstraint.constant = preferredContentHeight - 30
             filterTopConstraint.isActive = true
         }
         

@@ -22,11 +22,11 @@ final class MapListViewController: UIViewController {
     private var errorView: UIView?
     
     private lazy var placeCellStyle: PlaceCell.Style = {
-        PlaceCell.Style(nameFont: style.header1Font,
+        PlaceCell.Style(nameFont: style.semiBold15,
                         nameColor: style.headerColor,
-                        categoryFont: style.bodyFont,
+                        categoryFont: style.regular12,
                         categoryTextColor: style.descriptionTextColor,
-                        distanceFont: style.bodyFont,
+                        distanceFont: style.regular12,
                         distanceColor: style.grayTextColor)
     }()
     
@@ -68,7 +68,7 @@ final class MapListViewController: UIViewController {
         searchField.placeholder = L10n.MapListView.Search.placeholder
         searchField.addTarget(self, action: #selector(search(_:)), for: .editingChanged)
         searchField.textColor = style.mediumGrayTextColor
-        searchField.font = style.header2Font
+        searchField.font = style.regular13
         searchField.textAlignment = .left
         searchField.clearButtonMode = .whileEditing
         searchField.borderStyle = .none

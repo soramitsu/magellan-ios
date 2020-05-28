@@ -204,7 +204,7 @@ extension MapViewController: MapViewProtocol {
         }
         
         presenter.clusters.forEach {
-            self.markerFactory.marker(cluster: $0).map = self.mapView
+            self.markerFactory.marker(cluster: $0, font: style.semiBold10).map = self.mapView
         }
     }
     

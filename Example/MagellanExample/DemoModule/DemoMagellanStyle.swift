@@ -9,10 +9,20 @@ import Magellan
 
 
 final class DemoMagellanStyle: MagellanStyleProtocol {
-
-    var header1Font: UIFont = UIFont(name: "Sora-SemiBold", size: 15)!
-    var header2Font: UIFont = UIFont(name: "Sora-Regular", size: 15)!
-    var bodyFont: UIFont = UIFont(name: "Sora-Regular", size: 13)!
+    
+    private static let regular = "Sora-Regular"
+    private static let bold = "Sora-Bold"
+    private static let semiBold = "Sora-SemiBold"
+    
+    var bold16 = UIFont(name: DemoMagellanStyle.bold, size: 16)!
+    var semiBold15 = UIFont(name: DemoMagellanStyle.semiBold, size: 15)!
+    var semiBold14 = UIFont(name: DemoMagellanStyle.semiBold, size: 14)!
+    var semiBold13 = UIFont(name: DemoMagellanStyle.semiBold, size: 13)!
+    var semiBold12 = UIFont(name: DemoMagellanStyle.semiBold, size: 12)!
+    var semiBold10 = UIFont(name: DemoMagellanStyle.semiBold, size: 10)!
+    var regular14 = UIFont(name: DemoMagellanStyle.regular, size: 14)!
+    var regular13 = UIFont(name: DemoMagellanStyle.regular, size: 13)!
+    var regular12 = UIFont(name: DemoMagellanStyle.regular, size: 12)!
     
     var lighterGray: UIColor = UIColor(red: 161/255, green: 161/255, blue: 160/255, alpha: 1)
     var headerColor: UIColor = UIColor(red: 45/255, green: 41/255, blue: 38/255, alpha: 1)

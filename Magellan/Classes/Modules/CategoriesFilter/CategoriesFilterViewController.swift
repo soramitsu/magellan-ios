@@ -25,9 +25,9 @@ final class CategoriesFilterViewController: UIViewController {
     private var panView: UIView!
     
     private lazy var cellStyle: CategoryFilterTableCell.Style = {
-        return CategoryFilterTableCell.Style(titleFont: self.style.header2Font,
+        return CategoryFilterTableCell.Style(titleFont: self.style.semiBold14,
                                              titleColor: self.style.darkTextColor,
-                                            countFont: self.style.header2Font,
+                                             countFont: self.style.semiBold14,
                                             countColor: self.style.disabledGrayColor,
                                             selectedImage: UIImage(named: "checkmark", in: Bundle.frameworkBundle, compatibleWith: nil)!)
     }()
@@ -64,7 +64,7 @@ final class CategoriesFilterViewController: UIViewController {
         
         titleLabel = UILabel()
         titleLabel.text = L10n.Filter.title
-        titleLabel.font = style.header1Font
+        titleLabel.font = style.bold16
         titleLabel.textColor = style.headerColor
         headerView.addSubview(titleLabel)
         
@@ -72,6 +72,7 @@ final class CategoriesFilterViewController: UIViewController {
         resetButton.setTitle(L10n.Filter.reset, for: .normal)
         resetButton.setTitleColor(style.firstColor, for: .normal)
         resetButton.setTitleColor(style.firstColor.withAlphaComponent(0.3), for: .disabled)
+        resetButton.titleLabel?.font = style.regular14
         resetButton.addTarget(self, action: #selector(reset), for: .touchUpInside)
         headerView.addSubview(resetButton)
         containerView.addSubview(headerView)

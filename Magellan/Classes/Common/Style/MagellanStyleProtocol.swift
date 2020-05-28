@@ -10,9 +10,16 @@ import UIKit
 public protocol MagellanStyleProtocol {
     
     /* Fonts */
-    var header1Font: UIFont { get }
-    var header2Font: UIFont { get }
-    var bodyFont: UIFont { get }
+    var bold16: UIFont { get }
+    var semiBold15: UIFont { get }
+    var semiBold14: UIFont { get }
+    var semiBold13: UIFont { get }
+    var semiBold12: UIFont { get }
+    var semiBold10: UIFont { get }
+    
+    var regular14: UIFont { get }
+    var regular13: UIFont { get }
+    var regular12: UIFont { get }
     
     /* Text colors */
     var lighterGray: UIColor { get } // #A1A1A0
@@ -45,9 +52,16 @@ public protocol MagellanStyleProtocol {
 
 final class DefaultMagellanStyle: MagellanStyleProtocol {
     
-    var header1Font: UIFont = UIFont.systemFont(ofSize: 16, weight: .bold)
-    var header2Font: UIFont = UIFont.systemFont(ofSize: 15, weight: .regular)
-    var bodyFont: UIFont = UIFont.systemFont(ofSize: 13, weight: .regular)
+    var bold16: UIFont = .systemFont(ofSize: 16, weight: .bold)
+    var semiBold15: UIFont = .systemFont(ofSize: 15, weight: .semibold)
+    var semiBold14: UIFont = .systemFont(ofSize: 14, weight: .semibold)
+    var semiBold13: UIFont = .systemFont(ofSize: 13, weight: .semibold)
+    var semiBold12: UIFont = .systemFont(ofSize: 12, weight: .semibold)
+    var semiBold10: UIFont = .systemFont(ofSize: 10, weight: .semibold)
+    
+    var regular14: UIFont = .systemFont(ofSize: 14, weight: .regular)
+    var regular13: UIFont = .systemFont(ofSize: 13, weight: .regular)
+    var regular12: UIFont = .systemFont(ofSize: 12, weight: .regular)
     
     var lighterGray: UIColor = UIColor(red: 161/255, green: 161/255, blue: 160/255, alpha: 1)
     var headerColor: UIColor = UIColor(red: 45/255, green: 41/255, blue: 38/255, alpha: 1)

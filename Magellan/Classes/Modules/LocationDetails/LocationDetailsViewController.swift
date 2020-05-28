@@ -80,23 +80,23 @@ final class LocationDetailsViewController: UIViewController, LocationDetailsView
         panView.layer.cornerRadius = MapConstants.panHeight / 2
         headerView.addSubview(panView)
         
-        nameLabel.font = style.header1Font
+        nameLabel.font = style.semiBold15
         nameLabel.numberOfLines = 0
         nameLabel.text = presenter.title
         tableHeaderView.addSubview(nameLabel)
         
-        categoryLabel.font = style.bodyFont
+        categoryLabel.font = style.regular12
         categoryLabel.text = presenter.category
         categoryLabel.textColor = style.descriptionTextColor
         tableHeaderView.addSubview(categoryLabel)
         
         workingHoursLabel.text = presenter.workingStatus
-        workingHoursLabel.font = style.bodyFont
+        workingHoursLabel.font = style.regular12
         workingHoursLabel.textColor = presenter.isOpen ? style.firstColor : style.secondColor
         tableHeaderView.addSubview(workingHoursLabel)
         
         distanceLabel.text = presenter.distance
-        distanceLabel.font = style.bodyFont
+        distanceLabel.font = style.regular12
         distanceLabel.textColor = style.grayTextColor
         tableHeaderView.addSubview(distanceLabel)
         
@@ -105,7 +105,7 @@ final class LocationDetailsViewController: UIViewController, LocationDetailsView
         
         informationLabel.text = L10n.Location.Details.information
         informationLabel.textColor = style.headerColor
-        informationLabel.font = style.header2Font
+        informationLabel.font = style.semiBold13
         tableHeaderView.addSubview(informationLabel)
     }
     
@@ -192,18 +192,18 @@ extension LocationDetailsViewController: UITableViewDataSource {
             let cell = tableView.dequeueReusableCell(withIdentifier: MapAddressCell.reuseIdentifier,
                                                      for: indexPath) as! MapAddressCell
             cell.viewModel = model
-            cell.style = MapAddressCell.Style(titleFont: style.bodyFont,
+            cell.style = MapAddressCell.Style(titleFont: style.regular13,
                                               titleColor: style.lighterGray,
-                                              addressFont: style.bodyFont,
+                                              addressFont: style.regular13,
                                               addressTextColor: style.headerColor)
             return cell
         default:
             let cell = tableView.dequeueReusableCell(withIdentifier: MapDetailCell.reuseIdentifier,
                                                      for: indexPath) as! MapDetailCell
             cell.viewModel = (model as! MapDetailViewModel)
-            cell.style = MapDetailCell.Style(titleFont: style.bodyFont,
+            cell.style = MapDetailCell.Style(titleFont: style.regular13,
                                              titleTextColor: style.lighterGray,
-                                             contentFont: style.bodyFont,
+                                             contentFont: style.regular13,
                                              contentTextColor: style.headerColor)
             return cell
         }
@@ -219,7 +219,7 @@ extension LocationDetailsViewController: UITableViewDataSource {
         let labelInset: CGFloat = isAdaptiveHeightDecreased ? 20 : 50
         let descriptionHeight = model.content
             .height(for: max(0, tableView.bounds.width - 2 * labelInset),
-                    font: style.bodyFont)
+                    font: style.regular13)
         
         return MapAddressCell.baseHeight + descriptionHeight
     }

@@ -25,6 +25,77 @@ import AppKit
 
 
 
+class CategoriesFilterCoordinatorProtocolMock: CategoriesFilterCoordinatorProtocol {
+
+    //MARK: - dismiss
+
+    var dismissCallsCount = 0
+    var dismissCalled: Bool {
+        return dismissCallsCount > 0
+    }
+    var dismissClosure: (() -> Void)?
+
+    func dismiss() {
+        dismissCallsCount += 1
+        dismissClosure?()
+    }
+
+}
+// MARK: -
+// MARK: -
+class CategoriesFilterOutputProtocolMock: CategoriesFilterOutputProtocol {
+
+    //MARK: - categoriesFilter
+
+    var categoriesFilterCallsCount = 0
+    var categoriesFilterCalled: Bool {
+        return categoriesFilterCallsCount > 0
+    }
+    var categoriesFilterReceivedFilter: Set<PlaceCategory>?
+    var categoriesFilterClosure: ((Set<PlaceCategory>) -> Void)?
+
+    func categoriesFilter(_ filter: Set<PlaceCategory>) {
+        categoriesFilterCallsCount += 1
+        categoriesFilterReceivedFilter = filter
+        categoriesFilterClosure?(filter)
+    }
+
+}
+// MARK: -
+// MARK: -
+class CategoriesFilterViewProtocolMock: CategoriesFilterViewProtocol {
+    var presenter: CategoriesFilterPresenterProtocol {
+        get { return underlyingPresenter }
+        set(value) { underlyingPresenter = value }
+    }
+    var underlyingPresenter: CategoriesFilterPresenterProtocol!
+    var isSetup: Bool {
+        get { return underlyingIsSetup }
+        set(value) { underlyingIsSetup = value }
+    }
+    var underlyingIsSetup: Bool!
+    var controller: UIViewController {
+        get { return underlyingController }
+        set(value) { underlyingController = value }
+    }
+    var underlyingController: UIViewController!
+
+    //MARK: - reload
+
+    var reloadCallsCount = 0
+    var reloadCalled: Bool {
+        return reloadCallsCount > 0
+    }
+    var reloadClosure: (() -> Void)?
+
+    func reload() {
+        reloadCallsCount += 1
+        reloadClosure?()
+    }
+
+}
+// MARK: -
+// MARK: -
 class DashboardMapCoordinatorProtocolMock: DashboardMapCoordinatorProtocol {
     var presenter: DashboardMapPresenterProtocol?
 

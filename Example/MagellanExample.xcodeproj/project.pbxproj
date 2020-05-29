@@ -32,6 +32,7 @@
 		F83BB63F247E597E00A3FD8F /* DemoMagellanStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = F83BB63E247E597E00A3FD8F /* DemoMagellanStyle.swift */; };
 		F83F50E42446053B001AD397 /* DemoFactoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = F83F50E32446053B001AD397 /* DemoFactoryProtocol.swift */; };
 		F8524D84245836E20091ED5F /* UIFont+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8524D83245836E20091ED5F /* UIFont+Extensions.swift */; };
+		F85D275224812EB500C3B0BA /* CategoriesFilterPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F85D275124812EB500C3B0BA /* CategoriesFilterPresenterTests.swift */; };
 		F85DF3712462E43400BB977B /* MagellanErrorViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = F85DF3702462E43400BB977B /* MagellanErrorViewFactory.swift */; };
 		F86E8E3B245968940082219D /* MagellanPhoneFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F86E8E3A245968940082219D /* MagellanPhoneFormatter.swift */; };
 		F87C950224460B5D008CE9F2 /* EmptyDemo.swift in Sources */ = {isa = PBXBuildFile; fileRef = F87C950124460B5D008CE9F2 /* EmptyDemo.swift */; };
@@ -86,6 +87,7 @@
 		F83BB63E247E597E00A3FD8F /* DemoMagellanStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoMagellanStyle.swift; sourceTree = "<group>"; };
 		F83F50E32446053B001AD397 /* DemoFactoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoFactoryProtocol.swift; sourceTree = "<group>"; };
 		F8524D83245836E20091ED5F /* UIFont+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Extensions.swift"; sourceTree = "<group>"; };
+		F85D275124812EB500C3B0BA /* CategoriesFilterPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesFilterPresenterTests.swift; sourceTree = "<group>"; };
 		F85DF3702462E43400BB977B /* MagellanErrorViewFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MagellanErrorViewFactory.swift; path = MagellanExample/DemoModule/MagellanErrorViewFactory.swift; sourceTree = SOURCE_ROOT; };
 		F86E8E3A245968940082219D /* MagellanPhoneFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagellanPhoneFormatter.swift; sourceTree = "<group>"; };
 		F87C950124460B5D008CE9F2 /* EmptyDemo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyDemo.swift; sourceTree = "<group>"; };
@@ -256,6 +258,7 @@
 				F8F238242451C39600E4945E /* LocationDetailPresenterTests.swift */,
 				F819F83D2452E0BE00A6284F /* MapPresenterTests.swift */,
 				F819F83F2452E42200A6284F /* MapListPresenterTests.swift */,
+				F85D275124812EB500C3B0BA /* CategoriesFilterPresenterTests.swift */,
 			);
 			path = Modules;
 			sourceTree = "<group>";
@@ -559,6 +562,7 @@
 				F8F238252451C39600E4945E /* LocationDetailPresenterTests.swift in Sources */,
 				F819F8402452E42200A6284F /* MapListPresenterTests.swift in Sources */,
 				F8805F592450800F00C8BC30 /* AutoMockable.generated.swift in Sources */,
+				F85D275224812EB500C3B0BA /* CategoriesFilterPresenterTests.swift in Sources */,
 				F819F83E2452E0BE00A6284F /* MapPresenterTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

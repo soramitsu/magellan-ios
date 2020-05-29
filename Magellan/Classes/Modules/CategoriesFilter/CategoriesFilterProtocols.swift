@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol CategoriesFilterCoordinatorProtocol: AnyObject {
+protocol CategoriesFilterCoordinatorProtocol: AnyObject, AutoMockable {
     func dismiss()
 }
 
@@ -25,12 +25,12 @@ protocol CategoriesFilterPresenterProtocol: AnyObject {
     func dismiss()
 }
 
-protocol CategoriesFilterViewProtocol: ControllerBackedProtocol {
+protocol CategoriesFilterViewProtocol: ControllerBackedProtocol, AutoMockable {
     var presenter: CategoriesFilterPresenterProtocol { get }
     
     func reload()
 }
 
-protocol CategoriesFilterOutputProtocol: AnyObject {
+protocol CategoriesFilterOutputProtocol: AnyObject, AutoMockable {
     func categoriesFilter(_ filter: Set<PlaceCategory>)
 }

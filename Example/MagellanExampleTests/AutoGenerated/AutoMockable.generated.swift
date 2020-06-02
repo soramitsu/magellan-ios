@@ -387,17 +387,17 @@ class MapPresenterProtocolMock: MapPresenterProtocol {
 
     //MARK: - showDetails
 
-    var showDetailsPlaceCallsCount = 0
-    var showDetailsPlaceCalled: Bool {
-        return showDetailsPlaceCallsCount > 0
+    var showDetailsPlaceShowOnMapCallsCount = 0
+    var showDetailsPlaceShowOnMapCalled: Bool {
+        return showDetailsPlaceShowOnMapCallsCount > 0
     }
-    var showDetailsPlaceReceivedPlace: PlaceViewModel?
-    var showDetailsPlaceClosure: ((PlaceViewModel) -> Void)?
+    var showDetailsPlaceShowOnMapReceivedArguments: (place: PlaceViewModel, showOnMap: Bool)?
+    var showDetailsPlaceShowOnMapClosure: ((PlaceViewModel, Bool) -> Void)?
 
-    func showDetails(place: PlaceViewModel) {
-        showDetailsPlaceCallsCount += 1
-        showDetailsPlaceReceivedPlace = place
-        showDetailsPlaceClosure?(place)
+    func showDetails(place: PlaceViewModel, showOnMap: Bool) {
+        showDetailsPlaceShowOnMapCallsCount += 1
+        showDetailsPlaceShowOnMapReceivedArguments = (place: place, showOnMap: showOnMap)
+        showDetailsPlaceShowOnMapClosure?(place, showOnMap)
     }
 
     //MARK: - loadCategories

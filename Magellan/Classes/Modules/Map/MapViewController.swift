@@ -25,7 +25,7 @@ final class MapViewController: UIViewController {
     var observable = ViewModelObserverContainer<ContainableObserver>()
     
     private var camera: GMSCameraPosition!
-    
+    private weak var selectedMarker: GMSMarker?
     
     private var myPlaceButton = RoundedButton()
     private var filterButton = RoundedButton()
@@ -163,7 +163,19 @@ final class MapViewController: UIViewController {
 extension MapViewController: GMSMapViewDelegate {
     
     func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
+        if selectedMarker == marker {
+            return true
+        }
+        
+        if let animatable = selectedMarker?.iconView as? TapAnimatable {
+            animatable.animate()
+        }
+        selectedMarker?.iconView?.transform = .identity
         if let place = marker.userData as? PlaceViewModel {
+            selectedMarker = marker
+            if let animatable = marker.iconView as? TapAnimatable {
+                animatable.animate()
+            }
             presenter.showDetails(place: place, showOnMap: false)
             return true
         }

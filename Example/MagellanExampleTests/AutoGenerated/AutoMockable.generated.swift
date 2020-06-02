@@ -164,11 +164,11 @@ class MagellanServicePrototcolMock: MagellanServicePrototcol {
     var getPlaceWithRunCompletionInCompletionCalled: Bool {
         return getPlaceWithRunCompletionInCompletionCallsCount > 0
     }
-    var getPlaceWithRunCompletionInCompletionReceivedArguments: (placeId: Int, queue: DispatchQueue, completion: PlaceInfoCompletionBlock)?
+    var getPlaceWithRunCompletionInCompletionReceivedArguments: (placeId: String, queue: DispatchQueue, completion: PlaceInfoCompletionBlock)?
     var getPlaceWithRunCompletionInCompletionReturnValue: Operation!
-    var getPlaceWithRunCompletionInCompletionClosure: ((Int, DispatchQueue, @escaping PlaceInfoCompletionBlock) -> Operation)?
+    var getPlaceWithRunCompletionInCompletionClosure: ((String, DispatchQueue, @escaping PlaceInfoCompletionBlock) -> Operation)?
 
-    func getPlace(with placeId: Int, runCompletionIn queue: DispatchQueue, completion: @escaping PlaceInfoCompletionBlock) -> Operation {
+    func getPlace(with placeId: String, runCompletionIn queue: DispatchQueue, completion: @escaping PlaceInfoCompletionBlock) -> Operation {
         getPlaceWithRunCompletionInCompletionCallsCount += 1
         getPlaceWithRunCompletionInCompletionReceivedArguments = (placeId: placeId, queue: queue, completion: completion)
         return getPlaceWithRunCompletionInCompletionClosure.map({ $0(placeId, queue, completion) }) ?? getPlaceWithRunCompletionInCompletionReturnValue

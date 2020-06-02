@@ -14,7 +14,7 @@ class PlaceViewModel: NSObject, Coordinated {
     let place: Place
     var currentLocation: CLLocation?
     
-    var id: Int {
+    var id: String {
         return place.id
     }
     

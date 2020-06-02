@@ -23,31 +23,31 @@ final class LocationDetailsPresenter {
     }
     
     func setupContent() {
-        if !place.phoneNumber.isEmpty {
-            let rawPhone = place.phoneNumber
-            let phone = formatter?.formattedPhoneNumber(with: rawPhone, region: place.region) ?? rawPhone
+        if let phoneNumber = place.phoneNumber,
+            !phoneNumber.isEmpty {
+            let phone = formatter?.formattedPhoneNumber(with: phoneNumber, region: place.region) ?? phoneNumber
             items.append(MapDetailViewModel(type: .phone,
                                             content: phone,
                                             action: { [weak self] in
-                                                self?.handle(path: "tel://\(rawPhone)")
+                                                self?.handle(path: "tel://\(phoneNumber)")
             }))
         }
 
-        if !place.website.isEmpty {
-            let website = place.website
+        if let website = place.website,
+            !website.isEmpty {
             items.append(MapDetailViewModel(type: .website,
-                                            content: place.website,
+                                            content: website,
                                             action: { [weak self] in
                                                 self?.handle(path: website)
             }))
         }
 
-        if !place.facebook.isEmpty {
-            let fb = place.facebook
+        if let facebook = place.facebook,
+            !facebook.isEmpty {
             items.append(MapDetailViewModel(type: .facebook,
-                                              content: place.facebook,
+                                              content: facebook,
                                               action: { [weak self] in
-                                                self?.handle(path: fb)
+                                                self?.handle(path: facebook)
             }))
         }
 
@@ -88,7 +88,7 @@ extension LocationDetailsPresenter: LocationDetailsPresenterProtocol {
     }
     
     var distance: String {
-        return place.distance
+        return place.distance ?? ""
     }
     
     var workingStatus: String {

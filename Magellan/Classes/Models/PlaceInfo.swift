@@ -121,33 +121,33 @@ struct WorkingDay: WorkingStatusProtocol, Codable, Equatable {
 
 struct PlaceInfo: Coordinated {
     
-    let id: Int
+    let id: String
     let name: String
     let type: String
     let coordinates: Coordinates
     let address: String
-    let phoneNumber: String
-    let region: String
-    let website: String
-    let facebook: String
-    let logoUuid: String
-    let promoImageUuid: String
-    let distance: String
-    let workSchedule : Schedule
+    let phoneNumber: String?
+    let region: String?
+    let website: String?
+    let facebook: String?
+    let logoUuid: String?
+    let promoImageUuid: String?
+    let distance: String?
+    let workSchedule: Schedule?
 }
 
 extension PlaceInfo {
     
     var currentWorkingDay: WorkingDay? {
         let weekDayNumber = Calendar.current.component(.weekday, from: Date()) - 1
-        return workSchedule
+        return workSchedule?
             .workDays?
             .first(where: { $0.day.numberOfWeek == weekDayNumber })
     }
     
     var isOpen: Bool {
         
-        if workSchedule.open24 {
+        if workSchedule?.open24 == true {
             return true
         }
         
@@ -160,7 +160,7 @@ extension PlaceInfo {
     }
     
     var workingStatus: String {
-        if workSchedule.open24 {
+        if workSchedule?.open24 == true {
             return L10n.Location.Details.Status.open
         }
         

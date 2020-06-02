@@ -26,7 +26,7 @@ protocol MapPresenterProtocol: MapListOutputProtocol, AutoMockable {
     var position: Coordinates { get }
     var myLocation: Coordinates? { get }
 
-    func showDetails(place: PlaceViewModel)
+    func showDetails(place: PlaceViewModel, showOnMap: Bool)
     func loadCategories()
     func loadPlaces(topLeft:Coordinates, bottomRight: Coordinates, zoom: Int)
     

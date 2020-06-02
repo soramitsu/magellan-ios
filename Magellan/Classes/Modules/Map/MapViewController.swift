@@ -14,6 +14,7 @@ final class MapViewController: UIViewController {
         static let searchBarHeight: CGFloat = 68
         static let detailsHeight: CGFloat = 120
         static let markerPadding: CGFloat = 20
+        static let defaultZoom: Float = 12
     }
     
     let presenter: MapPresenterProtocol
@@ -163,8 +164,8 @@ extension MapViewController: GMSMapViewDelegate {
     
     func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
         if let place = marker.userData as? PlaceViewModel {
-            presenter.showDetails(place: place)
-            return false
+            presenter.showDetails(place: place, showOnMap: false)
+            return true
         }
         
         if let cluster = marker.userData as? ClusterViewModel {
@@ -172,10 +173,10 @@ extension MapViewController: GMSMapViewDelegate {
                                                          zoom: mapView.camera.zoom + 2)
             mapView.moveCamera(cameraUpdate)
             positionDidChange()
-            return false
+            return true
         }
         
-        return true
+        return false
     }
     
     func mapView(_ mapView: GMSMapView, didChange position: GMSCameraPosition) {
@@ -221,7 +222,11 @@ extension MapViewController: MapViewProtocol {
         if !isViewLoaded {
             return
         }
-        let camera = GMSCameraUpdate.setTarget(place.coordinates.coreLocationCoordinates, zoom: 12)
+        let currentZoom = mapView.camera.zoom
+        let zoom = currentZoom > Constants.defaultZoom
+            ? currentZoom + 1
+            : Constants.defaultZoom
+        let camera = GMSCameraUpdate.setTarget(place.coordinates.coreLocationCoordinates, zoom: zoom)
         mapView.moveCamera(camera)
     }
     

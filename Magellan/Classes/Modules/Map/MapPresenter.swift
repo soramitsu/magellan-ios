@@ -125,7 +125,7 @@ final class MapPresenter: MapPresenterProtocol {
         currentBottomRight = bottomRight
     }
     
-    func showDetails(place: PlaceViewModel) {
+    func showDetails(place: PlaceViewModel, showOnMap: Bool) {
         view?.showLoading()
         service.getPlace(with: place.id, runCompletionIn: DispatchQueue.main) { [weak self] result in
             guard let self = self else {
@@ -134,11 +134,13 @@ final class MapPresenter: MapPresenterProtocol {
             self.view?.hideLoading()
             switch result {
             case .success(let info):
-                self.view?.show(place: place)
+                if showOnMap {
+                    self.view?.show(place: place)
+                }
                 self.coordinator?.showDetails(for: info)
             case .failure(let error):
                 self.output?.loadingComplete(with: error) { [weak self] in
-                    self?.showDetails(place: place)
+                    self?.showDetails(place: place, showOnMap: showOnMap)
                 }
             }
         }
@@ -163,7 +165,7 @@ final class MapPresenter: MapPresenterProtocol {
 extension MapPresenter: MapListOutputProtocol {
     
     func select(place: PlaceViewModel) {
-        showDetails(place: place)
+        showDetails(place: place, showOnMap: true)
     }
     
     func search(with text: String) {

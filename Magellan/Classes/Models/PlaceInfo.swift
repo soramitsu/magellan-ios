@@ -54,7 +54,7 @@ struct WorkingDay: WorkingStatusProtocol, Codable, Equatable {
         }
     }
     
-    let day: Day
+    let dayOfWeek: Day
     let from: Time
     let to: Time
     let launchTimeFrom: Time?
@@ -142,7 +142,7 @@ extension PlaceInfo {
         let weekDayNumber = Calendar.current.component(.weekday, from: Date()) - 1
         return workSchedule?
             .workDays?
-            .first(where: { $0.day.numberOfWeek == weekDayNumber })
+            .first(where: { $0.dayOfWeek.numberOfWeek == weekDayNumber })
     }
     
     var isOpen: Bool {

@@ -19,7 +19,7 @@
         "workSchedule": {
             "open24": false,
             "workDays": [{
-                    "day": "MONDAY",
+                    "dayOfWeek": "MONDAY",
                     "from": {
                         "hour": 12,
                         "minutes": 0
@@ -30,7 +30,7 @@
                     }
                 },
                 {
-                    "day": "THURSDAY",
+                    "dayOfWeek": "THURSDAY",
                     "from": {
                         "hour": 12,
                         "minutes": 30
@@ -41,7 +41,7 @@
                     }
                 },
                 {
-                    "day": "WEDNESDAY",
+                    "dayOfWeek": "WEDNESDAY",
                     "from": {
                         "hour": 13,
                         "minutes": 30
@@ -52,7 +52,7 @@
                     }
                 },
                 {
-                    "day": "THRUSDAY",
+                    "dayOfWeek": "THRUSDAY",
                     "from": {
                         "hour": 14,
                         "minutes": 30
@@ -63,7 +63,7 @@
                     }
                 },
                 {
-                    "day": "FRIDAY" ,
+                    "dayOfWeek": "FRIDAY" ,
                     "from": {
                         "hour": 15,
                         "minutes": 30
@@ -74,7 +74,7 @@
                     }
                 },
                 {
-                    "day": "SATURDAY",
+                    "dayOfWeek": "SATURDAY",
                     "from": {
                         "hour": 16,
                         "minutes": 30
@@ -85,7 +85,7 @@
                     }
                 },
                 {
-                    "day": "SUNDAY",
+                    "dayOfWeek": "SUNDAY",
                     "from": {
                         "hour": 17,
                         "minutes": 30

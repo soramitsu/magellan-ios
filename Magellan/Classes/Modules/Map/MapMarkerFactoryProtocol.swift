@@ -8,35 +8,35 @@
 import UIKit
 import GoogleMaps
 
+protocol TapAnimatable: UIView {
+    func animate()
+}
+
 protocol MapMarkerFactoryProtocol {
     
     func marker(place viewModel: PlaceViewModel) -> GMSMarker
-    func image(for category: String) -> UIImage?
+    func image(for category: String) -> UIImage
     
     func marker(cluster viewModel: ClusterViewModel, font: UIFont) -> GMSMarker
 }
 
 final class MapMarkerDefaultFactory: MapMarkerFactoryProtocol {
     
+    private func iconView(for viewModel: PlaceViewModel) -> TapAnimatable {
+        let image = self.image(for: viewModel.category)
+        return PlaceIconView(image: image)
+    }
+    
     func marker(place viewModel: PlaceViewModel) -> GMSMarker {
         let marker = GMSMarker()
-        marker.title = viewModel.name
-        marker.snippet = viewModel.category
         marker.position = viewModel.position
-        if let iconImage = image(for: viewModel.category) {
-            let iconView = UIImageView(image: iconImage)
-            iconView.contentMode = .scaleAspectFit
-            iconView.translatesAutoresizingMaskIntoConstraints = false
-            iconView.heightAnchor.constraint(equalToConstant: 30).isActive = true
-            iconView.widthAnchor.constraint(equalToConstant: 30).isActive = true
-            marker.iconView = iconView
-        }
+        marker.iconView = iconView(for: viewModel)
         marker.userData = viewModel
         
         return marker
     }
     
-    func image(for category: String) -> UIImage? {
+    func image(for category: String) -> UIImage {
         guard let image = UIImage(named: "map_\(category.lowercased())", in: Bundle.frameworkBundle, compatibleWith: nil) else {
             return UIImage(named: "map_other", in: Bundle.frameworkBundle, compatibleWith: nil)!
         }

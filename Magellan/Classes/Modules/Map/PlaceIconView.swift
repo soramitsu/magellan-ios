@@ -10,7 +10,7 @@ import UIKit
 final class PlaceIconView: UIView, TapAnimatable {
     
     private struct Constants {
-        static let size: CGSize = CGSize(width: 48, height: 120)
+        static let size: CGSize = CGSize(width: 48, height: 60)
         static let anchorSize: CGFloat = 6
         static let imageSize: CGFloat = 32
         static let backgroundColor: UIColor = UIColor(red: 0.816, green: 0.008, blue: 0.107, alpha: 1)
@@ -33,7 +33,7 @@ final class PlaceIconView: UIView, TapAnimatable {
     private func configureUI() {
         let size = Constants.size
         anchorView.frame = CGRect(x: size.width / 2 - Constants.anchorSize / 2 ,
-                                  y: size.height / 2 - Constants.anchorSize / 2,
+                                  y: size.height / 2 - Constants.anchorSize / 2 + 14,
                                   width: Constants.anchorSize,
                                   height: Constants.anchorSize)
         anchorView.backgroundColor = Constants.backgroundColor
@@ -42,8 +42,8 @@ final class PlaceIconView: UIView, TapAnimatable {
         anchorView.layer.borderColor = UIColor.white.cgColor
         addSubview(anchorView)
         
-        imageView.frame = CGRect(x: size.width / 2 - Constants.imageSize / 2 ,
-                                 y: size.height / 2 - Constants.imageSize / 2,
+        imageView.frame = CGRect(x: size.width / 2 - Constants.imageSize / 2,
+                                 y: size.height / 2 - Constants.imageSize / 2 + 14,
                                  width: Constants.imageSize,
                                  height: Constants.imageSize)
         imageView.backgroundColor = Constants.backgroundColor
@@ -60,11 +60,13 @@ final class PlaceIconView: UIView, TapAnimatable {
     func animate() {
         if imageView.transform == .identity {
             UIView.animate(withDuration: CATransaction.animationDuration()) {
-                self.imageView.transform = CGAffineTransform.identity.scaledBy(x: 1.5, y: 1.5).translatedBy(x: 0, y: -20)
+                self.imageView.transform = CGAffineTransform.identity.scaledBy(x: 1.5, y: 1.5).translatedBy(x: 0, y: -12)
+                self.anchorView.transform = CGAffineTransform.identity.translatedBy(x: 0, y: 12)
             }
         } else {
             UIView.animate(withDuration: CATransaction.animationDuration()) {
                 self.imageView.transform = .identity
+                self.anchorView.transform = .identity
             }
         }
     }

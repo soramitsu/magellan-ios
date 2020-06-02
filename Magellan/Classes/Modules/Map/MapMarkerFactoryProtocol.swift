@@ -32,6 +32,7 @@ final class MapMarkerDefaultFactory: MapMarkerFactoryProtocol {
         marker.position = viewModel.position
         marker.iconView = iconView(for: viewModel)
         marker.userData = viewModel
+        marker.groundAnchor = CGPoint(x: 0.5, y: 0.5)
         
         return marker
     }
@@ -59,6 +60,7 @@ final class MapMarkerDefaultFactory: MapMarkerFactoryProtocol {
         marker.userData = viewModel
         marker.iconView = countLabel
         marker.position = viewModel.coordinates.coreLocationCoordinates
+        marker.groundAnchor = CGPoint(x: 0.5, y: 0.5)
         
         return marker
     }

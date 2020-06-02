@@ -180,7 +180,7 @@ extension MapViewController: GMSMapViewDelegate {
     
     func mapView(_ mapView: GMSMapView, didChange position: GMSCameraPosition) {
         NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(positionDidChange), object: nil)
-        perform(#selector(positionDidChange), with: nil, afterDelay: 3.0, inModes: [.common])
+        perform(#selector(positionDidChange), with: nil, afterDelay: 2.0, inModes: [.common])
     }
     
     @objc

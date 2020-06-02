@@ -37,7 +37,7 @@ final class MapPresenterTests: XCTestCase {
     }
     
     var placeInfo: PlaceInfo {
-        return PlaceInfo(id: 1,
+        return PlaceInfo(id: "1",
                 name: "name",
                 type: "type",
                 coordinates: Coordinates(lat: 1, lon: 1),

@@ -80,13 +80,13 @@ final class MapPresenter: MapPresenterProtocol {
             switch result {
             case .success(let items):
                 self.categories = items
+                self.view?.setFilterButton(hidden: false)
             default:
                 self.output?.loadingComplete(with: MapError.loadingError, retryClosure: { [weak self] in
                     self?.loadCategories()
                     self?.reloadIfNeeded(search: self?.currentSearchText)
                 })
             }
-            self.view?.setFilterButton(hidden: false)
         }
     }
     

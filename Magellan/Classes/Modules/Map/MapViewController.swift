@@ -102,6 +102,7 @@ final class MapViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         presenter.loadCategories()
+        positionDidChange()
     }
     
     private func setupButtons() {
@@ -161,11 +162,19 @@ final class MapViewController: UIViewController {
 extension MapViewController: GMSMapViewDelegate {
     
     func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
-        guard let place = marker.userData as? PlaceViewModel else {
+        if let place = marker.userData as? PlaceViewModel {
+            presenter.showDetails(place: place)
             return false
         }
         
-        presenter.showDetails(place: place)
+        if let cluster = marker.userData as? ClusterViewModel {
+            let cameraUpdate = GMSCameraUpdate.setTarget(cluster.coordinates.coreLocationCoordinates,
+                                                         zoom: mapView.camera.zoom + 2)
+            mapView.moveCamera(cameraUpdate)
+            positionDidChange()
+            return false
+        }
+        
         return true
     }
     

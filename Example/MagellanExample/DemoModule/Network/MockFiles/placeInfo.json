@@ -22,77 +22,77 @@
                     "dayOfWeek": "MONDAY",
                     "from": {
                         "hour": 12,
-                        "minutes": 0
+                        "minute": 0
                     },
                     "to": {
                         "hour": 12,
-                        "minutes": 30
+                        "minute": 30
                     }
                 },
                 {
                     "dayOfWeek": "THURSDAY",
                     "from": {
                         "hour": 12,
-                        "minutes": 30
+                        "minute": 30
                     },
                     "to": {
                         "hour": 13,
-                        "minutes": 30
+                        "minute": 30
                     }
                 },
                 {
                     "dayOfWeek": "WEDNESDAY",
                     "from": {
                         "hour": 13,
-                        "minutes": 30
+                        "minute": 30
                     },
                     "to": {
                         "hour": 14,
-                        "minutes": 30
+                        "minute": 30
                     }
                 },
                 {
                     "dayOfWeek": "THRUSDAY",
                     "from": {
                         "hour": 14,
-                        "minutes": 30
+                        "minute": 30
                     },
                     "to": {
                         "hour": 15,
-                        "minutes": 30
+                        "minute": 30
                     }
                 },
                 {
                     "dayOfWeek": "FRIDAY" ,
                     "from": {
                         "hour": 15,
-                        "minutes": 30
+                        "minute": 30
                     },
                     "to": {
                         "hour": 16,
-                        "minutes": 30
+                        "minute": 30
                     }
                 },
                 {
                     "dayOfWeek": "SATURDAY",
                     "from": {
                         "hour": 16,
-                        "minutes": 30
+                        "minute": 30
                     },
                     "to": {
                         "hour": 17,
-                        "minutes": 30
+                        "minute": 30
                     }
                 },
                 {
                     "dayOfWeek": "SUNDAY",
                     "from": {
                         "hour": 17,
-                        "minutes": 30
+                        "minute": 30
                     },
                     "to": {
                         "hour": 18,
-                        "minutes": 0
+                        "minute": 0
                     }
                 }
             ]

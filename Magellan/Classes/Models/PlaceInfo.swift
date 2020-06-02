@@ -17,10 +17,10 @@ struct WorkingDay: WorkingStatusProtocol, Codable, Equatable {
     
     struct Time: Codable, Equatable {
         let hour: Int
-        let minutes: Int
+        let minute: Int
         
         var description: String {
-            let minutesValue = minutes < 10 ? "0\(minutes)" : String(minutes)
+            let minutesValue = minute < 10 ? "0\(minute)" : String(minute)
             return "\(hour):\(minutesValue)"
         }
     }
@@ -95,7 +95,7 @@ struct WorkingDay: WorkingStatusProtocol, Codable, Equatable {
         guard let launchTimeFrom = launchTimeFrom else {
             return nil
         }
-        let seconds = Int64(launchTimeFrom.hour * 60 * 60 + launchTimeFrom.minutes * 60)
+        let seconds = Int64(launchTimeFrom.hour * 60 * 60 + launchTimeFrom.minute * 60)
         return TimeInterval(integerLiteral: seconds)
     }
     
@@ -103,17 +103,17 @@ struct WorkingDay: WorkingStatusProtocol, Codable, Equatable {
         guard let launchTimeTo = launchTimeTo else {
             return nil
         }
-        let seconds = Int64(launchTimeTo.hour * 60 * 60 + launchTimeTo.minutes * 60)
+        let seconds = Int64(launchTimeTo.hour * 60 * 60 + launchTimeTo.minute * 60)
         return TimeInterval(integerLiteral: seconds)
     }
     
     var opensTimeInterval: TimeInterval {
-        let seconds = Int64(from.hour * 60 * 60 + from.minutes * 60)
+        let seconds = Int64(from.hour * 60 * 60 + from.minute * 60)
         return TimeInterval(integerLiteral: seconds)
     }
     
     var closesTimeInterval: TimeInterval {
-        let seconds = Int64(to.hour * 60 * 60 + to.minutes * 60)
+        let seconds = Int64(to.hour * 60 * 60 + to.minute * 60)
         return TimeInterval(integerLiteral: seconds)
     }
     

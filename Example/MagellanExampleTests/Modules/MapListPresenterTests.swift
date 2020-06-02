@@ -27,8 +27,8 @@ final class MapListPresenterTests: XCTestCase {
     
     var places: [Place] {
         return [
-            Place(id: 1, name: "first", type: "one", coordinates: Coordinates(lat: 1, lon: 1)),
-            Place(id: 2, name: "second", type: "one", coordinates: Coordinates(lat: 2, lon: 2))
+            Place(id: "1", name: "first", type: "one", coordinates: Coordinates(lat: 1, lon: 1)),
+            Place(id: "2", name: "second", type: "one", coordinates: Coordinates(lat: 2, lon: 2))
         ]
     }
     

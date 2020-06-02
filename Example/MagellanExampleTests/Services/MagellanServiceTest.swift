@@ -101,7 +101,7 @@ class MagellanServiceTest: XCTestCase {
         let expectation = XCTestExpectation()
         var value: PlaceInfo? = nil
         
-        magellanService.getPlace(with: 1, runCompletionIn: DispatchQueue.main) { result in
+        magellanService.getPlace(with: "1", runCompletionIn: DispatchQueue.main) { result in
             switch result {
             case .failure:
                 XCTFail("expected array of categories")
@@ -119,7 +119,7 @@ class MagellanServiceTest: XCTestCase {
         let expectation = XCTestExpectation()
         var expError: Error? = nil
 
-        magellanService.getPlace(with: 1, runCompletionIn: DispatchQueue.main) { result in
+        magellanService.getPlace(with: "1", runCompletionIn: DispatchQueue.main) { result in
             switch result {
             case .failure(let error):
                 expError = error

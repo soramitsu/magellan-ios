@@ -8,7 +8,7 @@
 import Foundation
 
 struct Place {
-    let id: Int
+    let id: String
     let name: String
     let type: String
     let coordinates: Coordinates

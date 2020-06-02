@@ -8,7 +8,7 @@
   "data": {
     "locations": [
         {
-          "id": 0,
+          "id": "someID",
           "name": "Cyclonica",
           "type": "Education",
           "coordinates": {
@@ -17,7 +17,7 @@
           }
         },
         {
-          "id": 1,
+"id": "someID",
           "name": "Delphide",
           "type": "Services",
           "coordinates": {
@@ -26,7 +26,7 @@
           }
         },
         {
-          "id": 2,
+"id": "someID",
           "name": "Ziore",
           "type": "Pharmacy",
           "coordinates": {
@@ -35,7 +35,7 @@
           }
         },
         {
-          "id": 3,
+"id": "someID",
           "name": "Comvey",
           "type": "Other",
           "coordinates": {
@@ -44,7 +44,7 @@
           }
         },
         {
-          "id": 4,
+"id": "someID",
           "name": "Senmao",
           "type": "Services",
           "coordinates": {
@@ -53,7 +53,7 @@
           }
         },
         {
-          "id": 5,
+"id": "someID",
           "name": "Terrasys",
           "type": "Education",
           "coordinates": {
@@ -62,7 +62,7 @@
           }
         },
         {
-          "id": 6,
+"id": "someID",
           "name": "Bunga",
           "type": "Other",
           "coordinates": {
@@ -71,7 +71,7 @@
           }
         },
         {
-          "id": 7,
+"id": "someID",
           "name": "Realysis",
           "type": "Pharmacy",
           "coordinates": {
@@ -80,7 +80,7 @@
           }
         },
         {
-          "id": 8,
+"id": "someID",
           "name": "Ziggles",
           "type": "Bank",
           "coordinates": {
@@ -89,7 +89,7 @@
           }
         },
         {
-          "id": 9,
+"id": "someID",
           "name": "Honotron",
           "type": "Education",
           "coordinates": {
@@ -98,7 +98,7 @@
           }
         },
         {
-          "id": 10,
+          "id": "someID",
           "name": "Caxt",
           "type": "Bank",
           "coordinates": {
@@ -107,7 +107,7 @@
           }
         },
         {
-          "id": 11,
+          "id": "someID",
           "name": "Tellifly",
           "type": "Supermarkets",
           "coordinates": {
@@ -116,7 +116,7 @@
           }
         },
         {
-          "id": 12,
+          "id": "someID",
           "name": "Straloy",
           "type": "Services",
           "coordinates": {
@@ -125,7 +125,7 @@
           }
         },
         {
-          "id": 13,
+          "id": "someID",
           "name": "Ozean",
           "type": "Education",
           "coordinates": {
@@ -134,7 +134,7 @@
           }
         },
         {
-          "id": 14,
+          "id": "someID",
           "name": "Enthaze",
           "type": "Education",
           "coordinates": {
@@ -143,7 +143,7 @@
           }
         },
         {
-          "id": 15,
+          "id": "someID",
           "name": "Isoswitch",
           "type": "Supermarkets",
           "coordinates": {
@@ -152,7 +152,7 @@
           }
         },
         {
-          "id": 16,
+          "id": "someID",
           "name": "Edecine",
           "type": "Entertainment",
           "coordinates": {
@@ -161,7 +161,7 @@
           }
         },
         {
-          "id": 17,
+          "id": "someID",
           "name": "Centrexin",
           "type": "Pharmacy",
           "coordinates": {
@@ -170,7 +170,7 @@
           }
         },
         {
-          "id": 18,
+          "id": "someID",
           "name": "Chorizon",
           "type": "Education",
           "coordinates": {
@@ -179,7 +179,7 @@
           }
         },
         {
-          "id": 19,
+          "id": "someID",
           "name": "Ontagene",
           "type": "Entertainment",
           "coordinates": {
@@ -188,7 +188,7 @@
           }
         },
         {
-          "id": 20,
+          "id": "someID",
           "name": "Comtrak",
           "type": "Entertainment",
           "coordinates": {
@@ -197,7 +197,7 @@
           }
         },
         {
-          "id": 21,
+          "id": "someID",
           "name": "Prismatic",
           "type": "Entertainment",
           "coordinates": {
@@ -206,7 +206,7 @@
           }
         },
         {
-          "id": 22,
+          "id": "someID",
           "name": "Gushkool",
           "type": "Bank",
           "coordinates": {
@@ -215,7 +215,7 @@
           }
         },
         {
-          "id": 23,
+          "id": "someID",
           "name": "Exoswitch",
           "type": "Supermarkets",
           "coordinates": {
@@ -224,7 +224,7 @@
           }
         },
         {
-          "id": 24,
+          "id": "someID",
           "name": "Biotica",
           "type": "Bank",
           "coordinates": {
@@ -233,7 +233,7 @@
           }
         },
         {
-          "id": 25,
+          "id": "someID",
           "name": "Zytrax",
           "type": "Pharmacy",
           "coordinates": {
@@ -242,7 +242,7 @@
           }
         },
         {
-          "id": 26,
+          "id": "someID",
           "name": "Harmoney",
           "type": "Education",
           "coordinates": {
@@ -251,7 +251,7 @@
           }
         },
         {
-          "id": 27,
+          "id": "someID",
           "name": "Extragene",
           "type": "Pharmacy",
           "coordinates": {
@@ -260,7 +260,7 @@
           }
         },
         {
-          "id": 28,
+          "id": "someID",
           "name": "Tropolis",
           "type": "Pharmacy",
           "coordinates": {
@@ -269,7 +269,7 @@
           }
         },
         {
-          "id": 29,
+          "id": "someID",
           "name": "Ultrasure",
           "type": "Entertainment",
           "coordinates": {
@@ -278,7 +278,7 @@
           }
         },
         {
-          "id": 30,
+          "id": "someID",
           "name": "Quizka",
           "type": "Pharmacy",
           "coordinates": {
@@ -287,7 +287,7 @@
           }
         },
         {
-          "id": 31,
+          "id": "someID",
           "name": "Mediot",
           "type": "Pharmacy",
           "coordinates": {
@@ -296,7 +296,7 @@
           }
         },
         {
-          "id": 32,
+          "id": "someID",
           "name": "Koffee",
           "type": "Services",
           "coordinates": {
@@ -305,7 +305,7 @@
           }
         },
         {
-          "id": 33,
+          "id": "someID",
           "name": "Nipaz",
           "type": "Other",
           "coordinates": {
@@ -314,7 +314,7 @@
           }
         },
         {
-          "id": 34,
+          "id": "someID",
           "name": "Xsports",
           "type": "Bank",
           "coordinates": {
@@ -323,7 +323,7 @@
           }
         },
         {
-          "id": 35,
+          "id": "someID",
           "name": "Lotron",
           "type": "Pharmacy",
           "coordinates": {
@@ -332,7 +332,7 @@
           }
         },
         {
-          "id": 36,
+          "id": "someID",
           "name": "Vitricomp",
           "type": "Education",
           "coordinates": {
@@ -341,7 +341,7 @@
           }
         },
         {
-          "id": 37,
+          "id": "someID",
           "name": "Zillan",
           "type": "Other",
           "coordinates": {
@@ -350,7 +350,7 @@
           }
         },
         {
-          "id": 38,
+          "id": "someID",
           "name": "Miraclis",
           "type": "Education",
           "coordinates": {
@@ -359,7 +359,7 @@
           }
         },
         {
-          "id": 39,
+          "id": "someID",
           "name": "Netropic",
           "type": "Entertainment",
           "coordinates": {
@@ -368,7 +368,7 @@
           }
         },
         {
-          "id": 40,
+          "id": "someID",
           "name": "Unisure",
           "type": "Pharmacy",
           "coordinates": {
@@ -377,7 +377,7 @@
           }
         },
         {
-          "id": 41,
+          "id": "someID",
           "name": "Zoxy",
           "type": "Pharmacy",
           "coordinates": {
@@ -386,7 +386,7 @@
           }
         },
         {
-          "id": 42,
+          "id": "someID",
           "name": "Maxemia",
           "type": "Supermarkets",
           "coordinates": {
@@ -395,7 +395,7 @@
           }
         },
         {
-          "id": 43,
+          "id": "someID",
           "name": "Slambda",
           "type": "Services",
           "coordinates": {
@@ -404,7 +404,7 @@
           }
         },
         {
-          "id": 44,
+          "id": "someID",
           "name": "Valpreal",
           "type": "Other",
           "coordinates": {
@@ -413,7 +413,7 @@
           }
         },
         {
-          "id": 45,
+          "id": "someID",
           "name": "Furnafix",
           "type": "Supermarkets",
           "coordinates": {
@@ -422,7 +422,7 @@
           }
         },
         {
-          "id": 46,
+          "id": "someID",
           "name": "Springbee",
           "type": "Education",
           "coordinates": {
@@ -431,7 +431,7 @@
           }
         },
         {
-          "id": 47,
+          "id": "someID",
           "name": "Quilm",
           "type": "Education",
           "coordinates": {
@@ -440,7 +440,7 @@
           }
         },
         {
-          "id": 48,
+          "id": "someID",
           "name": "Eyeris",
           "type": "Bank",
           "coordinates": {
@@ -449,7 +449,7 @@
           }
         },
         {
-          "id": 49,
+          "id": "someID",
           "name": "Geeky",
           "type": "Services",
           "coordinates": {
@@ -458,7 +458,7 @@
           }
         },
         {
-          "id": 50,
+          "id": "someID",
           "name": "Eclipto",
           "type": "Supermarkets",
           "coordinates": {
@@ -467,7 +467,7 @@
           }
         },
         {
-          "id": 51,
+          "id": "someID",
           "name": "Primordia",
           "type": "Pharmacy",
           "coordinates": {
@@ -476,7 +476,7 @@
           }
         },
         {
-          "id": 52,
+          "id": "someID",
           "name": "Darwinium",
           "type": "Other",
           "coordinates": {
@@ -485,7 +485,7 @@
           }
         },
         {
-          "id": 53,
+          "id": "someID",
           "name": "Futuris",
           "type": "Education",
           "coordinates": {
@@ -494,7 +494,7 @@
           }
         },
         {
-          "id": 54,
+          "id": "someID",
           "name": "Kongle",
           "type": "Bank",
           "coordinates": {
@@ -503,7 +503,7 @@
           }
         },
         {
-          "id": 55,
+          "id": "someID",
           "name": "Viocular",
           "type": "Bank",
           "coordinates": {
@@ -512,7 +512,7 @@
           }
         },
         {
-          "id": 56,
+          "id": "someID",
           "name": "Podunk",
           "type": "Services",
           "coordinates": {
@@ -521,7 +521,7 @@
           }
         },
         {
-          "id": 57,
+          "id": "someID",
           "name": "Songlines",
           "type": "Other",
           "coordinates": {
@@ -530,7 +530,7 @@
           }
         },
         {
-          "id": 58,
+          "id": "someID",
           "name": "Cormoran",
           "type": "Services",
           "coordinates": {
@@ -539,7 +539,7 @@
           }
         },
         {
-          "id": 59,
+          "id": "someID",
           "name": "Letpro",
           "type": "Education",
           "coordinates": {
@@ -548,7 +548,7 @@
           }
         },
         {
-          "id": 60,
+          "id": "someID",
           "name": "Diginetic",
           "type": "Supermarkets",
           "coordinates": {
@@ -557,7 +557,7 @@
           }
         },
         {
-          "id": 61,
+          "id": "someID",
           "name": "Calcu",
           "type": "Services",
           "coordinates": {
@@ -566,7 +566,7 @@
           }
         },
         {
-          "id": 62,
+          "id": "someID",
           "name": "Perkle",
           "type": "Services",
           "coordinates": {
@@ -575,7 +575,7 @@
           }
         },
         {
-          "id": 63,
+          "id": "someID",
           "name": "Lunchpad",
           "type": "Services",
           "coordinates": {
@@ -584,7 +584,7 @@
           }
         },
         {
-          "id": 64,
+          "id": "someID",
           "name": "Dragbot",
           "type": "Supermarkets",
           "coordinates": {
@@ -593,7 +593,7 @@
           }
         },
         {
-          "id": 65,
+          "id": "someID",
           "name": "Hotcakes",
           "type": "Supermarkets",
           "coordinates": {
@@ -602,7 +602,7 @@
           }
         },
         {
-          "id": 66,
+          "id": "someID",
           "name": "Idealis",
           "type": "Services",
           "coordinates": {
@@ -611,7 +611,7 @@
           }
         },
         {
-          "id": 67,
+          "id": "someID",
           "name": "Qnekt",
           "type": "Education",
           "coordinates": {
@@ -620,7 +620,7 @@
           }
         },
         {
-          "id": 68,
+          "id": "someID",
           "name": "Atgen",
           "type": "Other",
           "coordinates": {
@@ -629,7 +629,7 @@
           }
         },
         {
-          "id": 69,
+          "id": "someID",
           "name": "Slumberia",
           "type": "Services",
           "coordinates": {
@@ -638,7 +638,7 @@
           }
         },
         {
-          "id": 70,
+          "id": "someID",
           "name": "Hometown",
           "type": "Education",
           "coordinates": {
@@ -647,7 +647,7 @@
           }
         },
         {
-          "id": 71,
+          "id": "someID",
           "name": "Zensus",
           "type": "Education",
           "coordinates": {
@@ -656,7 +656,7 @@
           }
         },
         {
-          "id": 72,
+          "id": "someID",
           "name": "Corecom",
           "type": "Bank",
           "coordinates": {
@@ -665,7 +665,7 @@
           }
         },
         {
-          "id": 73,
+          "id": "someID",
           "name": "Geekology",
           "type": "Entertainment",
           "coordinates": {
@@ -674,7 +674,7 @@
           }
         },
         {
-          "id": 74,
+          "id": "someID",
           "name": "Zillactic",
           "type": "Pharmacy",
           "coordinates": {
@@ -683,7 +683,7 @@
           }
         },
         {
-          "id": 75,
+          "id": "someID",
           "name": "Medesign",
           "type": "Other",
           "coordinates": {
@@ -692,7 +692,7 @@
           }
         },
         {
-          "id": 76,
+          "id": "someID",
           "name": "Quordate",
           "type": "Entertainment",
           "coordinates": {
@@ -701,7 +701,7 @@
           }
         },
         {
-          "id": 77,
+          "id": "someID",
           "name": "Assistix",
           "type": "Entertainment",
           "coordinates": {
@@ -710,7 +710,7 @@
           }
         },
         {
-          "id": 78,
+          "id": "someID",
           "name": "Senmei",
           "type": "Education",
           "coordinates": {
@@ -719,7 +719,7 @@
           }
         },
         {
-          "id": 79,
+          "id": "someID",
           "name": "Nimon",
           "type": "Education",
           "coordinates": {
@@ -728,7 +728,7 @@
           }
         },
         {
-          "id": 80,
+          "id": "someID",
           "name": "Yurture",
           "type": "Bank",
           "coordinates": {
@@ -737,7 +737,7 @@
           }
         },
         {
-          "id": 81,
+          "id": "someID",
           "name": "Stucco",
           "type": "Services",
           "coordinates": {
@@ -746,7 +746,7 @@
           }
         },
         {
-          "id": 82,
+          "id": "someID",
           "name": "Pasturia",
           "type": "Entertainment",
           "coordinates": {
@@ -755,7 +755,7 @@
           }
         },
         {
-          "id": 83,
+          "id": "someID",
           "name": "Twiist",
           "type": "Entertainment",
           "coordinates": {
@@ -764,7 +764,7 @@
           }
         },
         {
-          "id": 84,
+          "id": "someID",
           "name": "Kidgrease",
           "type": "Other",
           "coordinates": {
@@ -773,7 +773,7 @@
           }
         },
         {
-          "id": 85,
+          "id": "someID",
           "name": "Unia",
           "type": "Pharmacy",
           "coordinates": {
@@ -782,7 +782,7 @@
           }
         },
         {
-          "id": 86,
+          "id": "someID",
           "name": "Papricut",
           "type": "Supermarkets",
           "coordinates": {
@@ -791,7 +791,7 @@
           }
         },
         {
-          "id": 87,
+          "id": "someID",
           "name": "Isoplex",
           "type": "Pharmacy",
           "coordinates": {
@@ -800,7 +800,7 @@
           }
         },
         {
-          "id": 88,
+          "id": "someID",
           "name": "Strozen",
           "type": "Services",
           "coordinates": {
@@ -809,7 +809,7 @@
           }
         },
         {
-          "id": 89,
+          "id": "someID",
           "name": "Bleendot",
           "type": "Other",
           "coordinates": {
@@ -818,7 +818,7 @@
           }
         },
         {
-          "id": 90,
+          "id": "someID",
           "name": "Puria",
           "type": "Services",
           "coordinates": {
@@ -827,7 +827,7 @@
           }
         },
         {
-          "id": 91,
+          "id": "someID",
           "name": "Bullzone",
           "type": "Supermarkets",
           "coordinates": {
@@ -836,7 +836,7 @@
           }
         },
         {
-          "id": 92,
+          "id": "someID",
           "name": "Telequiet",
           "type": "Services",
           "coordinates": {
@@ -845,7 +845,7 @@
           }
         },
         {
-          "id": 93,
+          "id": "someID",
           "name": "Ovium",
           "type": "Supermarkets",
           "coordinates": {
@@ -854,7 +854,7 @@
           }
         },
         {
-          "id": 94,
+          "id": "someID",
           "name": "Zaj",
           "type": "Services",
           "coordinates": {
@@ -863,7 +863,7 @@
           }
         },
         {
-          "id": 95,
+          "id": "someID",
           "name": "Handshake",
           "type": "Other",
           "coordinates": {
@@ -872,7 +872,7 @@
           }
         },
         {
-          "id": 96,
+          "id": "someID",
           "name": "Premiant",
           "type": "Supermarkets",
           "coordinates": {
@@ -881,7 +881,7 @@
           }
         },
         {
-          "id": 97,
+          "id": "someID",
           "name": "Fanfare",
           "type": "Pharmacy",
           "coordinates": {
@@ -890,7 +890,7 @@
           }
         },
         {
-          "id": 98,
+          "id": "someID",
           "name": "Sarasonic",
           "type": "Services",
           "coordinates": {

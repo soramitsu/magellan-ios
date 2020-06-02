@@ -14,8 +14,15 @@ protocol WorkingStatusProtocol {
     var closesTime: String { get }
     var workingHours: String { get }
     
+    var startLaunchTime: String? { get }
+    var finishLaunchTime: String? { get }
+    var launchHours: String? { get }
+    
     var opensTimeInterval: TimeInterval { get }
     var closesTimeInterval: TimeInterval  { get }
+    
+    var startLaunchTimeInterval: TimeInterval? { get }
+    var finishLaunchTimeInterval: TimeInterval?  { get }
     var intervalFromDayBegins: TimeInterval  { get }
     
     var isOpen: Bool  { get }
@@ -36,6 +43,13 @@ extension WorkingStatusProtocol {
     }
     
     var isOpen: Bool {
+        if let startLaunchTimeInterval = startLaunchTimeInterval,
+            let finishLaunchTimeInterval = finishLaunchTimeInterval,
+            intervalFromDayBegins <= startLaunchTimeInterval,
+            intervalFromDayBegins > finishLaunchTimeInterval {
+            return false
+        }
+        
         if intervalFromDayBegins >= opensTimeInterval
             && intervalFromDayBegins < closesTimeInterval {
             return true
@@ -47,6 +61,14 @@ extension WorkingStatusProtocol {
     var status: String {
         if intervalFromDayBegins == 0 {
             return ""
+        }
+        
+        if let finishLaunchTime = finishLaunchTime,
+            let startLaunchTimeInterval = startLaunchTimeInterval,
+            let finishLaunchTimeInterval = finishLaunchTimeInterval,
+            intervalFromDayBegins <= startLaunchTimeInterval,
+            intervalFromDayBegins > finishLaunchTimeInterval {
+            return L10n.Location.Details.Status.closedTill(finishLaunchTime)
         }
         
         if intervalFromDayBegins >= opensTimeInterval

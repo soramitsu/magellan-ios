@@ -11,15 +11,9 @@ struct Place {
     let id: Int
     let name: String
     let type: String
-    let lat: Double
-    let lon: Double
+    let coordinates: Coordinates
 }
 
-extension Place: Coordinated {
-    var coordinates: Coordinates {
-       return Coordinates(lat: lat, lon: lon)
-    }
-}
-
+extension Place: Coordinated { }
 extension Place: Codable { }
 extension Place: Equatable { }

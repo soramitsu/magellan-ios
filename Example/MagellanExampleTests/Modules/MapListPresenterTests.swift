@@ -27,8 +27,8 @@ final class MapListPresenterTests: XCTestCase {
     
     var places: [Place] {
         return [
-            Place(id: 1, name: "first", type: "one", lat: 1, lon: 1),
-            Place(id: 2, name: "second", type: "one", lat: 2, lon: 2)
+            Place(id: 1, name: "first", type: "one", coordinates: Coordinates(lat: 1, lon: 1)),
+            Place(id: 2, name: "second", type: "one", coordinates: Coordinates(lat: 2, lon: 2))
         ]
     }
     
@@ -44,7 +44,7 @@ final class MapListPresenterTests: XCTestCase {
         facebook: "fb",
         logoUuid: "logoUiid",
         promoImageUuid: "promoUiid",
-        distance: "dist", workingSchedule: Schedule(opens24: true, workingDays: nil))
+        distance: "dist", workSchedule: Schedule(open24: true, workDays: nil))
     }
     
     var defaultPosition: Coordinates {

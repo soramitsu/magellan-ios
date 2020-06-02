@@ -16,81 +16,81 @@
         "address": "Russian Blv, 79",
         "phoneNumber": "855123456789",
         "region": "KH",
-        "workingSchedule": {
-            "opens24": false,
-            "workingDays": [{
-                    "day": 1,
-                    "opens": {
+        "workSchedule": {
+            "open24": false,
+            "workDays": [{
+                    "day": "MONDAY",
+                    "from": {
                         "hour": 12,
                         "minutes": 0
                     },
-                    "closes": {
+                    "to": {
                         "hour": 12,
                         "minutes": 30
                     }
                 },
                 {
-                    "day": 2,
-                    "opens": {
+                    "day": "THURSDAY",
+                    "from": {
                         "hour": 12,
                         "minutes": 30
                     },
-                    "closes": {
+                    "to": {
                         "hour": 13,
                         "minutes": 30
                     }
                 },
                 {
-                    "day": 3,
-                    "opens": {
+                    "day": "WEDNESDAY",
+                    "from": {
                         "hour": 13,
                         "minutes": 30
                     },
-                    "closes": {
+                    "to": {
                         "hour": 14,
                         "minutes": 30
                     }
                 },
                 {
-                    "day": 4,
-                    "opens": {
+                    "day": "THRUSDAY",
+                    "from": {
                         "hour": 14,
                         "minutes": 30
                     },
-                    "closes": {
+                    "to": {
                         "hour": 15,
                         "minutes": 30
                     }
                 },
                 {
-                    "day": 5,
-                    "opens": {
+                    "day": "FRIDAY" ,
+                    "from": {
                         "hour": 15,
                         "minutes": 30
                     },
-                    "closes": {
+                    "to": {
                         "hour": 16,
                         "minutes": 30
                     }
                 },
                 {
-                    "day": 6,
-                    "opens": {
+                    "day": "SATURDAY",
+                    "from": {
                         "hour": 16,
                         "minutes": 30
                     },
-                    "closes": {
+                    "to": {
                         "hour": 17,
                         "minutes": 30
                     }
                 },
                 {
-                    "day": 0,
-                    "opens": {
+                    "day": "SUNDAY",
+                    "from": {
                         "hour": 17,
                         "minutes": 30
                     },
-                    "closes": {
+                    "to": {
                         "hour": 18,
                         "minutes": 0
                     }

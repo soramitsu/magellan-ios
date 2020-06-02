@@ -24,7 +24,7 @@ final class LocationDetailPresenterTests: XCTestCase {
                         facebook: "fb",
                         logoUuid: "logoUiid",
                         promoImageUuid: "promoUiid",
-                        distance: "dist", workingSchedule: Schedule(opens24: true, workingDays: nil))
+                        distance: "dist", workSchedule: Schedule(open24: true, workDays: nil))
     }
     
     func testDismiss() {

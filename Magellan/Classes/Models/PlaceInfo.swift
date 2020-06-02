@@ -8,8 +8,8 @@ import Foundation
 
 struct Schedule: Codable, Equatable {
     
-    let opens24: Bool
-    let workingDays: [WorkingDay]?
+    let open24: Bool
+    let workDays: [WorkingDay]?
     
 }
 
@@ -18,52 +18,102 @@ struct WorkingDay: WorkingStatusProtocol, Codable, Equatable {
     struct Time: Codable, Equatable {
         let hour: Int
         let minutes: Int
+        
+        var description: String {
+            let minutesValue = minutes < 10 ? "0\(minutes)" : String(minutes)
+            return "\(hour):\(minutesValue)"
+        }
     }
     
-    enum Day: Int, Codable {
-        case Monday = 1
-        case Tuesday = 2
-        case Wednesday = 3
-        case Thursday = 4
-        case Friday = 5
-        case Saturday = 6
-        case Sunday = 0
+    enum Day: String, Codable {
+        case Monday = "MONDAY"
+        case Tuesday = "THURSDAY"
+        case Wednesday = "WEDNESDAY"
+        case Thursday = "THRUSDAY"
+        case Friday = "FRIDAY"
+        case Saturday = "SATURDAY"
+        case Sunday = "SUNDAY"
+        
+        var numberOfWeek: Int {
+            switch self {
+            case .Monday:
+                return 1
+            case .Tuesday:
+                return 2
+            case .Wednesday:
+                return 3
+            case .Thursday:
+                return 4
+            case .Friday:
+                return 5
+            case .Saturday:
+                return 6
+            case .Sunday:
+                return 0
+            }
+        }
     }
     
     let day: Day
-    let opens: Time
-    let closes: Time
+    let from: Time
+    let to: Time
+    let launchTimeFrom: Time?
+    let launchTimeTo: Time?
     
     var currentDate: Date {
         return Date()
     }
-    
-    var opensMinutes: String {
-        opens.minutes < 10 ? "0\(opens.minutes)" : "\(opens.minutes)"
-    }
-    
-    var closesMinutes: String {
-        closes.minutes < 10 ? "0\(closes.minutes)" : "\(closes.minutes)"
-    }
-    
+
     var opensTime: String {
-        return "\(opens.hour):\(opensMinutes)"
+        return from.description
     }
+    
     var closesTime: String {
-        return "\(closes.hour):\(closesMinutes)"
+        return to.description
     }
     
     var workingHours: String {
-        return "\(opens.hour):\(opensMinutes) - \(closes.hour):\(closesMinutes)"
+        return "\(from.description) - \(to.description)"
+    }
+    
+    var startLaunchTime: String? {
+        return launchTimeFrom?.description
+    }
+    var finishLaunchTime: String? {
+        return launchTimeTo?.description
+    }
+    
+    var launchHours: String? {
+        guard let launchTimeFrom = launchTimeFrom,
+            let launchTimeTo = launchTimeTo else {
+                return nil
+        }
+        return "\(launchTimeFrom.description) - \(launchTimeTo.description)"
+    }
+    
+    var startLaunchTimeInterval: TimeInterval? {
+        guard let launchTimeFrom = launchTimeFrom else {
+            return nil
+        }
+        let seconds = Int64(launchTimeFrom.hour * 60 * 60 + launchTimeFrom.minutes * 60)
+        return TimeInterval(integerLiteral: seconds)
+    }
+    
+    var finishLaunchTimeInterval: TimeInterval?  {
+        guard let launchTimeTo = launchTimeTo else {
+            return nil
+        }
+        let seconds = Int64(launchTimeTo.hour * 60 * 60 + launchTimeTo.minutes * 60)
+        return TimeInterval(integerLiteral: seconds)
     }
     
     var opensTimeInterval: TimeInterval {
-        let seconds = Int64(opens.hour * 60 * 60 + opens.minutes * 60)
+        let seconds = Int64(from.hour * 60 * 60 + from.minutes * 60)
         return TimeInterval(integerLiteral: seconds)
     }
     
     var closesTimeInterval: TimeInterval {
-        let seconds = Int64(closes.hour * 60 * 60 + closes.minutes * 60)
+        let seconds = Int64(to.hour * 60 * 60 + to.minutes * 60)
         return TimeInterval(integerLiteral: seconds)
     }
     
@@ -83,21 +133,21 @@ struct PlaceInfo: Coordinated {
     let logoUuid: String
     let promoImageUuid: String
     let distance: String
-    let workingSchedule : Schedule
+    let workSchedule : Schedule
 }
 
 extension PlaceInfo {
     
     var currentWorkingDay: WorkingDay? {
         let weekDayNumber = Calendar.current.component(.weekday, from: Date()) - 1
-        return workingSchedule
-            .workingDays?
-            .first(where: { $0.day.rawValue == weekDayNumber })
+        return workSchedule
+            .workDays?
+            .first(where: { $0.day.numberOfWeek == weekDayNumber })
     }
     
     var isOpen: Bool {
         
-        if workingSchedule.opens24 {
+        if workSchedule.open24 {
             return true
         }
         
@@ -110,7 +160,7 @@ extension PlaceInfo {
     }
     
     var workingStatus: String {
-        if workingSchedule.opens24 {
+        if workSchedule.open24 {
             return L10n.Location.Details.Status.open
         }
         

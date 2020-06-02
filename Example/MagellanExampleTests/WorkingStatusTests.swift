@@ -10,6 +10,17 @@ import XCTest
 @testable import Magellan
 
 struct TestWorkingHours: WorkingStatusProtocol {
+    
+    var startLaunchTime: String?
+    
+    var finishLaunchTime: String?
+    
+    var launchHours: String?
+    
+    var startLaunchTimeInterval: TimeInterval?
+    
+    var finishLaunchTimeInterval: TimeInterval?
+    
     var currentDate: Date
     var opensTime: String
     var closesTime: String

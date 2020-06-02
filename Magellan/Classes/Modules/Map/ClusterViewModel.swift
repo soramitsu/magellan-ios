@@ -16,7 +16,7 @@ class ClusterViewModel: NSObject, Coordinated {
     }
     
     var title: String {
-        return String(cluster.quantity)
+        return String(cluster.count)
     }
     
     init(cluster: Cluster) {

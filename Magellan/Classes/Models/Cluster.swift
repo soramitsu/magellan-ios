@@ -9,12 +9,11 @@ import Foundation
 
 struct Cluster: Coordinated {
     let type: String // can be enum, ask backend developer
-    let quantity: Int
-    let lat: Double
-    let lon: Double
+    let count: Int
+    let centroid: Coordinates
     
     var coordinates: Coordinates {
-        return Coordinates(lat: lat, lon: lon)
+        return centroid
     }
 }
 

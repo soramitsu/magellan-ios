@@ -703,17 +703,21 @@
     ],
     "clusters": [
         {
-        "lat": 54.55252,
-        "lon": 55.55252,
-        "type": "red",
-        "quantity": 15
+            "centroid": {
+                "lat": 54.55252,
+                "lon": 55.55252
+            },
+            "type": "red",
+            "count": 15
         },
         
         {
-        "lat": 53.55252,
-        "lon": 54.55252,
-        "type": "green",
-        "quantity": 10
+            "centroid": {
+                "lat": 53.55252,
+                "lon": 54.55252
+            },
+            "type": "green",
+            "count": 10
         }
     ]
   }

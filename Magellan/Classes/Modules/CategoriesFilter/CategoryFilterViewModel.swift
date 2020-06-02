@@ -22,8 +22,8 @@ struct CategoryFilterViewModel {
     }
     
     var image: UIImage {
-        guard let image = UIImage(named: "map_\(category.name.lowercased())", in: Bundle.frameworkBundle, compatibleWith: nil) else {
-            return UIImage(named: "map_other", in: Bundle.frameworkBundle, compatibleWith: nil)!
+        guard let image = UIImage(named: "filter_\(category.name.lowercased())", in: Bundle.frameworkBundle, compatibleWith: nil) else {
+            return UIImage(named: "filter_other", in: Bundle.frameworkBundle, compatibleWith: nil)!
         }
         
         return image

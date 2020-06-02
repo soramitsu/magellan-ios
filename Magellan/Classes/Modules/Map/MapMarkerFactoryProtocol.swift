@@ -37,8 +37,8 @@ final class MapMarkerDefaultFactory: MapMarkerFactoryProtocol {
     }
     
     func image(for category: String) -> UIImage {
-        guard let image = UIImage(named: "map_\(category.lowercased())", in: Bundle.frameworkBundle, compatibleWith: nil) else {
-            return UIImage(named: "map_other", in: Bundle.frameworkBundle, compatibleWith: nil)!
+        guard let image = UIImage(named: "template_\(category.lowercased())", in: Bundle.frameworkBundle, compatibleWith: nil) else {
+            return UIImage(named: "template_other", in: Bundle.frameworkBundle, compatibleWith: nil)!
         }
         
         return image

@@ -50,6 +50,7 @@ final class PlaceIconView: UIView, TapAnimatable {
         imageView.layer.cornerRadius = Constants.imageSize / 2
         imageView.layer.borderWidth = 2
         imageView.layer.borderColor = UIColor.white.cgColor
+        imageView.tintColor = .white
         imageView.image = image
         imageView.contentMode = .center
 

@@ -555,6 +555,19 @@ class MapViewProtocolMock: MapViewProtocol {
         showPlaceClosure?(place)
     }
 
+    //MARK: - removeSelection
+
+    var removeSelectionCallsCount = 0
+    var removeSelectionCalled: Bool {
+        return removeSelectionCallsCount > 0
+    }
+    var removeSelectionClosure: (() -> Void)?
+
+    func removeSelection() {
+        removeSelectionCallsCount += 1
+        removeSelectionClosure?()
+    }
+
     //MARK: - reloadData
 
     var reloadDataCallsCount = 0

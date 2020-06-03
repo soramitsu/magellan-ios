@@ -12,6 +12,7 @@ protocol MapViewProtocol: class, ControllerBackedProtocol, Containable, Loadable
     
     func setFilterButton(hidden: Bool)
     func show(place: PlaceViewModel)
+    func removeSelection()
     func reloadData()
 }
 

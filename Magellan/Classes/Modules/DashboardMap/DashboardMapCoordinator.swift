@@ -18,7 +18,7 @@ final class DashboardMapCoordinator: DashboardMapCoordinatorProtocol {
     
     var modalTransition: ModalDraggableTransition?
     var modalDismissableTransition: ModalDismissableTransition?
-    weak var mapView: ControllerBackedProtocol?
+    weak var mapView: MapViewProtocol?
     
     init(container: DashboardMapViewController, resolver: ResolverProtocol) {
         self.container = container
@@ -70,6 +70,7 @@ extension DashboardMapCoordinator: MapCoordinatorProtocol {
     func dismiss() {
         dragableNavigation?.set(dragableState: .compact, animated: true)
         modalTransition = nil
+        mapView?.removeSelection()
     }
 }
 

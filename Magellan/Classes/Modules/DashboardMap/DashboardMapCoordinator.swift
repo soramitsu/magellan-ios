@@ -28,6 +28,10 @@ final class DashboardMapCoordinator: DashboardMapCoordinatorProtocol {
 
 extension DashboardMapCoordinator: MapCoordinatorProtocol {
     func showDetails(for placeInfo: PlaceInfo) {
+        if let presentedVC = container?.presentedViewController as? LocationDetailsViewController {
+            presentedVC.dismiss(animated: true)
+        }
+        
         dragableNavigation?.set(dragableState: .min, animated: true)
         
         let detailsView = LocationDetailsAssembly.assemble(placeInfo: placeInfo,

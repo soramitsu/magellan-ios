@@ -14,7 +14,7 @@ protocol Selectable: UIView {
 
 protocol MapMarkerFactoryProtocol {
     
-    func marker(place viewModel: PlaceViewModel) -> GMSMarker
+    func marker(place viewModel: PlaceViewModel, selected: Bool) -> GMSMarker
     func image(for category: String) -> UIImage
     
     func marker(cluster viewModel: ClusterViewModel, font: UIFont) -> GMSMarker
@@ -27,10 +27,12 @@ final class MapMarkerDefaultFactory: MapMarkerFactoryProtocol {
         return PlaceIconView(image: image)
     }
     
-    func marker(place viewModel: PlaceViewModel) -> GMSMarker {
+    func marker(place viewModel: PlaceViewModel, selected: Bool) -> GMSMarker {
         let marker = GMSMarker()
         marker.position = viewModel.position
-        marker.iconView = iconView(for: viewModel)
+        let iconView = self.iconView(for: viewModel)
+        iconView.setSelected(selected, animated: false)
+        marker.iconView = iconView
         marker.userData = viewModel
         marker.groundAnchor = CGPoint(x: 0.5, y: 1)
         

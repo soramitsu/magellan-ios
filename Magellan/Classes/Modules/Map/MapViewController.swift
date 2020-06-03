@@ -179,6 +179,7 @@ extension MapViewController: GMSMapViewDelegate {
             presenter.showDetails(place: place, showOnMap: false)
             return true
         }
+        selectedMarker = nil
         
         if let cluster = marker.userData as? ClusterViewModel {
             let cameraUpdate = GMSCameraUpdate.setTarget(cluster.coordinates.coreLocationCoordinates,
@@ -209,6 +210,11 @@ extension MapViewController: GMSMapViewDelegate {
 
 extension MapViewController: MapViewProtocol {
     
+    func removeSelection() {
+        (selectedMarker?.iconView as? Selectable)?.setSelected(false, animated: true)
+        selectedMarker = nil
+    }
+    
     func setFilterButton(hidden: Bool) {
         UIView.animate(withDuration: MapConstants.contentAnimationDuration) {
             self.filterButton.isHidden = hidden
@@ -219,10 +225,11 @@ extension MapViewController: MapViewProtocol {
         if !isViewLoaded {
             return
         }
+        let selectedPlace = selectedMarker?.userData as? PlaceViewModel
         mapView.clear()
         
         presenter.places.forEach {
-            self.markerFactory.marker(place: $0).map = self.mapView
+            self.markerFactory.marker(place: $0, selected: $0.id == selectedPlace?.id).map = self.mapView
         }
         
         presenter.clusters.forEach {

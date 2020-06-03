@@ -8,8 +8,8 @@
 import UIKit
 import GoogleMaps
 
-protocol TapAnimatable: UIView {
-    func animate()
+protocol Selectable: UIView {
+    func setSelected(_ selected: Bool, animated: Bool)
 }
 
 protocol MapMarkerFactoryProtocol {
@@ -22,7 +22,7 @@ protocol MapMarkerFactoryProtocol {
 
 final class MapMarkerDefaultFactory: MapMarkerFactoryProtocol {
     
-    private func iconView(for viewModel: PlaceViewModel) -> TapAnimatable {
+    private func iconView(for viewModel: PlaceViewModel) -> Selectable {
         let image = self.image(for: viewModel.category)
         return PlaceIconView(image: image)
     }

@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class PlaceIconView: UIView, TapAnimatable {
+final class PlaceIconView: UIView, Selectable {
     
     private struct Constants {
         static let size: CGSize = CGSize(width: 48, height: 60)
@@ -57,17 +57,22 @@ final class PlaceIconView: UIView, TapAnimatable {
         addSubview(imageView)
     }
     
-    func animate() {
-        if imageView.transform == .identity {
+    func setSelected(_ selected: Bool, animated: Bool) {
+        let imageTransform = selected
+            ? CGAffineTransform.identity.scaledBy(x: 1.5, y: 1.5).translatedBy(x: 0, y: -12)
+            : CGAffineTransform.identity
+        let anchorTransform = selected
+            ? CGAffineTransform.identity.translatedBy(x: 0, y: 12)
+            : CGAffineTransform.identity
+        
+        if animated {
             UIView.animate(withDuration: CATransaction.animationDuration()) {
-                self.imageView.transform = CGAffineTransform.identity.scaledBy(x: 1.5, y: 1.5).translatedBy(x: 0, y: -12)
-                self.anchorView.transform = CGAffineTransform.identity.translatedBy(x: 0, y: 12)
+                self.imageView.transform = imageTransform
+                self.anchorView.transform = anchorTransform
             }
         } else {
-            UIView.animate(withDuration: CATransaction.animationDuration()) {
-                self.imageView.transform = .identity
-                self.anchorView.transform = .identity
-            }
+            self.imageView.transform = imageTransform
+            self.anchorView.transform = anchorTransform
         }
     }
     

@@ -167,14 +167,14 @@ extension MapViewController: GMSMapViewDelegate {
             return true
         }
         
-        if let animatable = selectedMarker?.iconView as? TapAnimatable {
-            animatable.animate()
+        if let animatable = selectedMarker?.iconView as? Selectable {
+            animatable.setSelected(false, animated: true)
         }
-        selectedMarker?.iconView?.transform = .identity
+        
         if let place = marker.userData as? PlaceViewModel {
             selectedMarker = marker
-            if let animatable = marker.iconView as? TapAnimatable {
-                animatable.animate()
+            if let animatable = marker.iconView as? Selectable {
+                animatable.setSelected(true, animated: true)
             }
             presenter.showDetails(place: place, showOnMap: false)
             return true

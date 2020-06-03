@@ -184,7 +184,7 @@ final class MapPresenterTests: XCTestCase {
         }
         
         // act
-        presenter.showDetails(place: viewModel)
+        presenter.showDetails(place: viewModel, showOnMap: true)
         
         // assert
         XCTAssertTrue(mapView.showLoadingCalled)

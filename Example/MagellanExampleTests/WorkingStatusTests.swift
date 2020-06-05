@@ -52,6 +52,11 @@ class WorkingHoursTests: XCTestCase {
         return dateFormatter.date(from:string)!
     }
     
+    let resources = WorkingStatusResources(opened: "Open",
+                                           closed: "Closed",
+                                           openedTill: "Open till",
+                                           closedTill: "Closed till")
+    
     override func setUp() {
         testItem = TestWorkingHours(currentDate: befoOpensDate,
                                     opensTime: "9:00",
@@ -91,7 +96,7 @@ class WorkingHoursTests: XCTestCase {
         item.currentDate = befoOpensDate
         
         // act
-        let result = item.status
+        let result = item.status(with: resources)
         
         // assert
         XCTAssertEqual(item.currentDate, befoOpensDate)
@@ -105,7 +110,7 @@ class WorkingHoursTests: XCTestCase {
         item.currentDate = workingDate
         
         // act
-        let result = item.status
+        let result = item.status(with: resources)
         
         // assert
         XCTAssertEqual(item.currentDate, workingDate)
@@ -119,7 +124,7 @@ class WorkingHoursTests: XCTestCase {
         item.currentDate = afterCloseDate
         
         // act
-        let result = item.status
+        let result = item.status(with: resources)
         
         // assert
         XCTAssertEqual(item.currentDate, afterCloseDate)

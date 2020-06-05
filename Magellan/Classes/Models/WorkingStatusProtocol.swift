@@ -7,6 +7,13 @@
 
 import Foundation
 
+struct WorkingStatusResources {
+    let opened: String
+    let closed: String
+    let openedTill: String
+    let closedTill: String
+}
+
 protocol WorkingStatusProtocol {
     var currentDate: Date { get }
     
@@ -26,7 +33,8 @@ protocol WorkingStatusProtocol {
     var intervalFromDayBegins: TimeInterval  { get }
     
     var isOpen: Bool  { get }
-    var status: String  { get }
+    
+    func status(with resources: WorkingStatusResources) -> String
 }
 
 extension WorkingStatusProtocol {
@@ -58,7 +66,7 @@ extension WorkingStatusProtocol {
         return false
     }
     
-    var status: String {
+    func status(with resources: WorkingStatusResources) -> String {
         if intervalFromDayBegins == 0 {
             return ""
         }
@@ -68,16 +76,16 @@ extension WorkingStatusProtocol {
             let finishLaunchTimeInterval = finishLaunchTimeInterval,
             intervalFromDayBegins <= startLaunchTimeInterval,
             intervalFromDayBegins > finishLaunchTimeInterval {
-            return L10n.Location.Details.Status.closedTill(finishLaunchTime)
+            return "\(resources.closedTill) \(finishLaunchTime)"
         }
         
         if intervalFromDayBegins >= opensTimeInterval
             && intervalFromDayBegins < closesTimeInterval {
-            return L10n.Location.Details.Status.openTill(closesTime)
+            return "\(resources.openedTill) \(closesTime)"
         } else if intervalFromDayBegins < opensTimeInterval {
-            return L10n.Location.Details.Status.closedTill(opensTime)
+            return "\(resources.closedTill) \(opensTime)"
         } else if intervalFromDayBegins > closesTimeInterval {
-            return L10n.Location.Details.Status.closed
+            return resources.closed
         }
         
         return workingHours

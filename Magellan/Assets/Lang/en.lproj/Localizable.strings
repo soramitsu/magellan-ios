@@ -1,3 +1,4 @@
+"MainViewController.title" = "Places";
 
 "MapListView.search.placeholder" = "Search by name...";
 "MapListView.nearbyplaces" = "Nearby places";
@@ -11,9 +12,8 @@
 "Location.Details.workingHours" = "Working hours";
 "Location.Details.Status.Open" = "Open";
 "Location.Details.Status.Closed" = "Closed";
-"Location.Details.Status.workingHours" = "Working hours: %@";
-"Location.Details.Status.OpenTill" = "Open till %@";
-"Location.Details.Status.ClosedTill" = "Closed till %@";
+"Location.Details.Status.OpenTill" = "Open till";
+"Location.Details.Status.ClosedTill" = "Closed till";
 
 "Error.Default.Title" = "Ooops";
 "Error.Default.Message" = "An error occured, please try again";

@@ -14,6 +14,8 @@ protocol ResolverProtocol {
     
     var networkOperationFactory: MiddlewareOperationFactoryProtocol { get }
     var markerFactory: MapMarkerFactoryProtocol? { get set }
+    
+    var localizationResourcesFactory: LocalizedResorcesFactoryProtocol { get }
 }
 
 extension ResolverProtocol {
@@ -32,12 +34,15 @@ final class Resolver: ResolverProtocol {
     var defaultCoordinate: Coordinates = Coordinates(lat: 11.5796669, lon: 104.7501013)
     
     let networkOperationFactory: MiddlewareOperationFactoryProtocol
+    let localizationResourcesFactory: LocalizedResorcesFactoryProtocol
     var markerFactory: MapMarkerFactoryProtocol?
     
     init(networkOperationFactory: MiddlewareOperationFactoryProtocol,
-         style: MagellanStyleProtocol) {
+         style: MagellanStyleProtocol,
+         localizationResourcesFactory: LocalizedResorcesFactoryProtocol) {
         self.networkOperationFactory = networkOperationFactory
         self.style = style
+        self.localizationResourcesFactory = localizationResourcesFactory
     }
     
 }

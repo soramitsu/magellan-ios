@@ -7,6 +7,7 @@ protocol MapListViewProtocol: ControllerBackedProtocol, AutoMockable {
     var presenter: MapListPresenterProtocol { get }
     func reloadPlaces()
     func showErrorState(_ retryClosure: @escaping () -> Void)
+    func set(placeholder: String)
 }
 
 protocol MapListPresenterProtocol: MapOutputProtocol, AutoMockable {
@@ -20,6 +21,7 @@ protocol MapListPresenterProtocol: MapOutputProtocol, AutoMockable {
     
     func dismiss()
     func expand()
+    func viewDidLoad()
 }
 
 protocol MapListPresenterDelegate: AnyObject {

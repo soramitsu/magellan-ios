@@ -8,6 +8,8 @@ import Foundation
 
 protocol DashboardMapViewProtocol: class, ControllerBackedProtocol, AutoMockable {
     var presenter: DashboardMapPresenterProtocol { get }
+    
+    func set(title: String)
 }
 
 protocol DashboardMapPresenterProtocol: AnyObject {

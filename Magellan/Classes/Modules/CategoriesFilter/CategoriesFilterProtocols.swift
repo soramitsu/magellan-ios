@@ -18,6 +18,7 @@ protocol CategoriesFilterPresenterProtocol: AnyObject {
     var coordinator: CategoriesFilterCoordinatorProtocol? { get set }
     var output: CategoriesFilterOutputProtocol? { get set }
     
+    func viewDidLoad()
     func viewModel(_ index: Int) -> CategoryFilterViewModel
     func deselect(with index: Int)
     func select(with index: Int)
@@ -28,6 +29,8 @@ protocol CategoriesFilterPresenterProtocol: AnyObject {
 protocol CategoriesFilterViewProtocol: ControllerBackedProtocol, AutoMockable {
     var presenter: CategoriesFilterPresenterProtocol { get }
     
+    func set(title: String)
+    func set(resetTitle: String)
     func reload()
 }
 

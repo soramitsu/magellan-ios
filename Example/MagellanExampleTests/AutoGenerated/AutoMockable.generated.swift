@@ -80,6 +80,36 @@ class CategoriesFilterViewProtocolMock: CategoriesFilterViewProtocol {
     }
     var underlyingController: UIViewController!
 
+    //MARK: - set
+
+    var setTitleCallsCount = 0
+    var setTitleCalled: Bool {
+        return setTitleCallsCount > 0
+    }
+    var setTitleReceivedTitle: String?
+    var setTitleClosure: ((String) -> Void)?
+
+    func set(title: String) {
+        setTitleCallsCount += 1
+        setTitleReceivedTitle = title
+        setTitleClosure?(title)
+    }
+
+    //MARK: - set
+
+    var setResetTitleCallsCount = 0
+    var setResetTitleCalled: Bool {
+        return setResetTitleCallsCount > 0
+    }
+    var setResetTitleReceivedResetTitle: String?
+    var setResetTitleClosure: ((String) -> Void)?
+
+    func set(resetTitle: String) {
+        setResetTitleCallsCount += 1
+        setResetTitleReceivedResetTitle = resetTitle
+        setResetTitleClosure?(resetTitle)
+    }
+
     //MARK: - reload
 
     var reloadCallsCount = 0
@@ -118,6 +148,21 @@ class DashboardMapViewProtocolMock: DashboardMapViewProtocol {
         set(value) { underlyingController = value }
     }
     var underlyingController: UIViewController!
+
+    //MARK: - set
+
+    var setTitleCallsCount = 0
+    var setTitleCalled: Bool {
+        return setTitleCallsCount > 0
+    }
+    var setTitleReceivedTitle: String?
+    var setTitleClosure: ((String) -> Void)?
+
+    func set(title: String) {
+        setTitleCallsCount += 1
+        setTitleReceivedTitle = title
+        setTitleClosure?(title)
+    }
 
 }
 // MARK: -
@@ -290,6 +335,19 @@ class MapListPresenterProtocolMock: MapListPresenterProtocol {
         expandClosure?()
     }
 
+    //MARK: - viewDidLoad
+
+    var viewDidLoadCallsCount = 0
+    var viewDidLoadCalled: Bool {
+        return viewDidLoadCallsCount > 0
+    }
+    var viewDidLoadClosure: (() -> Void)?
+
+    func viewDidLoad() {
+        viewDidLoadCallsCount += 1
+        viewDidLoadClosure?()
+    }
+
     //MARK: - didUpdate
 
     var didUpdatePlacesCallsCount = 0
@@ -366,6 +424,21 @@ class MapListViewProtocolMock: MapListViewProtocol {
         showErrorStateCallsCount += 1
         showErrorStateReceivedRetryClosure = retryClosure
         showErrorStateClosure?(retryClosure)
+    }
+
+    //MARK: - set
+
+    var setPlaceholderCallsCount = 0
+    var setPlaceholderCalled: Bool {
+        return setPlaceholderCallsCount > 0
+    }
+    var setPlaceholderReceivedPlaceholder: String?
+    var setPlaceholderClosure: ((String) -> Void)?
+
+    func set(placeholder: String) {
+        setPlaceholderCallsCount += 1
+        setPlaceholderReceivedPlaceholder = placeholder
+        setPlaceholderClosure?(placeholder)
     }
 
 }

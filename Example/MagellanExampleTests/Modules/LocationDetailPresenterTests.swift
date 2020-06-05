@@ -29,7 +29,8 @@ final class LocationDetailPresenterTests: XCTestCase {
     
     func testDismiss() {
         // arrange
-        let presenter = LocationDetailsPresenter(placeInfo: self.placeInfo)
+        let presenter = LocationDetailsPresenter(placeInfo: self.placeInfo,
+                                                 localizedResourcesFactory: DefaultLocalizedResorcesFactory())
         let coordinator = LocationDetailsPresenterDelegateMock()
         presenter.delegate = coordinator
         
@@ -42,9 +43,11 @@ final class LocationDetailPresenterTests: XCTestCase {
     
     func testProperties() {
         // arrange
+        let presenter = LocationDetailsPresenter(placeInfo: self.placeInfo,
+                                                 localizedResourcesFactory: DefaultLocalizedResorcesFactory())
         
         // act
-        let presenter = LocationDetailsPresenter(placeInfo: self.placeInfo)
+        presenter.viewDidLoad()
         
         // assert
         XCTAssertEqual(presenter.title, "name")

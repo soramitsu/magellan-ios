@@ -10,10 +10,24 @@ import Foundation
 final class MapListPresenter: MapListPresenterProtocol {
     
     var places: [PlaceViewModel] = []
+    let localizator: LocalizedResorcesFactoryProtocol
     
     weak var view: MapListViewProtocol?
     weak var delegate: MapListPresenterDelegate?
     weak var output: MapListOutputProtocol?
+    
+    init(localizator: LocalizedResorcesFactoryProtocol) {
+        self.localizator = localizator
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(localizationChanged),
+                                               name: .init(rawValue: localizator.notificationName),
+                                               object: nil)
+    }
+    
+    @objc func localizationChanged() {
+        view?.set(placeholder: localizator.searchPlaceholder)
+    }
     
     func showDetails(place: PlaceViewModel) {
         output?.select(place: place)
@@ -29,6 +43,10 @@ final class MapListPresenter: MapListPresenterProtocol {
     
     func expand() {
         delegate?.expandList()
+    }
+    
+    func viewDidLoad() {
+        view?.set(placeholder: localizator.searchPlaceholder)
     }
 }
 

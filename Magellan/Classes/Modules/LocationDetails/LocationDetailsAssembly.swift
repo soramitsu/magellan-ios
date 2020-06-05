@@ -9,7 +9,9 @@ import UIKit
 final class LocationDetailsAssembly {
 
     static func assemble(placeInfo: PlaceInfo, resolver: ResolverProtocol) -> LocationDetailsViewProtocol {
-        let presenter = LocationDetailsPresenter(placeInfo: placeInfo, phoneFormatter: resolver.phoneFormatter)
+        let presenter = LocationDetailsPresenter(placeInfo: placeInfo,
+                                                 localizedResourcesFactory: resolver.localizationResourcesFactory,
+                                                 phoneFormatter: resolver.phoneFormatter)
         let view = LocationDetailsViewController(presenter: presenter,
                                                  style: resolver.style)
         presenter.view = view

@@ -46,6 +46,11 @@ final class LocationDetailsViewController: UIViewController, LocationDetailsView
         layoutViews()
     }
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        presenter.viewDidLoad()
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: view.frame.origin.y, right: 0)
@@ -103,7 +108,6 @@ final class LocationDetailsViewController: UIViewController, LocationDetailsView
         separatorView.backgroundColor = style.sectionsDeviderBGColor
         tableHeaderView.addSubview(separatorView)
         
-        informationLabel.text = L10n.Location.Details.information
         informationLabel.textColor = style.headerColor
         informationLabel.font = style.semiBold13
         tableHeaderView.addSubview(informationLabel)
@@ -173,6 +177,14 @@ final class LocationDetailsViewController: UIViewController, LocationDetailsView
         tableView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
         tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         tableView.topAnchor.constraint(equalTo: headerView.bottomAnchor).isActive = true
+    }
+    
+    func set(information: String) {
+        informationLabel.text = information
+    }
+    
+    func reload() {
+        tableView.reloadData()
     }
 }
 

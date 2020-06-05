@@ -53,22 +53,19 @@ public enum L10n {
             public enum Status {
                 /// Closed
                 public static var closed: String { return localize("Location.Details.Status.Closed") }
-                /// Closed till %@
-                public static func closedTill(_ p1: String) -> String {
-                    return localize("Location.Details.Status.ClosedTill", p1)
-                }
+                /// Closed till
+                public static var closedTill: String { return localize("Location.Details.Status.ClosedTill") }
                 /// Open
                 public static var `open`: String { return localize("Location.Details.Status.Open") }
-                /// Open till %@
-                public static func openTill(_ p1: String) -> String {
-                    return localize("Location.Details.Status.OpenTill", p1)
-                }
-                /// Working hours: %@
-                public static func workingHours(_ p1: String) -> String {
-                    return localize("Location.Details.Status.workingHours", p1)
-                }
+                /// Open till
+                public static var openTill: String { return localize("Location.Details.Status.OpenTill") }
             }
         }
+    }
+
+    public enum MainViewController {
+        /// Places
+        public static var title: String { return localize("MainViewController.title") }
     }
 
     public enum MapListView {

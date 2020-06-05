@@ -11,23 +11,41 @@ final class CategoriesFilterPresenter {
     
     let categories: [PlaceCategory]
     let defaultFilter: Set<PlaceCategory>
+    let localizator: LocalizedResorcesFactoryProtocol
     var filter: Set<PlaceCategory>
     weak var view: CategoriesFilterViewProtocol?
     weak var coordinator: CategoriesFilterCoordinatorProtocol?
     weak var output: CategoriesFilterOutputProtocol?
     
-    init(categories: [PlaceCategory], filter: Set<PlaceCategory>) {
+    init(categories: [PlaceCategory],
+         filter: Set<PlaceCategory>,
+         localizator: LocalizedResorcesFactoryProtocol) {
         self.categories = categories
         self.filter = filter
         self.defaultFilter = filter
+        self.localizator = localizator
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(localizationChanged),
+                                               name: .init(rawValue: localizator.notificationName),
+                                               object: nil)
     }
     
+    @objc func localizationChanged() {
+        view?.reload()
+        view?.set(title: localizator.filter)
+        view?.set(resetTitle: localizator.reset)
+    }
 }
 
 extension CategoriesFilterPresenter: CategoriesFilterPresenterProtocol {
     
     var countOfCategories: Int {
         return categories.count
+    }
+    
+    func viewDidLoad() {
+        view?.set(title: localizator.filter)
+        view?.set(resetTitle: localizator.reset)
     }
     
     func dismiss() {

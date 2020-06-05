@@ -18,6 +18,10 @@ final class DashboardMapViewController: ContainerViewController {
     required init?(coder aDecoder: NSCoder) {
         fatalError("Storyboards are incompatible with truth and beauty.")
     }
+    
+    func set(title: String) {
+        self.title = title
+    }
 }
 
 extension DashboardMapViewController: DashboardMapViewProtocol {}

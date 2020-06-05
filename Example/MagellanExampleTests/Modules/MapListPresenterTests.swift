@@ -55,7 +55,7 @@ final class MapListPresenterTests: XCTestCase {
         super.setUp()
         mapPresenter = MapPresenterProtocolMock()
         view = MapListViewProtocolMock()
-        presenter = MapListPresenter()
+        presenter = MapListPresenter(localizator: DefaultLocalizedResorcesFactory())
         presenter.view = view
         presenter.output = mapPresenter
     }

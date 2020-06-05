@@ -15,19 +15,19 @@ enum MapDetailViewModelType {
     case facebook
     case address
     case workingHours
- 
-    var title: String {
+    
+    func title(with factory: LocalizedResorcesFactoryProtocol) -> String {
         switch self {
         case .address:
-            return L10n.Location.Details.address
+            return factory.address
         case .website:
-            return L10n.Location.Details.website
+            return factory.website
         case .phone:
-            return L10n.Location.Details.phone
+            return factory.phoneNumber
         case .facebook:
-            return L10n.Location.Details.fb
+            return factory.faceBook
         case .workingHours:
-            return L10n.Location.Details.workingHours
+            return factory.workingHours
         }
     }
 }
@@ -48,10 +48,7 @@ struct MapDetailViewModel: MapDetailViewModelProtocol {
     let type: MapDetailViewModelType
     let content: String
     let action: Action?
-    
-    var title: String {
-        return type.title
-    }
+    let title: String
     
     var image: UIImage? {
         switch type {
@@ -66,10 +63,11 @@ struct MapDetailViewModel: MapDetailViewModelProtocol {
         }
     }
     
-    init(type: MapDetailViewModelType, content: String, action: Action?) {
+    init(type: MapDetailViewModelType, title: String, content: String, action: Action?) {
         self.type = type
         self.content = content
         self.action = action
+        self.title = title
     }
     
 }

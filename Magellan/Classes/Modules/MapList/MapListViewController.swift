@@ -53,6 +53,11 @@ final class MapListViewController: UIViewController {
         configureKeyboardHandler()
     }
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        presenter.viewDidLoad()
+    }
+    
     fileprivate func configureHeader() {
         headerView.backgroundColor = style.mainBGColor
         view.addSubview(headerView)
@@ -65,7 +70,6 @@ final class MapListViewController: UIViewController {
         searchContainer.layer.cornerRadius = style.sideOffset
         headerView.addSubview(searchContainer)
         
-        searchField.placeholder = L10n.MapListView.Search.placeholder
         searchField.addTarget(self, action: #selector(search(_:)), for: .editingChanged)
         searchField.textColor = style.mediumGrayTextColor
         searchField.font = style.regular13
@@ -199,6 +203,10 @@ extension MapListViewController: UITextFieldDelegate {
 
 
 extension MapListViewController: MapListViewProtocol {
+    
+    func set(placeholder: String) {
+        searchField.placeholder = placeholder
+    }
     
     func reloadPlaces() {
         if isViewLoaded

@@ -9,7 +9,7 @@ import Foundation
 class DashboardMapAssembly: DashboardMapAssemblyProtocol {
     
     static func assembly(with resolver: ResolverProtocol) -> UIViewController {
-        let presenter = DashboardMapPresenter()
+        let presenter = DashboardMapPresenter(localizator: resolver.localizationResourcesFactory)
         let dashboardMapController = DashboardMapViewController(presenter: presenter)
         presenter.view = dashboardMapController
 

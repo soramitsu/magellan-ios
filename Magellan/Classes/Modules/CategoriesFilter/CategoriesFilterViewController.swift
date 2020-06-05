@@ -47,6 +47,7 @@ final class CategoriesFilterViewController: UIViewController {
         setupTapGesture()
         configureUI()
         setupConstraints()
+        presenter.viewDidLoad()
     }
     
     private func configureUI() {
@@ -63,13 +64,11 @@ final class CategoriesFilterViewController: UIViewController {
         headerView.addSubview(panView)
         
         titleLabel = UILabel()
-        titleLabel.text = L10n.Filter.title
         titleLabel.font = style.bold16
         titleLabel.textColor = style.headerColor
         headerView.addSubview(titleLabel)
         
         resetButton = UIButton(type: .custom)
-        resetButton.setTitle(L10n.Filter.reset, for: .normal)
         resetButton.setTitleColor(style.firstColor, for: .normal)
         resetButton.setTitleColor(style.firstColor.withAlphaComponent(0.3), for: .disabled)
         resetButton.titleLabel?.font = style.regular14
@@ -188,6 +187,14 @@ extension CategoriesFilterViewController: UITableViewDelegate {
 }
 
 extension CategoriesFilterViewController: CategoriesFilterViewProtocol {
+    
+    func set(title: String) {
+        titleLabel.text = title
+    }
+    
+    func set(resetTitle: String) {
+        resetButton.setTitle(resetTitle, for: .normal)
+    }
     
     func reload() {
         tableView.reloadData()

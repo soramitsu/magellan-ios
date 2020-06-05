@@ -25,12 +25,13 @@ protocol LocationDetailsPresenterProtocol: class {
     var isOpen: Bool { get }
     
     func dismiss()
-    
+    func viewDidLoad()
 }
 
 
 protocol LocationDetailsViewProtocol: class, ControllerBackedProtocol {
     
     var presenter: LocationDetailsPresenterProtocol { get set }
-    
+    func set(information: String)
+    func reload()
 }

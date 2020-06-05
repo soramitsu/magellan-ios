@@ -32,7 +32,8 @@ class CategoriesFilterPresenterTests: XCTestCase {
         view = CategoriesFilterViewProtocolMock()
         output = CategoriesFilterOutputProtocolMock()
         coordinator = CategoriesFilterCoordinatorProtocolMock()
-        presenter = CategoriesFilterPresenter(categories: categories, filter: defaultFilter)
+        presenter = CategoriesFilterPresenter(categories: categories, filter: defaultFilter,
+                                              localizator: DefaultLocalizedResorcesFactory())
         presenter.view = view
         presenter.output = output
         presenter.coordinator = coordinator

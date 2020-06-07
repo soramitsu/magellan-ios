@@ -37,21 +37,21 @@ public protocol LocalizedResorcesFactoryProtocol {
 struct DefaultLocalizedResorcesFactory: LocalizedResorcesFactoryProtocol {
     
     let notificationName: String = "LanguageChangeNotification"
-    let places: String = L10n.MainViewController.title
-    let searchPlaceholder: String = L10n.MapListView.Search.placeholder
-    let nearbyPlaces: String = L10n.MapListView.nearbyplaces
-    let information: String = L10n.Location.Details.information
-    let phoneNumber: String = L10n.Location.Details.phone
-    let website: String = L10n.Location.Details.website
-    let faceBook: String = L10n.Location.Details.fb
-    let email: String = L10n.Location.Details.email
-    let address: String = L10n.Location.Details.address
-    let workingHours: String = L10n.Location.Details.workingHours
-    let open: String = L10n.Location.Details.Status.open
-    let closed: String = L10n.Location.Details.Status.closed
-    let openTill: String = L10n.Location.Details.Status.openTill
-    let closedTill: String = L10n.Location.Details.Status.closedTill
-    let filter: String = L10n.Filter.title
-    let reset: String = L10n.Filter.reset
-    
+    let places: String = "Places";
+    let searchPlaceholder: String = "Search by name...";
+    let nearbyPlaces: String = "Nearby places";
+    let information: String = "Information";
+    let phoneNumber: String = "Phone number";
+    let website: String = "Website";
+    let faceBook: String = "FB";
+    let email: String = "E-mail";
+    let address: String = "Address";
+    let workingHours: String = "Working hours";
+    let open: String = "Open";
+    let closed: String = "Closed";
+    let openTill: String = "Open till";
+    let closedTill: String = "Closed till";
+    let filter: String = "Filter";
+    let reset: String = "Reset";
+
 }

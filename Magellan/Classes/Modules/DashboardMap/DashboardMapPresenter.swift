@@ -22,7 +22,7 @@ final class DashboardMapPresenter: DashboardMapPresenterProtocol {
     }
     
     @objc func localizationChanged() {
-        
+        view?.set(title: localizator.places)
     }
     
 }

@@ -161,7 +161,7 @@ extension PlaceInfo {
     
     func workingStatus(with resources: WorkingStatusResources) -> String {
         if workSchedule?.open24 == true {
-            resources.opened
+            return resources.opened
         }
         
         if let currentWorkingDay = currentWorkingDay {

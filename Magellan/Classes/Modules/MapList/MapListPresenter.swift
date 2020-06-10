@@ -10,13 +10,13 @@ import Foundation
 final class MapListPresenter: MapListPresenterProtocol {
     
     var places: [PlaceViewModel] = []
-    let localizator: LocalizedResorcesFactoryProtocol
+    let localizator: LocalizedResourcesFactoryProtocol
     
     weak var view: MapListViewProtocol?
     weak var delegate: MapListPresenterDelegate?
     weak var output: MapListOutputProtocol?
     
-    init(localizator: LocalizedResorcesFactoryProtocol) {
+    init(localizator: LocalizedResourcesFactoryProtocol) {
         self.localizator = localizator
         
         NotificationCenter.default.addObserver(self,

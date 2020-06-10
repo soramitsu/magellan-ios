@@ -93,6 +93,7 @@ final class LocationDetailsViewController: UIViewController, LocationDetailsView
         categoryLabel.font = style.regular12
         categoryLabel.text = presenter.category
         categoryLabel.textColor = style.descriptionTextColor
+        categoryLabel.numberOfLines = 0
         tableHeaderView.addSubview(categoryLabel)
         
         workingHoursLabel.text = presenter.workingStatus
@@ -131,8 +132,8 @@ final class LocationDetailsViewController: UIViewController, LocationDetailsView
         
         headerView.translatesAutoresizingMaskIntoConstraints = false
         headerView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-        headerView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
-        headerView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
+        headerView.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
+        headerView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         
         panView.translatesAutoresizingMaskIntoConstraints = false
         panView.heightAnchor.constraint(equalToConstant: MapConstants.panHeight).isActive = true
@@ -151,6 +152,7 @@ final class LocationDetailsViewController: UIViewController, LocationDetailsView
         
         categoryLabel.translatesAutoresizingMaskIntoConstraints = false
         categoryLabel.leftAnchor.constraint(equalTo: nameLabel.leftAnchor).isActive = true
+        categoryLabel.widthAnchor.constraint(equalTo: headerView.widthAnchor, constant: -(2 * style.sideOffset)).isActive = true
         categoryLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: style.smallOffset).isActive = true
         
         workingHoursLabel.translatesAutoresizingMaskIntoConstraints = false

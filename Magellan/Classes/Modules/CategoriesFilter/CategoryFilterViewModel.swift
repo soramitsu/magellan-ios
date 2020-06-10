@@ -9,12 +9,17 @@ import Foundation
 
 struct CategoryFilterViewModel {
 
-    private let category: PlaceCategory
+    let category: PlaceCategory
+    let locale: Locale
     
     var isSelected: Bool
     
     var name: String {
-        return category.name
+        guard let khmerName = category.khmerName,
+            locale.isKm else {
+            return category.name
+        }
+        return khmerName
     }
     
     var count: String {
@@ -29,9 +34,10 @@ struct CategoryFilterViewModel {
         return image
     }
     
-    init(category: PlaceCategory, isSelected: Bool) {
+    init(category: PlaceCategory, isSelected: Bool, locale: Locale) {
         self.category = category
         self.isSelected = isSelected
+        self.locale = locale
     }
     
 }

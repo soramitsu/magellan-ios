@@ -8,11 +8,11 @@ import CoreLocation
 
 final class DashboardMapPresenter: DashboardMapPresenterProtocol {
     
-    let localizator: LocalizedResorcesFactoryProtocol
+    let localizator: LocalizedResourcesFactoryProtocol
     weak var view: DashboardMapViewProtocol?
     var coordinator: DashboardMapCoordinatorProtocol?
     
-    init(localizator: LocalizedResorcesFactoryProtocol) {
+    init(localizator: LocalizedResourcesFactoryProtocol) {
         self.localizator = localizator
         
         NotificationCenter.default.addObserver(self,

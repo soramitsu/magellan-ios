@@ -8,9 +8,10 @@
 import Foundation
 
 
-public protocol LocalizedResorcesFactoryProtocol {
+public protocol LocalizedResourcesFactoryProtocol {
     
     var notificationName: String { get }
+    var currentLocale: String { get }
     
     var places: String { get }
     var searchPlaceholder: String { get }
@@ -19,7 +20,7 @@ public protocol LocalizedResorcesFactoryProtocol {
     var information: String { get }
     var phoneNumber: String { get }
     var website: String { get }
-    var faceBook: String { get }
+    var facebook: String { get }
     var email: String { get }
     var address: String { get }
     var workingHours: String { get }
@@ -34,16 +35,23 @@ public protocol LocalizedResorcesFactoryProtocol {
 
 }
 
-struct DefaultLocalizedResorcesFactory: LocalizedResorcesFactoryProtocol {
+internal extension LocalizedResourcesFactoryProtocol {
+    var locale: Locale {
+        return Locale(rawValue: currentLocale) ?? Locale.en
+    }
+}
+
+struct DefaultLocalizedResorcesFactory: LocalizedResourcesFactoryProtocol {
     
     let notificationName: String = "LanguageChangeNotification"
+    var currentLocale: String { return "en" }
     let places: String = "Places";
     let searchPlaceholder: String = "Search by name...";
     let nearbyPlaces: String = "Nearby places";
     let information: String = "Information";
     let phoneNumber: String = "Phone number";
     let website: String = "Website";
-    let faceBook: String = "FB";
+    let facebook: String = "FB";
     let email: String = "E-mail";
     let address: String = "Address";
     let workingHours: String = "Working hours";

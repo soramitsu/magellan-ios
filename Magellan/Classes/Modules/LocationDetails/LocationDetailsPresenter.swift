@@ -15,9 +15,9 @@ final class LocationDetailsPresenter {
     let place: PlaceInfo
     let formatter: PhoneFormatterProtocol?
     private(set) var items: [MapDetailViewModelProtocol] = []
-    private let localizator: LocalizedResorcesFactoryProtocol
+    private let localizator: LocalizedResourcesFactoryProtocol
 
-    init(placeInfo: PlaceInfo, localizedResourcesFactory: LocalizedResorcesFactoryProtocol, phoneFormatter: PhoneFormatterProtocol? = nil) {
+    init(placeInfo: PlaceInfo, localizedResourcesFactory: LocalizedResourcesFactoryProtocol, phoneFormatter: PhoneFormatterProtocol? = nil) {
         place = placeInfo
         formatter = phoneFormatter
         self.localizator = localizedResourcesFactory
@@ -103,10 +103,18 @@ extension LocationDetailsPresenter: LocationDetailsPresenterProtocol {
     }
     
     var category: String {
-        if !place.address.isEmpty {
-            return "\(place.type) · \(place.address)"
+        var type: String
+        if localizator.locale.isKm,
+            let khmerType = place.khmerType {
+            type = khmerType
+        } else {
+            type = place.type
         }
-        return place.type
+        
+        if !place.address.isEmpty {
+            return "\(type) · \(place.address)"
+        }
+        return type
     }
     
     var distance: String {

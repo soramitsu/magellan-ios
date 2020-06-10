@@ -19,7 +19,7 @@ public protocol MaggelanBuilderProtocol {
     func with(errorViewFactory: ErrorViewFactoryProtocol) -> Self
     
     @discardableResult
-    func with(localizedResourcesFactory: LocalizedResorcesFactoryProtocol) -> Self
+    func with(localizedResourcesFactory: LocalizedResourcesFactoryProtocol) -> Self
 }
 
 public final class MaggelanBuilder {
@@ -28,7 +28,7 @@ public final class MaggelanBuilder {
     private var style: MagellanStyleProtocol?
     private var phoneFormatter: PhoneFormatterProtocol?
     private var errorViewFactory: ErrorViewFactoryProtocol?
-    private var localizedResourcesFactory: LocalizedResorcesFactoryProtocol?
+    private var localizedResourcesFactory: LocalizedResourcesFactoryProtocol?
     
     /// Initializator
     /// - Parameter key: google mpas api key
@@ -68,7 +68,7 @@ extension MaggelanBuilder: MaggelanBuilderProtocol {
     }
     
     
-    public func with(localizedResourcesFactory: LocalizedResorcesFactoryProtocol) -> Self {
+    public func with(localizedResourcesFactory: LocalizedResourcesFactoryProtocol) -> Self {
         self.localizedResourcesFactory = localizedResourcesFactory
         return self
     }

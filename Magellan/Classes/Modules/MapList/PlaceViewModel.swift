@@ -12,6 +12,7 @@ import GoogleMapsUtils
 class PlaceViewModel: NSObject, Coordinated {
     
     let place: Place
+    let locale: Locale
     var currentLocation: CLLocation?
     
     var id: String {
@@ -23,7 +24,11 @@ class PlaceViewModel: NSObject, Coordinated {
     }
     
     var category: String {
-        return place.type
+        guard locale.isKm,
+            let khmerType = place.khmerType else {
+                return place.type
+        }
+        return khmerType
     }
     
     var distance: Double {
@@ -38,8 +43,9 @@ class PlaceViewModel: NSObject, Coordinated {
         return place.coordinates
     }
     
-    init(place: Place) {
+    init(place: Place, locale: Locale) {
         self.place = place
+        self.locale = locale
     }
     
 }

@@ -11,7 +11,8 @@ final class MapAssembly {
         let locationService = UserLocationService(distanceFilter: resolver.distanceFilter)
         let presenter = MapPresenter(service: resolver.networkService,
                                      locationService: locationService,
-                                     defaultPosition: resolver.defaultCoordinate)
+                                     defaultPosition: resolver.defaultCoordinate,
+                                     localizator: resolver.localizationResourcesFactory)
         
         let markerFactory = resolver.markerFactory ?? MapMarkerDefaultFactory()
         let mapView = MapViewController(presenter: presenter, markerFactory: markerFactory, style: resolver.style)

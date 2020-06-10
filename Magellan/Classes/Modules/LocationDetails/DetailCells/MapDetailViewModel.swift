@@ -16,7 +16,7 @@ enum MapDetailViewModelType {
     case address
     case workingHours
     
-    func title(with factory: LocalizedResorcesFactoryProtocol) -> String {
+    func title(with factory: LocalizedResourcesFactoryProtocol) -> String {
         switch self {
         case .address:
             return factory.address
@@ -25,7 +25,7 @@ enum MapDetailViewModelType {
         case .phone:
             return factory.phoneNumber
         case .facebook:
-            return factory.faceBook
+            return factory.facebook
         case .workingHours:
             return factory.workingHours
         }

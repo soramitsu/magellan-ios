@@ -10,6 +10,7 @@ import Foundation
 struct PlaceCategory {
     let id: Int
     let name: String
+    let khmerName: String?
 }
 
 extension PlaceCategory: Equatable { }

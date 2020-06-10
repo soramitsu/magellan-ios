@@ -124,6 +124,7 @@ struct PlaceInfo: Coordinated {
     let id: String
     let name: String
     let type: String
+    let khmerType: String?
     let coordinates: Coordinates
     let address: String
     let phoneNumber: String?

@@ -18,6 +18,7 @@ final class MapPresenter: MapPresenterProtocol {
     weak var output: MapOutputProtocol?
     var service: MagellanServicePrototcol
     private var locationService: UserLocationServiceProtocol
+    private let localizator: LocalizedResourcesFactoryProtocol
     
     private weak var getPlacesOperation: Operation?
     var currentSearchText: String?
@@ -61,10 +62,12 @@ final class MapPresenter: MapPresenterProtocol {
     
     init(service: MagellanServicePrototcol,
          locationService: UserLocationServiceProtocol,
-         defaultPosition: Coordinates) {
+         defaultPosition: Coordinates,
+         localizator: LocalizedResourcesFactoryProtocol) {
         self.service = service
         self.locationService = locationService
         self.defaultPosition = defaultPosition
+        self.localizator = localizator
     }
     
     func loadCategories() {
@@ -107,16 +110,19 @@ final class MapPresenter: MapPresenterProtocol {
                                          zoom: zoom )
         getPlacesOperation?.cancel()
         getPlacesOperation = service.getPlaces(with: placeRequest, runCompletionIn: DispatchQueue.main) { [weak self] result in
+            guard let self = self else {
+                return
+            }
             switch result {
             case .failure(let error):
-                self?.output?.loadingComplete(with: error) { [weak self] in
+                self.output?.loadingComplete(with: error) { [weak self] in
                     self?.loadCategories()
                     self?.loadPlaces(topLeft: topLeft, bottomRight: bottomRight, zoom: zoom, search: search)
                 }
             case .success(let response):
-                self?.places = response.locations.compactMap { PlaceViewModel(place: $0) }
-                self?.clusters = response.clusters.compactMap { ClusterViewModel(cluster: $0) }
-                self?.view?.reloadData()
+                self.places = response.locations.compactMap { PlaceViewModel(place: $0, locale: self.localizator.locale) }
+                self.clusters = response.clusters.compactMap { ClusterViewModel(cluster: $0) }
+                self.view?.reloadData()
             }
         }
         

@@ -11,7 +11,7 @@ final class CategoriesFilterPresenter {
     
     let categories: [PlaceCategory]
     let defaultFilter: Set<PlaceCategory>
-    let localizator: LocalizedResorcesFactoryProtocol
+    let localizator: LocalizedResourcesFactoryProtocol
     var filter: Set<PlaceCategory>
     weak var view: CategoriesFilterViewProtocol?
     weak var coordinator: CategoriesFilterCoordinatorProtocol?
@@ -19,7 +19,7 @@ final class CategoriesFilterPresenter {
     
     init(categories: [PlaceCategory],
          filter: Set<PlaceCategory>,
-         localizator: LocalizedResorcesFactoryProtocol) {
+         localizator: LocalizedResourcesFactoryProtocol) {
         self.categories = categories
         self.filter = filter
         self.defaultFilter = filter
@@ -56,7 +56,8 @@ extension CategoriesFilterPresenter: CategoriesFilterPresenterProtocol {
     func viewModel(_ index: Int) -> CategoryFilterViewModel {
         let item = categories[index]
         return CategoryFilterViewModel(category: item,
-                                       isSelected: filter.contains(item))
+                                       isSelected: filter.contains(item),
+                                       locale: localizator.locale)
     }
     
     func select(with index: Int) {

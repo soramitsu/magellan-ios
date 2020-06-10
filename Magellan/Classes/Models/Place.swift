@@ -11,6 +11,7 @@ struct Place {
     let id: String
     let name: String
     let type: String
+    let khmerType: String?
     let coordinates: Coordinates
 }
 

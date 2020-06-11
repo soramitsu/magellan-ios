@@ -22,17 +22,17 @@ final class MapPresenterTests: XCTestCase {
     
     var categoties: [Magellan.PlaceCategory] {
         return [
-            Magellan.PlaceCategory(id: 1, name: "1"),
-            Magellan.PlaceCategory(id: 2, name: "2"),
-            Magellan.PlaceCategory(id: 3, name: "3"),
-            Magellan.PlaceCategory(id: 4, name: "4"),
+            Magellan.PlaceCategory(id: 1, name: "1", khmerName: nil),
+            Magellan.PlaceCategory(id: 2, name: "2", khmerName: nil),
+            Magellan.PlaceCategory(id: 3, name: "3", khmerName: nil),
+            Magellan.PlaceCategory(id: 4, name: "4", khmerName: nil),
         ]
     }
     
     var places: [Place] {
         return [
-            Place(id: "1", name: "first", type: "one", coordinates: Coordinates(lat: 1, lon: 1)),
-            Place(id: "2", name: "second", type: "one", coordinates: Coordinates(lat: 2, lon: 2))
+            Place(id: "1", name: "first", type: "one", khmerType: nil, coordinates: Coordinates(lat: 1, lon: 1)),
+            Place(id: "2", name: "second", type: "one", khmerType: nil, coordinates: Coordinates(lat: 2, lon: 2))
         ]
     }
     
@@ -40,6 +40,7 @@ final class MapPresenterTests: XCTestCase {
         return PlaceInfo(id: "1",
                 name: "name",
                 type: "type",
+                khmerType: nil,
                 coordinates: Coordinates(lat: 1, lon: 1),
                 address: "addr",
                 phoneNumber: "+855000000009",
@@ -65,7 +66,7 @@ final class MapPresenterTests: XCTestCase {
         
         presenter = MapPresenter(service: service,
                                  locationService: locationService,
-                                 defaultPosition: self.defaultPosition)
+                                 defaultPosition: self.defaultPosition, localizator: DefaultLocalizedResorcesFactory())
         
         presenter.currentSearchText = "text"
         presenter.currentTopLeft = Coordinates(lat: 1, lon: 1)
@@ -176,7 +177,7 @@ final class MapPresenterTests: XCTestCase {
     
     func testShowDetails() {
         // arrange
-        let viewModel = PlaceViewModel(place: self.places.first!)
+        let viewModel = PlaceViewModel(place: self.places.first!, locale: .en)
         
         service.getPlaceWithRunCompletionInCompletionClosure = { _, _, completion in
             completion(.success(self.placeInfo))
@@ -195,7 +196,7 @@ final class MapPresenterTests: XCTestCase {
     
     func testSelectPlace() {
         // arrange
-        let viewModel = PlaceViewModel(place: self.places.first!)
+        let viewModel = PlaceViewModel(place: self.places.first!, locale: .en)
         
         service.getPlaceWithRunCompletionInCompletionClosure = { _, _, completion in
             completion(.success(self.placeInfo))

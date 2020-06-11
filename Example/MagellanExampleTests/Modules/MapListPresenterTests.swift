@@ -18,17 +18,17 @@ final class MapListPresenterTests: XCTestCase {
     
     var categoties: [Magellan.PlaceCategory] {
         return [
-            Magellan.PlaceCategory(id: 1, name: "1"),
-            Magellan.PlaceCategory(id: 2, name: "2"),
-            Magellan.PlaceCategory(id: 3, name: "3"),
-            Magellan.PlaceCategory(id: 4, name: "4"),
+            Magellan.PlaceCategory(id: 1, name: "1", khmerName: nil),
+            Magellan.PlaceCategory(id: 2, name: "2", khmerName: nil),
+            Magellan.PlaceCategory(id: 3, name: "3", khmerName: nil),
+            Magellan.PlaceCategory(id: 4, name: "4", khmerName: nil),
         ]
     }
     
     var places: [Place] {
         return [
-            Place(id: "1", name: "first", type: "one", coordinates: Coordinates(lat: 1, lon: 1)),
-            Place(id: "2", name: "second", type: "one", coordinates: Coordinates(lat: 2, lon: 2))
+            Place(id: "1", name: "first", type: "one", khmerType: nil, coordinates: Coordinates(lat: 1, lon: 1)),
+            Place(id: "2", name: "second", type: "one", khmerType: nil, coordinates: Coordinates(lat: 2, lon: 2))
         ]
     }
     
@@ -36,6 +36,7 @@ final class MapListPresenterTests: XCTestCase {
         return PlaceInfo(id: "1",
         name: "name",
         type: "type",
+        khmerType: nil,
         coordinates: Coordinates(lat: 1, lon: 1),
         address: "addr",
         phoneNumber: "+855000000009",
@@ -69,7 +70,7 @@ final class MapListPresenterTests: XCTestCase {
     
     func testShowDetails() {
         // arrange
-        let viewModel = PlaceViewModel(place: places.first!)
+        let viewModel = PlaceViewModel(place: places.first!, locale: .en)
         
         // act
         presenter.showDetails(place: viewModel)
@@ -88,7 +89,7 @@ final class MapListPresenterTests: XCTestCase {
     
     func testSetCategoriesAndPlaces() {
         // arrange
-        let items = places.compactMap { PlaceViewModel(place: $0) }
+        let items = places.compactMap { PlaceViewModel(place: $0, locale: .en) }
         
         // act
         presenter.didUpdate(places: items)

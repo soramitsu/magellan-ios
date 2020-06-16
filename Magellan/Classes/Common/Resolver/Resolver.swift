@@ -16,6 +16,7 @@ protocol ResolverProtocol {
     var markerFactory: MapMarkerFactoryProtocol? { get set }
     
     var localizationResourcesFactory: LocalizedResourcesFactoryProtocol { get }
+    var parameters: MagellanParametersProtocol { get }
 }
 
 extension ResolverProtocol {
@@ -36,13 +37,16 @@ final class Resolver: ResolverProtocol {
     let networkOperationFactory: MiddlewareOperationFactoryProtocol
     let localizationResourcesFactory: LocalizedResourcesFactoryProtocol
     var markerFactory: MapMarkerFactoryProtocol?
+    var parameters: MagellanParametersProtocol
     
     init(networkOperationFactory: MiddlewareOperationFactoryProtocol,
          style: MagellanStyleProtocol,
-         localizationResourcesFactory: LocalizedResourcesFactoryProtocol) {
+         localizationResourcesFactory: LocalizedResourcesFactoryProtocol,
+         parameters: MagellanParametersProtocol) {
         self.networkOperationFactory = networkOperationFactory
         self.style = style
         self.localizationResourcesFactory = localizationResourcesFactory
+        self.parameters = parameters
     }
     
 }

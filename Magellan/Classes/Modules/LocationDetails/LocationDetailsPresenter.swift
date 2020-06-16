@@ -74,7 +74,7 @@ final class LocationDetailsPresenter {
         }
         if let workingHours = place.currentWorkingDay?.workingHours {
             items.append(MapDetailViewModel(type: .workingHours,
-                                            title: MapDetailViewModelType.address.title(with: localizator),
+                                            title: MapDetailViewModelType.workingHours.title(with: localizator),
                                             content: workingHours,
                                             action: nil))
         }

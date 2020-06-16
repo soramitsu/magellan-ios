@@ -118,7 +118,7 @@ extension LocationDetailsPresenter: LocationDetailsPresenterProtocol {
     }
     
     var distance: String {
-        return place.distance ?? ""
+        return ""
     }
     
     var workingStatus: String {

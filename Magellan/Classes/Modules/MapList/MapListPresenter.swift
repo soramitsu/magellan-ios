@@ -33,7 +33,8 @@ final class MapListPresenter: MapListPresenterProtocol {
         output?.select(place: place)
     }
     
-    func search(with text: String) {
+    func search(with text: String?) {
+        
         output?.search(with: text)
     }
     

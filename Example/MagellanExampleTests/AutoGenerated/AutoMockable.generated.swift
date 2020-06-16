@@ -301,9 +301,9 @@ class MapListPresenterProtocolMock: MapListPresenterProtocol {
         return searchWithCallsCount > 0
     }
     var searchWithReceivedText: String?
-    var searchWithClosure: ((String) -> Void)?
+    var searchWithClosure: ((String?) -> Void)?
 
-    func search(with text: String) {
+    func search(with text: String?) {
         searchWithCallsCount += 1
         searchWithReceivedText = text
         searchWithClosure?(text)
@@ -536,9 +536,9 @@ class MapPresenterProtocolMock: MapPresenterProtocol {
         return searchWithCallsCount > 0
     }
     var searchWithReceivedText: String?
-    var searchWithClosure: ((String) -> Void)?
+    var searchWithClosure: ((String?) -> Void)?
 
-    func search(with text: String) {
+    func search(with text: String?) {
         searchWithCallsCount += 1
         searchWithReceivedText = text
         searchWithClosure?(text)

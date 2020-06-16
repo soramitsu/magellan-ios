@@ -17,7 +17,7 @@ protocol MapListPresenterProtocol: MapOutputProtocol, AutoMockable {
     var delegate: MapListPresenterDelegate? { get set }
     
     func showDetails(place: PlaceViewModel)
-    func search(with text: String)
+    func search(with text: String?)
     
     func dismiss()
     func expand()
@@ -34,7 +34,7 @@ protocol MapListPresenterDelegate: AnyObject {
 protocol MapListOutputProtocol: AnyObject {
     
     func select(place: PlaceViewModel)
-    func search(with text: String)
+    func search(with text: String?)
     func reset()
     
 }

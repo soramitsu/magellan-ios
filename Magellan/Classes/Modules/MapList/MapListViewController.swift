@@ -135,18 +135,7 @@ final class MapListViewController: UIViewController {
     }
 
     @objc private func search(_ textfield: UITextField) {
-        if let text = textfield.text, text.count > 3 {
-            presenter.search(with: text)
-        }
-    }
-    
-    @objc private func dismiss(_ sender: Any) {
-        if let text = searchField.text, !text.isEmpty {
-            searchField.text = ""
-            presenter.search(with: "")
-        } else {
-            presenter.dismiss()
-        }
+        presenter.search(with: textfield.text)
     }
     
 }

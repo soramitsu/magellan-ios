@@ -25,6 +25,7 @@ final class MapPresenter: MapPresenterProtocol {
     var currentTopLeft: Coordinates?
     var currentBottomRight: Coordinates?
     var currentZoom: Int?
+    private var searchMinimumLettersCount: Int = 2
     
     private(set) var categories: [PlaceCategory] = [] {
         didSet {
@@ -68,6 +69,10 @@ final class MapPresenter: MapPresenterProtocol {
         self.locationService = locationService
         self.defaultPosition = defaultPosition
         self.localizator = localizator
+    }
+    
+    func set(parameters: MagellanParametersProtocol) {
+        self.searchMinimumLettersCount = parameters.searchMinimumLettersCount
     }
     
     func loadCategories() {
@@ -175,7 +180,9 @@ extension MapPresenter: MapListOutputProtocol {
     }
     
     func search(with text: String?) {
-        if text?.count == 1 {
+        if let text = text,
+            !text.isEmpty,
+            text.count < searchMinimumLettersCount {
             return
         }
         reloadIfNeeded(search: text?.isEmpty == true ? nil : text)

@@ -155,8 +155,7 @@ final class MapPresenter: MapPresenterProtocol {
     func reloadIfNeeded(search: String?) {
         guard let currentTopLeft = currentTopLeft,
             let currentBottomRight = currentBottomRight,
-            let currentZoom = currentZoom,
-            currentSearchText != search else {
+            let currentZoom = currentZoom else {
                 return
         }
         loadPlaces(topLeft: currentTopLeft, bottomRight: currentBottomRight, zoom: currentZoom, search: search)
@@ -179,7 +178,7 @@ extension MapPresenter: MapListOutputProtocol {
         if text?.count == 1 {
             return
         }
-        reloadIfNeeded(search: text)
+        reloadIfNeeded(search: text?.isEmpty == true ? nil : text)
     }
     
     func reset() {

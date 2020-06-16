@@ -157,6 +157,7 @@ final class MapPresenterTests: XCTestCase {
         XCTAssertEqual(mapView.reloadDataCallsCount, 2)
         XCTAssertEqual(listPresenter.didUpdatePlacesCallsCount, 2)
     }
+    
     func testSearch() {
         // arrange
         service.getPlacesWithRunCompletionInCompletionClosure = { _, _, completion in
@@ -169,6 +170,60 @@ final class MapPresenterTests: XCTestCase {
                              bottomRight: Coordinates(lat: 2, lon: 2),
                              zoom: 3)
         presenter.search(with: "text")
+        
+        // assert
+        XCTAssertEqual(mapView.reloadDataCallsCount, 2)
+        XCTAssertEqual(listPresenter.didUpdatePlacesCallsCount, 2)
+    }
+    
+    func testSearchNil() {
+        // arrange
+        service.getPlacesWithRunCompletionInCompletionClosure = { _, _, completion in
+            completion(.success(PlacesResponse(locations: self.places, clusters: [])))
+            return BaseOperation<Void>()
+        }
+        
+        // act
+        presenter.loadPlaces(topLeft: Coordinates(lat: 1, lon: 1),
+                             bottomRight: Coordinates(lat: 2, lon: 2),
+                             zoom: 3)
+        presenter.search(with: nil)
+        
+        // assert
+        XCTAssertEqual(mapView.reloadDataCallsCount, 2)
+        XCTAssertEqual(listPresenter.didUpdatePlacesCallsCount, 2)
+    }
+    
+    func testSearchCountOne() {
+        // arrange
+        service.getPlacesWithRunCompletionInCompletionClosure = { _, _, completion in
+            completion(.success(PlacesResponse(locations: self.places, clusters: [])))
+            return BaseOperation<Void>()
+        }
+        
+        // act
+        presenter.loadPlaces(topLeft: Coordinates(lat: 1, lon: 1),
+                             bottomRight: Coordinates(lat: 2, lon: 2),
+                             zoom: 3)
+        presenter.search(with: "t")
+        
+        // assert
+        XCTAssertEqual(mapView.reloadDataCallsCount, 1)
+        XCTAssertEqual(listPresenter.didUpdatePlacesCallsCount, 1)
+    }
+    
+    func testSearchEmpty() {
+        // arrange
+        service.getPlacesWithRunCompletionInCompletionClosure = { _, _, completion in
+            completion(.success(PlacesResponse(locations: self.places, clusters: [])))
+            return BaseOperation<Void>()
+        }
+        
+        // act
+        presenter.loadPlaces(topLeft: Coordinates(lat: 1, lon: 1),
+                             bottomRight: Coordinates(lat: 2, lon: 2),
+                             zoom: 3)
+        presenter.search(with: "")
         
         // assert
         XCTAssertEqual(mapView.reloadDataCallsCount, 2)

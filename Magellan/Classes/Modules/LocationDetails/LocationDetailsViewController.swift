@@ -230,12 +230,12 @@ extension LocationDetailsViewController: UITableViewDataSource {
             return 48
         }
         
-        let labelInset: CGFloat = isAdaptiveHeightDecreased ? 20 : 50
+        let labelInset: CGFloat = 67
         let descriptionHeight = model.content
             .height(for: max(0, tableView.bounds.width - 2 * labelInset),
                     font: style.regular13)
         
-        return MapAddressCell.baseHeight + descriptionHeight
+        return MapAddressCell.baseHeight + descriptionHeight + style.regular13.lineHeight
     }
     
 }

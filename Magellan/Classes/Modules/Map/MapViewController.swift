@@ -10,6 +10,11 @@ import GoogleMaps
 
 final class MapViewController: UIViewController {
     
+    private enum State {
+        case normal
+        case cluster
+    }
+    
     private struct Constants {
         static let searchBarHeight: CGFloat = 68
         static let detailsHeight: CGFloat = 120
@@ -31,6 +36,7 @@ final class MapViewController: UIViewController {
     private var filterButton = RoundedButton()
     private var filterTopConstraint: NSLayoutConstraint?
     private var positionButton = UIButton()
+    private var state: State = .normal
     
     var mapView: GMSMapView {
         return view as! GMSMapView
@@ -184,8 +190,8 @@ extension MapViewController: GMSMapViewDelegate {
         if let cluster = marker.userData as? ClusterViewModel {
             let cameraUpdate = GMSCameraUpdate.setTarget(cluster.coordinates.coreLocationCoordinates,
                                                          zoom: mapView.camera.zoom + 2)
+            state = .cluster
             mapView.moveCamera(cameraUpdate)
-            positionDidChange()
             return true
         }
         
@@ -194,6 +200,14 @@ extension MapViewController: GMSMapViewDelegate {
     
     func mapView(_ mapView: GMSMapView, didChange position: GMSCameraPosition) {
         NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(positionDidChange), object: nil)
+        switch state {
+        case .normal:
+            break
+        case .cluster:
+            positionDidChange()
+            state = .normal
+            return
+        }
         perform(#selector(positionDidChange), with: nil, afterDelay: 2.0, inModes: [.common])
     }
     

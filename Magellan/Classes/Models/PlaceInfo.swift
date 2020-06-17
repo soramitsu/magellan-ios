@@ -169,7 +169,7 @@ extension PlaceInfo {
             return currentWorkingDay.status(with: resources)
         }
         
-        return resources.closed
+        return ""
     }
 }
 

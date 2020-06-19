@@ -152,6 +152,7 @@ final class MapViewController: UIViewController {
     
     @objc
     private func tapFilter() {
+        removeSelection()
         presenter.showFilter()
     }
     
@@ -204,11 +205,13 @@ extension MapViewController: GMSMapViewDelegate {
         case .normal:
             break
         case .cluster:
+            presenter.mapCameraDidChange()
             positionDidChange()
             state = .normal
             return
         }
-        perform(#selector(positionDidChange), with: nil, afterDelay: 2.0, inModes: [.common])
+        presenter.mapCameraDidChange()
+        perform(#selector(positionDidChange), with: nil, afterDelay: presenter.requestDelay, inModes: [.common])
     }
     
     @objc
@@ -239,7 +242,7 @@ extension MapViewController: MapViewProtocol {
         if !isViewLoaded {
             return
         }
-        let selectedPlace = selectedMarker?.userData as? PlaceViewModel
+        let selectedPlace = presenter.selectedPlace
         mapView.clear()
         
         presenter.places.forEach {
@@ -261,10 +264,6 @@ extension MapViewController: MapViewProtocol {
             : Constants.defaultZoom
         let camera = GMSCameraUpdate.setTarget(place.coordinates.coreLocationCoordinates, zoom: zoom)
         mapView.moveCamera(camera)
-    }
-    
-    func set(isLoading: Bool) {
-        // todo: show loading indicator
     }
 }
 

@@ -3,11 +3,18 @@
 * SPDX-License-Identifier: GPL-3.0
 */
 
+enum MapListModuleState {
+    case normal
+    case search
+    case error
+}
+
 protocol MapListViewProtocol: ControllerBackedProtocol, AutoMockable {
     var presenter: MapListPresenterProtocol { get }
     func reloadPlaces()
     func showErrorState(_ retryClosure: @escaping () -> Void)
     func set(placeholder: String)
+    func set(loading: Bool)
 }
 
 protocol MapListPresenterProtocol: MapOutputProtocol, AutoMockable {
@@ -22,6 +29,7 @@ protocol MapListPresenterProtocol: MapOutputProtocol, AutoMockable {
     func dismiss()
     func expand()
     func viewDidLoad()
+    func finishSearch()
 }
 
 protocol MapListPresenterDelegate: AnyObject {
@@ -33,6 +41,7 @@ protocol MapListPresenterDelegate: AnyObject {
 
 protocol MapListOutputProtocol: AnyObject {
     
+    func moduleChange(state: MapListModuleState)
     func select(place: PlaceViewModel)
     func search(with text: String?)
     func reset()

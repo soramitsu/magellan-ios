@@ -8,12 +8,16 @@
 import Foundation
 
 struct PlaceCategory {
-    let id: Int
+    let id: UInt64
     let name: String
     let khmerName: String?
 }
 
-extension PlaceCategory: Equatable { }
+extension PlaceCategory: Equatable {
+    static func == (lhs: PlaceCategory, rhs: PlaceCategory) -> Bool {
+        return lhs.id == rhs.id
+    }
+}
 extension PlaceCategory: Codable { }
 
 extension PlaceCategory: Hashable { }

@@ -26,6 +26,14 @@ final class MapPresenter: MapPresenterProtocol {
     var currentBottomRight: Coordinates?
     var currentZoom: Int?
     private var searchMinimumLettersCount: Int = 2
+    private(set)var requestDelay: TimeInterval = 1
+    private(set) var selectedPlace: PlaceViewModel? {
+        didSet {
+            if selectedPlace == nil {
+                view?.removeSelection()
+            }
+        }
+    }
     
     private(set) var categories: [PlaceCategory] = [] {
         didSet {
@@ -42,11 +50,25 @@ final class MapPresenter: MapPresenterProtocol {
     
     private(set) var places: [PlaceViewModel] = [] {
         didSet {
+            if let selectedPlace = self.selectedPlace,
+                !places.contains(selectedPlace) {
+                coordinator?.hideDetailsIfPresented()
+                self.selectedPlace = nil
+            }
+            if places.isEmpty
+                && listModuleState == .normal {
+                coordinator?.setMapList(state: .min, animated: true)
+            }
+            if oldValue.isEmpty
+                && !places.isEmpty
+                && listModuleState == .normal{
+                coordinator?.setMapList(state: .compact, animated: true)
+            }
             output?.didUpdate(places: places)
         }
     }
     private(set) var clusters: [ClusterViewModel] = []
-    
+    private var listModuleState: MapListModuleState = .normal
     private let defaultPosition: Coordinates
 
     
@@ -73,6 +95,7 @@ final class MapPresenter: MapPresenterProtocol {
     
     func set(parameters: MagellanParametersProtocol) {
         self.searchMinimumLettersCount = parameters.searchMinimumLettersCount
+        self.requestDelay = parameters.requestDelayOnMapChange
     }
     
     func loadCategories() {
@@ -111,7 +134,7 @@ final class MapPresenter: MapPresenterProtocol {
         let placeRequest = PlacesRequest(topLeft: topLeft,
                                          bottomRight: bottomRight,
                                          search: search,
-                                         categories: whiteFilter.flatMap{ $0.name },
+                                         categories: whiteFilter.flatMap{ $0.id },
                                          zoom: zoom )
         getPlacesOperation?.cancel()
         getPlacesOperation = service.getPlaces(with: placeRequest, runCompletionIn: DispatchQueue.main) { [weak self] result in
@@ -120,6 +143,7 @@ final class MapPresenter: MapPresenterProtocol {
             }
             switch result {
             case .failure(let error):
+                self.coordinator?.hideDetailsIfPresented()
                 self.output?.loadingComplete(with: error) { [weak self] in
                     self?.loadCategories()
                     self?.loadPlaces(topLeft: topLeft, bottomRight: bottomRight, zoom: zoom, search: search)
@@ -129,6 +153,7 @@ final class MapPresenter: MapPresenterProtocol {
                 self.clusters = response.clusters.compactMap { ClusterViewModel(cluster: $0) }
                 self.view?.reloadData()
             }
+            self.output?.loading(false)
         }
         
         currentZoom = zoom
@@ -149,6 +174,7 @@ final class MapPresenter: MapPresenterProtocol {
                     self.view?.show(place: place)
                 }
                 self.coordinator?.showDetails(for: info)
+                self.selectedPlace = place
             case .failure(let error):
                 self.output?.loadingComplete(with: error) { [weak self] in
                     self?.showDetails(place: place, showOnMap: showOnMap)
@@ -166,14 +192,21 @@ final class MapPresenter: MapPresenterProtocol {
         loadPlaces(topLeft: currentTopLeft, bottomRight: currentBottomRight, zoom: currentZoom, search: search)
     }
     
-    
+    func mapCameraDidChange() {
+        output?.loading(true)
+    }
     
     func showFilter() {
+        selectedPlace = nil
         coordinator?.showCategoriesFilter(categories: categories, filter: whiteFilter, output: self)
     }
 }
 
 extension MapPresenter: MapListOutputProtocol {
+    
+    func moduleChange(state: MapListModuleState) {
+        listModuleState = state
+    }
     
     func select(place: PlaceViewModel) {
         showDetails(place: place, showOnMap: true)

@@ -22,11 +22,6 @@ extension UrlHandlerProtocol {
     }
     
     func handle(url: URL, on controller: UIViewController) {
-        if ["http", "https"].contains(url.scheme?.lowercased() ?? "") {
-            controller.present(SFSafariViewController(url: url), animated: true, completion: nil)
-            return
-        }
-        
         if UIApplication.shared.canOpenURL(url) {
             if #available(iOS 10, *) {
                 UIApplication.shared.open(url)

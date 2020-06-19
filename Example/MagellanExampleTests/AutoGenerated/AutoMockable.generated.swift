@@ -240,6 +240,19 @@ class MagellanServicePrototcolMock: MagellanServicePrototcol {
 // MARK: -
 class MapCoordinatorProtocolMock: MapCoordinatorProtocol {
 
+    //MARK: - hideDetailsIfPresented
+
+    var hideDetailsIfPresentedCallsCount = 0
+    var hideDetailsIfPresentedCalled: Bool {
+        return hideDetailsIfPresentedCallsCount > 0
+    }
+    var hideDetailsIfPresentedClosure: (() -> Void)?
+
+    func hideDetailsIfPresented() {
+        hideDetailsIfPresentedCallsCount += 1
+        hideDetailsIfPresentedClosure?()
+    }
+
     //MARK: - showDetails
 
     var showDetailsForCallsCount = 0
@@ -268,6 +281,21 @@ class MapCoordinatorProtocolMock: MapCoordinatorProtocol {
         showCategoriesFilterCategoriesFilterOutputCallsCount += 1
         showCategoriesFilterCategoriesFilterOutputReceivedArguments = (categories: categories, filter: filter, output: output)
         showCategoriesFilterCategoriesFilterOutputClosure?(categories, filter, output)
+    }
+
+    //MARK: - setMapList
+
+    var setMapListStateAnimatedCallsCount = 0
+    var setMapListStateAnimatedCalled: Bool {
+        return setMapListStateAnimatedCallsCount > 0
+    }
+    var setMapListStateAnimatedReceivedArguments: (state: DraggableState, animated: Bool)?
+    var setMapListStateAnimatedClosure: ((DraggableState, Bool) -> Void)?
+
+    func setMapList(state: DraggableState, animated: Bool) {
+        setMapListStateAnimatedCallsCount += 1
+        setMapListStateAnimatedReceivedArguments = (state: state, animated: animated)
+        setMapListStateAnimatedClosure?(state, animated)
     }
 
 }
@@ -348,6 +376,19 @@ class MapListPresenterProtocolMock: MapListPresenterProtocol {
         viewDidLoadClosure?()
     }
 
+    //MARK: - finishSearch
+
+    var finishSearchCallsCount = 0
+    var finishSearchCalled: Bool {
+        return finishSearchCallsCount > 0
+    }
+    var finishSearchClosure: (() -> Void)?
+
+    func finishSearch() {
+        finishSearchCallsCount += 1
+        finishSearchClosure?()
+    }
+
     //MARK: - didUpdate
 
     var didUpdatePlacesCallsCount = 0
@@ -376,6 +417,21 @@ class MapListPresenterProtocolMock: MapListPresenterProtocol {
         loadingCompleteWithRetryClosureCallsCount += 1
         loadingCompleteWithRetryClosureReceivedArguments = (error: error, retryClosure: retryClosure)
         loadingCompleteWithRetryClosureClosure?(error, retryClosure)
+    }
+
+    //MARK: - loading
+
+    var loadingCallsCount = 0
+    var loadingCalled: Bool {
+        return loadingCallsCount > 0
+    }
+    var loadingReceivedShow: Bool?
+    var loadingClosure: ((Bool) -> Void)?
+
+    func loading(_ show: Bool) {
+        loadingCallsCount += 1
+        loadingReceivedShow = show
+        loadingClosure?(show)
     }
 
 }
@@ -441,6 +497,21 @@ class MapListViewProtocolMock: MapListViewProtocol {
         setPlaceholderClosure?(placeholder)
     }
 
+    //MARK: - set
+
+    var setLoadingCallsCount = 0
+    var setLoadingCalled: Bool {
+        return setLoadingCallsCount > 0
+    }
+    var setLoadingReceivedLoading: Bool?
+    var setLoadingClosure: ((Bool) -> Void)?
+
+    func set(loading: Bool) {
+        setLoadingCallsCount += 1
+        setLoadingReceivedLoading = loading
+        setLoadingClosure?(loading)
+    }
+
 }
 // MARK: -
 // MARK: -
@@ -457,6 +528,12 @@ class MapPresenterProtocolMock: MapPresenterProtocol {
     }
     var underlyingPosition: Coordinates!
     var myLocation: Coordinates?
+    var requestDelay: TimeInterval {
+        get { return underlyingRequestDelay }
+        set(value) { underlyingRequestDelay = value }
+    }
+    var underlyingRequestDelay: TimeInterval!
+    var selectedPlace: PlaceViewModel?
 
     //MARK: - showDetails
 
@@ -501,6 +578,19 @@ class MapPresenterProtocolMock: MapPresenterProtocol {
         loadPlacesTopLeftBottomRightZoomClosure?(topLeft, bottomRight, zoom)
     }
 
+    //MARK: - mapCameraDidChange
+
+    var mapCameraDidChangeCallsCount = 0
+    var mapCameraDidChangeCalled: Bool {
+        return mapCameraDidChangeCallsCount > 0
+    }
+    var mapCameraDidChangeClosure: (() -> Void)?
+
+    func mapCameraDidChange() {
+        mapCameraDidChangeCallsCount += 1
+        mapCameraDidChangeClosure?()
+    }
+
     //MARK: - showFilter
 
     var showFilterCallsCount = 0
@@ -512,6 +602,21 @@ class MapPresenterProtocolMock: MapPresenterProtocol {
     func showFilter() {
         showFilterCallsCount += 1
         showFilterClosure?()
+    }
+
+    //MARK: - moduleChange
+
+    var moduleChangeStateCallsCount = 0
+    var moduleChangeStateCalled: Bool {
+        return moduleChangeStateCallsCount > 0
+    }
+    var moduleChangeStateReceivedState: MapListModuleState?
+    var moduleChangeStateClosure: ((MapListModuleState) -> Void)?
+
+    func moduleChange(state: MapListModuleState) {
+        moduleChangeStateCallsCount += 1
+        moduleChangeStateReceivedState = state
+        moduleChangeStateClosure?(state)
     }
 
     //MARK: - select

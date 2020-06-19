@@ -27,12 +27,20 @@ final class DashboardMapCoordinator: DashboardMapCoordinatorProtocol {
 }
 
 extension DashboardMapCoordinator: MapCoordinatorProtocol {
-    func showDetails(for placeInfo: PlaceInfo) {
+    
+    func setMapList(state: DraggableState, animated: Bool) {
+        dragableNavigation?.set(dragableState: state, animated: animated)
+    }
+    
+    func hideDetailsIfPresented() {
         if let presentedVC = container?.presentedViewController as? LocationDetailsViewController {
             presentedVC.dismiss(animated: true)
         }
-        
-        dragableNavigation?.set(dragableState: .min, animated: true)
+    }
+    
+    func showDetails(for placeInfo: PlaceInfo) {
+        hideDetailsIfPresented()
+        setMapList(state: .min, animated: true)
         
         let detailsView = LocationDetailsAssembly.assemble(placeInfo: placeInfo,
                                                            resolver: resolver)
@@ -68,7 +76,6 @@ extension DashboardMapCoordinator: MapCoordinatorProtocol {
     }
     
     func dismiss() {
-        dragableNavigation?.set(dragableState: .compact, animated: true)
         modalTransition = nil
         mapView?.removeSelection()
     }

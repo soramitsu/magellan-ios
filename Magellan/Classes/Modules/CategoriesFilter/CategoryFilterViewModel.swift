@@ -15,11 +15,10 @@ struct CategoryFilterViewModel {
     var isSelected: Bool
     
     var name: String {
-        guard let khmerName = category.khmerName,
-            locale.isKm else {
-            return category.name
+        if locale.isKm {
+            return category.khmerName ?? category.name
         }
-        return khmerName
+        return category.name
     }
     
     var count: String {

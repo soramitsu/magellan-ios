@@ -15,6 +15,7 @@ final class MapListViewController: UIViewController {
     private let headerView = UIView()
     private let panView = UIView()
     private let searchField = UITextField()
+    private let activityIndicator = UIActivityIndicatorView(style: .gray)
     private let searchContainer = UIView()
     private let tableView = UITableView()
     private var keyboardHandler = KeyboardHandler()
@@ -79,6 +80,8 @@ final class MapListViewController: UIViewController {
         searchField.backgroundColor = .clear
         searchField.delegate = self
         searchContainer.addSubview(searchField)
+        
+        searchContainer.addSubview(activityIndicator)
     }
     
     private func configureViews() {
@@ -115,7 +118,11 @@ final class MapListViewController: UIViewController {
         searchField.topAnchor.constraint(equalTo: searchContainer.topAnchor, constant: style.topOffset).isActive = true
         searchField.bottomAnchor.constraint(equalTo: searchContainer.bottomAnchor, constant: -style.topOffset).isActive = true
         searchField.leftAnchor.constraint(equalTo: searchContainer.leftAnchor, constant: style.sideOffset).isActive = true
-        searchField.rightAnchor.constraint(equalTo: searchContainer.rightAnchor, constant: -style.sideOffset).isActive = true
+        searchField.rightAnchor.constraint(equalTo: activityIndicator.leftAnchor, constant: -style.sideOffset / 4).isActive = true
+        
+        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+        activityIndicator.rightAnchor.constraint(equalTo: searchContainer.rightAnchor, constant: -style.sideOffset / 2).isActive = true
+        activityIndicator.centerYAnchor.constraint(equalTo: searchField.centerYAnchor).isActive = true
         
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
@@ -188,10 +195,22 @@ extension MapListViewController: UITextFieldDelegate {
         return true
     }
     
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        presenter.finishSearch()
+    }
+    
 }
 
 
 extension MapListViewController: MapListViewProtocol {
+    
+    func set(loading: Bool) {
+        if loading {
+            activityIndicator.startAnimating()
+        } else {
+            activityIndicator.stopAnimating()
+        }
+    }
     
     func set(placeholder: String) {
         searchField.placeholder = placeholder

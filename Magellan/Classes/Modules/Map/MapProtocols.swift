@@ -26,21 +26,27 @@ protocol MapPresenterProtocol: MapListOutputProtocol, AutoMockable {
     var clusters: [ClusterViewModel] { get }
     var position: Coordinates { get }
     var myLocation: Coordinates? { get }
+    var requestDelay: TimeInterval { get }
+    var selectedPlace: PlaceViewModel? { get }
 
     func showDetails(place: PlaceViewModel, showOnMap: Bool)
     func loadCategories()
     func loadPlaces(topLeft:Coordinates, bottomRight: Coordinates, zoom: Int)
-    
+    func mapCameraDidChange()
     func showFilter()
 }
 
 protocol MapCoordinatorProtocol: AnyObject, AutoMockable {
+    
+    func hideDetailsIfPresented()
     func showDetails(for placeInfo: PlaceInfo)
     func showCategoriesFilter(categories: [PlaceCategory], filter: Set<PlaceCategory>, output: CategoriesFilterOutputProtocol?)
+    func setMapList(state: DraggableState, animated: Bool)
 }
 
 protocol MapOutputProtocol: AnyObject {
     func didUpdate(places: [PlaceViewModel])
     func loadingComplete(with error: Error?, retryClosure: @escaping () -> Void)
+    func loading(_ show: Bool)
 }
 

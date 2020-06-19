@@ -48,6 +48,10 @@ class PlaceViewModel: NSObject, Coordinated {
         self.locale = locale
     }
     
+    static func == (lhs: PlaceViewModel, rhs: PlaceViewModel) -> Bool {
+        return lhs.id == rhs.id
+    }
+    
 }
 
 extension PlaceViewModel: GMUClusterItem {

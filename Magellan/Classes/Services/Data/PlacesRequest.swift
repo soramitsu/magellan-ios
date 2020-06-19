@@ -12,7 +12,7 @@ public struct PlacesRequest: Codable {
     let topLeft: Coordinates
     let bottomRight: Coordinates
     let search: String?
-    let categories: [String]
+    let categories: [UInt64]
     let zoom: Int 
     
 }

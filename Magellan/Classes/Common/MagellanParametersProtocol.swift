@@ -9,10 +9,15 @@ import Foundation
 
 public protocol MagellanParametersProtocol {
     var searchMinimumLettersCount: Int { get }
+    var requestDelayOnMapChange: TimeInterval { get }
 }
 
 final class DefaultMagellanParameters: MagellanParametersProtocol {
     var searchMinimumLettersCount: Int {
         return 2
+    }
+    
+    var requestDelayOnMapChange: TimeInterval {
+        return 1
     }
 }

@@ -174,4 +174,8 @@ extension PlaceInfo {
 }
 
 extension PlaceInfo: Codable { }
-extension PlaceInfo: Equatable { }
+extension PlaceInfo: Equatable {
+    static func == (lhs: PlaceInfo, rhs: PlaceInfo) -> Bool {
+        return lhs.id == rhs.id
+    }
+}

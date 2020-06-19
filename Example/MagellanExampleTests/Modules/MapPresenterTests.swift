@@ -267,4 +267,49 @@ final class MapPresenterTests: XCTestCase {
         XCTAssertTrue(coordinator.showDetailsForCalled)
         XCTAssertTrue(mapView.showPlaceCalled)
     }
+    
+    func testSelectedItem() {
+        // arrange
+        let viewModel = PlaceViewModel(place: self.places.first!, locale: .en)
+        
+        service.getPlaceWithRunCompletionInCompletionClosure = { _, _, completion in
+            completion(.success(self.placeInfo))
+            return BaseOperation<Void>()
+        }
+        if presenter.selectedPlace != nil {
+            XCTFail("selectedPlace should be nil")
+        }
+        
+        // act
+        presenter.select(place: viewModel)
+        
+        // assert
+        XCTAssertNotNil(presenter.selectedPlace, "selected place shult be not nil")
+    }
+    
+    func testResetSelectedItem() {
+        // arrange
+        let firstModel = PlaceViewModel(place: self.places.first!, locale: .en)
+        
+        service.getPlaceWithRunCompletionInCompletionClosure = { _, _, completion in
+            completion(.success(self.placeInfo))
+            return BaseOperation<Void>()
+        }
+        
+        service.getPlacesWithRunCompletionInCompletionClosure = { _, _, completion in
+            completion(.success(PlacesResponse(locations: [self.places.last!], clusters: [])))
+            return BaseOperation<Void>()
+        }
+        if presenter.selectedPlace != nil {
+            XCTFail("selectedPlace should be nil")
+        }
+        
+        // act
+        presenter.select(place: firstModel)
+        presenter.loadPlaces(topLeft: Coordinates(lat: 1, lon: 1), bottomRight: Coordinates(lat: 1, lon: 1), zoom: 12)
+        
+        // assert
+        XCTAssertNil(presenter.selectedPlace)
+        XCTAssertTrue(coordinator.hideDetailsIfPresentedCalled)
+    }
 }

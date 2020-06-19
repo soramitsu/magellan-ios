@@ -119,34 +119,34 @@ PODS:
     - SoraKeystore (~> 0.1.5)
   - SoraFoundation/NotificationHandlers (0.7.0)
   - SoraKeystore (0.1.5)
-  - SoraUI (1.8.9):
-    - SoraUI/AdaptiveDesign (= 1.8.9)
-    - SoraUI/Animator (= 1.8.9)
-    - SoraUI/Camera (= 1.8.9)
-    - SoraUI/Controls (= 1.8.9)
-    - SoraUI/DetailsView (= 1.8.9)
-    - SoraUI/EmptyState (= 1.8.9)
-    - SoraUI/LoadingView (= 1.8.9)
-    - SoraUI/ModalInputPresentation (= 1.8.9)
-    - SoraUI/PageLoader (= 1.8.9)
-    - SoraUI/PinView (= 1.8.9)
-    - SoraUI/Skrull (= 1.8.9)
-  - SoraUI/AdaptiveDesign (1.8.9)
-  - SoraUI/Animator (1.8.9)
-  - SoraUI/Camera (1.8.9)
-  - SoraUI/Controls (1.8.9)
-  - SoraUI/DetailsView (1.8.9):
+  - SoraUI (1.8.10):
+    - SoraUI/AdaptiveDesign (= 1.8.10)
+    - SoraUI/Animator (= 1.8.10)
+    - SoraUI/Camera (= 1.8.10)
+    - SoraUI/Controls (= 1.8.10)
+    - SoraUI/DetailsView (= 1.8.10)
+    - SoraUI/EmptyState (= 1.8.10)
+    - SoraUI/LoadingView (= 1.8.10)
+    - SoraUI/ModalInputPresentation (= 1.8.10)
+    - SoraUI/PageLoader (= 1.8.10)
+    - SoraUI/PinView (= 1.8.10)
+    - SoraUI/Skrull (= 1.8.10)
+  - SoraUI/AdaptiveDesign (1.8.10)
+  - SoraUI/Animator (1.8.10)
+  - SoraUI/Camera (1.8.10)
+  - SoraUI/Controls (1.8.10)
+  - SoraUI/DetailsView (1.8.10):
     - SoraUI/Controls
-  - SoraUI/EmptyState (1.8.9):
+  - SoraUI/EmptyState (1.8.10):
     - SoraUI/Animator
-  - SoraUI/LoadingView (1.8.9):
+  - SoraUI/LoadingView (1.8.10):
     - SoraUI/Controls
-  - SoraUI/ModalInputPresentation (1.8.9):
+  - SoraUI/ModalInputPresentation (1.8.10):
     - SoraUI/Animator
-  - SoraUI/PageLoader (1.8.9)
-  - SoraUI/PinView (1.8.9):
+  - SoraUI/PageLoader (1.8.10)
+  - SoraUI/PinView (1.8.10):
     - SoraUI/Controls
-  - SoraUI/Skrull (1.8.9)
+  - SoraUI/Skrull (1.8.10)
   - SVProgressHUD (2.2.5)
   - SwiftLint (0.31.0)
 
@@ -213,7 +213,7 @@ SPEC CHECKSUMS:
   RobinHood: 73a108285ad4149c86d12839bbf209a296cfa542
   SoraFoundation: adeb5d9756236db69c76712e0e57df9bcc324c59
   SoraKeystore: 408a26aafda780fc3005b20ab336791832b5419e
-  SoraUI: 9bad0ba56d2f3cf67eb812f2d2fc56b8fd0aa39b
+  SoraUI: 236036ed20c4cbe8d379aa3212db4ae6a15a577c
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
   SwiftLint: 7a0227733d786395817373b2d0ca799fd0093ff3
 

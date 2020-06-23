@@ -27,9 +27,9 @@ struct WorkingDay: WorkingStatusProtocol, Codable, Equatable {
     
     enum Day: String, Codable {
         case Monday = "MONDAY"
-        case Tuesday = "THURSDAY"
+        case Tuesday = "TUESDAY"
         case Wednesday = "WEDNESDAY"
-        case Thursday = "THRUSDAY"
+        case Thursday = "THURSDAY"
         case Friday = "FRIDAY"
         case Saturday = "SATURDAY"
         case Sunday = "SUNDAY"

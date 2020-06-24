@@ -77,7 +77,7 @@ extension DashboardMapCoordinator: MapCoordinatorProtocol {
     
     func dismiss() {
         modalTransition = nil
-        mapView?.removeSelection()
+        mapView?.presenter.removeSelection()
     }
 }
 

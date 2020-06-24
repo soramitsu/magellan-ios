@@ -240,13 +240,13 @@ final class MapPresenterTests: XCTestCase {
         }
         
         // act
-        presenter.showDetails(place: viewModel, showOnMap: true)
+        presenter.showDetails(place: viewModel)
         
         // assert
         XCTAssertTrue(mapView.showLoadingCalled)
         XCTAssertTrue(mapView.hideLoadingCalled)
         XCTAssertTrue(coordinator.showDetailsForCalled)
-        XCTAssertTrue(mapView.showPlaceCalled)
+        XCTAssertTrue(mapView.updateSelectionCalled)
     }
     
     func testSelectPlace() {
@@ -265,7 +265,7 @@ final class MapPresenterTests: XCTestCase {
         XCTAssertTrue(mapView.showLoadingCalled)
         XCTAssertTrue(mapView.hideLoadingCalled)
         XCTAssertTrue(coordinator.showDetailsForCalled)
-        XCTAssertTrue(mapView.showPlaceCalled)
+        XCTAssertTrue(mapView.updateSelectionCalled)
     }
     
     func testSelectedItem() {

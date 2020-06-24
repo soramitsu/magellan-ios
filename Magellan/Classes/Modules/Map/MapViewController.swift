@@ -37,6 +37,7 @@ final class MapViewController: UIViewController {
     private var filterTopConstraint: NSLayoutConstraint?
     private var positionButton = UIButton()
     private var state: State = .normal
+    private var placeMarkers: [GMSMarker] = []
     
     var mapView: GMSMapView {
         return view as! GMSMapView
@@ -152,7 +153,7 @@ final class MapViewController: UIViewController {
     
     @objc
     private func tapFilter() {
-        removeSelection()
+        presenter.removeSelection()
         presenter.showFilter()
     }
     
@@ -179,14 +180,12 @@ extension MapViewController: GMSMapViewDelegate {
         }
         
         if let place = marker.userData as? PlaceViewModel {
-            selectedMarker = marker
             if let animatable = marker.iconView as? Selectable {
                 animatable.setSelected(true, animated: true)
             }
-            presenter.showDetails(place: place, showOnMap: false)
+            presenter.showDetails(place: place)
             return true
         }
-        selectedMarker = nil
         
         if let cluster = marker.userData as? ClusterViewModel {
             let cameraUpdate = GMSCameraUpdate.setTarget(cluster.coordinates.coreLocationCoordinates,
@@ -227,9 +226,16 @@ extension MapViewController: GMSMapViewDelegate {
 
 extension MapViewController: MapViewProtocol {
     
-    func removeSelection() {
+    func updateSelection() {
         (selectedMarker?.iconView as? Selectable)?.setSelected(false, animated: true)
-        selectedMarker = nil
+        guard let selectedPlace = presenter.selectedPlace else {
+            selectedMarker = nil
+            return
+        }
+        
+        let marker = placeMarkers.first(where: { ($0.userData as? PlaceViewModel)?.id == selectedPlace.id })
+        (marker?.iconView as? Selectable)?.setSelected(true, animated: true)
+        selectedMarker = marker
     }
     
     func setFilterButton(hidden: Bool) {
@@ -245,26 +251,19 @@ extension MapViewController: MapViewProtocol {
         let selectedPlace = presenter.selectedPlace
         mapView.clear()
         
+        var markers: [GMSMarker] = []
         presenter.places.forEach {
-            self.markerFactory.marker(place: $0, selected: $0.id == selectedPlace?.id).map = self.mapView
+            let item = self.markerFactory.marker(place: $0, selected: $0.id == selectedPlace?.id)
+            item.map = self.mapView
+            markers.append(item)
         }
+        placeMarkers = markers
         
         presenter.clusters.forEach {
             self.markerFactory.marker(cluster: $0, font: style.semiBold10).map = self.mapView
         }
     }
     
-    func show(place: PlaceViewModel) {
-        if !isViewLoaded {
-            return
-        }
-        let currentZoom = mapView.camera.zoom
-        let zoom = currentZoom > Constants.defaultZoom
-            ? currentZoom + 1
-            : Constants.defaultZoom
-        let camera = GMSCameraUpdate.setTarget(place.coordinates.coreLocationCoordinates, zoom: zoom)
-        mapView.moveCamera(camera)
-    }
 }
 
 extension MapViewController: Containable {

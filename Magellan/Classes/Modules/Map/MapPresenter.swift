@@ -29,9 +29,7 @@ final class MapPresenter: MapPresenterProtocol {
     private(set)var requestDelay: TimeInterval = 1
     private(set) var selectedPlace: PlaceViewModel? {
         didSet {
-            if selectedPlace == nil {
-                view?.removeSelection()
-            }
+            view?.updateSelection()
         }
     }
     
@@ -161,7 +159,7 @@ final class MapPresenter: MapPresenterProtocol {
         currentBottomRight = bottomRight
     }
     
-    func showDetails(place: PlaceViewModel, showOnMap: Bool) {
+    func showDetails(place: PlaceViewModel) {
         view?.showLoading()
         service.getPlace(with: place.id, runCompletionIn: DispatchQueue.main) { [weak self] result in
             guard let self = self else {
@@ -170,14 +168,11 @@ final class MapPresenter: MapPresenterProtocol {
             self.view?.hideLoading()
             switch result {
             case .success(let info):
-                if showOnMap {
-                    self.view?.show(place: place)
-                }
                 self.coordinator?.showDetails(for: info)
                 self.selectedPlace = place
             case .failure(let error):
                 self.output?.loadingComplete(with: error) { [weak self] in
-                    self?.showDetails(place: place, showOnMap: showOnMap)
+                    self?.showDetails(place: place)
                 }
             }
         }
@@ -200,6 +195,9 @@ final class MapPresenter: MapPresenterProtocol {
         selectedPlace = nil
         coordinator?.showCategoriesFilter(categories: categories, filter: whiteFilter, output: self)
     }
+    func removeSelection() {
+        selectedPlace = nil
+    }
 }
 
 extension MapPresenter: MapListOutputProtocol {
@@ -209,7 +207,7 @@ extension MapPresenter: MapListOutputProtocol {
     }
     
     func select(place: PlaceViewModel) {
-        showDetails(place: place, showOnMap: true)
+        showDetails(place: place)
     }
     
     func search(with text: String?) {

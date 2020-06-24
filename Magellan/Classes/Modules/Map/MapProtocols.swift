@@ -11,8 +11,7 @@ protocol MapViewProtocol: class, ControllerBackedProtocol, Containable, Loadable
     var presenter: MapPresenterProtocol { get }
     
     func setFilterButton(hidden: Bool)
-    func show(place: PlaceViewModel)
-    func removeSelection()
+    func updateSelection()
     func reloadData()
 }
 
@@ -29,11 +28,12 @@ protocol MapPresenterProtocol: MapListOutputProtocol, AutoMockable {
     var requestDelay: TimeInterval { get }
     var selectedPlace: PlaceViewModel? { get }
 
-    func showDetails(place: PlaceViewModel, showOnMap: Bool)
+    func showDetails(place: PlaceViewModel)
     func loadCategories()
     func loadPlaces(topLeft:Coordinates, bottomRight: Coordinates, zoom: Int)
     func mapCameraDidChange()
     func showFilter()
+    func removeSelection()
 }
 
 protocol MapCoordinatorProtocol: AnyObject, AutoMockable {

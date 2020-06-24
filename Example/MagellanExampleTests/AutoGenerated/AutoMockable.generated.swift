@@ -537,17 +537,17 @@ class MapPresenterProtocolMock: MapPresenterProtocol {
 
     //MARK: - showDetails
 
-    var showDetailsPlaceShowOnMapCallsCount = 0
-    var showDetailsPlaceShowOnMapCalled: Bool {
-        return showDetailsPlaceShowOnMapCallsCount > 0
+    var showDetailsPlaceCallsCount = 0
+    var showDetailsPlaceCalled: Bool {
+        return showDetailsPlaceCallsCount > 0
     }
-    var showDetailsPlaceShowOnMapReceivedArguments: (place: PlaceViewModel, showOnMap: Bool)?
-    var showDetailsPlaceShowOnMapClosure: ((PlaceViewModel, Bool) -> Void)?
+    var showDetailsPlaceReceivedPlace: PlaceViewModel?
+    var showDetailsPlaceClosure: ((PlaceViewModel) -> Void)?
 
-    func showDetails(place: PlaceViewModel, showOnMap: Bool) {
-        showDetailsPlaceShowOnMapCallsCount += 1
-        showDetailsPlaceShowOnMapReceivedArguments = (place: place, showOnMap: showOnMap)
-        showDetailsPlaceShowOnMapClosure?(place, showOnMap)
+    func showDetails(place: PlaceViewModel) {
+        showDetailsPlaceCallsCount += 1
+        showDetailsPlaceReceivedPlace = place
+        showDetailsPlaceClosure?(place)
     }
 
     //MARK: - loadCategories
@@ -602,6 +602,19 @@ class MapPresenterProtocolMock: MapPresenterProtocol {
     func showFilter() {
         showFilterCallsCount += 1
         showFilterClosure?()
+    }
+
+    //MARK: - removeSelection
+
+    var removeSelectionCallsCount = 0
+    var removeSelectionCalled: Bool {
+        return removeSelectionCallsCount > 0
+    }
+    var removeSelectionClosure: (() -> Void)?
+
+    func removeSelection() {
+        removeSelectionCallsCount += 1
+        removeSelectionClosure?()
     }
 
     //MARK: - moduleChange
@@ -718,32 +731,17 @@ class MapViewProtocolMock: MapViewProtocol {
         setFilterButtonHiddenClosure?(hidden)
     }
 
-    //MARK: - show
+    //MARK: - updateSelection
 
-    var showPlaceCallsCount = 0
-    var showPlaceCalled: Bool {
-        return showPlaceCallsCount > 0
+    var updateSelectionCallsCount = 0
+    var updateSelectionCalled: Bool {
+        return updateSelectionCallsCount > 0
     }
-    var showPlaceReceivedPlace: PlaceViewModel?
-    var showPlaceClosure: ((PlaceViewModel) -> Void)?
+    var updateSelectionClosure: (() -> Void)?
 
-    func show(place: PlaceViewModel) {
-        showPlaceCallsCount += 1
-        showPlaceReceivedPlace = place
-        showPlaceClosure?(place)
-    }
-
-    //MARK: - removeSelection
-
-    var removeSelectionCallsCount = 0
-    var removeSelectionCalled: Bool {
-        return removeSelectionCallsCount > 0
-    }
-    var removeSelectionClosure: (() -> Void)?
-
-    func removeSelection() {
-        removeSelectionCallsCount += 1
-        removeSelectionClosure?()
+    func updateSelection() {
+        updateSelectionCallsCount += 1
+        updateSelectionClosure?()
     }
 
     //MARK: - reloadData

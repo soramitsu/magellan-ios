@@ -48,8 +48,11 @@ class PlaceViewModel: NSObject, Coordinated {
         self.locale = locale
     }
     
-    static func == (lhs: PlaceViewModel, rhs: PlaceViewModel) -> Bool {
-        return lhs.id == rhs.id
+    override func isEqual(_ object: Any?) -> Bool {
+        if let rhs = object as? PlaceViewModel {
+            return self.place == rhs.place
+        }
+        return false
     }
     
 }

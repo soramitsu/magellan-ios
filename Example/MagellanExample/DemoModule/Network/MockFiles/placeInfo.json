@@ -30,7 +30,7 @@
                     }
                 },
                 {
-                    "dayOfWeek": "THURSDAY",
+                    "dayOfWeek": "TUESDAY",
                     "from": {
                         "hour": 12,
                         "minute": 30
@@ -52,7 +52,7 @@
                     }
                 },
                 {
-                    "dayOfWeek": "THRUSDAY",
+                    "dayOfWeek": "THURSDAY",
                     "from": {
                         "hour": 14,
                         "minute": 30

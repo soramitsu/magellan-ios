@@ -128,7 +128,7 @@ final class MapListViewController: UIViewController {
         tableView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
         tableView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
         tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -1).isActive = true
-        tableView.topAnchor.constraint(equalTo: headerView.bottomAnchor, constant: 1).isActive = true
+        tableView.topAnchor.constraint(equalTo: headerView.bottomAnchor).isActive = true
     }
     
     private func configureKeyboardHandler() {

@@ -184,6 +184,7 @@ final class MapPresenter: MapPresenterProtocol {
             let currentZoom = currentZoom else {
                 return
         }
+        output?.loading(true)
         loadPlaces(topLeft: currentTopLeft, bottomRight: currentBottomRight, zoom: currentZoom, search: search)
     }
     

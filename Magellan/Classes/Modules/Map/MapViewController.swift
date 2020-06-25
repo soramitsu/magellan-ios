@@ -189,7 +189,7 @@ extension MapViewController: GMSMapViewDelegate {
         
         if let cluster = marker.userData as? ClusterViewModel {
             let cameraUpdate = GMSCameraUpdate.setTarget(cluster.coordinates.coreLocationCoordinates,
-                                                         zoom: mapView.camera.zoom + 2)
+                                                         zoom: mapView.camera.zoom + 1)
             state = .cluster
             mapView.moveCamera(cameraUpdate)
             return true

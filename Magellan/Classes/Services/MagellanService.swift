@@ -30,6 +30,9 @@ extension MagellanService: MagellanServicePrototcol {
         
         operation.completionBlock = {
             queue.async {
+                if operation.isCancelled {
+                    return
+                }
                 guard let result = operation.result else {
                     completion(.failure(MagellanServiceError.noResult))
                     return
@@ -48,6 +51,9 @@ extension MagellanService: MagellanServicePrototcol {
         
         operation.completionBlock = {
             queue.async {
+                if operation.isCancelled {
+                    return
+                }
                 guard let result = operation.result else {
                     completion(.failure(MagellanServiceError.noResult))
                     return
@@ -66,6 +72,9 @@ extension MagellanService: MagellanServicePrototcol {
         
         operation.completionBlock = {
             queue.async {
+                if operation.isCancelled {
+                    return
+                }
                 guard let result = operation.result else {
                     completion(.failure(MagellanServiceError.noResult))
                     return

@@ -57,6 +57,9 @@ final class MapListPresenter: MapListPresenterProtocol {
     }
     
     func finishSearch() {
+        if state == .error {
+            return
+        }
         state = .normal
     }
 }

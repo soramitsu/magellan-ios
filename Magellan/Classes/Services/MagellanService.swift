@@ -30,14 +30,14 @@ extension MagellanService: MagellanServicePrototcol {
         
         operation.completionBlock = {
             queue.async {
-                if operation.isCancelled {
+                switch operation.result {
+                case .failure(let error):
+                    completion(.failure(error))
+                case .success(let result):
+                    completion(.success(result))
+                case .none:
                     return
                 }
-                guard let result = operation.result else {
-                    completion(.failure(MagellanServiceError.noResult))
-                    return
-                }
-                completion(result)
             }
         }
         
@@ -51,14 +51,14 @@ extension MagellanService: MagellanServicePrototcol {
         
         operation.completionBlock = {
             queue.async {
-                if operation.isCancelled {
+                switch operation.result {
+                case .failure(let error):
+                    completion(.failure(error))
+                case .success(let result):
+                    completion(.success(result))
+                case .none:
                     return
                 }
-                guard let result = operation.result else {
-                    completion(.failure(MagellanServiceError.noResult))
-                    return
-                }
-                completion(result)
             }
         }
         
@@ -72,14 +72,14 @@ extension MagellanService: MagellanServicePrototcol {
         
         operation.completionBlock = {
             queue.async {
-                if operation.isCancelled {
+                switch operation.result {
+                case .failure(let error):
+                    completion(.failure(error))
+                case .success(let result):
+                    completion(.success(result))
+                case .none:
                     return
                 }
-                guard let result = operation.result else {
-                    completion(.failure(MagellanServiceError.noResult))
-                    return
-                }
-                completion(result)
             }
         }
         

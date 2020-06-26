@@ -255,9 +255,13 @@ extension MapViewController: MapViewProtocol {
         
         var markers: [GMSMarker] = []
         presenter.places.forEach {
-            let item = self.markerFactory.marker(place: $0, selected: $0.id == selectedPlace?.id)
+            let isSelected = $0.id == selectedPlace?.id
+            let item = self.markerFactory.marker(place: $0, selected: isSelected)
             item.map = self.mapView
             markers.append(item)
+            if isSelected {
+                self.selectedMarker = item
+            }
         }
         placeMarkers = markers
         

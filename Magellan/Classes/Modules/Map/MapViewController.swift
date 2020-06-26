@@ -180,9 +180,7 @@ extension MapViewController: GMSMapViewDelegate {
         }
         
         if let place = marker.userData as? PlaceViewModel {
-            if let animatable = marker.iconView as? Selectable {
-                animatable.setSelected(true, animated: true)
-            }
+            removeSelection()
             presenter.showDetails(place: place)
             return true
         }
@@ -191,7 +189,7 @@ extension MapViewController: GMSMapViewDelegate {
             let cameraUpdate = GMSCameraUpdate.setTarget(cluster.coordinates.coreLocationCoordinates,
                                                          zoom: mapView.camera.zoom + 1)
             state = .cluster
-            mapView.moveCamera(cameraUpdate)
+            mapView.animate(with: cameraUpdate)
             return true
         }
         
@@ -227,15 +225,19 @@ extension MapViewController: GMSMapViewDelegate {
 extension MapViewController: MapViewProtocol {
     
     func updateSelection() {
-        (selectedMarker?.iconView as? Selectable)?.setSelected(false, animated: true)
+        removeSelection()
         guard let selectedPlace = presenter.selectedPlace else {
-            selectedMarker = nil
             return
         }
         
         let marker = placeMarkers.first(where: { ($0.userData as? PlaceViewModel)?.id == selectedPlace.id })
         (marker?.iconView as? Selectable)?.setSelected(true, animated: true)
         selectedMarker = marker
+    }
+    
+    func removeSelection() {
+        (selectedMarker?.iconView as? Selectable)?.setSelected(false, animated: true)
+        selectedMarker = nil
     }
     
     func setFilterButton(hidden: Bool) {

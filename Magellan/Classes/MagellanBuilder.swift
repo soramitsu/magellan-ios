@@ -23,6 +23,9 @@ public protocol MaggelanBuilderProtocol {
     
     @discardableResult
     func with(parameters: MagellanParametersProtocol) -> Self
+    
+    @discardableResult
+    func with(logger: LoggerProtocol) -> Self
 }
 
 public final class MaggelanBuilder {
@@ -33,6 +36,7 @@ public final class MaggelanBuilder {
     private var errorViewFactory: ErrorViewFactoryProtocol?
     private var localizedResourcesFactory: LocalizedResourcesFactoryProtocol?
     private var parameters: MagellanParametersProtocol?
+    private var logger: LoggerProtocol?
     
     /// Initializator
     /// - Parameter key: google mpas api key
@@ -50,7 +54,8 @@ extension MaggelanBuilder: MaggelanBuilderProtocol {
         let resolver = Resolver(networkOperationFactory: networkOperationFactory,
                                 style: self.style ?? DefaultMagellanStyle(),
                                 localizationResourcesFactory: localizedResourcesFactory ?? DefaultLocalizedResorcesFactory(),
-                                parameters: parameters ?? DefaultMagellanParameters())
+                                parameters: parameters ?? DefaultMagellanParameters(),
+                                logger: logger)
         resolver.phoneFormatter = phoneFormatter
         resolver.errorViewFactory = errorViewFactory
         
@@ -80,6 +85,11 @@ extension MaggelanBuilder: MaggelanBuilderProtocol {
     
     public func with(parameters: MagellanParametersProtocol) -> Self {
         self.parameters = parameters
+        return self
+    }
+    
+    public func with(logger: LoggerProtocol) -> Self {
+        self.logger = logger
         return self
     }
 }

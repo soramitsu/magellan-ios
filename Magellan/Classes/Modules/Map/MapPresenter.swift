@@ -81,6 +81,8 @@ final class MapPresenter: MapPresenterProtocol {
         return locationService.currentLocation
     }
     
+    var logger: LoggerDecorator?
+    
     init(service: MagellanServicePrototcol,
          locationService: UserLocationServiceProtocol,
          defaultPosition: Coordinates,
@@ -106,6 +108,7 @@ final class MapPresenter: MapPresenterProtocol {
             guard let self = self else {
                 return
             }
+            self.logger?.log(result)
             switch result {
             case .success(let items):
                 self.categories = items
@@ -139,6 +142,7 @@ final class MapPresenter: MapPresenterProtocol {
             guard let self = self else {
                 return
             }
+            self.logger?.log(result)
             switch result {
             case .failure(let error):
                 self.coordinator?.hideDetailsIfPresented()
@@ -165,6 +169,7 @@ final class MapPresenter: MapPresenterProtocol {
             guard let self = self else {
                 return
             }
+            self.logger?.log(result)
             self.view?.hideLoading()
             switch result {
             case .success(let info):

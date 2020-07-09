@@ -37,6 +37,7 @@ class ContainerViewController: UIViewController, AdaptiveDesignable {
     var draggable: Draggable?
 
     var gestureStartOriginY: CGFloat = 0.0
+    var gestureBegunOriginY: CGFloat = 0.0
 
     var inheritedInsets: UIEdgeInsets {
         var contentInsets: UIEdgeInsets = .zero
@@ -267,16 +268,17 @@ class ContainerViewController: UIViewController, AdaptiveDesignable {
             }
 
             gestureStartOriginY = recognizer.location(in: draggable.draggableView.superview).y
+            gestureBegunOriginY = gestureStartOriginY
         case .changed:
             let newY = recognizer.location(in: draggable.draggableView.superview).y
             let translation = newY - gestureStartOriginY
             gestureStartOriginY = newY
 
-            let compactFrame = createDraggableFrame(for: .compact)
+            let minFrame = createDraggableFrame(for: .min)
             let fullFrame = createDraggableFrame(for: .full)
 
             var newOriginY = draggable.draggableView.frame.origin.y + translation
-            newOriginY = min(compactFrame.minY, newOriginY)
+            newOriginY = min(minFrame.minY, newOriginY)
             newOriginY = max(fullFrame.minY, newOriginY)
 
             if draggable.canDrag(from: draggableState), draggable.draggableView.frame.origin.y != newOriginY {
@@ -284,61 +286,59 @@ class ContainerViewController: UIViewController, AdaptiveDesignable {
                 frame.origin.y = newOriginY
                 frame.size.height = containerSize.height - newOriginY - containerOrigin.y
 
-                updateAnimationProgress(draggableFrame: frame)
+                updateAnimationProgress(draggableFrame: frame,
+                                        direction: gestureBegunOriginY - gestureStartOriginY > 0 ? .up : .down)
             }
 
         case .ended, .cancelled:
             let velocity = recognizer.velocity(in: view)
-            completeStateTransitionAnimation(with: velocity)
+            completeStateTransitionAnimation(with: velocity,
+                                             direction: gestureBegunOriginY - gestureStartOriginY > 0 ? .up : .down)
         default:
             break
         }
     }
 
-    private func updateAnimationProgress(draggableFrame: CGRect) {
+    private func updateAnimationProgress(draggableFrame: CGRect, direction: DragDirection) {
         if let draggable = draggable {
-            switch draggableState {
-            case .compact, .min:
+            switch (draggableState, direction) {
+            case (.compact, .up):
                 shadowView.alpha = CGFloat(draggableProgress) * Constants.draggableMaxShadowAlpha
-            case .full:
+            case (.full, .down):
                 shadowView.alpha = CGFloat(1.0 - draggableProgress) * Constants.draggableMaxShadowAlpha
+            default:
+                shadowView.alpha = 0
             }
             
 
             draggable.animate(progress: draggableProgress,
                               from: draggableState,
-                              to: draggableState.other,
+                              to: draggableState.other(with: direction),
                               finalFrame: draggableFrame)
         }
     }
 
-    private func completeStateTransitionAnimation(with velocity: CGPoint) {
+    private func completeStateTransitionAnimation(with velocity: CGPoint, direction: DragDirection) {
         guard let draggable = draggable else {
             return
         }
-
-        let oppositPan = (velocity.y < 0.0 && draggableState == .full) ||
-            (velocity.y > 0.0 && draggableState == .compact)
-
-        if oppositPan || draggableProgress < Constants.draggableCancellationThreshold {
-            let duration = Constants.draggableChangeDuration
-            animateDraggable(to: draggableState, duration: duration)
-            draggable.set(dragableState: draggableState, animated: true)
-            return
+        var targetState: DraggableState
+        switch (draggableState, direction) {
+        case (.min, .up):
+            targetState = velocity.y < 0 ? .compact : .min
+        case (.compact, .down):
+            targetState = velocity.y < 0 ? .compact : .min
+        case (.compact, .up):
+            targetState = velocity.y < 0 ? .full : .compact
+        case (.full, .down):
+            targetState = velocity.y < 0 ? .full : .compact
+        default:
+            targetState = draggableState
         }
-
-        if draggableProgress > Constants.draggableChangesAfterThreshold ||
-            abs(velocity.y) > Constants.draggableVelocityThreshold {
-            let duration = Constants.draggableChangeDuration
-
-            draggableState = draggableState.other
-            animateDraggable(to: draggableState, duration: duration)
-            draggable.set(dragableState: draggableState, animated: true)
-        } else {
-            let duration = Constants.draggableChangeDuration
-            animateDraggable(to: draggableState, duration: duration)
-            draggable.set(dragableState: draggableState, animated: true)
-        }
+        
+        let duration = Constants.draggableChangeDuration
+        animateDraggable(to: targetState, duration: duration)
+        draggable.set(dragableState: targetState, animated: true)
     }
 
     private func animateDraggable(to state: DraggableState, duration: TimeInterval) {

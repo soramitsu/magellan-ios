@@ -35,19 +35,25 @@ protocol Containable: class {
     func draggable(_ draggable: Draggable, didChange frame: CGRect)
 }
 
+enum DragDirection {
+    case up
+    case down
+}
 
 enum DraggableState {
     case min
     case compact
     case full
-
-    var other: DraggableState {
-        switch self {
-        case .compact:
-            return .full
-        case .full:
+    
+    func other(with direction: DragDirection) -> DraggableState {
+        switch (self, direction) {
+        case (.min, _):
             return .compact
-        case .min:
+        case (.compact, .down):
+            return .min
+        case (.compact, .up):
+            return .full
+        case (.full, _):
             return .compact
         }
     }

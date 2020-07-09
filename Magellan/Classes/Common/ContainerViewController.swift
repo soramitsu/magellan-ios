@@ -238,18 +238,20 @@ class ContainerViewController: UIViewController, AdaptiveDesignable {
             return CGRect(x: 0.0,
                           y: containerSize.height - height,
                             width: containerSize.width,
-                            height: 67)
+                            height: height)
         }
 
     }
 
     fileprivate func updateDraggableLayout(forceLayoutUpdate: Bool = false) {
         if let draggable = draggable {
-            draggable.draggableView.frame = createDraggableFrame(for: draggableState)
+            let frame = createDraggableFrame(for: draggableState)
+            draggable.draggableView.frame = frame
 
             if forceLayoutUpdate {
                 draggable.draggableView.layoutIfNeeded()
             }
+            self.content?.draggable(draggable, didChange: frame)
         }
     }
     
@@ -348,8 +350,10 @@ class ContainerViewController: UIViewController, AdaptiveDesignable {
             }
 
             UIView.animate(withDuration: duration, animations: {
+                
                 draggable.draggableView.frame = frame
                 draggable.draggableView.layoutIfNeeded()
+                self.content?.draggable(draggable, didChange: frame)
 
                 switch state {
                 case .compact, .min:
@@ -357,7 +361,6 @@ class ContainerViewController: UIViewController, AdaptiveDesignable {
                 case .full:
                     self.shadowView.alpha = Constants.draggableMaxShadowAlpha
                 }
-
             }, completion: { _ in
                 if state == .compact {
                     self.shadowView.removeFromSuperview()
@@ -392,7 +395,6 @@ extension ContainerViewController: DraggableDelegate {
 
             if animating {
                 animateDraggable(to: draggableState, duration: Constants.draggableChangeDuration)
-                draggable?.set(dragableState: draggableState, animated: true)
             } else {
                 updateDraggableLayout()
 

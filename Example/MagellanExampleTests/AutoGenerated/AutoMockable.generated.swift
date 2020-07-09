@@ -772,6 +772,21 @@ class MapViewProtocolMock: MapViewProtocol {
         setContentInsetsAnimatedClosure?(contentInsets, animated)
     }
 
+    //MARK: - draggable
+
+    var draggableDidChangeCallsCount = 0
+    var draggableDidChangeCalled: Bool {
+        return draggableDidChangeCallsCount > 0
+    }
+    var draggableDidChangeReceivedArguments: (draggable: Draggable, frame: CGRect)?
+    var draggableDidChangeClosure: ((Draggable, CGRect) -> Void)?
+
+    func draggable(_ draggable: Draggable, didChange frame: CGRect) {
+        draggableDidChangeCallsCount += 1
+        draggableDidChangeReceivedArguments = (draggable: draggable, frame: frame)
+        draggableDidChangeClosure?(draggable, frame)
+    }
+
     //MARK: - showLoading
 
     var showLoadingCallsCount = 0

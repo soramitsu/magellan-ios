@@ -151,7 +151,7 @@ final class MapPresenter: MapPresenterProtocol {
                     self?.loadPlaces(topLeft: topLeft, bottomRight: bottomRight, zoom: zoom, search: search)
                 }
             case .success(let response):
-                self.places = response.locations.compactMap { PlaceViewModel(place: $0, locale: self.localizator.locale) }
+                self.places = [] //response.locations.compactMap { PlaceViewModel(place: $0, locale: self.localizator.locale) }
                 self.clusters = response.clusters.compactMap { ClusterViewModel(cluster: $0) }
                 self.view?.reloadData()
             }

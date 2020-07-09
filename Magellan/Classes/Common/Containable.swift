@@ -31,6 +31,8 @@ protocol Containable: class {
     var preferredContentHeight: CGFloat { get }
     var observable: ViewModelObserverContainer<ContainableObserver> { get }
     func setContentInsets(_ contentInsets: UIEdgeInsets, animated: Bool)
+    
+    func draggable(_ draggable: Draggable, didChange frame: CGRect)
 }
 
 

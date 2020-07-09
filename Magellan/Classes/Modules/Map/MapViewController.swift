@@ -26,15 +26,32 @@ final class MapViewController: UIViewController {
     let markerFactory: MapMarkerFactoryProtocol
     let style: MagellanStyleProtocol
     
-    var preferredContentHeight: CGFloat = 0
+    var preferredContentHeight: CGFloat = 0 {
+        willSet {
+            if preferredContentHeight == newValue {
+                return
+            }
+            observable.observers.forEach {
+                $0.observer?.willChangePreferredContentHeight()
+            }
+        }
+        
+        didSet {
+            if preferredContentHeight == oldValue {
+                return
+            }
+            observable.observers.forEach {
+                $0.observer?.didChangePreferredContentHeight(to: preferredContentHeight)
+            }
+        }
+    }
     var observable = ViewModelObserverContainer<ContainableObserver>()
     
     private var camera: GMSCameraPosition!
     private weak var selectedMarker: GMSMarker?
     
-    private var myPlaceButton = RoundedButton()
-    private var filterButton = RoundedButton()
-    private var filterTopConstraint: NSLayoutConstraint?
+    private var myPlaceButton: RoundedButton!
+    private var filterButton: RoundedButton!
     private var positionButton = UIButton()
     private var state: State = .normal
     private var placeMarkers: [GMSMarker] = []
@@ -81,9 +98,11 @@ final class MapViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-        observable.observers.forEach {
-            $0.observer?.willChangePreferredContentHeight()
+        if preferredContentHeight != 0 {
+            return
         }
+        
+        myPlaceButton.frame.origin.x = view.frame.width - myPlaceButton.bounds.size.width - 10
         
         var heightDiff: CGFloat = 0.0
         if let origin = view.superview?.convert(view.frame.origin, to: nil) {
@@ -94,16 +113,6 @@ final class MapViewController: UIViewController {
             preferredContentHeight = view.frame.height - view.safeAreaInsets.bottom - MapConstants.listCompactHeight - heightDiff
         } else {
             preferredContentHeight = view.frame.height - MapConstants.listCompactHeight - heightDiff
-        }
-        
-         if let filterTopConstraint = filterTopConstraint,
-            filterTopConstraint.constant != preferredContentHeight - 30 {
-            filterTopConstraint.constant = preferredContentHeight - 30
-            filterTopConstraint.isActive = true
-        }
-        
-        observable.observers.forEach {
-            $0.observer?.didChangePreferredContentHeight(to: preferredContentHeight)
         }
     }
     
@@ -130,24 +139,19 @@ final class MapViewController: UIViewController {
             item.changesContentOpacityWhenHighlighted = true
         }
         
+        filterButton = RoundedButton(frame: CGRect(x: 10, y: 0, width: 32, height: 32))
         filterButton.imageWithTitleView?.iconImage = filterImage
         filterButton.isHidden = true
         setupClosure(filterButton)
         
         view.addSubview(filterButton)
-        filterButton.translatesAutoresizingMaskIntoConstraints = false
-        filterButton.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 10).isActive = true
-        filterTopConstraint = filterButton.topAnchor.constraint(equalTo: view.topAnchor)
         filterButton.addTarget(nil, action: #selector(tapFilter), for: .touchUpInside)
         
-        
+        myPlaceButton = RoundedButton(frame: CGRect(x: view.frame.width - 10, y: 0, width: 32, height: 32))
         myPlaceButton.imageWithTitleView?.iconImage = myPlaceImage
         setupClosure(myPlaceButton)
         
         view.addSubview(myPlaceButton)
-        myPlaceButton.translatesAutoresizingMaskIntoConstraints = false
-        myPlaceButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -10).isActive = true
-        myPlaceButton.centerYAnchor.constraint(equalTo: filterButton.centerYAnchor).isActive = true
         myPlaceButton.addTarget(nil, action: #selector(showMyPosition), for: .touchUpInside)
     }
     
@@ -282,4 +286,21 @@ extension MapViewController: Containable {
     }
     
     func setContentInsets(_ contentInsets: UIEdgeInsets, animated: Bool) {}
+    
+    func draggable(_ draggable: Draggable, didChange frame: CGRect) {
+        let newYOrigin = frame.origin.y - filterButton.bounds.height - 20
+        if newYOrigin < view.center.y / 2
+        || filterButton.frame.origin.y == newYOrigin {
+            return
+        }
+        filterButton.frame = rect(for: filterButton, with: newYOrigin)
+        myPlaceButton.frame = rect(for: myPlaceButton, with: newYOrigin)
+    }
+    
+    private func rect(for item: UIView, with yOrigin: CGFloat) -> CGRect {
+        return CGRect(x: item.frame.origin.x,
+                      y: yOrigin,
+                      width: item.bounds.width,
+                      height: item.bounds.height)
+    }
 }

@@ -73,8 +73,7 @@ class CategoriesFilterPresenterTests: XCTestCase {
         presenter.dismiss()
         
         // assert
-        XCTAssertTrue(output.categoriesFilterReceivedFilter?.count == 2)
-        XCTAssertEqual(output.categoriesFilterReceivedFilter, defaultFilter)
+        XCTAssertTrue(output.categoriesFilterReceivedFilter?.count == 3)
     }
     
     func testCountOfCategories() {

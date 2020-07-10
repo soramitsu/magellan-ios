@@ -10,7 +10,6 @@ import Foundation
 final class CategoriesFilterPresenter {
     
     let categories: [PlaceCategory]
-    let defaultFilter: Set<PlaceCategory>
     let localizator: LocalizedResourcesFactoryProtocol
     var filter: Set<PlaceCategory>
     weak var view: CategoriesFilterViewProtocol?
@@ -22,7 +21,6 @@ final class CategoriesFilterPresenter {
          localizator: LocalizedResourcesFactoryProtocol) {
         self.categories = categories
         self.filter = filter
-        self.defaultFilter = filter
         self.localizator = localizator
         
         NotificationCenter.default.addObserver(self, selector: #selector(localizationChanged),
@@ -69,7 +67,7 @@ extension CategoriesFilterPresenter: CategoriesFilterPresenterProtocol {
     }
     
     func resetFilter() {
-        filter = defaultFilter
+        filter = Set<PlaceCategory>(categories)
         view?.reload()
     }
     

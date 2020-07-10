@@ -17,6 +17,8 @@ protocol ResolverProtocol {
     
     var localizationResourcesFactory: LocalizedResourcesFactoryProtocol { get }
     var parameters: MagellanParametersProtocol { get }
+    
+    var logger: LoggerDecorator? { get }
 }
 
 extension ResolverProtocol {
@@ -38,15 +40,20 @@ final class Resolver: ResolverProtocol {
     let localizationResourcesFactory: LocalizedResourcesFactoryProtocol
     var markerFactory: MapMarkerFactoryProtocol?
     var parameters: MagellanParametersProtocol
+    private(set) var logger: LoggerDecorator?
     
     init(networkOperationFactory: MiddlewareOperationFactoryProtocol,
          style: MagellanStyleProtocol,
          localizationResourcesFactory: LocalizedResourcesFactoryProtocol,
-         parameters: MagellanParametersProtocol) {
+         parameters: MagellanParametersProtocol,
+         logger: LoggerProtocol?) {
         self.networkOperationFactory = networkOperationFactory
         self.style = style
         self.localizationResourcesFactory = localizationResourcesFactory
         self.parameters = parameters
+        if let logger = logger {
+            self.logger = LoggerDecorator(logger: logger)
+        }
     }
     
 }

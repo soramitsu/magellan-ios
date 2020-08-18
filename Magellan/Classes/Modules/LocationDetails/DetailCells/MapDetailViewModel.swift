@@ -9,65 +9,52 @@ import UIKit
 typealias Action = () -> Void
 
 enum MapDetailViewModelType {
-    
     case phone
     case website
     case facebook
     case address
     case workingHours
-    
-    func title(with factory: LocalizedResourcesFactoryProtocol) -> String {
-        switch self {
-        case .address:
-            return factory.address
-        case .website:
-            return factory.website
-        case .phone:
-            return factory.phoneNumber
-        case .facebook:
-            return factory.facebook
-        case .workingHours:
-            return factory.workingHours
-        }
-    }
 }
 
-protocol MapDetailViewModelProtocol {
+protocol MapDetailViewModelProtocol: CellViewModelProtocol {
     
     var type: MapDetailViewModelType { get }
-    var title: String { get }
     var content: String { get }
     var action: Action? { get }
     var image: UIImage? { get }
     
 }
 
-
 struct MapDetailViewModel: MapDetailViewModelProtocol {
-    
     let type: MapDetailViewModelType
     let content: String
     let action: Action?
-    let title: String
     
     var image: UIImage? {
         switch type {
-        case .address:
-            return UIImage(named: "navigate", in: .frameworkBundle, compatibleWith: nil)
         case .phone:
-            return UIImage(named: "call", in: .frameworkBundle, compatibleWith: nil)
-        case .facebook, .website:
-            return UIImage(named: "open", in: .frameworkBundle, compatibleWith: nil)
+            return UIImage(named: "placeInfo_call", in: .frameworkBundle, compatibleWith: nil)!
+        case .website:
+            return UIImage(named: "placeInfo_360", in: .frameworkBundle, compatibleWith: nil)!
+        case .facebook:
+            return UIImage(named: "placeInfo_external-link", in: .frameworkBundle, compatibleWith: nil)!
+        case .address:
+            return UIImage(named: "placeInfo_direction", in: .frameworkBundle, compatibleWith: nil)!
         case .workingHours:
-            return nil
+            return UIImage(named: "placeInfo_time", in: .frameworkBundle, compatibleWith: nil)!
         }
     }
     
-    init(type: MapDetailViewModelType, title: String, content: String, action: Action?) {
+    init(type: MapDetailViewModelType, content: String, action: Action?) {
         self.type = type
         self.content = content
         self.action = action
-        self.title = title
     }
-    
+
+}
+
+extension MapDetailViewModelProtocol {
+    var cellType: UITableViewCell.Type {
+        return LocationInfoCell.self
+    }
 }

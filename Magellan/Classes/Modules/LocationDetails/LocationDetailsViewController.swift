@@ -12,19 +12,9 @@ final class LocationDetailsViewController: UIViewController, LocationDetailsView
     private let style: MagellanStyleProtocol
     var presenter: LocationDetailsPresenterProtocol
     
-    private let tableView = UITableView()
-    private let tableHeaderView = UIView()
-    
+    private let tableView = UITableView(frame: .zero, style: .grouped)
     private let headerView = UIView()
     private let panView = UIView()
-    
-    
-    private let nameLabel = UILabel()
-    private let categoryLabel = UILabel()
-    private let workingHoursLabel = UILabel()
-    private let distanceLabel = UILabel()
-    private let separatorView = UIView()
-    private let informationLabel = UILabel()
         
     init(presenter: LocationDetailsPresenterProtocol,
          style: MagellanStyleProtocol) {
@@ -51,80 +41,24 @@ final class LocationDetailsViewController: UIViewController, LocationDetailsView
         presenter.viewDidLoad()
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: view.frame.origin.y, right: 0)
-    }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-
-        if let tableHeader = tableView.tableHeaderView {
-
-            let height = tableHeader.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
-            var headerFrame = tableHeader.frame
-
-            //Comparison necessary to avoid infinite loop
-            if height != headerFrame.size.height {
-                headerFrame.size.height = height
-                tableHeader.frame = headerFrame
-                tableView.tableHeaderView = tableHeader
-            }
-        }
-    }
-    
-    fileprivate func configureHeader() {
+    private func configureViews() {
         view.layer.masksToBounds = true
         view.layer.cornerRadius = style.topOffset
-        tableHeaderView.backgroundColor = style.mainBGColor
-        
+
         headerView.backgroundColor = style.mainBGColor
         view.addSubview(headerView)
-        
+
         panView.backgroundColor = style.panBGColor
         panView.layer.cornerRadius = MapConstants.panHeight / 2
         headerView.addSubview(panView)
-        
-        nameLabel.font = style.semiBold15
-        nameLabel.numberOfLines = 0
-        nameLabel.text = presenter.title
-        tableHeaderView.addSubview(nameLabel)
-        
-        categoryLabel.font = style.regular12
-        categoryLabel.text = presenter.category
-        categoryLabel.textColor = style.descriptionTextColor
-        categoryLabel.numberOfLines = 0
-        tableHeaderView.addSubview(categoryLabel)
-        
-        workingHoursLabel.text = presenter.workingStatus
-        workingHoursLabel.font = style.regular12
-        workingHoursLabel.textColor = presenter.isOpen ? style.firstColor : style.secondColor
-        tableHeaderView.addSubview(workingHoursLabel)
-        
-        distanceLabel.text = presenter.distance
-        distanceLabel.font = style.regular12
-        distanceLabel.textColor = style.grayTextColor
-        tableHeaderView.addSubview(distanceLabel)
-        
-        separatorView.backgroundColor = style.sectionsDeviderBGColor
-        tableHeaderView.addSubview(separatorView)
-        
-        informationLabel.textColor = style.headerColor
-        informationLabel.font = style.semiBold13
-        tableHeaderView.addSubview(informationLabel)
-    }
-    
-    private func configureViews() {
-        configureHeader()
-    
-        tableView.register(MapDetailCell.self, forCellReuseIdentifier: MapDetailCell.reuseIdentifier)
-        tableView.register(MapAddressCell.self, forCellReuseIdentifier: MapAddressCell.reuseIdentifier)
+
+        tableView.register(LocationInfoCell.self, forCellReuseIdentifier: LocationInfoCell.reuseIdentifier)
+        tableView.register(LocationHeaderCell.self, forCellReuseIdentifier: LocationHeaderCell.reuseIdentifier)
         tableView.delegate = self as UITableViewDelegate
         tableView.dataSource = self as UITableViewDataSource
-        tableView.separatorInset = style.tableSeparatorInsets
+        tableView.separatorStyle = .none
         tableView.showsVerticalScrollIndicator = false
-        tableView.tableHeaderView = tableHeaderView
-        tableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 1))
+        tableView.backgroundColor = style.backgroundColor
         view.addSubview(tableView)
     }
     
@@ -133,56 +67,20 @@ final class LocationDetailsViewController: UIViewController, LocationDetailsView
         headerView.translatesAutoresizingMaskIntoConstraints = false
         headerView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
         headerView.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
+        headerView.heightAnchor.constraint(equalToConstant: style.doubleOffset).isActive = true
         headerView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         
         panView.translatesAutoresizingMaskIntoConstraints = false
         panView.heightAnchor.constraint(equalToConstant: MapConstants.panHeight).isActive = true
         panView.widthAnchor.constraint(equalToConstant: style.panWidth).isActive = true
-        panView.topAnchor.constraint(equalTo: headerView.topAnchor, constant: style.offset).isActive = true
-        panView.bottomAnchor.constraint(equalTo: headerView.bottomAnchor, constant: -style.doubleOffset).isActive = true
         panView.centerXAnchor.constraint(equalTo: headerView.centerXAnchor).isActive = true
-        
-        tableHeaderView.translatesAutoresizingMaskIntoConstraints = false
-        tableHeaderView.widthAnchor.constraint(equalTo: tableView.widthAnchor).isActive = true
-        
-        nameLabel.translatesAutoresizingMaskIntoConstraints = false
-        nameLabel.leftAnchor.constraint(equalTo: tableHeaderView.leftAnchor, constant: style.sideOffset).isActive = true
-        nameLabel.rightAnchor.constraint(equalTo: tableHeaderView.rightAnchor, constant: -style.sideOffset).isActive = true
-        nameLabel.topAnchor.constraint(equalTo: tableHeaderView.topAnchor).isActive = true
-        
-        categoryLabel.translatesAutoresizingMaskIntoConstraints = false
-        categoryLabel.leftAnchor.constraint(equalTo: nameLabel.leftAnchor).isActive = true
-        categoryLabel.widthAnchor.constraint(equalTo: headerView.widthAnchor, constant: -(2 * style.sideOffset)).isActive = true
-        categoryLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: style.smallOffset).isActive = true
-        
-        workingHoursLabel.translatesAutoresizingMaskIntoConstraints = false
-        workingHoursLabel.leftAnchor.constraint(equalTo: nameLabel.leftAnchor).isActive = true
-        workingHoursLabel.topAnchor.constraint(equalTo: categoryLabel.bottomAnchor, constant: style.topOffset).isActive = true
-        
-        distanceLabel.translatesAutoresizingMaskIntoConstraints = false
-        distanceLabel.centerYAnchor.constraint(equalTo: workingHoursLabel.centerYAnchor).isActive = true
-        distanceLabel.rightAnchor.constraint(equalTo: tableHeaderView.rightAnchor, constant: -style.sideOffset).isActive = true
-        
-        separatorView.translatesAutoresizingMaskIntoConstraints = false
-        separatorView.topAnchor.constraint(equalTo: workingHoursLabel.bottomAnchor, constant: style.topOffset).isActive = true
-        separatorView.leftAnchor.constraint(equalTo: tableHeaderView.leftAnchor).isActive = true
-        separatorView.rightAnchor.constraint(equalTo: tableHeaderView.rightAnchor).isActive = true
-        separatorView.heightAnchor.constraint(equalToConstant: style.topOffset).isActive = true
-        
-        informationLabel.translatesAutoresizingMaskIntoConstraints = false
-        informationLabel.topAnchor.constraint(equalTo: separatorView.bottomAnchor, constant: style.doubleOffset).isActive = true
-        informationLabel.bottomAnchor.constraint(equalTo: tableHeaderView.bottomAnchor, constant: -style.doubleOffset).isActive = true
-        informationLabel.leftAnchor.constraint(equalTo: tableHeaderView.leftAnchor, constant: style.doubleOffset).isActive = true
+        panView.centerYAnchor.constraint(equalTo: headerView.centerYAnchor).isActive = true
 
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
         tableView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
         tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         tableView.topAnchor.constraint(equalTo: headerView.bottomAnchor).isActive = true
-    }
-    
-    func set(information: String) {
-        informationLabel.text = information
     }
     
     func reload() {
@@ -193,62 +91,107 @@ final class LocationDetailsViewController: UIViewController, LocationDetailsView
 
 extension LocationDetailsViewController: UITableViewDataSource {
 
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return presenter.items.count
+    }
+
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return presenter.items[section].items.count
     }
     
     //swiftlint:disable next force_try
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let model = presenter.items[indexPath.row]
-        
-        switch model.type {
-        case .address:
-            let cell = tableView.dequeueReusableCell(withIdentifier: MapAddressCell.reuseIdentifier,
-                                                     for: indexPath) as! MapAddressCell
-            cell.viewModel = model
-            cell.style = MapAddressCell.Style(titleFont: style.regular13,
-                                              titleColor: style.lighterGray,
-                                              addressFont: style.regular13,
-                                              addressTextColor: style.headerColor)
-            return cell
+        let model = presenter.items[indexPath.section].items[indexPath.row]
+        let cell = tableView.dequeueReusableCell(withIdentifier: model.cellReusableKey, for: indexPath)
+        if let bindable = cell as? Bindable {
+            bindable.bind(viewModel: model)
+        }
+
+        if let style = style(for: indexPath),
+            let styleApplicable = cell as? StyleApplicable {
+            styleApplicable.allpy(style: style)
+        }
+
+        return cell
+    }
+
+    private func style(for indexPath: IndexPath) -> StyleProtocol? {
+        let viewModel = presenter.items[indexPath.section].items[indexPath.row]
+        switch viewModel {
+        case is MapDetailViewModel:
+            let isLast = presenter.items[indexPath.section].items.count - 1 == indexPath.row
+            return LocationInfoCell.Style(font: style.regular15,
+                                          textColor: style.darkColor,
+                                          separatorColor:  isLast ? .clear : style.dividerColor)
+        case is LocationHeaderViewModel:
+            return LocationHeaderCell.Style(titleFont: style.bold20,
+                                            commentFont: style.regular15,
+                                            bodyFont: style.regular14,
+                                            reviewRatingFont: style.semiBold14,
+                                            darkColor: style.darkColor,
+                                            tintColor: style.primaryColor,
+                                            bodyColor: style.grayColor,
+                                            ratingDisabledColor: style.dividerColor)
         default:
-            let cell = tableView.dequeueReusableCell(withIdentifier: MapDetailCell.reuseIdentifier,
-                                                     for: indexPath) as! MapDetailCell
-            cell.viewModel = (model as! MapDetailViewModel)
-            cell.style = MapDetailCell.Style(titleFont: style.regular13,
-                                             titleTextColor: style.lighterGray,
-                                             contentFont: style.regular13,
-                                             contentTextColor: style.headerColor)
-            return cell
+            return nil
         }
     }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        let model = presenter.items[indexPath.row]
-        
-        if model.type != .address {
-            return 48
-        }
-        
-        let labelInset: CGFloat = 67
-        let descriptionHeight = model.content
-            .height(for: max(0, tableView.bounds.width - 2 * labelInset),
-                    font: style.regular13)
-        
-        return MapAddressCell.baseHeight + descriptionHeight + style.regular13.lineHeight
-    }
-    
 }
 
 extension LocationDetailsViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        if let model = presenter.items[indexPath.row] as? MapDetailViewModel {
+        if let model = presenter.items[indexPath.section].items[indexPath.row] as? MapDetailViewModel {
             model.action?()
         }
     }
-    
+
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        guard let title = presenter.items[section].title else {
+            return nil
+        }
+
+        let label = UILabel()
+        label.text = title
+        label.font = style.semiBold15
+        label.textColor = style.darkColor
+
+        let containerView = UIView()
+        containerView.backgroundColor = tableView.backgroundColor
+        containerView.addSubview(label)
+        
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.topAnchor.constraint(equalTo: containerView.topAnchor,
+                                   constant: style.offset * 2).isActive = true
+        label.bottomAnchor.constraint(equalTo: containerView.bottomAnchor,
+                                   constant: -style.offset * 2).isActive = true
+        label.leftAnchor.constraint(equalTo: containerView.leftAnchor,
+                                   constant: style.offset * 2).isActive = true
+        label.rightAnchor.constraint(equalTo: containerView.rightAnchor,
+                                   constant: -style.offset * 2).isActive = true
+
+        return containerView
+    }
+
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        let item = UIView()
+        item.backgroundColor = tableView.backgroundColor
+        return item
+    }
+
+
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return style.offset
+    }
+
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        guard let title = presenter.items[section].title else {
+            return .zero
+        }
+
+        return UITableView.automaticDimension
+    }
 }
 
 extension LocationDetailsViewController: ModalDraggable {

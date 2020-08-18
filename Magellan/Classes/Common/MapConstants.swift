@@ -9,7 +9,7 @@ import UIKit
 
 struct MapConstants {
     
-    static let panHeight: CGFloat = 6
+    static let panHeight: CGFloat = 5
     static let headerHeight: CGFloat = 64
     static let headerOffset: CGFloat = 8
     static let draggableOffset: CGFloat = 10

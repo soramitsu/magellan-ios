@@ -11,13 +11,13 @@ public protocol MagellanStyleProtocol {
     
     /* Fonts */
     var bold16: UIFont { get }
-    var semiBold15: UIFont { get }
+
     var semiBold14: UIFont { get }
     var semiBold13: UIFont { get }
     var semiBold12: UIFont { get }
     var semiBold10: UIFont { get }
     
-    var regular14: UIFont { get }
+
     var regular13: UIFont { get }
     var regular12: UIFont { get }
     
@@ -48,18 +48,29 @@ public protocol MagellanStyleProtocol {
     var sideOffset: CGFloat { get }
     var buttonSideSize: CGFloat { get }
     var roundedButtonSideSize: CGFloat { get }
+
+
+    // MARK: new properties
+
+    var bold20: UIFont { get }
+    var semiBold15: UIFont { get }
+    var regular15: UIFont { get }
+    var regular14: UIFont { get }
+
+    var backgroundColor: UIColor { get }
+    var darkColor: UIColor { get }
+    var grayColor: UIColor { get }
+    var dividerColor: UIColor { get }
+    var primaryColor: UIColor { get }
 }
 
 final class DefaultMagellanStyle: MagellanStyleProtocol {
-    
     var bold16: UIFont = .systemFont(ofSize: 16, weight: .bold)
-    var semiBold15: UIFont = .systemFont(ofSize: 15, weight: .semibold)
     var semiBold14: UIFont = .systemFont(ofSize: 14, weight: .semibold)
     var semiBold13: UIFont = .systemFont(ofSize: 13, weight: .semibold)
     var semiBold12: UIFont = .systemFont(ofSize: 12, weight: .semibold)
     var semiBold10: UIFont = .systemFont(ofSize: 10, weight: .semibold)
-    
-    var regular14: UIFont = .systemFont(ofSize: 14, weight: .regular)
+
     var regular13: UIFont = .systemFont(ofSize: 13, weight: .regular)
     var regular12: UIFont = .systemFont(ofSize: 12, weight: .regular)
     
@@ -88,4 +99,17 @@ final class DefaultMagellanStyle: MagellanStyleProtocol {
     let sideOffset: CGFloat = 20
     let buttonSideSize: CGFloat = 40
     let roundedButtonSideSize: CGFloat = 32
+
+    // MARK: new properties
+
+    let bold20: UIFont = .systemFont(ofSize: 20, weight: .bold)
+    let semiBold15: UIFont = .systemFont(ofSize: 15, weight: .semibold)
+    let regular15: UIFont = .systemFont(ofSize: 15, weight: .regular)
+    let regular14: UIFont = .systemFont(ofSize: 14, weight: .regular)
+
+    var backgroundColor: UIColor = .white
+    var darkColor: UIColor = UIColor(red: 0.176, green: 0.161, blue: 0.149, alpha: 1)
+    var grayColor: UIColor = UIColor(red: 0.631, green: 0.631, blue: 0.627, alpha: 1)
+    var dividerColor: UIColor = UIColor(red: 0.867, green: 0.867, blue: 0.867, alpha: 1)
+    var primaryColor: UIColor = UIColor(red: 0.816, green: 0.008, blue: 0.107, alpha: 1)
 }

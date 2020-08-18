@@ -14,7 +14,7 @@ final class LocationDetailsPresenter {
     weak var delegate: LocationDetailsPresenterDelegate?
     let place: PlaceInfo
     let formatter: PhoneFormatterProtocol?
-    private(set) var items: [MapDetailViewModelProtocol] = []
+    private(set) var items: [LocationSectionViewModel] = []
     private let localizator: LocalizedResourcesFactoryProtocol
 
     init(placeInfo: PlaceInfo, localizedResourcesFactory: LocalizedResourcesFactoryProtocol, phoneFormatter: PhoneFormatterProtocol? = nil) {
@@ -30,56 +30,62 @@ final class LocationDetailsPresenter {
     
     @objc func localizationChanged() {
         setupContent()
-        view?.set(information: localizator.information)
     }
     
     func setupContent() {
         items.removeAll()
+
+        items.append(LocationSectionViewModel(title: nil,
+                                              items: [
+                                                LocationHeaderViewModel(place: place,
+                                                                              localizator: localizator)
+        ]))
+
+        var infoItems: [CellViewModelProtocol] = []
         if let phoneNumber = place.phoneNumber,
             !phoneNumber.isEmpty {
             let phone = formatter?.formattedPhoneNumber(with: phoneNumber, region: place.region) ?? phoneNumber
-            items.append(MapDetailViewModel(type: .phone,
-                                            title: MapDetailViewModelType.phone.title(with: localizator),
-                                            content: phone,
-                                            action: { [weak self] in
-                                                self?.handle(path: "tel://\(phoneNumber)")
+            infoItems.append(MapDetailViewModel(type: .phone,
+                                                content: phone,
+                                                action: { [weak self] in
+                                                    self?.handle(path: "tel://\(phoneNumber)")
             }))
         }
 
         if let website = place.website,
             !website.isEmpty {
-            items.append(MapDetailViewModel(type: .website,
-                                            title: MapDetailViewModelType.website.title(with: localizator),
-                                            content: website,
-                                            action: { [weak self] in
-                                                self?.handle(path: website)
+            infoItems.append(MapDetailViewModel(type: .website,
+                                                content: website,
+                                                action: { [weak self] in
+                                                    self?.handle(path: website)
             }))
         }
 
         if let facebook = place.facebook,
             !facebook.isEmpty {
-            items.append(MapDetailViewModel(type: .facebook,
-                                            title: MapDetailViewModelType.facebook.title(with: localizator),
-                                            content: facebook,
-                                            action: { [weak self] in
-                                                self?.handle(path: facebook)
+            infoItems.append(MapDetailViewModel(type: .facebook,
+                                                content: facebook,
+                                                action: { [weak self] in
+                                                    self?.handle(path: facebook)
             }))
         }
 
         if !place.address.isEmpty {
-            items.append(MapDetailViewModel(type: .address,
-                                            title: MapDetailViewModelType.address.title(with: localizator),
-                                            content: place.address,
-                                            action: nil))
+            infoItems.append(MapDetailViewModel(type: .address,
+                                                content: place.address,
+                                                action: nil))
         }
         if let workingHours = place.currentWorkingDay?.workingHours {
-            items.append(MapDetailViewModel(type: .workingHours,
-                                            title: MapDetailViewModelType.workingHours.title(with: localizator),
-                                            content: workingHours,
-                                            action: nil))
+            infoItems.append(MapDetailViewModel(type: .workingHours,
+                                                content: workingHours,
+                                                action: nil))
         }
         
+        if !infoItems.isEmpty {
+            items.append(LocationSectionViewModel(title: localizator.information, items: infoItems))
+        }
 
+        view?.reload()
     }
     
     func handle(path: String) {
@@ -95,43 +101,6 @@ extension LocationDetailsPresenter: LocationDetailsPresenterProtocol {
     
     func viewDidLoad() {
         setupContent()
-        view?.set(information: localizator.information)
-    }
-    
-    var title: String {
-        return place.name
-    }
-    
-    var category: String {
-        var type: String
-        if localizator.locale.isKm,
-            let khmerType = place.khmerType {
-            type = khmerType
-        } else {
-            type = place.type
-        }
-        
-        if !place.address.isEmpty {
-            return "\(type) · \(place.address)"
-        }
-        return type
-    }
-    
-    var distance: String {
-        return ""
-    }
-    
-    var workingStatus: String {
-        let resources = WorkingStatusResources(opened: localizator.open,
-                                               closed: localizator.closed,
-                                               openedTill: localizator.openTill,
-                                               closedTill: localizator.closedTill)
-        return place.workingStatus(with: resources)
-        
-    }
-    
-    var isOpen: Bool {
-        place.isOpen
     }
     
     func dismiss() {

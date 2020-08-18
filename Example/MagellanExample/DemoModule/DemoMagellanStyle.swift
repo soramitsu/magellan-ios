@@ -15,12 +15,10 @@ final class DemoMagellanStyle: MagellanStyleProtocol {
     private static let semiBold = "Sora-SemiBold"
     
     var bold16 = UIFont(name: DemoMagellanStyle.bold, size: 16)!
-    var semiBold15 = UIFont(name: DemoMagellanStyle.semiBold, size: 15)!
     var semiBold14 = UIFont(name: DemoMagellanStyle.semiBold, size: 14)!
     var semiBold13 = UIFont(name: DemoMagellanStyle.semiBold, size: 13)!
     var semiBold12 = UIFont(name: DemoMagellanStyle.semiBold, size: 12)!
     var semiBold10 = UIFont(name: DemoMagellanStyle.semiBold, size: 10)!
-    var regular14 = UIFont(name: DemoMagellanStyle.regular, size: 14)!
     var regular13 = UIFont(name: DemoMagellanStyle.regular, size: 13)!
     var regular12 = UIFont(name: DemoMagellanStyle.regular, size: 12)!
     
@@ -49,5 +47,18 @@ final class DemoMagellanStyle: MagellanStyleProtocol {
     let sideOffset: CGFloat = 20
     let buttonSideSize: CGFloat = 40
     let roundedButtonSideSize: CGFloat = 32
+
+    // MARK: new properties
+
+    let bold20: UIFont = UIFont(name: DemoMagellanStyle.bold, size: 20)!
+    var semiBold15 = UIFont(name: DemoMagellanStyle.semiBold, size: 15)!
+    let regular15: UIFont = UIFont(name: DemoMagellanStyle.regular, size: 15)!
+    let regular14: UIFont = UIFont(name: DemoMagellanStyle.regular, size: 14)!
+
+    var backgroundColor: UIColor = .white
+    var darkColor: UIColor = UIColor(red: 0.176, green: 0.161, blue: 0.149, alpha: 1)
+    var grayColor: UIColor = UIColor(red: 0.631, green: 0.631, blue: 0.627, alpha: 1)
+    var dividerColor: UIColor = UIColor(red: 0.867, green: 0.867, blue: 0.867, alpha: 1)
+    var primaryColor: UIColor = UIColor(red: 0.816, green: 0.008, blue: 0.107, alpha: 1)
 }
 

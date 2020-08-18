@@ -1,103 +1,100 @@
 PODS:
-  - Crashlytics (3.12.0):
-    - Fabric (~> 1.9.0)
-  - Fabric (1.9.0)
-  - Firebase/Analytics (6.22.0):
+  - Crashlytics (3.14.0):
+    - Fabric (~> 1.10.2)
+  - Fabric (1.10.2)
+  - Firebase/Analytics (6.30.0):
     - Firebase/Core
-  - Firebase/Core (6.22.0):
+  - Firebase/Core (6.30.0):
     - Firebase/CoreOnly
-    - FirebaseAnalytics (= 6.4.1)
-  - Firebase/CoreOnly (6.22.0):
-    - FirebaseCore (= 6.6.6)
-  - FirebaseAnalytics (6.4.1):
-    - FirebaseCore (~> 6.6)
-    - FirebaseInstallations (~> 1.1)
-    - GoogleAppMeasurement (= 6.4.1)
-    - GoogleUtilities/AppDelegateSwizzler (~> 6.0)
-    - GoogleUtilities/MethodSwizzler (~> 6.0)
-    - GoogleUtilities/Network (~> 6.0)
-    - "GoogleUtilities/NSData+zlib (~> 6.0)"
-    - nanopb (= 0.3.9011)
-  - FirebaseCore (6.6.6):
-    - FirebaseCoreDiagnostics (~> 1.2)
-    - FirebaseCoreDiagnosticsInterop (~> 1.2)
-    - GoogleUtilities/Environment (~> 6.5)
-    - GoogleUtilities/Logger (~> 6.5)
-  - FirebaseCoreDiagnostics (1.2.3):
-    - FirebaseCoreDiagnosticsInterop (~> 1.2)
-    - GoogleDataTransportCCTSupport (~> 2.0)
-    - GoogleUtilities/Environment (~> 6.5)
-    - GoogleUtilities/Logger (~> 6.5)
-    - nanopb (~> 0.3.901)
-  - FirebaseCoreDiagnosticsInterop (1.2.0)
-  - FirebaseInstallations (1.1.1):
-    - FirebaseCore (~> 6.6)
-    - GoogleUtilities/UserDefaults (~> 6.5)
+    - FirebaseAnalytics (= 6.7.2)
+  - Firebase/CoreOnly (6.30.0):
+    - FirebaseCore (= 6.10.0)
+  - FirebaseAnalytics (6.7.2):
+    - FirebaseCore (~> 6.8)
+    - FirebaseInstallations (~> 1.4)
+    - GoogleAppMeasurement (= 6.7.2)
+    - GoogleUtilities/AppDelegateSwizzler (~> 6.7)
+    - GoogleUtilities/MethodSwizzler (~> 6.7)
+    - GoogleUtilities/Network (~> 6.7)
+    - "GoogleUtilities/NSData+zlib (~> 6.7)"
+    - nanopb (~> 1.30905.0)
+  - FirebaseCore (6.10.0):
+    - FirebaseCoreDiagnostics (~> 1.3)
+    - GoogleUtilities/Environment (~> 6.7)
+    - GoogleUtilities/Logger (~> 6.7)
+  - FirebaseCoreDiagnostics (1.5.0):
+    - GoogleDataTransport (~> 7.0)
+    - GoogleUtilities/Environment (~> 6.7)
+    - GoogleUtilities/Logger (~> 6.7)
+    - nanopb (~> 1.30905.0)
+  - FirebaseInstallations (1.6.0):
+    - FirebaseCore (~> 6.10)
+    - GoogleUtilities/Environment (~> 6.7)
+    - GoogleUtilities/UserDefaults (~> 6.7)
     - PromisesObjC (~> 1.2)
-  - Google-Maps-iOS-Utils (3.1.1):
-    - Google-Maps-iOS-Utils/Clustering (= 3.1.1)
-    - Google-Maps-iOS-Utils/Geometry (= 3.1.1)
-    - Google-Maps-iOS-Utils/Heatmap (= 3.1.1)
-    - Google-Maps-iOS-Utils/QuadTree (= 3.1.1)
+  - Google-Maps-iOS-Utils (3.2.1):
+    - Google-Maps-iOS-Utils/Clustering (= 3.2.1)
+    - Google-Maps-iOS-Utils/Geometry (= 3.2.1)
+    - Google-Maps-iOS-Utils/Heatmap (= 3.2.1)
+    - Google-Maps-iOS-Utils/QuadTree (= 3.2.1)
     - GoogleMaps
-  - Google-Maps-iOS-Utils/Clustering (3.1.1):
+  - Google-Maps-iOS-Utils/Clustering (3.2.1):
     - Google-Maps-iOS-Utils/QuadTree
     - GoogleMaps
-  - Google-Maps-iOS-Utils/Geometry (3.1.1):
+  - Google-Maps-iOS-Utils/Geometry (3.2.1):
     - GoogleMaps
-  - Google-Maps-iOS-Utils/Heatmap (3.1.1):
+  - Google-Maps-iOS-Utils/Heatmap (3.2.1):
     - Google-Maps-iOS-Utils/QuadTree
     - GoogleMaps
-  - Google-Maps-iOS-Utils/QuadTree (3.1.1):
+  - Google-Maps-iOS-Utils/QuadTree (3.2.1):
     - GoogleMaps
-  - GoogleAppMeasurement (6.4.1):
-    - GoogleUtilities/AppDelegateSwizzler (~> 6.0)
-    - GoogleUtilities/MethodSwizzler (~> 6.0)
-    - GoogleUtilities/Network (~> 6.0)
-    - "GoogleUtilities/NSData+zlib (~> 6.0)"
-    - nanopb (= 0.3.9011)
-  - GoogleDataTransport (5.1.1)
-  - GoogleDataTransportCCTSupport (2.0.3):
-    - GoogleDataTransport (~> 5.1)
-    - nanopb (~> 0.3.901)
-  - GoogleMaps (3.8.0):
-    - GoogleMaps/Maps (= 3.8.0)
-  - GoogleMaps/Base (3.8.0)
-  - GoogleMaps/Maps (3.8.0):
+  - GoogleAppMeasurement (6.7.2):
+    - GoogleUtilities/AppDelegateSwizzler (~> 6.7)
+    - GoogleUtilities/MethodSwizzler (~> 6.7)
+    - GoogleUtilities/Network (~> 6.7)
+    - "GoogleUtilities/NSData+zlib (~> 6.7)"
+    - nanopb (~> 1.30905.0)
+  - GoogleDataTransport (7.2.0):
+    - nanopb (~> 1.30905.0)
+  - GoogleMaps (3.9.0):
+    - GoogleMaps/Maps (= 3.9.0)
+  - GoogleMaps/Base (3.9.0)
+  - GoogleMaps/Maps (3.9.0):
     - GoogleMaps/Base
-  - GoogleUtilities/AppDelegateSwizzler (6.5.2):
+  - GoogleUtilities/AppDelegateSwizzler (6.7.2):
     - GoogleUtilities/Environment
     - GoogleUtilities/Logger
     - GoogleUtilities/Network
-  - GoogleUtilities/Environment (6.5.2)
-  - GoogleUtilities/Logger (6.5.2):
+  - GoogleUtilities/Environment (6.7.2):
+    - PromisesObjC (~> 1.2)
+  - GoogleUtilities/Logger (6.7.2):
     - GoogleUtilities/Environment
-  - GoogleUtilities/MethodSwizzler (6.5.2):
+  - GoogleUtilities/MethodSwizzler (6.7.2):
     - GoogleUtilities/Logger
-  - GoogleUtilities/Network (6.5.2):
+  - GoogleUtilities/Network (6.7.2):
     - GoogleUtilities/Logger
     - "GoogleUtilities/NSData+zlib"
     - GoogleUtilities/Reachability
-  - "GoogleUtilities/NSData+zlib (6.5.2)"
-  - GoogleUtilities/Reachability (6.5.2):
+  - "GoogleUtilities/NSData+zlib (6.7.2)"
+  - GoogleUtilities/Reachability (6.7.2):
     - GoogleUtilities/Logger
-  - GoogleUtilities/UserDefaults (6.5.2):
+  - GoogleUtilities/UserDefaults (6.7.2):
     - GoogleUtilities/Logger
   - libPhoneNumber-iOS (0.9.15)
   - Magellan (0.1.0):
     - Google-Maps-iOS-Utils
-    - GoogleMaps
+    - GoogleMaps (= 3.9.0)
     - RobinHood (~> 2.3.0)
     - SoraFoundation/DateProcessing (~> 0.7.0)
     - SoraFoundation/Localization (~> 0.7.0)
     - SoraFoundation/NotificationHandlers (~> 0.7.0)
     - SoraUI (~> 1.8.7)
     - SVProgressHUD
-  - nanopb (0.3.9011):
-    - nanopb/decode (= 0.3.9011)
-    - nanopb/encode (= 0.3.9011)
-  - nanopb/decode (0.3.9011)
-  - nanopb/encode (0.3.9011)
+  - nanopb (1.30905.0):
+    - nanopb/decode (= 1.30905.0)
+    - nanopb/encode (= 1.30905.0)
+  - nanopb/decode (1.30905.0)
+  - nanopb/encode (1.30905.0)
   - OHHTTPStubs/Core (9.0.0)
   - OHHTTPStubs/Default (9.0.0):
     - OHHTTPStubs/Core
@@ -111,7 +108,7 @@ PODS:
   - OHHTTPStubs/OHPathHelpers (9.0.0)
   - OHHTTPStubs/Swift (9.0.0):
     - OHHTTPStubs/Default
-  - PromisesObjC (1.2.8)
+  - PromisesObjC (1.2.10)
   - RobinHood (2.3.0)
   - SoraFoundation/DateProcessing (0.7.0):
     - SoraFoundation/Localization
@@ -119,34 +116,35 @@ PODS:
     - SoraKeystore (~> 0.1.5)
   - SoraFoundation/NotificationHandlers (0.7.0)
   - SoraKeystore (0.1.5)
-  - SoraUI (1.8.10):
-    - SoraUI/AdaptiveDesign (= 1.8.10)
-    - SoraUI/Animator (= 1.8.10)
-    - SoraUI/Camera (= 1.8.10)
-    - SoraUI/Controls (= 1.8.10)
-    - SoraUI/DetailsView (= 1.8.10)
-    - SoraUI/EmptyState (= 1.8.10)
-    - SoraUI/LoadingView (= 1.8.10)
-    - SoraUI/ModalInputPresentation (= 1.8.10)
-    - SoraUI/PageLoader (= 1.8.10)
-    - SoraUI/PinView (= 1.8.10)
-    - SoraUI/Skrull (= 1.8.10)
-  - SoraUI/AdaptiveDesign (1.8.10)
-  - SoraUI/Animator (1.8.10)
-  - SoraUI/Camera (1.8.10)
-  - SoraUI/Controls (1.8.10)
-  - SoraUI/DetailsView (1.8.10):
+  - SoraUI (1.8.11):
+    - SoraUI/AdaptiveDesign (= 1.8.11)
+    - SoraUI/Animator (= 1.8.11)
+    - SoraUI/Camera (= 1.8.11)
+    - SoraUI/Controls (= 1.8.11)
+    - SoraUI/DetailsView (= 1.8.11)
+    - SoraUI/EmptyState (= 1.8.11)
+    - SoraUI/LoadingView (= 1.8.11)
+    - SoraUI/ModalInputPresentation (= 1.8.11)
+    - SoraUI/PageLoader (= 1.8.11)
+    - SoraUI/PinView (= 1.8.11)
+    - SoraUI/Skrull (= 1.8.11)
+  - SoraUI/AdaptiveDesign (1.8.11)
+  - SoraUI/Animator (1.8.11)
+  - SoraUI/Camera (1.8.11)
+  - SoraUI/Controls (1.8.11)
+  - SoraUI/DetailsView (1.8.11):
     - SoraUI/Controls
-  - SoraUI/EmptyState (1.8.10):
+  - SoraUI/EmptyState (1.8.11):
     - SoraUI/Animator
-  - SoraUI/LoadingView (1.8.10):
+  - SoraUI/LoadingView (1.8.11):
     - SoraUI/Controls
-  - SoraUI/ModalInputPresentation (1.8.10):
+  - SoraUI/ModalInputPresentation (1.8.11):
     - SoraUI/Animator
-  - SoraUI/PageLoader (1.8.10)
-  - SoraUI/PinView (1.8.10):
     - SoraUI/Controls
-  - SoraUI/Skrull (1.8.10)
+  - SoraUI/PageLoader (1.8.11)
+  - SoraUI/PinView (1.8.11):
+    - SoraUI/Controls
+  - SoraUI/Skrull (1.8.11)
   - SVProgressHUD (2.2.5)
   - SwiftLint (0.31.0)
 
@@ -167,12 +165,10 @@ SPEC REPOS:
     - FirebaseAnalytics
     - FirebaseCore
     - FirebaseCoreDiagnostics
-    - FirebaseCoreDiagnosticsInterop
     - FirebaseInstallations
     - Google-Maps-iOS-Utils
     - GoogleAppMeasurement
     - GoogleDataTransport
-    - GoogleDataTransportCCTSupport
     - GoogleMaps
     - GoogleUtilities
     - libPhoneNumber-iOS
@@ -191,29 +187,27 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  Crashlytics: 07fb167b1694128c1c9a5a5cc319b0e9c3ca0933
-  Fabric: f988e33c97f08930a413e08123064d2e5f68d655
-  Firebase: 32f9520684e87c7af3f0704f7f88042626d6b536
-  FirebaseAnalytics: 83f822fd0d33a46f49f89b8c3ab16ab4d89df08a
-  FirebaseCore: 9aca0f1fffb405176ba15311a5621fcde4106fcf
-  FirebaseCoreDiagnostics: 13a6564cd6d5375066bbc8940cc1753af24497f3
-  FirebaseCoreDiagnosticsInterop: 296e2c5f5314500a850ad0b83e9e7c10b011a850
-  FirebaseInstallations: acb3216eb9784d3b1d2d2d635ff74fa892cc0c44
-  Google-Maps-iOS-Utils: f5d6ea55799d2ef47c113e1351b48e21cddd593c
-  GoogleAppMeasurement: e49be3954045b17d046f271b9cc1ec052bad9702
-  GoogleDataTransport: 6ffa4dd0b6d547f8d27b91bd92fa9e197a3f5f1f
-  GoogleDataTransportCCTSupport: 2d7e609f8c5af1a33d7d59053e6f8cba59365df5
-  GoogleMaps: 7c8d66d70e4e8c300f43a7219d8fdaad7b325a9a
-  GoogleUtilities: ad0f3b691c67909d03a3327cc205222ab8f42e0e
+  Crashlytics: 540b7e5f5da5a042647227a5e3ac51d85eed06df
+  Fabric: 706c8b8098fff96c33c0db69cbf81f9c551d0d74
+  Firebase: 210f41ca352067d83b1ba4fd2e7fb49a0c017397
+  FirebaseAnalytics: a299a86ef70fcc6aa011418bc65a7e101fb9636c
+  FirebaseCore: 9a41e2de78fef10f63cee30ab10e2945266bc1fc
+  FirebaseCoreDiagnostics: 7535fe695737f8c5b350584292a70b7f8ff0357b
+  FirebaseInstallations: 45f9d44d3a8d6f780fa337ee8987dad87210fcbc
+  Google-Maps-iOS-Utils: 1f1d9acb04f2211bcfd65659902eef7c9ba26028
+  GoogleAppMeasurement: 3def7652b1f5b5a576178dc332e2a36a260fbef6
+  GoogleDataTransport: 672fb0ce96fe7f7f31d43672fca62ad2c9c86f7b
+  GoogleMaps: 4b5346bddfe6911bb89155d43c903020170523ac
+  GoogleUtilities: 7f2f5a07f888cdb145101d6042bc4422f57e70b3
   libPhoneNumber-iOS: 0a32a9525cf8744fe02c5206eb30d571e38f7d75
-  Magellan: 6eace5668f4b063bd07eefb2f589606cabdfb9dc
-  nanopb: 18003b5e52dab79db540fe93fe9579f399bd1ccd
+  Magellan: 5d910f07076b5ccf54b5b47ba97730e66d54687e
+  nanopb: c43f40fadfe79e8b8db116583945847910cbabc9
   OHHTTPStubs: cb29d2a9d09a828ecb93349a2b0c64f99e0db89f
-  PromisesObjC: c119f3cd559f50b7ae681fa59dc1acd19173b7e6
+  PromisesObjC: b14b1c6b68e306650688599de8a45e49fae81151
   RobinHood: 73a108285ad4149c86d12839bbf209a296cfa542
   SoraFoundation: adeb5d9756236db69c76712e0e57df9bcc324c59
   SoraKeystore: 408a26aafda780fc3005b20ab336791832b5419e
-  SoraUI: 236036ed20c4cbe8d379aa3212db4ae6a15a577c
+  SoraUI: 842707652cba50c3ed19672bcd72106892a0ff37
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
   SwiftLint: 7a0227733d786395817373b2d0ca799fd0093ff3
 

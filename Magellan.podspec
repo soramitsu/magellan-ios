@@ -26,7 +26,7 @@ Library allow fast integration of Soramitsu Places.
   s.dependency 'SoraFoundation/DateProcessing', '~> 0.7.0'
   s.dependency 'SoraFoundation/NotificationHandlers', '~> 0.7.0'
   s.dependency 'SoraFoundation/Localization', '~> 0.7.0'
-  s.dependency 'GoogleMaps'
+  s.dependency 'GoogleMaps', '= 3.9.0'
   s.dependency 'Google-Maps-iOS-Utils'
   s.dependency 'SVProgressHUD'
 

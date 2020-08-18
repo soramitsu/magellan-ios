@@ -49,12 +49,13 @@ final class LocationDetailPresenterTests: XCTestCase {
         
         // act
         presenter.viewDidLoad()
+        let viewModel = presenter.items.first?.items.first as? LocationHeaderViewModel
         
         // assert
-        XCTAssertEqual(presenter.title, "name")
-        XCTAssertEqual(presenter.category, "type · addr")
-        XCTAssertEqual(presenter.distance, "")
-        XCTAssertEqual(presenter.workingStatus, "Open")
-        XCTAssertEqual(presenter.items.count, 4)
+        XCTAssertEqual(viewModel?.title, "name")
+        XCTAssertEqual(viewModel?.comment, "type · addr")
+        XCTAssertEqual(viewModel?.status, nil)
+        XCTAssertEqual(viewModel?.subStatus, "Open")
+        XCTAssertEqual(presenter.items.count, 2)
     }
 }

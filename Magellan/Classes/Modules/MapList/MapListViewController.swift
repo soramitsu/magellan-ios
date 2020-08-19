@@ -73,7 +73,7 @@ final class MapListViewController: UIViewController {
         headerView.addSubview(searchContainer)
         
         searchField.addTarget(self, action: #selector(search(_:)), for: .editingChanged)
-        searchField.textColor = style.grayColor
+        searchField.textColor = style.darkColor
         searchField.font = style.regular14
         searchField.textAlignment = .left
         searchField.clearButtonMode = .whileEditing
@@ -119,10 +119,10 @@ final class MapListViewController: UIViewController {
         searchField.topAnchor.constraint(equalTo: searchContainer.topAnchor, constant: style.topOffset).isActive = true
         searchField.bottomAnchor.constraint(equalTo: searchContainer.bottomAnchor, constant: -style.topOffset).isActive = true
         searchField.leftAnchor.constraint(equalTo: searchContainer.leftAnchor, constant: style.doubleOffset).isActive = true
-        searchField.rightAnchor.constraint(equalTo: activityIndicator.leftAnchor, constant: -style.sideOffset / 4).isActive = true
+        searchField.rightAnchor.constraint(equalTo: searchContainer.rightAnchor, constant: -style.offset).isActive = true
         
         activityIndicator.translatesAutoresizingMaskIntoConstraints = false
-        activityIndicator.rightAnchor.constraint(equalTo: searchContainer.rightAnchor, constant: -style.sideOffset / 2).isActive = true
+        activityIndicator.rightAnchor.constraint(equalTo: searchField.rightAnchor, constant: -style.offset).isActive = true
         activityIndicator.centerYAnchor.constraint(equalTo: searchField.centerYAnchor).isActive = true
         
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -202,7 +202,7 @@ extension MapListViewController: UITextFieldDelegate {
 extension MapListViewController: MapListViewProtocol {
     
     func set(loading: Bool) {
-        if loading {
+        if loading && !searchField.isEditing {
             activityIndicator.startAnimating()
         } else {
             activityIndicator.stopAnimating()

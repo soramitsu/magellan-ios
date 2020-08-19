@@ -55,7 +55,7 @@ final class MapPresenter: MapPresenterProtocol {
             }
             if places.isEmpty
                 && listModuleState == .normal {
-                coordinator?.setMapList(state: .min, animated: true)
+                coordinator?.setMapList(state: .compact, animated: true)
             }
             if oldValue.isEmpty
                 && !places.isEmpty

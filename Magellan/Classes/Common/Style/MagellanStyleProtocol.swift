@@ -63,6 +63,9 @@ public protocol MagellanStyleProtocol {
     /// Default value: #D0021B
     var primaryColor: UIColor { get }
 
+    /// Default value #FAE6E8
+    var categoryLabelBackground: UIColor { get }
+
 }
 
 final class DefaultMagellanStyle: MagellanStyleProtocol {
@@ -108,4 +111,5 @@ final class DefaultMagellanStyle: MagellanStyleProtocol {
     var grayColor: UIColor = UIColor(red: 0.631, green: 0.631, blue: 0.627, alpha: 1)
     var dividerColor: UIColor = UIColor(red: 0.867, green: 0.867, blue: 0.867, alpha: 1)
     var primaryColor: UIColor = UIColor(red: 0.816, green: 0.008, blue: 0.107, alpha: 1)
+    var categoryLabelBackground: UIColor = UIColor(red: 0.98, green: 0.902, blue: 0.91, alpha: 1)
 }

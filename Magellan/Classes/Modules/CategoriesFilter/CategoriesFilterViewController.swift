@@ -12,6 +12,7 @@ final class CategoriesFilterViewController: UIViewController {
     private struct Constants {
         static let backgroundAlpha: CGFloat = 0.4
         static let backgroundColor: UIColor = .black
+        static let tableHeight: CGFloat = UIDevice.isSmallPhone ? 400 : 562
     }
     
     let presenter: CategoriesFilterPresenterProtocol
@@ -27,9 +28,10 @@ final class CategoriesFilterViewController: UIViewController {
     private lazy var cellStyle: CategoryFilterTableCell.Style = {
         return CategoryFilterTableCell.Style(titleFont: self.style.semiBold14,
                                              titleColor: self.style.darkTextColor,
-                                             countFont: self.style.semiBold14,
-                                            countColor: self.style.disabledGrayColor,
-                                            selectedImage: UIImage(named: "checkmark", in: Bundle.frameworkBundle, compatibleWith: nil)!)
+                                             selectedImage: UIImage(named: "filter_checkmark",
+                                                                    in: Bundle.frameworkBundle,
+                                                                    compatibleWith: nil)!,
+                                             logoBackground: self.style.categoryLabelBackground)
     }()
     
     init(presenter: CategoriesFilterPresenterProtocol, style: MagellanStyleProtocol) {
@@ -123,10 +125,10 @@ final class CategoriesFilterViewController: UIViewController {
         separatorView.leftAnchor.constraint(equalTo: headerView.leftAnchor).isActive = true
         separatorView.rightAnchor.constraint(equalTo: headerView.rightAnchor).isActive = true
         separatorView.heightAnchor.constraint(equalToConstant: 1).isActive = true
-        
+
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.topAnchor.constraint(equalTo: headerView.bottomAnchor).isActive = true
-        tableView.heightAnchor.constraint(equalToConstant: 400).isActive = true
+        tableView.heightAnchor.constraint(equalToConstant: Constants.tableHeight).isActive = true
         tableView.leftAnchor.constraint(equalTo: containerView.leftAnchor).isActive = true
         tableView.rightAnchor.constraint(equalTo: containerView.rightAnchor).isActive = true
         tableView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor).isActive = true
@@ -173,9 +175,6 @@ extension CategoriesFilterViewController: UITableViewDataSource {
 }
 
 extension CategoriesFilterViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 50
-    }
     
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
         presenter.deselect(with: indexPath.row)
@@ -194,6 +193,10 @@ extension CategoriesFilterViewController: CategoriesFilterViewProtocol {
     
     func set(resetTitle: String) {
         resetButton.setTitle(resetTitle, for: .normal)
+    }
+
+    func set(resetEnabled: Bool) {
+        resetButton.isEnabled = resetEnabled
     }
     
     func reload() {

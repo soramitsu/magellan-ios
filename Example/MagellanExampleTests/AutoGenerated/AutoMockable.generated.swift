@@ -110,6 +110,21 @@ class CategoriesFilterViewProtocolMock: CategoriesFilterViewProtocol {
         setResetTitleClosure?(resetTitle)
     }
 
+    //MARK: - set
+
+    var setResetEnabledCallsCount = 0
+    var setResetEnabledCalled: Bool {
+        return setResetEnabledCallsCount > 0
+    }
+    var setResetEnabledReceivedResetEnabled: Bool?
+    var setResetEnabledClosure: ((Bool) -> Void)?
+
+    func set(resetEnabled: Bool) {
+        setResetEnabledCallsCount += 1
+        setResetEnabledReceivedResetEnabled = resetEnabled
+        setResetEnabledClosure?(resetEnabled)
+    }
+
     //MARK: - reload
 
     var reloadCallsCount = 0

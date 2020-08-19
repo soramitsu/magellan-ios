@@ -31,6 +31,7 @@ protocol CategoriesFilterViewProtocol: ControllerBackedProtocol, AutoMockable {
     
     func set(title: String)
     func set(resetTitle: String)
+    func set(resetEnabled: Bool)
     func reload()
 }
 

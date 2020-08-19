@@ -27,11 +27,9 @@ final class MapListViewController: UIViewController {
     
     private lazy var placeCellStyle: PlaceCell.Style = {
         PlaceCell.Style(nameFont: style.semiBold15,
-                        nameColor: style.headerColor,
-                        categoryFont: style.regular12,
-                        categoryTextColor: style.descriptionTextColor,
-                        distanceFont: style.regular12,
-                        distanceColor: style.grayTextColor)
+                        nameColor: style.darkColor,
+                        categoryFont: style.regular14,
+                        categoryTextColor: style.grayColor)
     }()
     
     init(presenter: MapListPresenterProtocol, style: MagellanStyleProtocol) {
@@ -94,7 +92,7 @@ final class MapListViewController: UIViewController {
         tableView.backgroundColor = style.backgroundColor
         tableView.dataSource = self as UITableViewDataSource
         tableView.delegate = self as UITableViewDelegate
-        
+        tableView.separatorStyle = .none
         tableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 1))
         view.addSubview(tableView)
     }
@@ -166,10 +164,6 @@ extension MapListViewController: UITableViewDataSource {
         cell.style = placeCellStyle
         
         return cell
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 110
     }
  
 }

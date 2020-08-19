@@ -41,12 +41,11 @@ protocol MapCoordinatorProtocol: AnyObject, AutoMockable {
     func hideDetailsIfPresented()
     func showDetails(for placeInfo: PlaceInfo)
     func showCategoriesFilter(categories: [PlaceCategory], filter: Set<PlaceCategory>, output: CategoriesFilterOutputProtocol?)
-    func setMapList(state: DraggableState, animated: Bool)
+    
 }
 
 protocol MapOutputProtocol: AnyObject {
     func didUpdate(places: [PlaceViewModel])
-    func loadingComplete(with error: Error?, retryClosure: @escaping () -> Void)
     func loading(_ show: Bool)
 }
 

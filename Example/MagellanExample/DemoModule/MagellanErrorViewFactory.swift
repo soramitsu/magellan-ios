@@ -52,13 +52,3 @@ final class MagellanErrorView: UIView {
         retryClosure()
     }
 }
-
-
-class MagellanErrorViewFactory: ErrorViewFactoryProtocol {
-    
-    func errorView(with retryClosure: @escaping () -> Void) -> UIView {
-        return MagellanErrorView(retryClosure: retryClosure)
-    }
-    
-    
-}

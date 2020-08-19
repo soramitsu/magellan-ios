@@ -7,7 +7,6 @@ protocol ResolverProtocol {
     
     var style: MagellanStyleProtocol { get }
     var phoneFormatter: PhoneFormatterProtocol? { get set }
-    var errorViewFactory: ErrorViewFactoryProtocol? { get set }
     
     var distanceFilter: Double { get set }
     var defaultCoordinate: Coordinates { get set }
@@ -31,7 +30,6 @@ final class Resolver: ResolverProtocol {
     
     var style: MagellanStyleProtocol
     var phoneFormatter: PhoneFormatterProtocol?
-    var errorViewFactory: ErrorViewFactoryProtocol?
     
     var distanceFilter: Double = 50
     var defaultCoordinate: Coordinates = Coordinates(lat: 11.5796669, lon: 104.7501013)

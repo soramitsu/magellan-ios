@@ -9,11 +9,14 @@ import UIKit
 
 
 final class PlaceCell: UITableViewCell {
+
+    private struct Constants {
+        static let offset: CGFloat = 8
+        static let doubleOffset: CGFloat = 16
+    }
     
     private let nameLabel = UILabel()
     private let categoryLabel = UILabel()
-    private let timeLabel = UILabel()
-    private let distanceLabel = UILabel()
     
     var place: PlaceViewModel? {
         didSet {
@@ -26,21 +29,15 @@ final class PlaceCell: UITableViewCell {
         let nameColor: UIColor
         let categoryFont: UIFont
         let categoryTextColor: UIColor
-        let distanceFont: UIFont
-        let distanceColor: UIColor
         
         init(nameFont: UIFont,
              nameColor: UIColor,
              categoryFont: UIFont,
-             categoryTextColor: UIColor,
-             distanceFont: UIFont,
-             distanceColor: UIColor) {
+             categoryTextColor: UIColor) {
             self.nameFont = nameFont
             self.nameColor = nameColor
             self.categoryFont = categoryFont
             self.categoryTextColor = categoryTextColor
-            self.distanceFont = distanceFont
-            self.distanceColor = distanceColor
         }
     }
     
@@ -67,15 +64,8 @@ final class PlaceCell: UITableViewCell {
     }
     
     private func configureViews() {
-        nameLabel.textColor = .black
-        nameLabel.textAlignment = .center
-        nameLabel.numberOfLines = 0
         contentView.addSubview(nameLabel)
-        
         contentView.addSubview(categoryLabel)
-                
-        distanceLabel.textAlignment = .right
-        contentView.addSubview(distanceLabel)
     }
     
     private func applyStyle() {
@@ -86,22 +76,24 @@ final class PlaceCell: UITableViewCell {
         nameLabel.textColor = style.nameColor
         categoryLabel.textColor = style.categoryTextColor
         categoryLabel.font = style.categoryFont
-        distanceLabel.textColor = style.distanceColor
-        distanceLabel.font = style.distanceFont
     }
     
     private func layoutViews() {
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
-        nameLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 20).isActive = true
-        nameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 20).isActive = true
+        nameLabel.topAnchor.constraint(equalTo: contentView.topAnchor,
+                                       constant: Constants.doubleOffset).isActive = true
+        nameLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor,
+                                        constant: Constants.doubleOffset).isActive = true
+        nameLabel.topAnchor.constraint(equalTo: contentView.topAnchor,
+                                       constant: Constants.doubleOffset).isActive = true
         
         categoryLabel.translatesAutoresizingMaskIntoConstraints = false
+        categoryLabel.rightAnchor.constraint(equalTo: nameLabel.rightAnchor).isActive = true
         categoryLabel.leftAnchor.constraint(equalTo: nameLabel.leftAnchor).isActive = true
-        categoryLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 8).isActive = true
-        
-        distanceLabel.translatesAutoresizingMaskIntoConstraints = false
-        distanceLabel.leftAnchor.constraint(equalTo: nameLabel.leftAnchor).isActive = true
-        distanceLabel.topAnchor.constraint(equalTo: categoryLabel.bottomAnchor, constant: 8).isActive = true
+        categoryLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor,
+                                           constant: Constants.offset).isActive = true
+        categoryLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor,
+                                              constant: -Constants.doubleOffset).isActive = true
     }
     
     private func configureContent() {
@@ -111,11 +103,6 @@ final class PlaceCell: UITableViewCell {
         
         nameLabel.text = place.name
         categoryLabel.text = place.category
-
-        
-        if place.distance != 0.0 {
-            distanceLabel.text = String(format: "%.2f km", place.distance)
-        }
     }
     
 }

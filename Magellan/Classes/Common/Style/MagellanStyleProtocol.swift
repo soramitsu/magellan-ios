@@ -98,7 +98,7 @@ final class DefaultMagellanStyle: MagellanStyleProtocol {
     let topOffset: CGFloat = 10
     let sideOffset: CGFloat = 20
     let buttonSideSize: CGFloat = 40
-    let roundedButtonSideSize: CGFloat = 32
+    let roundedButtonSideSize: CGFloat = 40
 
     // MARK: new properties
 

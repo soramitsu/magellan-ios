@@ -52,6 +52,8 @@ final class MapViewController: UIViewController {
     
     private var myPlaceButton: RoundedButton!
     private var filterButton: RoundedButton!
+    private var zoomInButton: RoundedButton!
+    private var zoomOutButton: RoundedButton!
     private var positionButton = UIButton()
     private var state: State = .normal
     private var placeMarkers: [GMSMarker] = []
@@ -86,6 +88,7 @@ final class MapViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupButtons()
+        setupConstraints()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -101,8 +104,6 @@ final class MapViewController: UIViewController {
         if preferredContentHeight != 0 {
             return
         }
-        
-        myPlaceButton.frame.origin.x = view.frame.width - myPlaceButton.bounds.size.width - 10
         
         var heightDiff: CGFloat = 0.0
         if let origin = view.superview?.convert(view.frame.origin, to: nil) {
@@ -124,9 +125,12 @@ final class MapViewController: UIViewController {
     
     private func setupButtons() {
         let side = style.roundedButtonSideSize
+        let viewHeight = view.frame.height
         
-        guard let filterImage = UIImage(named: "filter", in: Bundle.frameworkBundle, compatibleWith: nil),
-            let myPlaceImage = UIImage(named: "gps_locate_me", in: Bundle.frameworkBundle, compatibleWith: nil) else {
+        guard let filterImage = UIImage(named: "map_filter", in: Bundle.frameworkBundle, compatibleWith: nil),
+            let myPlaceImage = UIImage(named: "map_location", in: Bundle.frameworkBundle, compatibleWith: nil),
+            let plusImage = UIImage(named: "map_plus", in: Bundle.frameworkBundle, compatibleWith: nil),
+            let minusImage = UIImage(named: "map_minus", in: Bundle.frameworkBundle, compatibleWith: nil) else {
                 fatalError("Can not load images from fraimwork bundle")
         }
         
@@ -139,20 +143,67 @@ final class MapViewController: UIViewController {
             item.changesContentOpacityWhenHighlighted = true
         }
         
-        filterButton = RoundedButton(frame: CGRect(x: 10, y: 0, width: 32, height: 32))
+        filterButton = RoundedButton(frame: CGRect(x: 0, y: 0, width: side, height: side))
         filterButton.imageWithTitleView?.iconImage = filterImage
         filterButton.isHidden = true
-        setupClosure(filterButton)
-        
-        view.addSubview(filterButton)
         filterButton.addTarget(nil, action: #selector(tapFilter), for: .touchUpInside)
-        
-        myPlaceButton = RoundedButton(frame: CGRect(x: view.frame.width - 10, y: 0, width: 32, height: 32))
+        setupClosure(filterButton)
+        view.addSubview(filterButton)
+
+        myPlaceButton = RoundedButton(frame: CGRect(x: 0, y: 0, width: side, height: side))
         myPlaceButton.imageWithTitleView?.iconImage = myPlaceImage
-        setupClosure(myPlaceButton)
-        
-        view.addSubview(myPlaceButton)
         myPlaceButton.addTarget(nil, action: #selector(showMyPosition), for: .touchUpInside)
+        setupClosure(myPlaceButton)
+        view.addSubview(myPlaceButton)
+
+        zoomInButton = RoundedButton(frame: CGRect(x: 0, y: 0, width: side, height: side))
+        zoomInButton.imageWithTitleView?.iconImage = plusImage
+        zoomInButton.addTarget(self, action: #selector(zoomInHandler(sender:)), for: .touchUpInside)
+        setupClosure(zoomInButton)
+        view.addSubview(zoomInButton)
+
+        zoomOutButton = RoundedButton(frame: CGRect(x: 0, y: 0, width: side, height: side))
+        zoomOutButton.imageWithTitleView?.iconImage = minusImage
+        zoomOutButton.addTarget(self, action: #selector(zoomOutHandler(sender:)), for: .touchUpInside)
+        setupClosure(zoomOutButton)
+        view.addSubview(zoomOutButton)
+    }
+
+    private func setupConstraints() {
+        filterButton.translatesAutoresizingMaskIntoConstraints = false
+        filterButton.leftAnchor.constraint(equalTo: view.leftAnchor,
+                                           constant: style.doubleOffset).isActive = true
+
+        if #available(iOS 11.0, *) {
+            filterButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor,
+                                                 constant: -118).isActive = true
+        } else {
+            filterButton.bottomAnchor.constraint(equalTo: view.bottomAnchor,
+                                                 constant: -118).isActive = true
+        }
+
+        myPlaceButton.translatesAutoresizingMaskIntoConstraints = false
+        myPlaceButton.rightAnchor.constraint(equalTo: view.rightAnchor,
+                                             constant: -style.doubleOffset).isActive = true
+        myPlaceButton.centerYAnchor.constraint(equalTo: filterButton.centerYAnchor).isActive = true
+
+        zoomInButton.translatesAutoresizingMaskIntoConstraints = false
+        zoomInButton.centerXAnchor.constraint(equalTo: myPlaceButton.centerXAnchor).isActive = true
+        zoomInButton.bottomAnchor.constraint(equalTo: zoomOutButton.topAnchor, constant: -12).isActive = true
+
+        zoomOutButton.translatesAutoresizingMaskIntoConstraints = false
+        zoomOutButton.centerXAnchor.constraint(equalTo: myPlaceButton.centerXAnchor).isActive = true
+        zoomOutButton.bottomAnchor.constraint(equalTo: myPlaceButton.topAnchor, constant: -40).isActive = true
+    }
+
+    @objc
+    private func zoomInHandler(sender: Any) {
+        mapView.animate(toZoom: mapView.camera.zoom + 1)
+    }
+
+    @objc
+    private func zoomOutHandler(sender: Any) {
+        mapView.animate(toZoom: mapView.camera.zoom - 1)
     }
     
     @objc
@@ -287,20 +338,5 @@ extension MapViewController: Containable {
     
     func setContentInsets(_ contentInsets: UIEdgeInsets, animated: Bool) {}
     
-    func draggable(_ draggable: Draggable, didChange frame: CGRect) {
-        let newYOrigin = frame.origin.y - filterButton.bounds.height - 20
-        if newYOrigin < view.center.y / 2
-        || filterButton.frame.origin.y == newYOrigin {
-            return
-        }
-        filterButton.frame = rect(for: filterButton, with: newYOrigin)
-        myPlaceButton.frame = rect(for: myPlaceButton, with: newYOrigin)
-    }
-    
-    private func rect(for item: UIView, with yOrigin: CGFloat) -> CGRect {
-        return CGRect(x: item.frame.origin.x,
-                      y: yOrigin,
-                      width: item.bounds.width,
-                      height: item.bounds.height)
-    }
+    func draggable(_ draggable: Draggable, didChange frame: CGRect) { }
 }

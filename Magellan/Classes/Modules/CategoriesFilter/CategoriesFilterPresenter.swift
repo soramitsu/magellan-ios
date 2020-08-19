@@ -44,6 +44,7 @@ extension CategoriesFilterPresenter: CategoriesFilterPresenterProtocol {
     func viewDidLoad() {
         view?.set(title: localizator.filter)
         view?.set(resetTitle: localizator.reset)
+        view?.set(resetEnabled: filter.count != categories.count)
     }
     
     func dismiss() {
@@ -60,14 +61,17 @@ extension CategoriesFilterPresenter: CategoriesFilterPresenterProtocol {
     
     func select(with index: Int) {
         filter.insert(categories[index])
+        view?.set(resetEnabled: filter.count != categories.count)
     }
     
     func deselect(with index: Int) {
         filter.remove(categories[index])
+        view?.set(resetEnabled: true)
     }
     
     func resetFilter() {
         filter = Set<PlaceCategory>(categories)
+        view?.set(resetEnabled: false)
         view?.reload()
     }
     

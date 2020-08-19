@@ -220,21 +220,12 @@ class ContainerViewController: UIViewController, AdaptiveDesignable {
         let preferredContentHeight = content?.preferredContentHeight ?? 0.0
 
         switch state {
-        case .compact:
-            let preferredContentInsets = createPreferredContentInsets(for: preferredContentHeight)
-
-            let compactOriginY = containerSize.height - preferredContentInsets.bottom - containerOrigin.y
-            let compactHeight = preferredContentInsets.bottom
-            return CGRect(x: 0.0,
-                          y: compactOriginY,
-                          width: containerSize.width,
-                          height: compactHeight)
         case .full:
             return CGRect(x: 0.0,
                           y: MapConstants.draggableOffset + inheritedInsets.top,
                           width: containerSize.width,
                           height: containerSize.height - MapConstants.draggableOffset - containerOrigin.y)
-        case .min:
+        case .compact:
             let height: CGFloat = 67 + inheritedInsets.bottom
             return CGRect(x: 0.0,
                           y: containerSize.height - height,
@@ -274,11 +265,11 @@ class ContainerViewController: UIViewController, AdaptiveDesignable {
             let translation = newY - gestureStartOriginY
             gestureStartOriginY = newY
 
-            let minFrame = createDraggableFrame(for: .min)
+            let compactFrame = createDraggableFrame(for: .compact)
             let fullFrame = createDraggableFrame(for: .full)
 
             var newOriginY = draggable.draggableView.frame.origin.y + translation
-            newOriginY = min(minFrame.minY, newOriginY)
+            newOriginY = min(compactFrame.minY, newOriginY)
             newOriginY = max(fullFrame.minY, newOriginY)
 
             if draggable.canDrag(from: draggableState), draggable.draggableView.frame.origin.y != newOriginY {
@@ -286,54 +277,44 @@ class ContainerViewController: UIViewController, AdaptiveDesignable {
                 frame.origin.y = newOriginY
                 frame.size.height = containerSize.height - newOriginY - containerOrigin.y
 
-                updateAnimationProgress(draggableFrame: frame,
-                                        direction: gestureBegunOriginY - gestureStartOriginY > 0 ? .up : .down)
+                updateAnimationProgress(draggableFrame: frame)
             }
 
         case .ended, .cancelled:
             let velocity = recognizer.velocity(in: view)
-            completeStateTransitionAnimation(with: velocity,
-                                             direction: gestureBegunOriginY - gestureStartOriginY > 0 ? .up : .down)
+            completeStateTransitionAnimation(with: velocity)
         default:
             break
         }
     }
 
-    private func updateAnimationProgress(draggableFrame: CGRect, direction: DragDirection) {
+    private func updateAnimationProgress(draggableFrame: CGRect) {
         if let draggable = draggable {
-            switch (draggableState, direction) {
-            case (.compact, .up):
+            switch draggableState {
+            case .compact:
                 shadowView.alpha = CGFloat(draggableProgress) * Constants.draggableMaxShadowAlpha
-            case (.full, .down):
+            case .full:
                 shadowView.alpha = CGFloat(1.0 - draggableProgress) * Constants.draggableMaxShadowAlpha
-            default:
-                shadowView.alpha = 0
             }
             
 
             draggable.animate(progress: draggableProgress,
                               from: draggableState,
-                              to: draggableState.other(with: direction),
+                              to: draggableState.other,
                               finalFrame: draggableFrame)
         }
     }
 
-    private func completeStateTransitionAnimation(with velocity: CGPoint, direction: DragDirection) {
+    private func completeStateTransitionAnimation(with velocity: CGPoint) {
         guard let draggable = draggable else {
             return
         }
         var targetState: DraggableState
-        switch (draggableState, direction) {
-        case (.min, .up):
-            targetState = velocity.y < 0 ? .compact : .min
-        case (.compact, .down):
-            targetState = velocity.y < 0 ? .compact : .min
-        case (.compact, .up):
+        switch draggableState {
+        case .compact:
+            targetState = velocity.y > 0 ? .compact : .full
+        case .full:
             targetState = velocity.y < 0 ? .full : .compact
-        case (.full, .down):
-            targetState = velocity.y < 0 ? .full : .compact
-        default:
-            targetState = draggableState
         }
         
         let duration = Constants.draggableChangeDuration
@@ -356,7 +337,7 @@ class ContainerViewController: UIViewController, AdaptiveDesignable {
                 self.content?.draggable(draggable, didChange: frame)
 
                 switch state {
-                case .compact, .min:
+                case .compact:
                     self.shadowView.alpha = 0.0
                 case .full:
                     self.shadowView.alpha = Constants.draggableMaxShadowAlpha
@@ -403,8 +384,6 @@ extension ContainerViewController: DraggableDelegate {
                     shadowView.removeFromSuperview()
                 case .full:
                     setupShadowView()
-                case .min:
-                    break
                 }
             }
         }

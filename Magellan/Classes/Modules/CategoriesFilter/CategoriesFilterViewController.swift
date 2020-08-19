@@ -52,14 +52,14 @@ final class CategoriesFilterViewController: UIViewController {
     
     private func configureUI() {
         containerView = UIView()
-        containerView.backgroundColor = style.mainBGColor
+        containerView.backgroundColor = style.backgroundColor
         headerView = UIView()
         
         headerView.layer.cornerRadius = style.topOffset
-        headerView.backgroundColor = style.mainBGColor
+        headerView.backgroundColor = style.backgroundColor
         
         panView = UIView()
-        panView.backgroundColor = style.panBGColor
+        panView.backgroundColor = style.dividerColor
         panView.layer.cornerRadius = MapConstants.panHeight / 2
         headerView.addSubview(panView)
         
@@ -69,8 +69,8 @@ final class CategoriesFilterViewController: UIViewController {
         headerView.addSubview(titleLabel)
         
         resetButton = UIButton(type: .custom)
-        resetButton.setTitleColor(style.firstColor, for: .normal)
-        resetButton.setTitleColor(style.firstColor.withAlphaComponent(0.3), for: .disabled)
+        resetButton.setTitleColor(style.primaryColor, for: .normal)
+        resetButton.setTitleColor(style.primaryColor.withAlphaComponent(0.3), for: .disabled)
         resetButton.titleLabel?.font = style.regular14
         resetButton.addTarget(self, action: #selector(reset), for: .touchUpInside)
         headerView.addSubview(resetButton)
@@ -82,7 +82,7 @@ final class CategoriesFilterViewController: UIViewController {
         tableView.showsVerticalScrollIndicator = false
         tableView.dataSource = self
         tableView.delegate = self
-        tableView.backgroundColor = style.mainBGColor
+        tableView.backgroundColor = style.backgroundColor
         tableView.separatorStyle = .none
         tableView.allowsMultipleSelection = true
         view.addSubview(tableView)

@@ -63,10 +63,10 @@ final class MapListViewController: UIViewController {
     }
     
     fileprivate func configureHeader() {
-        headerView.backgroundColor = style.mainBGColor
+        headerView.backgroundColor = style.backgroundColor
         view.addSubview(headerView)
         
-        panView.backgroundColor = style.panBGColor
+        panView.backgroundColor = style.dividerColor
         panView.layer.cornerRadius = MapConstants.panHeight / 2
         headerView.addSubview(panView)
         
@@ -91,10 +91,10 @@ final class MapListViewController: UIViewController {
         configureHeader()
         
         tableView.register(PlaceCell.self, forCellReuseIdentifier: PlaceCell.reuseIdentifier)
-        tableView.backgroundColor = style.mainBGColor
+        tableView.backgroundColor = style.backgroundColor
         tableView.dataSource = self as UITableViewDataSource
         tableView.delegate = self as UITableViewDelegate
-        tableView.separatorInset = style.tableSeparatorInsets
+        
         tableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 1))
         view.addSubview(tableView)
     }

@@ -31,18 +31,13 @@ final class DemoMagellanStyle: MagellanStyleProtocol {
     var mediumGrayTextColor: UIColor = UIColor(red: 121/255, green: 121/255, blue: 121/255, alpha: 1)
     
     var sectionsDeviderBGColor: UIColor = UIColor(red: 245/255, green: 245/255, blue: 245/255, alpha: 1)
-    var mainBGColor: UIColor = .white
-    var panBGColor: UIColor = UIColor(red: 221/255, green: 221/255, blue: 221/255, alpha: 1)
-    
-    var firstColor: UIColor = UIColor(red: 208/255, green: 2/255, blue: 27/255, alpha: 1)
-    var secondColor: UIColor = UIColor(red: 229/255, green: 121/255, blue: 1/255, alpha: 1)
     
 
     let tableSeparatorInsets: UIEdgeInsets = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
     let panWidth: CGFloat = 35
-    let smallOffset: CGFloat = 5
-    let offset: CGFloat = 7
-    let doubleOffset: CGFloat = 15
+    let smallOffset: CGFloat = 4
+    let offset: CGFloat = 8
+    let doubleOffset: CGFloat = 16
     let topOffset: CGFloat = 10
     let sideOffset: CGFloat = 20
     let buttonSideSize: CGFloat = 40

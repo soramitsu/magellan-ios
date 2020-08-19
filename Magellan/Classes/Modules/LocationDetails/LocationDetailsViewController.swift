@@ -45,10 +45,10 @@ final class LocationDetailsViewController: UIViewController, LocationDetailsView
         view.layer.masksToBounds = true
         view.layer.cornerRadius = style.topOffset
 
-        headerView.backgroundColor = style.mainBGColor
+        headerView.backgroundColor = style.backgroundColor
         view.addSubview(headerView)
 
-        panView.backgroundColor = style.panBGColor
+        panView.backgroundColor = style.dividerColor
         panView.layer.cornerRadius = MapConstants.panHeight / 2
         headerView.addSubview(panView)
 

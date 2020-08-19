@@ -16,9 +16,6 @@ public protocol MaggelanBuilderProtocol {
     func with(phoneFormatter: PhoneFormatterProtocol) -> Self
     
     @discardableResult
-    func with(errorViewFactory: ErrorViewFactoryProtocol) -> Self
-    
-    @discardableResult
     func with(localizedResourcesFactory: LocalizedResourcesFactoryProtocol) -> Self
     
     @discardableResult
@@ -33,7 +30,6 @@ public final class MaggelanBuilder {
     private let apiKey: String
     private var style: MagellanStyleProtocol?
     private var phoneFormatter: PhoneFormatterProtocol?
-    private var errorViewFactory: ErrorViewFactoryProtocol?
     private var localizedResourcesFactory: LocalizedResourcesFactoryProtocol?
     private var parameters: MagellanParametersProtocol?
     private var logger: LoggerProtocol?
@@ -57,7 +53,6 @@ extension MaggelanBuilder: MaggelanBuilderProtocol {
                                 parameters: parameters ?? DefaultMagellanParameters(),
                                 logger: logger)
         resolver.phoneFormatter = phoneFormatter
-        resolver.errorViewFactory = errorViewFactory
         
         return DashboardMapAssembly.assembly(with: resolver)
     }
@@ -71,12 +66,6 @@ extension MaggelanBuilder: MaggelanBuilderProtocol {
         self.phoneFormatter = phoneFormatter
         return self
     }
-    
-    public func with(errorViewFactory: ErrorViewFactoryProtocol) -> Self{
-        self.errorViewFactory = errorViewFactory
-        return self
-    }
-    
     
     public func with(localizedResourcesFactory: LocalizedResourcesFactoryProtocol) -> Self {
         self.localizedResourcesFactory = localizedResourcesFactory

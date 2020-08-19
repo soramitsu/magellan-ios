@@ -15,11 +15,6 @@ final class MapListPresenter: MapListPresenterProtocol {
     weak var view: MapListViewProtocol?
     weak var delegate: MapListPresenterDelegate?
     weak var output: MapListOutputProtocol?
-    private var state: MapListModuleState = .normal {
-        didSet {
-            output?.moduleChange(state: state)
-        }
-    }
     
     init(localizator: LocalizedResourcesFactoryProtocol) {
         self.localizator = localizator
@@ -39,7 +34,6 @@ final class MapListPresenter: MapListPresenterProtocol {
     }
     
     func search(with text: String?) {
-        
         output?.search(with: text)
     }
     
@@ -48,19 +42,11 @@ final class MapListPresenter: MapListPresenterProtocol {
     }
     
     func expand() {
-        state = .search
         delegate?.expandList()
     }
     
     func viewDidLoad() {
         view?.set(placeholder: localizator.searchPlaceholder)
-    }
-    
-    func finishSearch() {
-        if state == .error {
-            return
-        }
-        state = .normal
     }
 }
 
@@ -71,19 +57,7 @@ extension MapListPresenter: MapOutputProtocol {
     }
     
     func didUpdate(places: [PlaceViewModel]) {
-        if state == .error {
-            return
-        }
         self.places = places
         view?.reloadPlaces()
-    }
-    
-    func loadingComplete(with error: Error?, retryClosure: @escaping () -> Void) {
-        state = .error
-        delegate?.collapseList()
-        view?.showErrorState() {
-            self.state = .normal
-            retryClosure()
-        }
     }
 }

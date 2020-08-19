@@ -53,20 +53,10 @@ final class MapPresenter: MapPresenterProtocol {
                 coordinator?.hideDetailsIfPresented()
                 self.selectedPlace = nil
             }
-            if places.isEmpty
-                && listModuleState == .normal {
-                coordinator?.setMapList(state: .compact, animated: true)
-            }
-            if oldValue.isEmpty
-                && !places.isEmpty
-                && listModuleState == .normal{
-                coordinator?.setMapList(state: .compact, animated: true)
-            }
             output?.didUpdate(places: places)
         }
     }
     private(set) var clusters: [ClusterViewModel] = []
-    private var listModuleState: MapListModuleState = .normal
     private let defaultPosition: Coordinates
 
     
@@ -114,10 +104,8 @@ final class MapPresenter: MapPresenterProtocol {
                 self.categories = items
                 self.view?.setFilterButton(hidden: false)
             default:
-                self.output?.loadingComplete(with: MapError.loadingError, retryClosure: { [weak self] in
-                    self?.loadCategories()
-                    self?.reloadIfNeeded(search: self?.currentSearchText)
-                })
+                // todo: show toast
+                return
             }
         }
     }
@@ -146,10 +134,7 @@ final class MapPresenter: MapPresenterProtocol {
             switch result {
             case .failure(let error):
                 self.coordinator?.hideDetailsIfPresented()
-                self.output?.loadingComplete(with: error) { [weak self] in
-                    self?.loadCategories()
-                    self?.loadPlaces(topLeft: topLeft, bottomRight: bottomRight, zoom: zoom, search: search)
-                }
+                // todo: show toast if needed
             case .success(let response):
                 self.places = response.locations.compactMap { PlaceViewModel(place: $0, locale: self.localizator.locale) }
                 self.clusters = response.clusters.compactMap { ClusterViewModel(cluster: $0) }
@@ -176,9 +161,8 @@ final class MapPresenter: MapPresenterProtocol {
                 self.coordinator?.showDetails(for: info)
                 self.selectedPlace = place
             case .failure(let error):
-                self.output?.loadingComplete(with: error) { [weak self] in
-                    self?.showDetails(place: place)
-                }
+                self.logger?.log(error)
+                // toso: show toast
             }
         }
     }
@@ -207,10 +191,6 @@ final class MapPresenter: MapPresenterProtocol {
 }
 
 extension MapPresenter: MapListOutputProtocol {
-    
-    func moduleChange(state: MapListModuleState) {
-        listModuleState = state
-    }
     
     func select(place: PlaceViewModel) {
         showDetails(place: place)

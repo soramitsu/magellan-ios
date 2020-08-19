@@ -9,6 +9,10 @@ import SoraUI
 import SoraFoundation
 
 final class MapListViewController: UIViewController {
+
+    private struct Constants {
+        static let cornerRadius: CGFloat = 10
+    }
     
     let presenter: MapListPresenterProtocol
     private let style: MagellanStyleProtocol
@@ -19,7 +23,6 @@ final class MapListViewController: UIViewController {
     private let searchContainer = UIView()
     private let tableView = UITableView()
     private var keyboardHandler = KeyboardHandler()
-    var erroViewFactory: ErrorViewFactoryProtocol?
     private var errorView: UIView?
     
     private lazy var placeCellStyle: PlaceCell.Style = {
@@ -46,7 +49,7 @@ final class MapListViewController: UIViewController {
         view.backgroundColor = style.sectionsDeviderBGColor
         self.view = view
         
-        view.layer.cornerRadius = 10
+        view.layer.cornerRadius = Constants.cornerRadius
         view.layer.masksToBounds = true
         
         configureViews()
@@ -72,8 +75,8 @@ final class MapListViewController: UIViewController {
         headerView.addSubview(searchContainer)
         
         searchField.addTarget(self, action: #selector(search(_:)), for: .editingChanged)
-        searchField.textColor = style.mediumGrayTextColor
-        searchField.font = style.regular13
+        searchField.textColor = style.grayColor
+        searchField.font = style.regular14
         searchField.textAlignment = .left
         searchField.clearButtonMode = .whileEditing
         searchField.borderStyle = .none
@@ -105,19 +108,19 @@ final class MapListViewController: UIViewController {
         panView.translatesAutoresizingMaskIntoConstraints = false
         panView.heightAnchor.constraint(equalToConstant: MapConstants.panHeight).isActive = true
         panView.widthAnchor.constraint(equalToConstant: style.panWidth).isActive = true
-        panView.topAnchor.constraint(equalTo: headerView.topAnchor, constant: MapConstants.panHeight).isActive = true
+        panView.centerYAnchor.constraint(equalTo: headerView.topAnchor, constant: Constants.cornerRadius).isActive = true
         panView.centerXAnchor.constraint(equalTo: headerView.centerXAnchor).isActive = true
         
         searchContainer.translatesAutoresizingMaskIntoConstraints = false
-        searchContainer.topAnchor.constraint(equalTo: headerView.topAnchor, constant: style.doubleOffset).isActive = true
-        searchContainer.bottomAnchor.constraint(equalTo: headerView.bottomAnchor, constant: -style.doubleOffset).isActive = true
+        searchContainer.topAnchor.constraint(equalTo: headerView.topAnchor, constant: style.offset * 3).isActive = true
+        searchContainer.bottomAnchor.constraint(equalTo: headerView.bottomAnchor, constant: -style.offset * 3).isActive = true
         searchContainer.leftAnchor.constraint(equalTo: headerView.leftAnchor, constant: style.doubleOffset).isActive = true
         searchContainer.rightAnchor.constraint(equalTo: headerView.rightAnchor, constant: -style.doubleOffset).isActive = true
 
         searchField.translatesAutoresizingMaskIntoConstraints = false
         searchField.topAnchor.constraint(equalTo: searchContainer.topAnchor, constant: style.topOffset).isActive = true
         searchField.bottomAnchor.constraint(equalTo: searchContainer.bottomAnchor, constant: -style.topOffset).isActive = true
-        searchField.leftAnchor.constraint(equalTo: searchContainer.leftAnchor, constant: style.sideOffset).isActive = true
+        searchField.leftAnchor.constraint(equalTo: searchContainer.leftAnchor, constant: style.doubleOffset).isActive = true
         searchField.rightAnchor.constraint(equalTo: activityIndicator.leftAnchor, constant: -style.sideOffset / 4).isActive = true
         
         activityIndicator.translatesAutoresizingMaskIntoConstraints = false
@@ -196,7 +199,7 @@ extension MapListViewController: UITextFieldDelegate {
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        presenter.finishSearch()
+        
     }
     
 }
@@ -225,25 +228,6 @@ extension MapListViewController: MapListViewProtocol {
             tableView.reloadData()
             view.setNeedsLayout()
         }
-    }
-    
-    func showErrorState(_ retryClosure: @escaping () -> Void) {
-        guard let errorView = erroViewFactory?.errorView(with: retryClosure) else {
-            return
-        }
-        tableView.isHidden = true
-        headerView.isHidden = true
-
-        
-        view.addSubview(errorView)
-        
-        errorView.translatesAutoresizingMaskIntoConstraints = false
-        errorView.topAnchor.constraint(equalTo: view.topAnchor, constant: 16).isActive = true
-        errorView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
-        errorView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
-        
-        self.errorView?.removeFromSuperview()
-        self.errorView = errorView
     }
 }
 

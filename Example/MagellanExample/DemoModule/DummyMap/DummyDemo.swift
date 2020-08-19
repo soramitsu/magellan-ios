@@ -20,7 +20,6 @@ class DummyDemo: DemoFactoryProtocol {
         Mocks.mockAPI()
         return MaggelanBuilder(key: testKey)
             .with(phoneFormatter: MagellanPhoneFormatter())
-            .with(errorViewFactory: MagellanErrorViewFactory())
             .build(networkResolver: networkResolver)
     }
 }

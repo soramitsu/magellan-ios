@@ -283,21 +283,6 @@ class MapCoordinatorProtocolMock: MapCoordinatorProtocol {
         showCategoriesFilterCategoriesFilterOutputClosure?(categories, filter, output)
     }
 
-    //MARK: - setMapList
-
-    var setMapListStateAnimatedCallsCount = 0
-    var setMapListStateAnimatedCalled: Bool {
-        return setMapListStateAnimatedCallsCount > 0
-    }
-    var setMapListStateAnimatedReceivedArguments: (state: DraggableState, animated: Bool)?
-    var setMapListStateAnimatedClosure: ((DraggableState, Bool) -> Void)?
-
-    func setMapList(state: DraggableState, animated: Bool) {
-        setMapListStateAnimatedCallsCount += 1
-        setMapListStateAnimatedReceivedArguments = (state: state, animated: animated)
-        setMapListStateAnimatedClosure?(state, animated)
-    }
-
 }
 // MARK: -
 // MARK: -
@@ -376,19 +361,6 @@ class MapListPresenterProtocolMock: MapListPresenterProtocol {
         viewDidLoadClosure?()
     }
 
-    //MARK: - finishSearch
-
-    var finishSearchCallsCount = 0
-    var finishSearchCalled: Bool {
-        return finishSearchCallsCount > 0
-    }
-    var finishSearchClosure: (() -> Void)?
-
-    func finishSearch() {
-        finishSearchCallsCount += 1
-        finishSearchClosure?()
-    }
-
     //MARK: - didUpdate
 
     var didUpdatePlacesCallsCount = 0
@@ -402,21 +374,6 @@ class MapListPresenterProtocolMock: MapListPresenterProtocol {
         didUpdatePlacesCallsCount += 1
         didUpdatePlacesReceivedPlaces = places
         didUpdatePlacesClosure?(places)
-    }
-
-    //MARK: - loadingComplete
-
-    var loadingCompleteWithRetryClosureCallsCount = 0
-    var loadingCompleteWithRetryClosureCalled: Bool {
-        return loadingCompleteWithRetryClosureCallsCount > 0
-    }
-    var loadingCompleteWithRetryClosureReceivedArguments: (error: Error?, retryClosure: () -> Void)?
-    var loadingCompleteWithRetryClosureClosure: ((Error?, @escaping () -> Void) -> Void)?
-
-    func loadingComplete(with error: Error?, retryClosure: @escaping () -> Void) {
-        loadingCompleteWithRetryClosureCallsCount += 1
-        loadingCompleteWithRetryClosureReceivedArguments = (error: error, retryClosure: retryClosure)
-        loadingCompleteWithRetryClosureClosure?(error, retryClosure)
     }
 
     //MARK: - loading
@@ -465,21 +422,6 @@ class MapListViewProtocolMock: MapListViewProtocol {
     func reloadPlaces() {
         reloadPlacesCallsCount += 1
         reloadPlacesClosure?()
-    }
-
-    //MARK: - showErrorState
-
-    var showErrorStateCallsCount = 0
-    var showErrorStateCalled: Bool {
-        return showErrorStateCallsCount > 0
-    }
-    var showErrorStateReceivedRetryClosure: (() -> Void)?
-    var showErrorStateClosure: ((@escaping () -> Void) -> Void)?
-
-    func showErrorState(_ retryClosure: @escaping () -> Void) {
-        showErrorStateCallsCount += 1
-        showErrorStateReceivedRetryClosure = retryClosure
-        showErrorStateClosure?(retryClosure)
     }
 
     //MARK: - set
@@ -615,21 +557,6 @@ class MapPresenterProtocolMock: MapPresenterProtocol {
     func removeSelection() {
         removeSelectionCallsCount += 1
         removeSelectionClosure?()
-    }
-
-    //MARK: - moduleChange
-
-    var moduleChangeStateCallsCount = 0
-    var moduleChangeStateCalled: Bool {
-        return moduleChangeStateCallsCount > 0
-    }
-    var moduleChangeStateReceivedState: MapListModuleState?
-    var moduleChangeStateClosure: ((MapListModuleState) -> Void)?
-
-    func moduleChange(state: MapListModuleState) {
-        moduleChangeStateCallsCount += 1
-        moduleChangeStateReceivedState = state
-        moduleChangeStateClosure?(state)
     }
 
     //MARK: - select

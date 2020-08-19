@@ -12,7 +12,6 @@ final class MapListAssembly {
     static func assembly(with resolver: ResolverProtocol) -> MapListViewProtocol {
         let presenter = MapListPresenter(localizator: resolver.localizationResourcesFactory)
         let view = MapListViewController(presenter: presenter, style: resolver.style)
-        view.erroViewFactory = resolver.errorViewFactory
         presenter.view = view
         
         return view

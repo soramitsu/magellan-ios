@@ -74,7 +74,7 @@ extension DashboardMapCoordinator: MapCoordinatorProtocol {
         controller.modalPresentationStyle = .custom
         container?.present(controller, animated: true, completion: nil)
     }
-    
+
     func dismiss() {
         modalTransition = nil
         mapView?.presenter.removeSelection()

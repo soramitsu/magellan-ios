@@ -125,8 +125,11 @@ class ModalDraggablePresentationViewController: UIPresentationController {
        
     private func animate(view: UIView, frame: CGRect) {
         modalDraggable.viewWillChangeFrame(to: frame)
+        let buttonFrame = backButtonFrame(with: frame)
+        let isButtonHidden = frame.minY - buttonFrame.maxY < Constants.doubleOffset * 2
         UIView.beginAnimations(nil, context: nil)
-        backButton.frame = backButtonFrame(with: frame)
+        backButton.frame = buttonFrame
+        backButton.isHidden = isButtonHidden
         view.frame = frame
 
         UIView.commitAnimations()

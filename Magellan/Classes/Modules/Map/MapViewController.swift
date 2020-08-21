@@ -134,38 +134,29 @@ final class MapViewController: UIViewController {
                 fatalError("Can not load images from fraimwork bundle")
         }
         
-        let setupClosure: (RoundedButton) -> Void = { item in
-            item.roundedBackgroundView?.cornerRadius = side / 2
-            item.roundedBackgroundView?.shadowOpacity = 0.36
-            item.roundedBackgroundView?.shadowOffset = CGSize(width: 0, height: 2)
-            item.roundedBackgroundView?.fillColor = .white
-            item.roundedBackgroundView?.highlightedFillColor = .white
-            item.changesContentOpacityWhenHighlighted = true
-        }
-        
         filterButton = RoundedButton(frame: CGRect(x: 0, y: 0, width: side, height: side))
         filterButton.imageWithTitleView?.iconImage = filterImage
         filterButton.isHidden = true
         filterButton.addTarget(nil, action: #selector(tapFilter), for: .touchUpInside)
-        setupClosure(filterButton)
+        filterButton.configureRound(with: side)
         view.addSubview(filterButton)
 
         myPlaceButton = RoundedButton(frame: CGRect(x: 0, y: 0, width: side, height: side))
         myPlaceButton.imageWithTitleView?.iconImage = myPlaceImage
         myPlaceButton.addTarget(nil, action: #selector(showMyPosition), for: .touchUpInside)
-        setupClosure(myPlaceButton)
+        myPlaceButton.configureRound(with: side)
         view.addSubview(myPlaceButton)
 
         zoomInButton = RoundedButton(frame: CGRect(x: 0, y: 0, width: side, height: side))
         zoomInButton.imageWithTitleView?.iconImage = plusImage
         zoomInButton.addTarget(self, action: #selector(zoomInHandler(sender:)), for: .touchUpInside)
-        setupClosure(zoomInButton)
+        zoomInButton.configureRound(with: side)
         view.addSubview(zoomInButton)
 
         zoomOutButton = RoundedButton(frame: CGRect(x: 0, y: 0, width: side, height: side))
         zoomOutButton.imageWithTitleView?.iconImage = minusImage
         zoomOutButton.addTarget(self, action: #selector(zoomOutHandler(sender:)), for: .touchUpInside)
-        setupClosure(zoomOutButton)
+        zoomOutButton.configureRound(with: side)
         view.addSubview(zoomOutButton)
     }
 

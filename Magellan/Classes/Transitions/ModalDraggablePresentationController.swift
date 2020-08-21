@@ -38,23 +38,24 @@ class ModalDraggablePresentationViewController: UIPresentationController {
 
     private lazy var backButton: RoundedButton = {
         let bounds = presentingViewController.view.bounds
-        let yPosition = bounds.height - modalDraggable.compactHeight - Constants.backButtonWidth - Constants.doubleOffset * 2
+        let yPosition = bounds.height
+            - modalDraggable.compactHeight
+            - Constants.backButtonWidth
+            - Constants.doubleOffset * 2
         let button = RoundedButton(frame: CGRect(x: Constants.doubleOffset,
                                                  y: yPosition,
-                                                 width: 40,
-                                                 height: 40))
-        button.imageWithTitleView?.iconImage = UIImage(named: "arrow-left", in: .frameworkBundle, compatibleWith: nil)
-        button.roundedBackgroundView?.cornerRadius = 40 / 2
-        button.roundedBackgroundView?.shadowOpacity = 0.36
-        button.roundedBackgroundView?.shadowOffset = CGSize(width: 0, height: 2)
-        button.roundedBackgroundView?.fillColor = .white
-        button.roundedBackgroundView?.highlightedFillColor = .white
-        button.changesContentOpacityWhenHighlighted = true
+                                                 width: Constants.backButtonWidth,
+                                                 height: Constants.backButtonWidth))
+        button.configureRound(with: Constants.backButtonWidth)
+        button.imageWithTitleView?.iconImage = UIImage(named: "arrow-left",
+                                                       in: .frameworkBundle,
+                                                       compatibleWith: nil)
         button.addTarget(self, action: #selector(dismissHandler), for: .touchUpInside)
+
         return button
     }()
     
-    var modalDraggable: ModalDraggable! {
+    var modalDraggable: ModalDraggable {
         guard let result = presentedViewController as? ModalDraggable else {
             fatalError("presentedViewController should confom to ModalDraggable protocol")
         }
@@ -63,15 +64,9 @@ class ModalDraggablePresentationViewController: UIPresentationController {
     
     override var frameOfPresentedViewInContainerView: CGRect {
         let bounds = presentingViewController.view.bounds
-        
-        if let modalDraggable = modalDraggable {
-            return CGRect(x: 0,
-                          y: bounds.height - modalDraggable.compactHeight,
-                          width: bounds.size.width,
-                          height: bounds.size.height)
-        }
+
         return CGRect(x: 0,
-                      y: bounds.size.height / 2,
+                      y: bounds.height - modalDraggable.compactHeight,
                       width: bounds.size.width,
                       height: bounds.size.height)
     }
@@ -129,7 +124,7 @@ class ModalDraggablePresentationViewController: UIPresentationController {
     }
        
     private func animate(view: UIView, frame: CGRect) {
-        modalDraggable?.viewWillChangeFrame(to: frame)
+        modalDraggable.viewWillChangeFrame(to: frame)
         UIView.beginAnimations(nil, context: nil)
         backButton.frame = backButtonFrame(with: frame)
         view.frame = frame
@@ -139,7 +134,7 @@ class ModalDraggablePresentationViewController: UIPresentationController {
 
     private func backButtonFrame(with frame: CGRect) -> CGRect {
         let newYOrigin = frame.origin.y - Constants.backButtonWidth - Constants.doubleOffset * 2
-        let minYOrigin = Constants.topOffset
+        let minYOrigin = Constants.topOffset + UIApplication.shared.statusBarFrame.size.height
         return CGRect(x: backButton.frame.origin.x,
                       y: max(newYOrigin, minYOrigin),
                       width: backButton.frame.size.width,

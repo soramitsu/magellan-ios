@@ -291,6 +291,16 @@ extension MapViewController: MapViewProtocol {
             self.filterButton.isHidden = hidden
         }
     }
+
+    func setButtons(hidden: Bool) {
+        UIView.animate(withDuration: MapConstants.contentAnimationDuration) {
+            self.filterButton.isHidden = hidden
+            self.positionButton.isHidden = hidden
+            self.zoomInButton.isHidden = hidden
+            self.zoomOutButton.isHidden = hidden
+        }
+    }
+
     
     func reloadData() {
         if !isViewLoaded {

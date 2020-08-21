@@ -9,7 +9,8 @@ import GoogleMaps
 
 protocol MapViewProtocol: class, ControllerBackedProtocol, Containable, Loadable, AutoMockable {
     var presenter: MapPresenterProtocol { get }
-    
+
+    func setButtons(hidden: Bool)
     func setFilterButton(hidden: Bool)
     func updateSelection()
     func reloadData()

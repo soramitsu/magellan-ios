@@ -160,6 +160,7 @@ final class MapPresenter: MapPresenterProtocol {
             case .success(let info):
                 self.coordinator?.showDetails(for: info)
                 self.selectedPlace = place
+                self.view?.setButtons(hidden: true)
             case .failure(let error):
                 self.logger?.log(error)
                 // toso: show toast
@@ -187,6 +188,10 @@ final class MapPresenter: MapPresenterProtocol {
     }
     func removeSelection() {
         selectedPlace = nil
+        view?.setButtons(hidden: false)
+        if categories.isEmpty {
+            view?.setFilterButton(hidden: true)
+        }
     }
 }
 

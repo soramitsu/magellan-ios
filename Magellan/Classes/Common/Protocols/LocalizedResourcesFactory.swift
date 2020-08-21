@@ -24,11 +24,14 @@ public protocol LocalizedResourcesFactoryProtocol {
     var email: String { get }
     var address: String { get }
     var workingHours: String { get }
-    
-    var open: String { get }
-    var closed: String { get }
-    var openTill: String { get }
-    var closedTill: String { get }
+
+    var allTimeWorks: String { get }
+    var open: String { get}
+    var closed: String { get}
+    var until: String { get}
+    var opens: String { get}
+    var closes: String { get}
+    var reopens: String { get}
     
     var filter: String { get }
     var reset: String { get }
@@ -42,7 +45,7 @@ internal extension LocalizedResourcesFactoryProtocol {
 }
 
 struct DefaultLocalizedResorcesFactory: LocalizedResourcesFactoryProtocol {
-    
+
     let notificationName: String = "LanguageChangeNotification"
     var currentLocale: String { return "en" }
     let places: String = "Places";
@@ -55,11 +58,16 @@ struct DefaultLocalizedResorcesFactory: LocalizedResourcesFactoryProtocol {
     let email: String = "E-mail";
     let address: String = "Address";
     let workingHours: String = "Working hours";
+    let allTimeWorks: String = "Open 24 hours"
     let open: String = "Open";
     let closed: String = "Closed";
     let openTill: String = "Open till";
     let closedTill: String = "Closed till";
     let filter: String = "Filter";
     let reset: String = "Reset";
+    let until: String = "until"
+    let opens: String = "opens"
+    let closes: String = "closes"
+    let reopens: String = "reopens"
 
 }

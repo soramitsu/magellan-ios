@@ -658,6 +658,21 @@ class MapViewProtocolMock: MapViewProtocol {
     var underlyingController: UIViewController!
     var loadingPresenter: UIViewController?
 
+    //MARK: - setButtons
+
+    var setButtonsHiddenCallsCount = 0
+    var setButtonsHiddenCalled: Bool {
+        return setButtonsHiddenCallsCount > 0
+    }
+    var setButtonsHiddenReceivedHidden: Bool?
+    var setButtonsHiddenClosure: ((Bool) -> Void)?
+
+    func setButtons(hidden: Bool) {
+        setButtonsHiddenCallsCount += 1
+        setButtonsHiddenReceivedHidden = hidden
+        setButtonsHiddenClosure?(hidden)
+    }
+
     //MARK: - setFilterButton
 
     var setFilterButtonHiddenCallsCount = 0

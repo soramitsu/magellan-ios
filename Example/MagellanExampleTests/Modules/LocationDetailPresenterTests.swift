@@ -55,7 +55,7 @@ final class LocationDetailPresenterTests: XCTestCase {
         XCTAssertEqual(viewModel?.title, "name")
         XCTAssertEqual(viewModel?.comment, "type · addr")
         XCTAssertEqual(viewModel?.status, nil)
-        XCTAssertEqual(viewModel?.subStatus, "Open")
+        XCTAssertEqual(viewModel?.subStatus, "Open 24 hours")
         XCTAssertEqual(presenter.items.count, 2)
     }
 }

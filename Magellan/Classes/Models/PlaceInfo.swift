@@ -14,7 +14,12 @@ struct Schedule: Codable, Equatable {
 }
 
 struct WorkingDay: WorkingStatusProtocol, Codable, Equatable {
-    
+
+    var day: String? {
+        return Calendar.current.shortStandaloneWeekdaySymbols[dayOfWeek.numberOfWeek]
+    }
+
+
     struct Time: Codable, Equatable {
         let hour: Int
         let minute: Int
@@ -138,12 +143,22 @@ struct PlaceInfo: Coordinated {
 }
 
 extension PlaceInfo {
-    
+
+    var weekDayNumber: Int {
+        return Calendar.current.component(.weekday, from: Date()) - 1
+    }
+
     var currentWorkingDay: WorkingDay? {
-        let weekDayNumber = Calendar.current.component(.weekday, from: Date()) - 1
         return workSchedule?
             .workDays?
             .first(where: { $0.dayOfWeek.numberOfWeek == weekDayNumber })
+    }
+
+    var nextWorkingDay: WorkingDay? {
+        let nextDayNumber = weekDayNumber == 6 ? 0 : weekDayNumber + 1
+        return workSchedule?
+            .workDays?
+            .first(where: { $0.dayOfWeek.numberOfWeek == nextDayNumber })
     }
     
     var isOpen: Bool {
@@ -162,11 +177,12 @@ extension PlaceInfo {
     
     func workingStatus(with resources: WorkingStatusResources) -> String {
         if workSchedule?.open24 == true {
-            return resources.opened
+            return resources.open
         }
-        
-        if let currentWorkingDay = currentWorkingDay {
-            return currentWorkingDay.status(with: resources)
+
+        if let currentWorkingDay = currentWorkingDay,
+            let status = currentWorkingDay.status(with: resources, nextWorkingDay: nextWorkingDay) {
+            return status
         }
         
         return ""

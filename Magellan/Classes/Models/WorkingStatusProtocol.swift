@@ -8,13 +8,17 @@
 import Foundation
 
 struct WorkingStatusResources {
-    let opened: String
+    let open: String
     let closed: String
-    let openedTill: String
-    let closedTill: String
+    let until: String
+    let opens: String
+    let closes: String
+    let reopens: String
 }
 
-protocol WorkingStatusProtocol {
+protocol WorkingStatusProtocol: Codable {
+
+    var day: String? { get }
     var currentDate: Date { get }
     
     var opensTime: String { get }
@@ -34,7 +38,56 @@ protocol WorkingStatusProtocol {
     
     var isOpen: Bool  { get }
     
-    func status(with resources: WorkingStatusResources) -> String
+    func status(with resources: WorkingStatusResources, nextWorkingDay: WorkingStatusProtocol?) -> String?
+}
+
+fileprivate enum Status {
+    case open
+    case closed
+    case beforeOpening
+    case beforeLaunchTime
+    case launchTime
+
+    static func status(with intervalFromDayBegins: TimeInterval,
+         opens: TimeInterval,
+         closes: TimeInterval,
+         startLaunch: TimeInterval?,
+         finishLaunch: TimeInterval?) -> Status {
+        if intervalFromDayBegins < opens {
+            return .beforeOpening
+        }
+
+        if let startLaunch = startLaunch,
+            intervalFromDayBegins < startLaunch {
+            return .beforeLaunchTime
+        }
+
+        if let finishLaunch = finishLaunch,
+            intervalFromDayBegins < finishLaunch {
+            return .launchTime
+        }
+
+        if intervalFromDayBegins < closes {
+            return .open
+        }
+
+        return .closed
+    }
+
+    var isOpen: Bool {
+        switch self {
+        case .beforeOpening:
+            return false
+        case .open:
+            return true
+        case .closed:
+            return false
+        case .beforeLaunchTime:
+            return true
+        case .launchTime:
+            return false
+        }
+    }
 }
 
 extension WorkingStatusProtocol {
@@ -51,43 +104,56 @@ extension WorkingStatusProtocol {
     }
     
     var isOpen: Bool {
-        if let startLaunchTimeInterval = startLaunchTimeInterval,
-            let finishLaunchTimeInterval = finishLaunchTimeInterval,
-            intervalFromDayBegins <= startLaunchTimeInterval,
-            intervalFromDayBegins > finishLaunchTimeInterval {
-            return false
-        }
+        let status = Status.status(with: intervalFromDayBegins,
+                                   opens: opensTimeInterval,
+                                   closes: closesTimeInterval,
+                                   startLaunch: startLaunchTimeInterval,
+                                   finishLaunch: finishLaunchTimeInterval)
         
-        if intervalFromDayBegins >= opensTimeInterval
-            && intervalFromDayBegins < closesTimeInterval {
-            return true
-        }
-        
-        return false
+        return status.isOpen
     }
     
-    func status(with resources: WorkingStatusResources) -> String {
+    func status(with resources: WorkingStatusResources, nextWorkingDay: WorkingStatusProtocol?) -> String? {
         if intervalFromDayBegins == 0 {
             return ""
         }
-        
-        if let finishLaunchTime = finishLaunchTime,
-            let startLaunchTimeInterval = startLaunchTimeInterval,
-            let finishLaunchTimeInterval = finishLaunchTimeInterval,
-            intervalFromDayBegins <= startLaunchTimeInterval,
-            intervalFromDayBegins > finishLaunchTimeInterval {
-            return "\(resources.closedTill) \(finishLaunchTime)"
+
+        let status = Status.status(with: intervalFromDayBegins,
+                                   opens: opensTimeInterval,
+                                   closes: closesTimeInterval,
+                                   startLaunch: startLaunchTimeInterval,
+                                   finishLaunch: finishLaunchTimeInterval)
+        switch status {
+        case .beforeOpening:
+            return "\(resources.opens) \(opensTime)"
+        case .open:
+            return "\(resources.until) \(closesTime)"
+        case .closed:
+            guard let nextWorkingDay = nextWorkingDay,
+                let nextDay = nextWorkingDay.day else {
+                return nil
+            }
+            return "\(resources.opens) \(nextWorkingDay.opensTime) \(nextDay)"
+        case .beforeLaunchTime:
+            guard let startLaunchTime = startLaunchTime,
+                let finishLaunchTime = finishLaunchTime else {
+                return ""
+            }
+            return "\(resources.closes) \(startLaunchTime), \(resources.reopens) \(finishLaunchTime)"
+        case .launchTime:
+            guard let finishLaunchTime = finishLaunchTime else {
+                return ""
+            }
+            return "\(resources.opens) \(finishLaunchTime)"
         }
-        
-        if intervalFromDayBegins >= opensTimeInterval
-            && intervalFromDayBegins < closesTimeInterval {
-            return "\(resources.openedTill) \(closesTime)"
-        } else if intervalFromDayBegins < opensTimeInterval {
-            return "\(resources.closedTill) \(opensTime)"
-        } else if intervalFromDayBegins > closesTimeInterval {
-            return resources.closed
-        }
-        
         return workingHours
     }
+
+    private func time(from timeInterval: TimeInterval) -> String {
+        let hours = timeInterval / 3600
+        let minutes = (timeInterval - hours * 60) / 60
+        return "\(hours):\(minutes)"
+    }
+
+
 }

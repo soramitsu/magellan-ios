@@ -43,15 +43,21 @@ struct LocationHeaderViewModel {
         if place.workSchedule?.open24 == true {
             return nil
         }
-        // todo: add Closes soon state
+
         return place.isOpen ? localizator.open : localizator.closed
     }
 
     var subStatus: String? {
-        let resources = WorkingStatusResources(opened: localizator.open,
+        if place.workSchedule?.open24 == true {
+            return localizator.allTimeWorks
+        }
+
+        let resources = WorkingStatusResources(open: localizator.open,
                                                closed: localizator.closed,
-                                               openedTill: localizator.openTill,
-                                               closedTill: localizator.closedTill)
+                                               until: localizator.until,
+                                               opens: localizator.opens,
+                                               closes: localizator.closes,
+                                               reopens: localizator.reopens)
         return place.workingStatus(with: resources)
     }
 

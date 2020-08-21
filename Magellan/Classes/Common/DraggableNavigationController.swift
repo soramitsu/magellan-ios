@@ -3,7 +3,6 @@
 * SPDX-License-Identifier: GPL-3.0
 */
 
-import Foundation
 import UIKit
 
 
@@ -11,10 +10,10 @@ final class DraggableNavigationController: BarHidingNavigationController {
     
     weak var draggableDelegate: DraggableDelegate?
     private var draggableState: DraggableState = .compact
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         view.layer.cornerRadius = 10
         view.layer.masksToBounds = true
     }

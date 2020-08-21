@@ -172,6 +172,7 @@ class ContainerViewController: UIViewController, AdaptiveDesignable {
         if let draggable = draggable {
             view.insertSubview(shadowView, belowSubview: draggable.draggableView)
             shadowView.backgroundColor = .black
+            shadowView.alpha = 0
             shadowView.frame = view.bounds
         }
     }

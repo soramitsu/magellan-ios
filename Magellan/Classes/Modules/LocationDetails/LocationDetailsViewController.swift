@@ -13,7 +13,7 @@ final class LocationDetailsViewController: UIViewController, LocationDetailsView
     var presenter: LocationDetailsPresenterProtocol
     
     private let tableView = UITableView(frame: .zero, style: .grouped)
-    private let headerView = UIView()
+    private let headerView = RoundedView()
     private let panView = UIView()
         
     init(presenter: LocationDetailsPresenterProtocol,
@@ -29,7 +29,7 @@ final class LocationDetailsViewController: UIViewController, LocationDetailsView
     
     override func loadView() {
         let view = UIView()
-        view.backgroundColor = style.sectionsDeviderBGColor
+        view.backgroundColor = .clear
         self.view = view
         
         configureViews()
@@ -42,10 +42,11 @@ final class LocationDetailsViewController: UIViewController, LocationDetailsView
     }
     
     private func configureViews() {
-        view.layer.masksToBounds = true
-        view.layer.cornerRadius = style.topOffset
+        headerView.roundingCorners = [.topLeft, .topRight]
+        headerView.cornerRadius = style.topOffset
+        headerView.shadowOpacity = 0
+        headerView.fillColor = style.backgroundColor
 
-        headerView.backgroundColor = style.backgroundColor
         view.addSubview(headerView)
 
         panView.backgroundColor = style.dividerColor
@@ -63,11 +64,11 @@ final class LocationDetailsViewController: UIViewController, LocationDetailsView
     }
     
     private func layoutViews() {
-        
         headerView.translatesAutoresizingMaskIntoConstraints = false
         headerView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-        headerView.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
-        headerView.heightAnchor.constraint(equalToConstant: style.doubleOffset).isActive = true
+        headerView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
+        headerView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+        headerView.heightAnchor.constraint(equalToConstant: style.doubleOffset + 1).isActive = true
         headerView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         
         panView.translatesAutoresizingMaskIntoConstraints = false
@@ -80,7 +81,7 @@ final class LocationDetailsViewController: UIViewController, LocationDetailsView
         tableView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
         tableView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
         tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-        tableView.topAnchor.constraint(equalTo: headerView.bottomAnchor).isActive = true
+        tableView.topAnchor.constraint(equalTo: headerView.bottomAnchor, constant: -1).isActive = true
     }
     
     func reload() {
@@ -196,6 +197,10 @@ extension LocationDetailsViewController: UITableViewDelegate {
 
 extension LocationDetailsViewController: ModalDraggable {
 
+    var isDraggableDismissEnabled: Bool {
+        false
+    }
+
     func dismiss() {
         dismiss(animated: true) {
             self.presenter.dismiss()
@@ -205,7 +210,7 @@ extension LocationDetailsViewController: ModalDraggable {
     var draggableView: UIView {
         return headerView
     }
-    
+
     var compactHeight: CGFloat {
         guard let keyWindow = UIApplication.shared.keyWindow else {
             return 280
@@ -219,8 +224,8 @@ extension LocationDetailsViewController: ModalDraggable {
         
         return height
     }
-    
-    var fullHeight: CGFloat {
+
+    private var maxAvailableHeight: CGFloat {
         var topOffset: CGFloat = 0
         if #available(iOS 11.0, *) {
             topOffset += UIApplication.shared.keyWindow?.safeAreaInsets.top ?? 0
@@ -233,7 +238,13 @@ extension LocationDetailsViewController: ModalDraggable {
         return keyWindow.bounds.height - topOffset - MapConstants.draggableOffset
     }
     
+    var fullHeight: CGFloat {
+        let contentHeight = headerView.frame.size.height + tableView.contentSize.height
+        return min(maxAvailableHeight, contentHeight)
+    }
+    
     func viewWillChangeFrame(to frame: CGRect) {
+        let minStateOrigin = compactHeight
         tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: frame.origin.y, right: 0)
     }
 }

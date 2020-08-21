@@ -6,6 +6,7 @@
 
 
 import UIKit
+import SoraUI
 
 protocol ModalDraggable {
     var view: UIView! { get }
@@ -13,22 +14,51 @@ protocol ModalDraggable {
     var compactHeight: CGFloat { get }
     var fullHeight: CGFloat { get }
     var isBeingDismissed: Bool { get }
+    var isDraggableDismissEnabled: Bool { get }
     
     func dismiss()
     func viewWillChangeFrame(to frame: CGRect)
 }
 
 class ModalDraggablePresentationViewController: UIPresentationController {
+
+    private struct Constants {
+        static let doubleOffset: CGFloat = 16
+        static let backButtonWidth: CGFloat = 40
+        static let topOffset: CGFloat = 44
+    }
     
     weak var underlyingView: UIView?
     private lazy var modalView: ModalView = {
         let view = ModalView(frame: UIScreen.main.bounds)
         view.blockedView = underlyingView
+        view.addSubview(backButton)
         return view
     }()
+
+    private lazy var backButton: RoundedButton = {
+        let bounds = presentingViewController.view.bounds
+        let yPosition = bounds.height - modalDraggable.compactHeight - Constants.backButtonWidth - Constants.doubleOffset * 2
+        let button = RoundedButton(frame: CGRect(x: Constants.doubleOffset,
+                                                 y: yPosition,
+                                                 width: 40,
+                                                 height: 40))
+        button.imageWithTitleView?.iconImage = UIImage(named: "arrow-left", in: .frameworkBundle, compatibleWith: nil)
+        button.roundedBackgroundView?.cornerRadius = 40 / 2
+        button.roundedBackgroundView?.shadowOpacity = 0.36
+        button.roundedBackgroundView?.shadowOffset = CGSize(width: 0, height: 2)
+        button.roundedBackgroundView?.fillColor = .white
+        button.roundedBackgroundView?.highlightedFillColor = .white
+        button.changesContentOpacityWhenHighlighted = true
+        button.addTarget(self, action: #selector(dismissHandler), for: .touchUpInside)
+        return button
+    }()
     
-    var modalDraggable: ModalDraggable? {
-        presentedViewController as? ModalDraggable
+    var modalDraggable: ModalDraggable! {
+        guard let result = presentedViewController as? ModalDraggable else {
+            fatalError("presentedViewController should confom to ModalDraggable protocol")
+        }
+        return result
     }
     
     override var frameOfPresentedViewInContainerView: CGRect {
@@ -50,18 +80,13 @@ class ModalDraggablePresentationViewController: UIPresentationController {
         super.presentationTransitionWillBegin()
         containerView?.addSubview(modalView)
         containerView?.addSubview(presentedView!)
-        if let modalDraggable = modalDraggable {
-            let gesture = UIPanGestureRecognizer(target: self, action: #selector(handlePan(gesture:)))
-            modalDraggable.draggableView.addGestureRecognizer(gesture)
-        }
+        let gesture = UIPanGestureRecognizer(target: self, action: #selector(handlePan(gesture:)))
+        modalDraggable.draggableView.addGestureRecognizer(gesture)
     }
     
     private var startedHeight: CGFloat = 0
     @objc private func handlePan(gesture: UIPanGestureRecognizer) {
-        guard let modalDraggable = modalDraggable,
-            let view = modalDraggable.view else {
-            return
-        }
+        let view = modalDraggable.view!
         
         switch gesture.state {
         case .began:
@@ -72,8 +97,14 @@ class ModalDraggablePresentationViewController: UIPresentationController {
            startedHeight = newY
            let newOrigin = CGPoint(x: view.frame.origin.x, y: view.frame.origin.y + delta)
            if view.bounds.height - newOrigin.y < modalDraggable.compactHeight - 20 {
-                modalDraggable.dismiss()
-                modalView.removeFromSuperview()
+                if !modalDraggable.isDraggableDismissEnabled {
+                    return
+                }
+                dismissHandler()
+                return
+           }
+
+           if view.bounds.height - newOrigin.y > modalDraggable.fullHeight {
                 return
            }
            let targetFrame = CGRect(x: 0,
@@ -100,8 +131,25 @@ class ModalDraggablePresentationViewController: UIPresentationController {
     private func animate(view: UIView, frame: CGRect) {
         modalDraggable?.viewWillChangeFrame(to: frame)
         UIView.beginAnimations(nil, context: nil)
+        backButton.frame = backButtonFrame(with: frame)
         view.frame = frame
+
         UIView.commitAnimations()
    }
+
+    private func backButtonFrame(with frame: CGRect) -> CGRect {
+        let newYOrigin = frame.origin.y - Constants.backButtonWidth - Constants.doubleOffset * 2
+        let minYOrigin = Constants.topOffset
+        return CGRect(x: backButton.frame.origin.x,
+                      y: max(newYOrigin, minYOrigin),
+                      width: backButton.frame.size.width,
+                      height: backButton.frame.size.height)
+    }
+
+    @objc
+    private func dismissHandler() {
+        modalDraggable.dismiss()
+        modalView.removeFromSuperview()
+    }
     
 }

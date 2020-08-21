@@ -13,15 +13,9 @@ class ModalView: UIView {
     
     override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
         let superResult = super.hitTest(point, with: event)
-        guard let blockedView = blockedView else {
-            return superResult
-        }
-
-        if superResult == self || superResult == nil {
-            return blockedView.hitTest(point, with: event)
-        }
-
-        return superResult
+        return superResult != nil && superResult != self
+            ? superResult
+            : blockedView?.hitTest(point, with: event)
     }
     
 }

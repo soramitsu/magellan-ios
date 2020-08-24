@@ -155,7 +155,7 @@ extension PlaceInfo {
     }
 
     var nextWorkingDay: WorkingDay? {
-        let nextDayNumber = weekDayNumber == 6 ? 0 : weekDayNumber + 1
+        let nextDayNumber = (weekDayNumber + 1) % 7
         return workSchedule?
             .workDays?
             .first(where: { $0.dayOfWeek.numberOfWeek == nextDayNumber })

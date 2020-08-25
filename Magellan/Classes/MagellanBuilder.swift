@@ -23,6 +23,9 @@ public protocol MaggelanBuilderProtocol {
     
     @discardableResult
     func with(logger: LoggerProtocol) -> Self
+
+    @discardableResult
+    func with(alertHelper: AlertHelperProtocol) -> Self
 }
 
 public final class MaggelanBuilder {
@@ -33,6 +36,7 @@ public final class MaggelanBuilder {
     private var localizedResourcesFactory: LocalizedResourcesFactoryProtocol?
     private var parameters: MagellanParametersProtocol?
     private var logger: LoggerProtocol?
+    private var alertHelper: AlertHelperProtocol?
     
     /// Initializator
     /// - Parameter key: google mpas api key
@@ -51,7 +55,8 @@ extension MaggelanBuilder: MaggelanBuilderProtocol {
                                 style: self.style ?? DefaultMagellanStyle(),
                                 localizationResourcesFactory: localizedResourcesFactory ?? DefaultLocalizedResorcesFactory(),
                                 parameters: parameters ?? DefaultMagellanParameters(),
-                                logger: logger)
+                                logger: logger,
+                                alertHelper: alertHelper)
         resolver.phoneFormatter = phoneFormatter
         
         return DashboardMapAssembly.assembly(with: resolver)
@@ -79,6 +84,11 @@ extension MaggelanBuilder: MaggelanBuilderProtocol {
     
     public func with(logger: LoggerProtocol) -> Self {
         self.logger = logger
+        return self
+    }
+
+    public func with(alertHelper: AlertHelperProtocol) -> Self {
+        self.alertHelper = alertHelper
         return self
     }
 }

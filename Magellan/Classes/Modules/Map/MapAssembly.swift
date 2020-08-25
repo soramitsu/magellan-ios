@@ -15,6 +15,7 @@ final class MapAssembly {
                                      localizator: resolver.localizationResourcesFactory)
         presenter.set(parameters: resolver.parameters)
         presenter.logger = resolver.logger
+        presenter.alertHelper = resolver.alertHelper
         let markerFactory = resolver.markerFactory ?? MapMarkerDefaultFactory()
         let mapView = MapViewController(presenter: presenter, markerFactory: markerFactory, style: resolver.style)
         presenter.view = mapView

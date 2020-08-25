@@ -36,6 +36,10 @@ public protocol LocalizedResourcesFactoryProtocol {
     var filter: String { get }
     var reset: String { get }
 
+    var retry: String { get }
+    var error: String { get }
+    var loadingError: String { get }
+
 }
 
 internal extension LocalizedResourcesFactoryProtocol {
@@ -69,5 +73,7 @@ struct DefaultLocalizedResorcesFactory: LocalizedResourcesFactoryProtocol {
     let opens: String = "opens"
     let closes: String = "closes"
     let reopens: String = "reopens"
-
+    let error: String = "Error"
+    let loadingError: String = "Something went wrong. Please try again"
+    let retry: String = "Retry"
 }

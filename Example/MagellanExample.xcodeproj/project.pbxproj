@@ -33,7 +33,6 @@
 		F83F50E42446053B001AD397 /* DemoFactoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = F83F50E32446053B001AD397 /* DemoFactoryProtocol.swift */; };
 		F8524D84245836E20091ED5F /* UIFont+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8524D83245836E20091ED5F /* UIFont+Extensions.swift */; };
 		F85D275224812EB500C3B0BA /* CategoriesFilterPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F85D275124812EB500C3B0BA /* CategoriesFilterPresenterTests.swift */; };
-		F85DF3712462E43400BB977B /* MagellanErrorViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = F85DF3702462E43400BB977B /* MagellanErrorViewFactory.swift */; };
 		F86E8E3B245968940082219D /* MagellanPhoneFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F86E8E3A245968940082219D /* MagellanPhoneFormatter.swift */; };
 		F87C950224460B5D008CE9F2 /* EmptyDemo.swift in Sources */ = {isa = PBXBuildFile; fileRef = F87C950124460B5D008CE9F2 /* EmptyDemo.swift */; };
 		F87C950524460D84008CE9F2 /* EmptyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F87C950424460D84008CE9F2 /* EmptyViewController.swift */; };
@@ -88,7 +87,6 @@
 		F83F50E32446053B001AD397 /* DemoFactoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoFactoryProtocol.swift; sourceTree = "<group>"; };
 		F8524D83245836E20091ED5F /* UIFont+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Extensions.swift"; sourceTree = "<group>"; };
 		F85D275124812EB500C3B0BA /* CategoriesFilterPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesFilterPresenterTests.swift; sourceTree = "<group>"; };
-		F85DF3702462E43400BB977B /* MagellanErrorViewFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MagellanErrorViewFactory.swift; path = MagellanExample/DemoModule/MagellanErrorViewFactory.swift; sourceTree = SOURCE_ROOT; };
 		F86E8E3A245968940082219D /* MagellanPhoneFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagellanPhoneFormatter.swift; sourceTree = "<group>"; };
 		F87C950124460B5D008CE9F2 /* EmptyDemo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyDemo.swift; sourceTree = "<group>"; };
 		F87C950424460D84008CE9F2 /* EmptyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyViewController.swift; sourceTree = "<group>"; };
@@ -181,7 +179,6 @@
 			isa = PBXGroup;
 			children = (
 				F83422ED2448736400E0C685 /* DummyDemo.swift */,
-				F85DF3702462E43400BB977B /* MagellanErrorViewFactory.swift */,
 			);
 			path = DummyMap;
 			sourceTree = "<group>";
@@ -524,7 +521,6 @@
 				F838F050244992A100F34627 /* NetworkResolver.swift in Sources */,
 				F82317792445D54F00D4B95F /* DemoViewController.swift in Sources */,
 				F838F0522449968600F34627 /* Mocks.swift in Sources */,
-				F85DF3712462E43400BB977B /* MagellanErrorViewFactory.swift in Sources */,
 				F87C950524460D84008CE9F2 /* EmptyViewController.swift in Sources */,
 				F83422EE2448736400E0C685 /* DummyDemo.swift in Sources */,
 				F87C950224460B5D008CE9F2 /* EmptyDemo.swift in Sources */,

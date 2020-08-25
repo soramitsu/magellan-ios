@@ -72,6 +72,7 @@ final class MapPresenter: MapPresenterProtocol {
     }
     
     var logger: LoggerDecorator?
+    var alertHelper: AlertHelperProtocol?
     
     init(service: MagellanServicePrototcol,
          locationService: UserLocationServiceProtocol,
@@ -104,10 +105,18 @@ final class MapPresenter: MapPresenterProtocol {
                 self.categories = items
                 self.view?.setFilterButton(hidden: false)
             default:
-                // todo: show toast
+                self.showErrorAlert { [weak self] in
+                    self?.loadCategories()
+                }
                 return
             }
         }
+    }
+
+    private func showErrorAlert(with retry: @escaping () -> Void) {
+        alertHelper?.showToast(with: localizator.loadingError,
+                               title: localizator.error,
+                               action: (title: localizator.retry, action: retry))
     }
     
     func loadPlaces(topLeft: Coordinates, bottomRight: Coordinates, zoom: Int) {
@@ -133,8 +142,12 @@ final class MapPresenter: MapPresenterProtocol {
             self.logger?.log(result)
             switch result {
             case .failure(let error):
-                self.coordinator?.hideDetailsIfPresented()
-                // todo: show toast if needed
+                self.showErrorAlert { [weak self] in
+                    self?.loadPlaces(topLeft: topLeft,
+                                     bottomRight: bottomRight,
+                                     zoom: zoom,
+                                     search: search)
+                }
             case .success(let response):
                 self.places = response.locations.compactMap { PlaceViewModel(place: $0, locale: self.localizator.locale) }
                 self.clusters = response.clusters.compactMap { ClusterViewModel(cluster: $0) }
@@ -163,7 +176,9 @@ final class MapPresenter: MapPresenterProtocol {
                 self.view?.setButtons(hidden: true)
             case .failure(let error):
                 self.logger?.log(error)
-                // toso: show toast
+                self.showErrorAlert { [weak self] in
+                    self?.showDetails(place: place)
+                }
             }
         }
     }

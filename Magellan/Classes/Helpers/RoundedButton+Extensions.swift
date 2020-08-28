@@ -8,15 +8,34 @@
 import SoraUI
 
 extension RoundedButton {
+
+    struct ShadowStyle {
+        let opacity: Float
+        let color: UIColor
+        let offset: CGSize
+        let radius: CGFloat
+    }
+
+    private static let defaultShadowStyle = ShadowStyle(opacity: 0.15,
+                                                        color: UIColor(red: 0.141, green: 0.149, blue: 0.161, alpha: 1),
+                                                        offset: CGSize(width: 0, height: 4),
+                                                        radius: 8)
     func configureRound(with side: CGFloat,
-                        shadowOpacity: CGFloat = 0.36,
-                        size: CGSize = CGSize(width: 0, height: 2),
-                        fillColor: UIColor = .white) {
+                        fillColor: UIColor = .white,
+                        highlightedFillColor: UIColor = .white,
+                        changesContentOpacityOnHighlighted: Bool = true,
+                        shadowStyle: ShadowStyle = RoundedButton.defaultShadowStyle) {
         roundedBackgroundView?.cornerRadius = side / 2
-        roundedBackgroundView?.shadowOpacity = 0.36
-        roundedBackgroundView?.shadowOffset = CGSize(width: 0, height: 2)
-        roundedBackgroundView?.fillColor = .white
-        roundedBackgroundView?.highlightedFillColor = .white
-        changesContentOpacityWhenHighlighted = true
+        roundedBackgroundView?.shapePath
+        roundedBackgroundView?.shadowOpacity = shadowStyle.opacity
+        roundedBackgroundView?.shadowOffset = shadowStyle.offset
+        roundedBackgroundView?.shadowRadius = shadowStyle.radius
+        roundedBackgroundView?.fillColor = fillColor
+        roundedBackgroundView?.highlightedFillColor = highlightedFillColor
+        changesContentOpacityWhenHighlighted = changesContentOpacityOnHighlighted
+        roundedBackgroundView?.layer.shadowPath = UIBezierPath(roundedRect: CGRect(origin: .zero,
+                                                                                   size: CGSize(width: side,
+                                                                                                height: side)),
+                                                               cornerRadius: side / 2).cgPath
     }
 }

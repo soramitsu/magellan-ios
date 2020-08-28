@@ -198,7 +198,7 @@ extension LocationDetailsViewController: UITableViewDelegate {
 extension LocationDetailsViewController: ModalDraggable {
 
     var isDraggableDismissEnabled: Bool {
-        false
+        true
     }
 
     func dismiss() {

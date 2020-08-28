@@ -116,15 +116,6 @@ final class CategoriesFilterViewController: UIViewController {
         resetButton.translatesAutoresizingMaskIntoConstraints = false
         resetButton.centerYAnchor.constraint(equalTo: titleLabel.centerYAnchor).isActive = true
         resetButton.rightAnchor.constraint(equalTo: headerView.rightAnchor, constant: -style.sideOffset).isActive = true
-        
-        let separatorView = UIView()
-        separatorView.backgroundColor = style.sectionsDeviderBGColor
-        headerView.addSubview(separatorView)
-        separatorView.translatesAutoresizingMaskIntoConstraints = false
-        separatorView.bottomAnchor.constraint(equalTo: headerView.bottomAnchor).isActive = true
-        separatorView.leftAnchor.constraint(equalTo: headerView.leftAnchor).isActive = true
-        separatorView.rightAnchor.constraint(equalTo: headerView.rightAnchor).isActive = true
-        separatorView.heightAnchor.constraint(equalToConstant: 1).isActive = true
 
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.topAnchor.constraint(equalTo: headerView.bottomAnchor).isActive = true

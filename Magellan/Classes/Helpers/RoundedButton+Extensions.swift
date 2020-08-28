@@ -16,10 +16,10 @@ extension RoundedButton {
         let radius: CGFloat
     }
 
-    private static let defaultShadowStyle = ShadowStyle(opacity: 0.15,
+    private static let defaultShadowStyle = ShadowStyle(opacity: 0.2,
                                                         color: UIColor(red: 0.141, green: 0.149, blue: 0.161, alpha: 1),
                                                         offset: CGSize(width: 0, height: 4),
-                                                        radius: 8)
+                                                        radius: 6)
     func configureRound(with side: CGFloat,
                         fillColor: UIColor = .white,
                         highlightedFillColor: UIColor = .white,

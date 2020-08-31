@@ -60,6 +60,8 @@ final class LocationDetailsViewController: UIViewController, LocationDetailsView
         tableView.separatorStyle = .none
         tableView.showsVerticalScrollIndicator = false
         tableView.backgroundColor = style.backgroundColor
+        tableView.isScrollEnabled = false
+
         view.addSubview(tableView)
     }
     
@@ -137,6 +139,7 @@ extension LocationDetailsViewController: UITableViewDataSource {
             return nil
         }
     }
+
 }
 
 extension LocationDetailsViewController: UITableViewDelegate {
@@ -197,8 +200,8 @@ extension LocationDetailsViewController: UITableViewDelegate {
 
 extension LocationDetailsViewController: ModalDraggable {
 
-    var isDraggableDismissEnabled: Bool {
-        true
+    var canDragg: Bool {
+        return tableView.contentOffset.y <= 0
     }
 
     func dismiss() {
@@ -208,7 +211,7 @@ extension LocationDetailsViewController: ModalDraggable {
     }
     
     var draggableView: UIView {
-        return headerView
+        return view
     }
 
     var compactHeight: CGFloat {
@@ -244,9 +247,25 @@ extension LocationDetailsViewController: ModalDraggable {
     }
     
     func viewWillChangeFrame(to frame: CGRect) {
-        let minStateOrigin = compactHeight
+        tableView.isScrollEnabled = (frame.size.height - frame.origin.y) >= maxAvailableHeight
+            && tableView.frame.size.height < tableView.contentSize.height
         tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: frame.origin.y, right: 0)
+    }
+
+    func didSetup(gesture: UIPanGestureRecognizer) {
+        gesture.delegate = self
     }
 }
 
 extension LocationDetailsViewController: NavigationBarHiding {}
+
+
+extension LocationDetailsViewController: UIGestureRecognizerDelegate {
+
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer,
+                           shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return otherGestureRecognizer.view?.isDescendant(of: view) == true
+    }
+
+}
+

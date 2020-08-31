@@ -14,10 +14,11 @@ protocol ModalDraggable {
     var compactHeight: CGFloat { get }
     var fullHeight: CGFloat { get }
     var isBeingDismissed: Bool { get }
-    var isDraggableDismissEnabled: Bool { get }
+    var canDragg: Bool { get }
     
     func dismiss()
     func viewWillChangeFrame(to frame: CGRect)
+    func didSetup(gesture: UIPanGestureRecognizer)
 }
 
 class ModalDraggablePresentationViewController: UIPresentationController {
@@ -77,6 +78,7 @@ class ModalDraggablePresentationViewController: UIPresentationController {
         containerView?.addSubview(presentedView!)
         let gesture = UIPanGestureRecognizer(target: self, action: #selector(handlePan(gesture:)))
         modalDraggable.draggableView.addGestureRecognizer(gesture)
+        modalDraggable.didSetup(gesture: gesture)
     }
     
     private var startedHeight: CGFloat = 0
@@ -91,11 +93,12 @@ class ModalDraggablePresentationViewController: UIPresentationController {
            let delta = newY - startedHeight
            startedHeight = newY
            let newOrigin = CGPoint(x: view.frame.origin.x, y: view.frame.origin.y + delta)
+           if !modalDraggable.canDragg {
+                return
+           }
+
            if view.bounds.height - newOrigin.y < modalDraggable.compactHeight - 20 {
-                if !modalDraggable.isDraggableDismissEnabled {
-                    return
-                }
-                dismissHandler()
+            dismissHandler()
                 return
            }
 
@@ -108,7 +111,8 @@ class ModalDraggablePresentationViewController: UIPresentationController {
                                     height: view.bounds.height)
            animate(view: view, frame: targetFrame)
         case .cancelled, .ended:
-            if modalDraggable.isBeingDismissed {
+            if modalDraggable.isBeingDismissed
+                || !modalDraggable.canDragg {
                 return
             }
             let futureHeight = view.frame.height - view.frame.origin.y - gesture.velocity(in: view).y

@@ -54,7 +54,6 @@ final class MapViewController: UIViewController {
     private var filterButton: RoundedButton!
     private var zoomInButton: RoundedButton!
     private var zoomOutButton: RoundedButton!
-    private var positionButton = UIButton()
     private var state: State = .normal
     private var placeMarkers: [GMSMarker] = []
     
@@ -287,18 +286,14 @@ extension MapViewController: MapViewProtocol {
     }
     
     func setFilterButton(hidden: Bool) {
-        UIView.animate(withDuration: MapConstants.contentAnimationDuration) {
-            self.filterButton.isHidden = hidden
-        }
+        self.filterButton.isHidden = hidden
     }
 
     func setButtons(hidden: Bool) {
-        UIView.animate(withDuration: MapConstants.contentAnimationDuration) {
-            self.filterButton.isHidden = hidden
-            self.positionButton.isHidden = hidden
-            self.zoomInButton.isHidden = hidden
-            self.zoomOutButton.isHidden = hidden
-        }
+        self.filterButton.isHidden = hidden
+        self.myPlaceButton.isHidden = hidden
+        self.zoomInButton.isHidden = hidden
+        self.zoomOutButton.isHidden = hidden
     }
 
     

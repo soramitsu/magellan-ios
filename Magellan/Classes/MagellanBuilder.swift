@@ -26,6 +26,12 @@ public protocol MaggelanBuilderProtocol {
 
     @discardableResult
     func with(alertHelper: AlertHelperProtocol) -> Self
+
+    @discardableResult
+    func with(appearClosure: @escaping Closure) -> Self
+
+    @discardableResult
+    func with(disappearClosure: @escaping Closure) -> Self
 }
 
 public final class MaggelanBuilder {
@@ -37,6 +43,8 @@ public final class MaggelanBuilder {
     private var parameters: MagellanParametersProtocol?
     private var logger: LoggerProtocol?
     private var alertHelper: AlertHelperProtocol?
+    private var appearsClosure: Closure?
+    private var disapersClosure: Closure?
     
     /// Initializator
     /// - Parameter key: google mpas api key
@@ -57,6 +65,8 @@ extension MaggelanBuilder: MaggelanBuilderProtocol {
                                 parameters: parameters ?? DefaultMagellanParameters(),
                                 logger: logger,
                                 alertHelper: alertHelper)
+        resolver.moduleAppersClosure = appearsClosure
+        resolver.moduleDisappersClosure = disapersClosure
         resolver.phoneFormatter = phoneFormatter
         
         return DashboardMapAssembly.assembly(with: resolver)
@@ -89,6 +99,16 @@ extension MaggelanBuilder: MaggelanBuilderProtocol {
 
     public func with(alertHelper: AlertHelperProtocol) -> Self {
         self.alertHelper = alertHelper
+        return self
+    }
+
+    public func with(appearClosure: @escaping Closure) -> Self {
+        self.appearsClosure = appearClosure
+        return self
+    }
+
+    public func with(disappearClosure: @escaping Closure) -> Self {
+        self.disapersClosure = disappearClosure
         return self
     }
 }

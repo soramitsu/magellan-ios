@@ -12,6 +12,8 @@ class DashboardMapAssembly: DashboardMapAssemblyProtocol {
         let presenter = DashboardMapPresenter(localizator: resolver.localizationResourcesFactory)
         let dashboardMapController = DashboardMapViewController(presenter: presenter)
         presenter.view = dashboardMapController
+        dashboardMapController.appearsClosure = resolver.moduleAppersClosure
+        dashboardMapController.disappearsClosure = resolver.moduleDisappersClosure
 
         let mapView = MapAssembly.assembly(with: resolver)
         let dragableView = DraggableNavigationController()

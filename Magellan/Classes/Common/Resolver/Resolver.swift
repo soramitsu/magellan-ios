@@ -3,6 +3,8 @@
 * SPDX-License-Identifier: GPL-3.0
 */
 
+public typealias Closure = () -> Void
+
 protocol ResolverProtocol {
     
     var style: MagellanStyleProtocol { get }
@@ -19,6 +21,9 @@ protocol ResolverProtocol {
     
     var logger: LoggerDecorator? { get }
     var alertHelper: AlertHelperProtocol? { get }
+
+    var moduleAppersClosure: Closure? { get set }
+    var moduleDisappersClosure: Closure? { get set }
 }
 
 extension ResolverProtocol {
@@ -41,6 +46,9 @@ final class Resolver: ResolverProtocol {
     var parameters: MagellanParametersProtocol
     private(set) var logger: LoggerDecorator?
     private(set) var alertHelper: AlertHelperProtocol?
+
+    var moduleAppersClosure: Closure?
+    var moduleDisappersClosure: Closure?
     
     init(networkOperationFactory: MiddlewareOperationFactoryProtocol,
          style: MagellanStyleProtocol,

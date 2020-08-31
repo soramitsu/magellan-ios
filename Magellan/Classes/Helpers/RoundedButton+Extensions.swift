@@ -26,16 +26,11 @@ extension RoundedButton {
                         changesContentOpacityOnHighlighted: Bool = true,
                         shadowStyle: ShadowStyle = RoundedButton.defaultShadowStyle) {
         roundedBackgroundView?.cornerRadius = side / 2
-        roundedBackgroundView?.shapePath
         roundedBackgroundView?.shadowOpacity = shadowStyle.opacity
         roundedBackgroundView?.shadowOffset = shadowStyle.offset
         roundedBackgroundView?.shadowRadius = shadowStyle.radius
         roundedBackgroundView?.fillColor = fillColor
         roundedBackgroundView?.highlightedFillColor = highlightedFillColor
         changesContentOpacityWhenHighlighted = changesContentOpacityOnHighlighted
-        roundedBackgroundView?.layer.shadowPath = UIBezierPath(roundedRect: CGRect(origin: .zero,
-                                                                                   size: CGSize(width: side,
-                                                                                                height: side)),
-                                                               cornerRadius: side / 2).cgPath
     }
 }

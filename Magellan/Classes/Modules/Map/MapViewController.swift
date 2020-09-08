@@ -77,6 +77,7 @@ final class MapViewController: UIViewController {
     override func loadView() {
         var mapView = GMSMapView()
         mapView.isMyLocationEnabled = true
+        mapView.settings.rotateGestures = false
         let position = presenter.position
         camera = GMSCameraPosition.camera(withLatitude: position.lat, longitude: position.lon, zoom: 8.0)
         mapView.camera = camera

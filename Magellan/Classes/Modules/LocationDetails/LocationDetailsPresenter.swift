@@ -12,13 +12,13 @@ final class LocationDetailsPresenter {
     
     weak var view: LocationDetailsViewProtocol?
     weak var delegate: LocationDetailsPresenterDelegate?
-    let place: PlaceInfo
+    let place: PlaceInfoViewModel
     let formatter: PhoneFormatterProtocol?
     private(set) var items: [LocationSectionViewModel] = []
     private let localizator: LocalizedResourcesFactoryProtocol
 
     init(placeInfo: PlaceInfo, localizedResourcesFactory: LocalizedResourcesFactoryProtocol, phoneFormatter: PhoneFormatterProtocol? = nil) {
-        place = placeInfo
+        place = PlaceInfoViewModel(place: placeInfo)
         formatter = phoneFormatter
         self.localizator = localizedResourcesFactory
         

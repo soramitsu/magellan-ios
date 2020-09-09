@@ -9,33 +9,7 @@ import Foundation
 import XCTest
 @testable import Magellan
 
-struct TestWorkingHours: WorkingStatusProtocol {
-
-    var day: String? {
-        Calendar.current.shortStandaloneWeekdaySymbols[Calendar.current.component(.weekday, from: currentDate)]
-    }
-
-    var startLaunchTime: String?
-    
-    var finishLaunchTime: String?
-    
-    var launchHours: String?
-    
-    var startLaunchTimeInterval: TimeInterval?
-    
-    var finishLaunchTimeInterval: TimeInterval?
-    
-    var currentDate: Date
-    var opensTime: String
-    var closesTime: String
-    var workingHours: String
-    var opensTimeInterval: TimeInterval
-    var closesTimeInterval: TimeInterval
-}
-
 class WorkingHoursTests: XCTestCase {
-    
-    var testItem: TestWorkingHours!
     
     var befoOpensDate: Date {
         return date(string: "2016-04-14T02:44:00")
@@ -56,6 +30,14 @@ class WorkingHoursTests: XCTestCase {
     var afterCloseDate: Date {
         return date(string: "2016-04-14T20:44:00")
     }
+    
+    var workingDay: WorkingDay {
+        return WorkingDay(dayOfWeek: .Monday,
+                          from: .init(hour: 9, minute: 00),
+                          to: .init(hour: 19, minute: 00),
+                          launchTimeFrom: .init(hour: 13, minute: 30),
+                          launchTimeTo: .init(hour: 14, minute: 30))
+    }
 
     func date(string: String) -> Date {
         let dateFormatter = DateFormatter()
@@ -70,24 +52,10 @@ class WorkingHoursTests: XCTestCase {
                                            opens: "opens",
                                            closes: "closes",
                                            reopens: "reopens")
+
     
-    override func setUp() {
-        testItem = TestWorkingHours(currentDate: befoOpensDate,
-                                    opensTime: "9:00",
-                                    closesTime: "18:00",
-                                    workingHours: "9:00-18:00",
-                                    opensTimeInterval: 9 * 60 * 60,
-                                    closesTimeInterval: 18 * 60 * 60)
-        testItem.startLaunchTime = "13:30"
-        testItem.startLaunchTimeInterval = 13 * 60 * 60 + 30 * 60
-        testItem.finishLaunchTime = "14:30"
-        testItem.finishLaunchTimeInterval = 14 * 60 * 60 + 30 * 60
-        super.setUp()
-    }
-    
-    override func tearDown() {
-        testItem = nil
-        super.tearDown()
+    func viewModelWith(date: Date) -> WorkingDayViewModel {
+        return WorkingDayViewModel(workingDay: workingDay, currentDate: date)
     }
     
     func testDayComponents() {
@@ -118,8 +86,7 @@ class WorkingHoursTests: XCTestCase {
     
     func testBeforeOpen() {
         // arrange
-        var item = testItem!
-        item.currentDate = befoOpensDate
+        let item = viewModelWith(date: befoOpensDate)
         
         // act
         let result = item.status(with: resources, nextWorkingDay: nil)
@@ -132,8 +99,7 @@ class WorkingHoursTests: XCTestCase {
 
     func testBeforeLaunch() {
         // arrange
-        var item = testItem!
-        item.currentDate = beforeLaunchDate
+        let item = viewModelWith(date: beforeLaunchDate)
 
         // act
         let result = item.status(with: resources, nextWorkingDay: nil)
@@ -146,8 +112,7 @@ class WorkingHoursTests: XCTestCase {
 
     func testLaunch() {
         // arrange
-        var item = testItem!
-        item.currentDate = launchDate
+        let item = viewModelWith(date: launchDate)
 
         // act
         let result = item.status(with: resources, nextWorkingDay: nil)
@@ -160,28 +125,26 @@ class WorkingHoursTests: XCTestCase {
 
     func testAfterLaunch() {
         // arrange
-        var item = testItem!
-        item.currentDate = afterLaunchDate
+        let item = viewModelWith(date: afterLaunchDate)
 
         // act
         let result = item.status(with: resources, nextWorkingDay: nil)
 
         // assert
         XCTAssertEqual(item.currentDate, afterLaunchDate)
-        XCTAssertEqual(result, "until 18:00")
+        XCTAssertEqual(result, "until 19:00")
         XCTAssertTrue(item.isOpen)
     }
 
     func testClosed() {
         // arrange
-        var item = testItem!
-        item.currentDate = afterCloseDate
-        let nextWorkingDay = TestWorkingHours(currentDate: afterCloseDate.addingTimeInterval(24 * 3600),
-                                              opensTime: "9:00",
-                                              closesTime: "18:00",
-                                              workingHours: "9:00-18:00",
-                                              opensTimeInterval: 9 * 60 * 60,
-                                              closesTimeInterval: 18 * 60 * 60)
+        let item = viewModelWith(date: afterCloseDate)
+        let nextWorkingDay = WorkingDayViewModel(workingDay: WorkingDay(dayOfWeek: .Saturday,
+                                                                        from: .init(hour: 9, minute: 00),
+                                                                        to: .init(hour: 19, minute: 00),
+                                                                        launchTimeFrom: .init(hour: 13, minute: 30),
+                                                                        launchTimeTo: .init(hour: 14, minute: 30)),
+                                                 currentDate: afterCloseDate)
 
         // act
         let result = item.status(with: resources, nextWorkingDay: nextWorkingDay)

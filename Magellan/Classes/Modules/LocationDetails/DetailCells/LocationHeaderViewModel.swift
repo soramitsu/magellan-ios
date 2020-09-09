@@ -9,7 +9,7 @@ import Foundation
 
 struct LocationHeaderViewModel {
 
-    let place: PlaceInfo
+    let place: PlaceInfoViewModel
     let localizator: LocalizedResourcesFactoryProtocol
 
     var title: String {

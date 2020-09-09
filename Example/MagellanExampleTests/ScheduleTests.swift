@@ -9,22 +9,15 @@ import Foundation
 import XCTest
 @testable import Magellan
 
-class TestSchedule: Schedule {
-    
-    override var weekDayNumber: Int {
-        return 1
-    }
-    
-}
 class ScheduleTest: XCTestCase {
     
-    func workingDay(_ dayOfWeek: WorkingDay.Day) -> WorkingDay {
+    func workingDay(_ dayOfWeek: Day) -> WorkingDay {
         return WorkingDay(dayOfWeek: dayOfWeek,
                           from: .init(hour: 9, minute: 0), to: .init(hour: 18, minute: 0), launchTimeFrom: .init(hour: 13, minute: 0), launchTimeTo: .init(hour: 14, minute: 0))
     }
     
     func testDaily() {
-        let schedule = TestSchedule(open24: false, workDays: [
+        let schedule = Schedule(open24: false, workDays: [
             workingDay(.Monday),
             workingDay(.Tuesday),
             workingDay(.Wednesday),
@@ -33,13 +26,14 @@ class ScheduleTest: XCTestCase {
             workingDay(.Saturday),
             workingDay(.Sunday),
         ])
+        let viewModel = ScheduleViewModel(schedule: schedule, weekDayNumber: 1)
         
-        XCTAssertTrue(schedule.isDaily)
-        XCTAssertEqual(schedule.description(with: DefaultLocalizedResorcesFactory()), "Daily 9:00 - 18:00\nLunch time 13:00 - 14:00")
+        XCTAssertTrue(viewModel.isDaily)
+        XCTAssertEqual(viewModel.description(with: DefaultLocalizedResorcesFactory()), "Daily 9:00 - 18:00\nLunch time 13:00 - 14:00")
     }
     
     func testTodayWithoutDay() {
-        let schedule = TestSchedule(open24: false, workDays: [
+        let schedule = Schedule(open24: false, workDays: [
             workingDay(.Monday),
             workingDay(.Tuesday),
             workingDay(.Wednesday),
@@ -47,13 +41,14 @@ class ScheduleTest: XCTestCase {
             workingDay(.Friday),
             workingDay(.Saturday),
         ])
+        let viewModel = ScheduleViewModel(schedule: schedule, weekDayNumber: 1)
         
-        XCTAssertFalse(schedule.isDaily)
-        XCTAssertEqual(schedule.description(with: DefaultLocalizedResorcesFactory()), "Today 9:00 - 18:00\nLunch time 13:00 - 14:00")
+        XCTAssertFalse(viewModel.isDaily)
+        XCTAssertEqual(viewModel.description(with: DefaultLocalizedResorcesFactory()), "Today 9:00 - 18:00\nLunch time 13:00 - 14:00")
     }
     
     func testToday() {
-        let schedule = TestSchedule(open24: false, workDays: [
+        let schedule = Schedule(open24: false, workDays: [
             workingDay(.Monday),
             workingDay(.Tuesday),
             workingDay(.Wednesday),
@@ -63,9 +58,10 @@ class ScheduleTest: XCTestCase {
             WorkingDay(dayOfWeek: .Saturday,
             from: .init(hour: 9, minute: 0), to: .init(hour: 19, minute: 0), launchTimeFrom: .init(hour: 13, minute: 0), launchTimeTo: .init(hour: 14, minute: 0))
         ])
+        let viewModel = ScheduleViewModel(schedule: schedule, weekDayNumber: 1)
         
-        XCTAssertFalse(schedule.isDaily)
-        XCTAssertEqual(schedule.description(with: DefaultLocalizedResorcesFactory()), "Today 9:00 - 18:00\nLunch time 13:00 - 14:00")
+        XCTAssertFalse(viewModel.isDaily)
+        XCTAssertEqual(viewModel.description(with: DefaultLocalizedResorcesFactory()), "Today 9:00 - 18:00\nLunch time 13:00 - 14:00")
     }
     
 }

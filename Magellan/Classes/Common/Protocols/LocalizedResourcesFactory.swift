@@ -33,7 +33,7 @@ public protocol LocalizedResourcesFactoryProtocol {
     var closes: String { get}
     var reopens: String { get}
     var today: String { get }
-    var launchTime: String { get }
+    var lunchTime: String { get }
     var daily: String { get }
     
     var filter: String { get }
@@ -80,6 +80,6 @@ struct DefaultLocalizedResorcesFactory: LocalizedResourcesFactoryProtocol {
     let loadingError: String = "Something went wrong. Please try again"
     let retry: String = "Retry"
     let today: String = "Today"
-    let launchTime: String = "Lunch time"
+    let lunchTime: String = "Lunch time"
     let daily: String = "Daily"
 }

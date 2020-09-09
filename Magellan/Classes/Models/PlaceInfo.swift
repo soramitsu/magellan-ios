@@ -62,7 +62,7 @@ extension Schedule {
         var prefix = isDaily ? localizator.daily : localizator.today
         var scheduleInfo = "\(prefix) \(workingHours)"
         if let lauchHours = currentWorkingDay?.launchHours {
-            scheduleInfo += "\n\(localizator.launchTime) \(lauchHours)"
+            scheduleInfo += "\n\(localizator.lunchTime) \(lauchHours)"
         }
         return scheduleInfo
     }

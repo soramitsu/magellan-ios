@@ -27,6 +27,14 @@
                     "to": {
                         "hour": 12,
                         "minute": 30
+                    },
+                    "launchTimeFrom": {
+                        "hour": 12,
+                        "minute": 10
+                    },
+                    "launchTimeTo": {
+                        "hour": 12,
+                        "minute": 20
                     }
                 },
                 {
@@ -38,6 +46,14 @@
                     "to": {
                         "hour": 13,
                         "minute": 30
+                    },
+                    "launchTimeFrom": {
+                        "hour": 12,
+                        "minute": 40
+                    },
+                    "launchTimeTo": {
+                        "hour": 12,
+                        "minute": 50
                     }
                 },
                 {
@@ -49,6 +65,14 @@
                     "to": {
                         "hour": 14,
                         "minute": 30
+                    },
+                    "launchTimeFrom": {
+                        "hour": 13,
+                        "minute": 40
+                    },
+                    "launchTimeTo": {
+                        "hour": 13,
+                        "minute": 50
                     }
                 },
                 {
@@ -60,6 +84,14 @@
                     "to": {
                         "hour": 15,
                         "minute": 30
+                    },
+                    "launchTimeFrom": {
+                        "hour": 14,
+                        "minute": 40
+                    },
+                    "launchTimeTo": {
+                        "hour": 14,
+                        "minute": 50
                     }
                 },
                 {
@@ -71,6 +103,14 @@
                     "to": {
                         "hour": 16,
                         "minute": 30
+                    },
+                    "launchTimeFrom": {
+                        "hour": 15,
+                        "minute": 40
+                    },
+                    "launchTimeTo": {
+                        "hour": 15,
+                        "minute": 50
                     }
                 },
                 {
@@ -82,6 +122,14 @@
                     "to": {
                         "hour": 17,
                         "minute": 30
+                    },
+                    "launchTimeFrom": {
+                        "hour": 16,
+                        "minute": 40
+                    },
+                    "launchTimeTo": {
+                        "hour": 16,
+                        "minute": 50
                     }
                 },
                 {
@@ -93,6 +141,14 @@
                     "to": {
                         "hour": 18,
                         "minute": 0
+                    },
+                    "launchTimeFrom": {
+                        "hour": 17,
+                        "minute": 40
+                    },
+                    "launchTimeTo": {
+                        "hour": 17,
+                        "minute": 50
                     }
                 }
             ]

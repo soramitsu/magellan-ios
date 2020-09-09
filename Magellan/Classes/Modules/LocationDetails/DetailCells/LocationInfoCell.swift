@@ -76,6 +76,12 @@ extension LocationInfoCell: Bindable, StyleApplicable {
         self.viewModel = viewModel as? MapDetailViewModel
         iconView.image = self.viewModel?.image
         titleLabel.text = self.viewModel?.content
+        switch self.viewModel?.type {
+        case .workingHours:
+            titleLabel.numberOfLines = 0
+        default:
+            titleLabel.numberOfLines = 1
+        }
     }
 
     func allpy(style: StyleProtocol) {

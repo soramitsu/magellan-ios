@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		17061FE073A57124647D5975 /* Pods_MagellanExampleTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A3BA81BCD1B57884BA4E8D0B /* Pods_MagellanExampleTests.framework */; };
 		A831EC652F77C08E5DB8F62B /* Pods_MagellanExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D65D4FA8123FFAC561A0302 /* Pods_MagellanExample.framework */; };
+		CECA0A4B2508C75F0070E9E0 /* ScheduleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CECA0A4A2508C75F0070E9E0 /* ScheduleTests.swift */; };
 		F819F83E2452E0BE00A6284F /* MapPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F819F83D2452E0BE00A6284F /* MapPresenterTests.swift */; };
 		F819F8402452E42200A6284F /* MapListPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F819F83F2452E42200A6284F /* MapListPresenterTests.swift */; };
 		F81E165224571BBC009C4AAD /* WorkingStatusTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F81E165124571BBC009C4AAD /* WorkingStatusTests.swift */; };
@@ -60,6 +61,7 @@
 		2F15C4D9882F4AA2FBF60436 /* Pods-MagellanExampleTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MagellanExampleTests.release.xcconfig"; path = "Target Support Files/Pods-MagellanExampleTests/Pods-MagellanExampleTests.release.xcconfig"; sourceTree = "<group>"; };
 		3D65D4FA8123FFAC561A0302 /* Pods_MagellanExample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MagellanExample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A3BA81BCD1B57884BA4E8D0B /* Pods_MagellanExampleTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MagellanExampleTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		CECA0A4A2508C75F0070E9E0 /* ScheduleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleTests.swift; sourceTree = "<group>"; };
 		E0AEDA81F225E2F5A1EF8364 /* Pods-MagellanExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MagellanExample.debug.xcconfig"; path = "Target Support Files/Pods-MagellanExample/Pods-MagellanExample.debug.xcconfig"; sourceTree = "<group>"; };
 		F819F83D2452E0BE00A6284F /* MapPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapPresenterTests.swift; sourceTree = "<group>"; };
 		F819F83F2452E42200A6284F /* MapListPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapListPresenterTests.swift; sourceTree = "<group>"; };
@@ -269,6 +271,7 @@
 				F8B2027A2445D73500B449C9 /* Info.plist */,
 				F8F238262451C92900E4945E /* GeoflashTests.swift */,
 				F81E165124571BBC009C4AAD /* WorkingStatusTests.swift */,
+				CECA0A4A2508C75F0070E9E0 /* ScheduleTests.swift */,
 			);
 			path = MagellanExampleTests;
 			sourceTree = "<group>";
@@ -541,6 +544,7 @@
 				F8805F592450800F00C8BC30 /* AutoMockable.generated.swift in Sources */,
 				F85D275224812EB500C3B0BA /* CategoriesFilterPresenterTests.swift in Sources */,
 				F819F83E2452E0BE00A6284F /* MapPresenterTests.swift in Sources */,
+				CECA0A4B2508C75F0070E9E0 /* ScheduleTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -6,10 +6,66 @@
 
 import Foundation
 
-struct Schedule: Codable, Equatable {
+class Schedule: Codable {
     
     let open24: Bool
-    let workDays: [WorkingDay]?
+    let workDays: Set<WorkingDay>?
+    
+    var weekDayNumber: Int {
+        return Calendar.current.component(.weekday, from: Date()) - 1
+    }
+    
+    init(open24: Bool, workDays: Set<WorkingDay>?) {
+        self.open24 = open24
+        self.workDays = workDays
+    }
+    
+}
+
+extension Schedule {
+    
+    var isDaily: Bool {
+        guard let workDays = workDays,
+            workDays.count == 7,
+            let first = workDays.first else {
+                return false
+        }
+        var result = true
+        for item in workDays {
+            if first.workingHours == item.workingHours
+                && first.launchHours == item.launchHours {
+                continue
+            }
+            result = false
+            break
+        }
+        
+        return result
+    }
+    
+    var currentWorkingDay: WorkingDay? {
+        return workDays?
+            .first(where: { $0.dayOfWeek.numberOfWeek == weekDayNumber })
+    }
+    
+    var nextWorkingDay: WorkingDay? {
+        let nextDayNumber = (weekDayNumber + 1) % 7
+        return workDays?
+            .first(where: { $0.dayOfWeek.numberOfWeek == nextDayNumber })
+    }
+    
+    func description(with localizator: LocalizedResourcesFactoryProtocol) -> String? {
+        guard let workingHours = currentWorkingDay?.workingHours else {
+            return nil
+        }
+        
+        var prefix = isDaily ? localizator.daily : localizator.today
+        var scheduleInfo = "\(prefix) \(workingHours)"
+        if let lauchHours = currentWorkingDay?.launchHours {
+            scheduleInfo += "\n\(localizator.launchTime) \(lauchHours)"
+        }
+        return scheduleInfo
+    }
     
 }
 
@@ -124,6 +180,12 @@ struct WorkingDay: WorkingStatusProtocol, Codable, Equatable {
     
 }
 
+extension WorkingDay: Hashable {
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(dayOfWeek.rawValue)
+    }
+}
+
 struct PlaceInfo: Coordinated {
     
     let id: String
@@ -143,23 +205,6 @@ struct PlaceInfo: Coordinated {
 }
 
 extension PlaceInfo {
-
-    var weekDayNumber: Int {
-        return Calendar.current.component(.weekday, from: Date()) - 1
-    }
-
-    var currentWorkingDay: WorkingDay? {
-        return workSchedule?
-            .workDays?
-            .first(where: { $0.dayOfWeek.numberOfWeek == weekDayNumber })
-    }
-
-    var nextWorkingDay: WorkingDay? {
-        let nextDayNumber = (weekDayNumber + 1) % 7
-        return workSchedule?
-            .workDays?
-            .first(where: { $0.dayOfWeek.numberOfWeek == nextDayNumber })
-    }
     
     var isOpen: Bool {
         
@@ -167,7 +212,7 @@ extension PlaceInfo {
             return true
         }
         
-        if let currentWorkingDay = currentWorkingDay {
+        if let currentWorkingDay = workSchedule?.currentWorkingDay {
             return currentWorkingDay.isOpen
         }
         
@@ -180,8 +225,8 @@ extension PlaceInfo {
             return resources.open
         }
 
-        if let currentWorkingDay = currentWorkingDay,
-            let status = currentWorkingDay.status(with: resources, nextWorkingDay: nextWorkingDay) {
+        if let currentWorkingDay = workSchedule?.currentWorkingDay,
+            let status = currentWorkingDay.status(with: resources, nextWorkingDay: workSchedule?.nextWorkingDay) {
             return status
         }
         

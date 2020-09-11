@@ -13,7 +13,7 @@ class ScheduleTest: XCTestCase {
     
     func workingDay(_ dayOfWeek: Day) -> WorkingDay {
         return WorkingDay(dayOfWeek: dayOfWeek,
-                          from: .init(hour: 9, minute: 0), to: .init(hour: 18, minute: 0), launchTimeFrom: .init(hour: 13, minute: 0), launchTimeTo: .init(hour: 14, minute: 0))
+                          from: .init(hour: 9, minute: 0), to: .init(hour: 18, minute: 0), lunchTimeFrom: .init(hour: 13, minute: 0), lunchTimeTo: .init(hour: 14, minute: 0))
     }
     
     func testDaily() {
@@ -56,7 +56,7 @@ class ScheduleTest: XCTestCase {
             workingDay(.Friday),
             workingDay(.Saturday),
             WorkingDay(dayOfWeek: .Saturday,
-            from: .init(hour: 9, minute: 0), to: .init(hour: 19, minute: 0), launchTimeFrom: .init(hour: 13, minute: 0), launchTimeTo: .init(hour: 14, minute: 0))
+            from: .init(hour: 9, minute: 0), to: .init(hour: 19, minute: 0), lunchTimeFrom: .init(hour: 13, minute: 0), lunchTimeTo: .init(hour: 14, minute: 0))
         ])
         let viewModel = ScheduleViewModel(schedule: schedule, weekDayNumber: 1)
         

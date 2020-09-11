@@ -27,7 +27,7 @@ struct ScheduleViewModel {
         var result = true
         for item in workDays {
             if first.workingHours == item.workingHours
-                && first.launchHours == item.launchHours {
+                && first.lunchHours == item.lunchHours {
                 continue
             }
             result = false
@@ -65,7 +65,7 @@ struct ScheduleViewModel {
         
         var prefix = isDaily ? localizator.daily : localizator.today
         var scheduleInfo = "\(prefix) \(workingHours)"
-        if let lauchHours = currentWorkingDay?.launchHours {
+        if let lauchHours = currentWorkingDay?.lunchHours {
             scheduleInfo += "\n\(localizator.lunchTime) \(lauchHours)"
         }
         return scheduleInfo

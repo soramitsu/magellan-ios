@@ -25,15 +25,15 @@ protocol WorkingStatusProtocol: Codable {
     var closesTime: String { get }
     var workingHours: String { get }
     
-    var startLaunchTime: String? { get }
-    var finishLaunchTime: String? { get }
-    var launchHours: String? { get }
+    var startLunchTime: String? { get }
+    var finishLunchTime: String? { get }
+    var lunchHours: String? { get }
     
     var opensTimeInterval: TimeInterval { get }
     var closesTimeInterval: TimeInterval  { get }
     
-    var startLaunchTimeInterval: TimeInterval? { get }
-    var finishLaunchTimeInterval: TimeInterval?  { get }
+    var startLunchTimeInterval: TimeInterval? { get }
+    var finishLunchTimeInterval: TimeInterval?  { get }
     var intervalFromDayBegins: TimeInterval  { get }
     
     var isOpen: Bool  { get }
@@ -45,26 +45,26 @@ fileprivate enum Status {
     case open
     case closed
     case beforeOpening
-    case beforeLaunchTime
-    case launchTime
+    case beforeLunchTime
+    case lunchTime
 
     static func status(with intervalFromDayBegins: TimeInterval,
          opens: TimeInterval,
          closes: TimeInterval,
-         startLaunch: TimeInterval?,
-         finishLaunch: TimeInterval?) -> Status {
+         startLunch: TimeInterval?,
+         finishLunch: TimeInterval?) -> Status {
         if intervalFromDayBegins < opens {
             return .beforeOpening
         }
 
-        if let startLaunch = startLaunch,
-            intervalFromDayBegins < startLaunch {
-            return .beforeLaunchTime
+        if let startLunch = startLunch,
+            intervalFromDayBegins < startLunch {
+            return .beforeLunchTime
         }
 
-        if let finishLaunch = finishLaunch,
-            intervalFromDayBegins < finishLaunch {
-            return .launchTime
+        if let finishLunch = finishLunch,
+            intervalFromDayBegins < finishLunch {
+            return .lunchTime
         }
 
         if intervalFromDayBegins < closes {
@@ -82,9 +82,9 @@ fileprivate enum Status {
             return true
         case .closed:
             return false
-        case .beforeLaunchTime:
+        case .beforeLunchTime:
             return true
-        case .launchTime:
+        case .lunchTime:
             return false
         }
     }
@@ -107,8 +107,8 @@ extension WorkingStatusProtocol {
         let status = Status.status(with: intervalFromDayBegins,
                                    opens: opensTimeInterval,
                                    closes: closesTimeInterval,
-                                   startLaunch: startLaunchTimeInterval,
-                                   finishLaunch: finishLaunchTimeInterval)
+                                   startLunch: startLunchTimeInterval,
+                                   finishLunch: finishLunchTimeInterval)
         
         return status.isOpen
     }
@@ -121,8 +121,8 @@ extension WorkingStatusProtocol {
         let status = Status.status(with: intervalFromDayBegins,
                                    opens: opensTimeInterval,
                                    closes: closesTimeInterval,
-                                   startLaunch: startLaunchTimeInterval,
-                                   finishLaunch: finishLaunchTimeInterval)
+                                   startLunch: startLunchTimeInterval,
+                                   finishLunch: finishLunchTimeInterval)
         switch status {
         case .beforeOpening:
             return "\(resources.opens) \(opensTime)"
@@ -134,17 +134,17 @@ extension WorkingStatusProtocol {
                 return nil
             }
             return "\(resources.opens) \(nextWorkingDay.opensTime) \(nextDay)"
-        case .beforeLaunchTime:
-            guard let startLaunchTime = startLaunchTime,
-                let finishLaunchTime = finishLaunchTime else {
+        case .beforeLunchTime:
+            guard let startLunchTime = startLunchTime,
+                let finishLunchTime = finishLunchTime else {
                 return ""
             }
-            return "\(resources.closes) \(startLaunchTime), \(resources.reopens) \(finishLaunchTime)"
-        case .launchTime:
-            guard let finishLaunchTime = finishLaunchTime else {
+            return "\(resources.closes) \(startLunchTime), \(resources.reopens) \(finishLunchTime)"
+        case .lunchTime:
+            guard let finishLunchTime = finishLunchTime else {
                 return ""
             }
-            return "\(resources.opens) \(finishLaunchTime)"
+            return "\(resources.opens) \(finishLunchTime)"
         }
         return workingHours
     }

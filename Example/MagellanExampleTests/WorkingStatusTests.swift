@@ -35,8 +35,8 @@ class WorkingHoursTests: XCTestCase {
         return WorkingDay(dayOfWeek: .Monday,
                           from: .init(hour: 9, minute: 00),
                           to: .init(hour: 19, minute: 00),
-                          launchTimeFrom: .init(hour: 13, minute: 30),
-                          launchTimeTo: .init(hour: 14, minute: 30))
+                          lunchTimeFrom: .init(hour: 13, minute: 30),
+                          lunchTimeTo: .init(hour: 14, minute: 30))
     }
 
     func date(string: String) -> Date {
@@ -142,8 +142,8 @@ class WorkingHoursTests: XCTestCase {
         let nextWorkingDay = WorkingDayViewModel(workingDay: WorkingDay(dayOfWeek: .Saturday,
                                                                         from: .init(hour: 9, minute: 00),
                                                                         to: .init(hour: 19, minute: 00),
-                                                                        launchTimeFrom: .init(hour: 13, minute: 30),
-                                                                        launchTimeTo: .init(hour: 14, minute: 30)),
+                                                                        lunchTimeFrom: .init(hour: 13, minute: 30),
+                                                                        lunchTimeTo: .init(hour: 14, minute: 30)),
                                                  currentDate: afterCloseDate)
 
         // act

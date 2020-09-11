@@ -57,8 +57,8 @@ struct WorkingDay: Codable, Equatable {
     let dayOfWeek: Day
     let from: Time
     let to: Time
-    let launchTimeFrom: Time?
-    let launchTimeTo: Time?
+    let lunchTimeFrom: Time?
+    let lunchTimeTo: Time?
     
 }
 

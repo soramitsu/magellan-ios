@@ -28,11 +28,11 @@
                         "hour": 12,
                         "minute": 30
                     },
-                    "launchTimeFrom": {
+                    "lunchTimeFrom": {
                         "hour": 12,
                         "minute": 10
                     },
-                    "launchTimeTo": {
+                    "lunchTimeTo": {
                         "hour": 12,
                         "minute": 20
                     }
@@ -47,11 +47,11 @@
                         "hour": 13,
                         "minute": 30
                     },
-                    "launchTimeFrom": {
+                    "lunchTimeFrom": {
                         "hour": 12,
                         "minute": 40
                     },
-                    "launchTimeTo": {
+                    "lunchTimeTo": {
                         "hour": 12,
                         "minute": 50
                     }
@@ -66,11 +66,11 @@
                         "hour": 14,
                         "minute": 30
                     },
-                    "launchTimeFrom": {
+                    "lunchTimeFrom": {
                         "hour": 13,
                         "minute": 40
                     },
-                    "launchTimeTo": {
+                    "lunchTimeTo": {
                         "hour": 13,
                         "minute": 50
                     }
@@ -85,11 +85,11 @@
                         "hour": 15,
                         "minute": 30
                     },
-                    "launchTimeFrom": {
+                    "lunchTimeFrom": {
                         "hour": 14,
                         "minute": 40
                     },
-                    "launchTimeTo": {
+                    "lunchTimeTo": {
                         "hour": 14,
                         "minute": 50
                     }
@@ -104,11 +104,11 @@
                         "hour": 16,
                         "minute": 30
                     },
-                    "launchTimeFrom": {
+                    "lunchTimeFrom": {
                         "hour": 15,
                         "minute": 40
                     },
-                    "launchTimeTo": {
+                    "lunchTimeTo": {
                         "hour": 15,
                         "minute": 50
                     }
@@ -123,11 +123,11 @@
                         "hour": 17,
                         "minute": 30
                     },
-                    "launchTimeFrom": {
+                    "lunchTimeFrom": {
                         "hour": 16,
                         "minute": 40
                     },
-                    "launchTimeTo": {
+                    "lunchTimeTo": {
                         "hour": 16,
                         "minute": 50
                     }
@@ -142,11 +142,11 @@
                         "hour": 18,
                         "minute": 0
                     },
-                    "launchTimeFrom": {
+                    "lunchTimeFrom": {
                         "hour": 17,
                         "minute": 40
                     },
-                    "launchTimeTo": {
+                    "lunchTimeTo": {
                         "hour": 17,
                         "minute": 50
                     }

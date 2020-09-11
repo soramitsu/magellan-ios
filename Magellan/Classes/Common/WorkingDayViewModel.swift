@@ -34,17 +34,17 @@ struct WorkingDayViewModel {
     }
     
     var lunchTimeFrom: Time? {
-        return workingDay.launchTimeFrom
+        return workingDay.lunchTimeFrom
     }
     
     var lunchTimeTo: Time? {
-        return workingDay.launchTimeTo
+        return workingDay.lunchTimeTo
     }
     
 }
 
 extension WorkingDayViewModel: WorkingStatusProtocol {
-
+    
     var opensTime: String {
         return from.description
     }
@@ -57,34 +57,34 @@ extension WorkingDayViewModel: WorkingStatusProtocol {
         return "\(from.description) - \(to.description)"
     }
     
-    var startLaunchTime: String? {
+    var startLunchTime: String? {
         return lunchTimeFrom?.description
     }
-    var finishLaunchTime: String? {
+    var finishLunchTime: String? {
         return lunchTimeTo?.description
     }
     
-    var launchHours: String? {
-        guard let launchTimeFrom = lunchTimeFrom,
-            let launchTimeTo = lunchTimeTo else {
+    var lunchHours: String? {
+        guard let lunchTimeFrom = lunchTimeFrom,
+            let lunchTimeTo = lunchTimeTo else {
                 return nil
         }
-        return "\(launchTimeFrom.description) - \(launchTimeTo.description)"
+        return "\(lunchTimeFrom.description) - \(lunchTimeTo.description)"
     }
     
-    var startLaunchTimeInterval: TimeInterval? {
-        guard let launchTimeFrom = lunchTimeFrom else {
+    var startLunchTimeInterval: TimeInterval? {
+        guard let lunchTimeFrom = lunchTimeFrom else {
             return nil
         }
-        let seconds = Int64(launchTimeFrom.hour * 60 * 60 + launchTimeFrom.minute * 60)
+        let seconds = Int64(lunchTimeFrom.hour * 60 * 60 + lunchTimeFrom.minute * 60)
         return TimeInterval(integerLiteral: seconds)
     }
     
-    var finishLaunchTimeInterval: TimeInterval?  {
-        guard let launchTimeTo = lunchTimeTo else {
+    var finishLunchTimeInterval: TimeInterval?  {
+        guard let lunchTimeTo = lunchTimeTo else {
             return nil
         }
-        let seconds = Int64(launchTimeTo.hour * 60 * 60 + launchTimeTo.minute * 60)
+        let seconds = Int64(lunchTimeTo.hour * 60 * 60 + lunchTimeTo.minute * 60)
         return TimeInterval(integerLiteral: seconds)
     }
     

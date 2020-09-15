@@ -22,7 +22,7 @@ Library allow fast integration of Soramitsu Places.
 
   s.frameworks = 'UIKit', 'CoreImage'
   s.dependency 'RobinHood', '~> 2.3.0'
-  s.dependency 'SoraUI', '~> 1.8.7'
+  s.dependency 'SoraUI'
   s.dependency 'SoraFoundation/DateProcessing', '~> 0.7.0'
   s.dependency 'SoraFoundation/NotificationHandlers', '~> 0.7.0'
   s.dependency 'SoraFoundation/Localization', '~> 0.7.0'

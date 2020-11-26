@@ -31,6 +31,10 @@ class PlaceViewModel: NSObject, Coordinated {
         return khmerType
     }
     
+    var type: String {
+        return place.type
+    }
+    
     var distance: Double {
         guard let currentLocation = currentLocation else {
             return 0.0

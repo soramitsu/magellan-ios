@@ -23,7 +23,7 @@ protocol MapMarkerFactoryProtocol {
 final class MapMarkerDefaultFactory: MapMarkerFactoryProtocol {
     
     private func iconView(for viewModel: PlaceViewModel) -> Selectable {
-        let image = self.image(for: viewModel.category)
+        let image = self.image(for: viewModel.type)
         return PlaceIconView(image: image)
     }
     

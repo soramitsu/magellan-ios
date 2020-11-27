@@ -59,7 +59,23 @@ extension MaggelanBuilder: MaggelanBuilderProtocol {
         
         let networkOperationFactory = MiddlewareOperationFactory(networkResolver: networkResolver)
         
-        let resolver = Resolver(networkOperationFactory: networkOperationFactory,
+        let resolver = Resolver(networkService: MagellanService(operationFactory: networkOperationFactory),
+                                style: self.style ?? DefaultMagellanStyle(),
+                                localizationResourcesFactory: localizedResourcesFactory ?? DefaultLocalizedResorcesFactory(),
+                                parameters: parameters ?? DefaultMagellanParameters(),
+                                logger: logger,
+                                alertHelper: alertHelper)
+        resolver.moduleAppersClosure = appearsClosure
+        resolver.moduleDisappersClosure = disapersClosure
+        resolver.phoneFormatter = phoneFormatter
+        
+        return DashboardMapAssembly.assembly(with: resolver)
+    }
+    
+    public func build(networkService: MagellanServicePrototcol) -> UIViewController {
+        GMSServices.provideAPIKey(apiKey)
+        
+        let resolver = Resolver(networkService: networkService,
                                 style: self.style ?? DefaultMagellanStyle(),
                                 localizationResourcesFactory: localizedResourcesFactory ?? DefaultLocalizedResorcesFactory(),
                                 parameters: parameters ?? DefaultMagellanParameters(),
@@ -111,4 +127,5 @@ extension MaggelanBuilder: MaggelanBuilderProtocol {
         self.disapersClosure = disappearClosure
         return self
     }
+
 }

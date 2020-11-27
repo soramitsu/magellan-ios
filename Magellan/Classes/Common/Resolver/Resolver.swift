@@ -13,7 +13,6 @@ protocol ResolverProtocol {
     var distanceFilter: Double { get set }
     var defaultCoordinate: Coordinates { get set }
     
-    var networkOperationFactory: MiddlewareOperationFactoryProtocol { get }
     var markerFactory: MapMarkerFactoryProtocol? { get set }
     
     var localizationResourcesFactory: LocalizedResourcesFactoryProtocol { get }
@@ -24,12 +23,9 @@ protocol ResolverProtocol {
 
     var moduleAppersClosure: Closure? { get set }
     var moduleDisappersClosure: Closure? { get set }
-}
+    
+    var networkService: MagellanServicePrototcol { get }
 
-extension ResolverProtocol {
-    var networkService: MagellanServicePrototcol {
-        return MagellanService(operationFactory: networkOperationFactory)
-    }
 }
 
 final class Resolver: ResolverProtocol {
@@ -40,7 +36,6 @@ final class Resolver: ResolverProtocol {
     var distanceFilter: Double = 50
     var defaultCoordinate: Coordinates = Coordinates(lat: 11.5796669, lon: 104.7501013)
     
-    let networkOperationFactory: MiddlewareOperationFactoryProtocol
     let localizationResourcesFactory: LocalizedResourcesFactoryProtocol
     var markerFactory: MapMarkerFactoryProtocol?
     var parameters: MagellanParametersProtocol
@@ -50,13 +45,14 @@ final class Resolver: ResolverProtocol {
     var moduleAppersClosure: Closure?
     var moduleDisappersClosure: Closure?
     
-    init(networkOperationFactory: MiddlewareOperationFactoryProtocol,
+    var networkService: MagellanServicePrototcol
+    
+    init(networkService: MagellanServicePrototcol,
          style: MagellanStyleProtocol,
          localizationResourcesFactory: LocalizedResourcesFactoryProtocol,
          parameters: MagellanParametersProtocol,
          logger: LoggerProtocol?,
          alertHelper: AlertHelperProtocol?) {
-        self.networkOperationFactory = networkOperationFactory
         self.style = style
         self.localizationResourcesFactory = localizationResourcesFactory
         self.parameters = parameters
@@ -64,6 +60,7 @@ final class Resolver: ResolverProtocol {
             self.logger = LoggerDecorator(logger: logger)
         }
         self.alertHelper = alertHelper
+        self.networkService = networkService
     }
     
 }

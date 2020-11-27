@@ -68,7 +68,7 @@ extension WorkingDay: Hashable {
     }
 }
 
-struct PlaceInfo: Coordinated {
+public struct PlaceInfo: Coordinated {
     
     let id: String
     let name: String
@@ -88,7 +88,7 @@ struct PlaceInfo: Coordinated {
 
 extension PlaceInfo: Codable { }
 extension PlaceInfo: Equatable {
-    static func == (lhs: PlaceInfo, rhs: PlaceInfo) -> Bool {
+    public static func == (lhs: PlaceInfo, rhs: PlaceInfo) -> Bool {
         return lhs.id == rhs.id
     }
 }

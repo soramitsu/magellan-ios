@@ -12,15 +12,18 @@ public typealias CategoriesCompletionBlock = (Result<[PlaceCategory], Error>) ->
 public typealias PlaceInfoCompletionBlock = (Result<PlaceInfo, Error>) -> Void
 public typealias PlacesCompletionBlock = (Result<PlacesResponse, Error>) -> Void
 
+public protocol Cancelable: class {
+    func cancel()
+}
 
 public protocol MagellanServicePrototcol {
     
     @discardableResult
-    func getCategories(runCompletionIn queue: DispatchQueue, completion: @escaping CategoriesCompletionBlock) -> Operation
+    func getCategories(runCompletionIn queue: DispatchQueue, completion: @escaping CategoriesCompletionBlock) -> Cancelable
     
     @discardableResult
-    func getPlace(with placeId: String, runCompletionIn queue: DispatchQueue, completion: @escaping PlaceInfoCompletionBlock) -> Operation
+    func getPlace(with placeId: String, runCompletionIn queue: DispatchQueue, completion: @escaping PlaceInfoCompletionBlock) -> Cancelable
     
     @discardableResult
-    func getPlaces(with request: PlacesRequest, runCompletionIn queue: DispatchQueue, completion: @escaping PlacesCompletionBlock) -> Operation
+    func getPlaces(with request: PlacesRequest, runCompletionIn queue: DispatchQueue, completion: @escaping PlacesCompletionBlock) -> Cancelable
 }

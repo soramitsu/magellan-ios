@@ -20,7 +20,7 @@ final class MapPresenter: MapPresenterProtocol {
     private var locationService: UserLocationServiceProtocol
     private let localizator: LocalizedResourcesFactoryProtocol
     
-    private weak var getPlacesOperation: Operation?
+    private weak var getPlacesOperation: Cancelable?
     var currentSearchText: String?
     var currentTopLeft: Coordinates?
     var currentBottomRight: Coordinates?

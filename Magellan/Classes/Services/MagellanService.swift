@@ -12,6 +12,8 @@ enum MagellanServiceError: Error {
     case noResult
 }
 
+extension Operation: Cancelable { }
+
 final class MagellanService {
     let operationQueue: OperationQueue
     let operationFactory: MiddlewareOperationFactoryProtocol
@@ -25,7 +27,7 @@ final class MagellanService {
 
 extension MagellanService: MagellanServicePrototcol {
     
-    func getCategories(runCompletionIn queue: DispatchQueue, completion: @escaping CategoriesCompletionBlock) -> Operation {
+    func getCategories(runCompletionIn queue: DispatchQueue, completion: @escaping CategoriesCompletionBlock) -> Cancelable {
         let operation = operationFactory.fetchCategories()
         
         operation.completionBlock = {
@@ -46,7 +48,7 @@ extension MagellanService: MagellanServicePrototcol {
         return operation
     }
     
-    func getPlace(with placeId: String, runCompletionIn queue: DispatchQueue, completion: @escaping PlaceInfoCompletionBlock) -> Operation {
+    func getPlace(with placeId: String, runCompletionIn queue: DispatchQueue, completion: @escaping PlaceInfoCompletionBlock) -> Cancelable {
         let operation = operationFactory.fetchPlaceInfo(with: "\(placeId)")
         
         operation.completionBlock = {
@@ -67,7 +69,7 @@ extension MagellanService: MagellanServicePrototcol {
         return operation
     }
     
-    func getPlaces(with request: PlacesRequest, runCompletionIn queue: DispatchQueue, completion: @escaping PlacesCompletionBlock) -> Operation {
+    func getPlaces(with request: PlacesRequest, runCompletionIn queue: DispatchQueue, completion: @escaping PlacesCompletionBlock) -> Cancelable {
         let operation = operationFactory.fetchPlaces(with: request)
         
         operation.completionBlock = {

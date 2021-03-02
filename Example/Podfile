@@ -11,6 +11,7 @@ target 'MagellanExample' do
   pod 'Crashlytics'
   pod 'Firebase/Analytics'
   pod 'libPhoneNumber-iOS'
+  pod 'Sourcery', '1.0.0'
 
   target 'MagellanExampleTests' do
     inherit! :search_paths

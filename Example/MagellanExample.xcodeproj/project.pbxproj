@@ -509,7 +509,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nSourcery\n";
+			shellScript = "# Run Sourcery https://github.com/krzysztofzablocki/Sourcery\n\"${PODS_ROOT}/Sourcery/bin/sourcery\"\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 

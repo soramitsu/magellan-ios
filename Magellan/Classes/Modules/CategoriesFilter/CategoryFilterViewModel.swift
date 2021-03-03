@@ -21,10 +21,6 @@ struct CategoryFilterViewModel {
         return category.name
     }
     
-    var count: String {
-        return ""
-    }
-    
     var image: UIImage {
         guard let image = UIImage(named: "filter_\(category.name.lowercased())", in: Bundle.frameworkBundle, compatibleWith: nil) else {
             return UIImage(named: "filter_other", in: Bundle.frameworkBundle, compatibleWith: nil)!

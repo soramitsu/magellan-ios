@@ -775,7 +775,7 @@ class MapViewProtocolMock: MapViewProtocol {
 // MARK: -
 class UserLocationServiceProtocolMock: UserLocationServiceProtocol {
     var currentLocation: Coordinates?
-    var delegaet: UserLocationServiceDelegate?
+    var delegate: UserLocationServiceDelegate?
 
 }
 // MARK: -

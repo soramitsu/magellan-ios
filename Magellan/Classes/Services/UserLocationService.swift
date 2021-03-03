@@ -14,13 +14,13 @@ protocol UserLocationServiceDelegate: AnyObject {
 
 protocol UserLocationServiceProtocol: AutoMockable {
     var currentLocation: Coordinates? { get }
-    var delegaet: UserLocationServiceDelegate? { get set }
+    var delegate: UserLocationServiceDelegate? { get }
 }
 
 final class UserLocationService: NSObject, UserLocationServiceProtocol {
     var currentLocation: Coordinates?
     let locationManager: CLLocationManager
-    weak var delegaet: UserLocationServiceDelegate?
+    weak var delegate: UserLocationServiceDelegate?
     
     init(distanceFilter: Double) {
         locationManager = CLLocationManager()
@@ -45,7 +45,7 @@ extension UserLocationService: CLLocationManagerDelegate {
             manager.stopUpdatingLocation()
             currentLocation = Coordinates(lat: location.coordinate.latitude,
                                           lon: location.coordinate.longitude)
-            delegaet?.userLocationDidUpdate()
+            delegate?.userLocationDidUpdate()
         }
     }
     

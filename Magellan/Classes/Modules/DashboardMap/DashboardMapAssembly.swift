@@ -27,7 +27,6 @@ class DashboardMapAssembly: DashboardMapAssemblyProtocol {
         let coordinator = DashboardMapCoordinator(container: dashboardMapController, resolver: resolver)
         coordinator.mapView = mapView
         coordinator.presenter = presenter
-        presenter.coordinator = coordinator
 
         mapView.presenter.coordinator = coordinator
         

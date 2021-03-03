@@ -10,7 +10,6 @@ final class DashboardMapPresenter: DashboardMapPresenterProtocol {
     
     let localizator: LocalizedResourcesFactoryProtocol
     weak var view: DashboardMapViewProtocol?
-    var coordinator: DashboardMapCoordinatorProtocol?
     
     init(localizator: LocalizedResourcesFactoryProtocol) {
         self.localizator = localizator

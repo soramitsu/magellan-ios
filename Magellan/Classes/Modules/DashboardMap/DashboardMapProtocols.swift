@@ -14,7 +14,6 @@ protocol DashboardMapViewProtocol: class, ControllerBackedProtocol, AutoMockable
 
 protocol DashboardMapPresenterProtocol: AnyObject {
     var view: DashboardMapViewProtocol? { get }
-    var coordinator: DashboardMapCoordinatorProtocol? { get }
 }
 
 protocol DashboardMapCoordinatorProtocol: AutoMockable {

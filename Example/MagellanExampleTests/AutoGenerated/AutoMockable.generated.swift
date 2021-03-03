@@ -200,7 +200,7 @@ class LocationDetailsPresenterDelegateMock: LocationDetailsPresenterDelegate {
 }
 // MARK: -
 // MARK: -
-class MagellanServicePrototcolMock: MagellanServiceProtocol {
+class MagellanServiceProtocolMock: MagellanServiceProtocol {
 
     //MARK: - getCategories
 
@@ -303,7 +303,6 @@ class MapCoordinatorProtocolMock: MapCoordinatorProtocol {
 // MARK: -
 class MapListPresenterProtocolMock: MapListPresenterProtocol {
     var places: [PlaceViewModel] = []
-    var view: MapListViewProtocol?
     var output: MapListOutputProtocol?
     var delegate: MapListPresenterDelegate?
 

@@ -13,7 +13,6 @@ protocol MapListViewProtocol: ControllerBackedProtocol, AutoMockable {
 
 protocol MapListPresenterProtocol: MapOutputProtocol, AutoMockable {
     var places: [PlaceViewModel] { get }
-    var view: MapListViewProtocol? { get set }
     var output: MapListOutputProtocol? { get set }
     var delegate: MapListPresenterDelegate? { get set }
     

@@ -209,7 +209,7 @@ final class MapViewController: UIViewController {
             return
         }
 
-        var cameraUpdate = GMSCameraUpdate.setTarget(myLocation.coreLocationCoordinates, zoom: 9)
+        let cameraUpdate = GMSCameraUpdate.setTarget(myLocation.coreLocationCoordinates, zoom: 9)
         mapView.moveCamera(cameraUpdate)
     }
 }

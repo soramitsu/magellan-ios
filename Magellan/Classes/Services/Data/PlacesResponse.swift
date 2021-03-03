@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct PlacesResponse: Codable {
+public struct PlacesResponse: Decodable {
     let locations: [Place]
     let clusters: [Cluster]
 }

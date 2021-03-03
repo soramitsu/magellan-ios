@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct PlacesRequest: Codable {
+public struct PlacesRequest: Encodable {
     
     let topLeft: Coordinates
     let bottomRight: Coordinates

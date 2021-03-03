@@ -9,8 +9,8 @@ import Foundation
 
 class CategoriesFilterAssembly {
     
-    static func assemble(with resolver: ResolverProtocol, filter: Set<PlaceCategory>,  categories: [PlaceCategory]) -> CategoriesFilterViewProtocol {
-        var presenter = CategoriesFilterPresenter(categories: categories,
+    static func assemble(with resolver: ResolverProtocol, filter: Set<PlaceCategory>, categories: [PlaceCategory]) -> CategoriesFilterViewProtocol {
+        let presenter = CategoriesFilterPresenter(categories: categories,
                                                   filter: filter,
                                                   localizator: resolver.localizationResourcesFactory)
         let view = CategoriesFilterViewController(presenter: presenter, style: resolver.style)

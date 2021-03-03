@@ -22,7 +22,7 @@ final class MapListViewController: UIViewController {
     private let activityIndicator = UIActivityIndicatorView(style: .gray)
     private let searchContainer = UIView()
     private let tableView = UITableView()
-    private var keyboardHandler = KeyboardHandler()
+    private let keyboardHandler = KeyboardHandler()
     private var errorView: UIView?
     
     private lazy var placeCellStyle: PlaceCell.Style = {

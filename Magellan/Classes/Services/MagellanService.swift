@@ -47,7 +47,7 @@ extension MagellanService: MagellanServiceProtocol {
     }
     
     func getPlace(with placeId: String, runCompletionIn queue: DispatchQueue, completion: @escaping PlaceInfoCompletionBlock) -> Operation {
-        let operation = operationFactory.fetchPlaceInfo(with: "\(placeId)")
+        let operation = operationFactory.fetchPlaceInfo(with: placeId)
         
         operation.completionBlock = {
             queue.async {

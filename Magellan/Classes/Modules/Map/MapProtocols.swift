@@ -18,7 +18,7 @@ protocol MapViewProtocol: class, ControllerBackedProtocol, Containable, Loadable
 
 protocol MapPresenterProtocol: MapListOutputProtocol, AutoMockable {
     
-    var view: MapViewProtocol? { get set }
+    var view: MapViewProtocol? { get }
     var coordinator: MapCoordinatorProtocol? { get set }
     var output: MapOutputProtocol? { get set }
     var categories: [PlaceCategory] { get }

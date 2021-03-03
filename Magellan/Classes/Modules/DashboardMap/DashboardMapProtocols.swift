@@ -13,12 +13,12 @@ protocol DashboardMapViewProtocol: class, ControllerBackedProtocol, AutoMockable
 }
 
 protocol DashboardMapPresenterProtocol: AnyObject {
-    var view: DashboardMapViewProtocol? { get set }
-    var coordinator: DashboardMapCoordinatorProtocol? { get set }
+    var view: DashboardMapViewProtocol? { get }
+    var coordinator: DashboardMapCoordinatorProtocol? { get }
 }
 
 protocol DashboardMapCoordinatorProtocol: AutoMockable {
-    var presenter: DashboardMapPresenterProtocol? { get set }
+    var presenter: DashboardMapPresenterProtocol? { get }
 }
 
 protocol DashboardMapAssemblyProtocol {

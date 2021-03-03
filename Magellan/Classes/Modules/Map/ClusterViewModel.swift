@@ -7,7 +7,7 @@
 
 import Foundation
 
-class ClusterViewModel: NSObject, Coordinated {
+class ClusterViewModel: Coordinated {
     
     let cluster: Cluster
     

@@ -16,8 +16,8 @@ final class MapPresenter: MapPresenterProtocol {
     weak var view: MapViewProtocol?
     weak var coordinator: MapCoordinatorProtocol?
     weak var output: MapOutputProtocol?
-    var service: MagellanServicePrototcol
-    private var locationService: UserLocationServiceProtocol
+    let service: MagellanServiceProtocol
+    private let locationService: UserLocationServiceProtocol
     private let localizator: LocalizedResourcesFactoryProtocol
     
     private weak var getPlacesOperation: Operation?
@@ -74,7 +74,7 @@ final class MapPresenter: MapPresenterProtocol {
     var logger: LoggerDecorator?
     var alertHelper: AlertHelperProtocol?
     
-    init(service: MagellanServicePrototcol,
+    init(service: MagellanServiceProtocol,
          locationService: UserLocationServiceProtocol,
          defaultPosition: Coordinates,
          localizator: LocalizedResourcesFactoryProtocol) {

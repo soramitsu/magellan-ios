@@ -23,7 +23,7 @@ final class MagellanService {
     }
 }
 
-extension MagellanService: MagellanServicePrototcol {
+extension MagellanService: MagellanServiceProtocol {
     
     func getCategories(runCompletionIn queue: DispatchQueue, completion: @escaping CategoriesCompletionBlock) -> Operation {
         let operation = operationFactory.fetchCategories()

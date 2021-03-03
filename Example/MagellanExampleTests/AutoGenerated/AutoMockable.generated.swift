@@ -200,7 +200,7 @@ class LocationDetailsPresenterDelegateMock: LocationDetailsPresenterDelegate {
 }
 // MARK: -
 // MARK: -
-class MagellanServicePrototcolMock: MagellanServicePrototcol {
+class MagellanServicePrototcolMock: MagellanServiceProtocol {
 
     //MARK: - getCategories
 

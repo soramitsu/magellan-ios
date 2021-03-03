@@ -27,7 +27,7 @@ protocol ResolverProtocol {
 }
 
 extension ResolverProtocol {
-    var networkService: MagellanServicePrototcol {
+    var networkService: MagellanServiceProtocol {
         return MagellanService(operationFactory: networkOperationFactory)
     }
 }

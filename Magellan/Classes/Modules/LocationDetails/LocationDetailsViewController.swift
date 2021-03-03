@@ -10,7 +10,7 @@ import SoraUI
 final class LocationDetailsViewController: UIViewController, LocationDetailsViewProtocol, AdaptiveDesignable {
     
     private let style: MagellanStyleProtocol
-    var presenter: LocationDetailsPresenterProtocol
+    let presenter: LocationDetailsPresenterProtocol
     
     private let tableView = UITableView(frame: .zero, style: .grouped)
     private let headerView = RoundedView()

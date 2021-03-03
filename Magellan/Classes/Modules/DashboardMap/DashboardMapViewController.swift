@@ -28,7 +28,7 @@ final class DashboardMapViewController: ContainerViewController {
     }
 
     override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+        super.viewWillDisappear(animated)
         disappearsClosure?()
     }
     

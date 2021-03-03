@@ -14,7 +14,7 @@ protocol CategoriesFilterCoordinatorProtocol: AnyObject, AutoMockable {
 protocol CategoriesFilterPresenterProtocol: AnyObject {
     
     var countOfCategories: Int { get }
-    var view: CategoriesFilterViewProtocol? { get set }
+    var view: CategoriesFilterViewProtocol? { get }
     var coordinator: CategoriesFilterCoordinatorProtocol? { get set }
     var output: CategoriesFilterOutputProtocol? { get set }
     

@@ -10,7 +10,7 @@ import Foundation
 struct Place {
     let id: String
     let name: String
-    let type: String
+    let type: String?
     let types: Types?
     let khmerType: String?
     let coordinates: Coordinates

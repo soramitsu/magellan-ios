@@ -19,7 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Fabric.with([Crashlytics.self])
         
         let demoController = DemoViewController()
-        demoController.items = [EmptyDemo(), DummyDemo()]
+        demoController.items = [EmptyDemo(), DummyDemo(), ReviewDemo()]
         
         let navigationController = UINavigationController()
         navigationController.viewControllers = [demoController]

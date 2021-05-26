@@ -45,6 +45,7 @@ extension DemoViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: UITableViewCell.reuseIdentifier, for: indexPath)
+        cell.selectionStyle = .none
         cell.textLabel?.text = items[indexPath.row].title
         return cell
     }

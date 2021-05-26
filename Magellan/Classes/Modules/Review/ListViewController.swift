@@ -15,22 +15,7 @@ protocol ListModelProtocol {
     func viewDidLoad()
 }
 
-final class ReviewListModel: ListModelProtocol {
-
-    let reviewModel: ReviewModel
-    var dataSource: UITableViewDataSource { reviewModel.dataSource }
-    var delegate: UITableViewDelegate?
-
-    internal init(reviewModel: ReviewModel) {
-        self.reviewModel = reviewModel
-    }
-    
-    func viewDidLoad() {
-        reviewModel.loadData()
-    }
-}
-
-class ListViewController: UIViewController {
+class ListViewController: UIViewController, ListViewProtocol {
     
     let model: ListModelProtocol
     let style: MagellanStyleProtocol
@@ -80,5 +65,19 @@ class ListViewController: UIViewController {
         tableView.backgroundColor = style.backgroundColor
         tableView.isScrollEnabled = false
         view.addSubview(tableView)
+    }
+}
+
+protocol ListViewProtocol: AnyObject {
+    
+    var tableView: UITableView { get }
+    
+    func reloadData()
+}
+
+extension ListViewProtocol {
+    
+    func reloadData() {
+        tableView.reloadData()
     }
 }

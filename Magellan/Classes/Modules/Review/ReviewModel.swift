@@ -7,7 +7,11 @@
 
 import Foundation
 
-class ReviewDataSource: NSObject {}
+class ReviewDataSource: NSObject {
+    
+    
+    
+}
 
 extension ReviewDataSource: UITableViewDataSource {
     
@@ -41,7 +45,9 @@ public final class ReviewAssembly {
         let reviewModel = ReviewModel()
         let model = ListModel(dataSource: reviewModel.dataSource)
         let style = DefaultMagellanStyle()
-        return ListViewController(model: model, style: style)
+        let listController = ListViewController(model: model, style: style)
+        let modalController = ModalViewController(rootViewController: listController)
+        return UINavigationController(rootViewController: modalController)
     }
     
 }

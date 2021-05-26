@@ -13,8 +13,6 @@ struct ReviewDemo: DemoFactoryProtocol {
     var title: String { "Reviews Demo" }
     
     func setupDemo(with completionBlock: @escaping DemoCompletionBlock) throws -> UIViewController {
-        let rootViewController = ReviewAssembly.assemble()
-        let navigationController = UINavigationController(rootViewController: rootViewController)
-        return navigationController
+        return ReviewAssembly.assemble()
     }
 }

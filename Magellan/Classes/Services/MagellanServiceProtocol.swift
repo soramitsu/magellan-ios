@@ -24,13 +24,3 @@ protocol MagellanServicePrototcol: AutoMockable {
     @discardableResult
     func getPlaces(with request: PlacesRequest, runCompletionIn queue: DispatchQueue, completion: @escaping PlacesCompletionBlock) -> Operation
 }
-
-protocol ReviewServiceProtocol {
-    
-    @discardableResult
-    func getAllReviews() -> Operation
-    
-    @discardableResult
-    func getLastReviews() -> Operation
-    
-}

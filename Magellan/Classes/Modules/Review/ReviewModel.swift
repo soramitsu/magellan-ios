@@ -7,29 +7,47 @@
 
 import Foundation
 
-class ReviewDataSource: NSObject {
+class PlaceReviewDataSource: NSObject {
     
+    struct ReviewSectionViewModel {
+        let title: String?
+        var items: [CellViewModelProtocol]
+    }
     
+    var place: PlaceInfoViewModel!
+    private(set) var items: [ReviewSectionViewModel] = []
     
+    private func setupContent() {
+        
+        
+        
+    }
 }
 
-extension ReviewDataSource: UITableViewDataSource {
+extension PlaceReviewDataSource: UITableViewDataSource {
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        items.count
+    }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        0
+        items[section].items.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        UITableViewCell()
+        let model = items[indexPath.section].items[indexPath.row]
+        let cell = tableView.dequeueReusableCell(withIdentifier: model.cellReusableKey, for: indexPath)
+        (cell as? Bindable)?.bind(viewModel: model)
+        return cell
     }
 }
 
 class ReviewModel {
     
     let place: Reviewable?
-    let dataSource: ReviewDataSource
+    let dataSource: UITableViewDataSource
     
-    internal init(place: Reviewable? = nil, dataSource: ReviewDataSource = ReviewDataSource()) {
+    internal init(place: Reviewable? = nil, dataSource: UITableViewDataSource = PlaceReviewDataSource()) {
         self.place = place
         self.dataSource = dataSource
     }

@@ -170,7 +170,7 @@ final class MapPresenter: MapPresenterProtocol {
             self.logger?.log(result)
             self.view?.hideLoading()
             switch result {
-            case .success(let info):
+            case .success(let info): 
                 self.coordinator?.showDetails(for: info)
                 self.selectedPlace = place
                 self.view?.setButtons(hidden: true)

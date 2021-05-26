@@ -68,7 +68,7 @@ extension WorkingDay: Hashable {
     }
 }
 
-struct PlaceInfo: Coordinated {
+struct PlaceInfo: Coordinated, Reviewable {
     
     let id: String
     let name: String
@@ -84,6 +84,7 @@ struct PlaceInfo: Coordinated {
     let promoImageUuid: String?
     let distance: String?
     let workSchedule: Schedule?
+    let score: Double?
 }
 
 extension PlaceInfo: Codable { }

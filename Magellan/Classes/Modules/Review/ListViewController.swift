@@ -7,20 +7,32 @@
 
 import UIKit
 
-final class ListModel {
+protocol ListModelProtocol {
+    
+    var dataSource: UITableViewDataSource { get }
+    var delegate: UITableViewDelegate? { get }
+    
+    func viewDidLoad()
+}
 
-    let dataSource: UITableViewDataSource
+final class ReviewListModel: ListModelProtocol {
+
+    let reviewModel: ReviewModel
+    var dataSource: UITableViewDataSource { reviewModel.dataSource }
     var delegate: UITableViewDelegate?
 
-    internal init(dataSource: UITableViewDataSource, delegate: UITableViewDelegate? = nil) {
-        self.dataSource = dataSource
-        self.delegate = delegate
+    internal init(reviewModel: ReviewModel) {
+        self.reviewModel = reviewModel
+    }
+    
+    func viewDidLoad() {
+        reviewModel.loadData()
     }
 }
 
 class ListViewController: UIViewController {
     
-    let model: ListModel
+    let model: ListModelProtocol
     let style: MagellanStyleProtocol
     
     lazy var tableView: UITableView = {
@@ -28,7 +40,7 @@ class ListViewController: UIViewController {
         return tableView
     }()
     
-    init(model: ListModel, style: MagellanStyleProtocol) {
+    init(model: ListModelProtocol, style: MagellanStyleProtocol) {
         self.model = model
         self.style = style
         super.init(nibName: nil, bundle: nil)
@@ -47,6 +59,7 @@ class ListViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        model.viewDidLoad()
     }
     
     private func layoutViews() {
@@ -60,8 +73,6 @@ class ListViewController: UIViewController {
 
     private func configureViews() {
         
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Close", style: .plain, target: self, action: #selector(dismissController))
-        
         tableView.dataSource = model.dataSource
         tableView.delegate = model.delegate
         tableView.separatorStyle = .singleLine
@@ -69,9 +80,5 @@ class ListViewController: UIViewController {
         tableView.backgroundColor = style.backgroundColor
         tableView.isScrollEnabled = false
         view.addSubview(tableView)
-    }
-    
-    @objc func dismissController() {
-        dismiss(animated: true, completion: nil)
     }
 }

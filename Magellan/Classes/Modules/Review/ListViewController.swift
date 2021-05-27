@@ -60,10 +60,7 @@ class ListViewController: UIViewController, ListViewProtocol {
         
         tableView.dataSource = model.dataSource
         tableView.delegate = model.delegate
-        tableView.separatorStyle = .singleLine
-        tableView.showsVerticalScrollIndicator = false
-        tableView.backgroundColor = style.backgroundColor
-        tableView.isScrollEnabled = false
+        tableView.separatorStyle = .none
         view.addSubview(tableView)
     }
 }

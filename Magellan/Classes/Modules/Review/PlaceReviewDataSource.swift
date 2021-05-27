@@ -1,16 +1,57 @@
 //
 /**
-* Copyright Soramitsu Co., Ltd. All Rights Reserved.
-* SPDX-License-Identifier: GPL-3.0
-*/
+ * Copyright Soramitsu Co., Ltd. All Rights Reserved.
+ * SPDX-License-Identifier: GPL-3.0
+ */
 
 
 import Foundation
 
+protocol BindableViewModelProtocol: CellViewModelProtocol {
+    
+    func bind(to cell: UITableViewCell)
+}
+
+protocol RateViewModelProtocol: BindableViewModelProtocol {
+    var rate: Double { get }
+    var comment: String { get }
+}
+
+struct RateViewModel<Cell: RateTableViewCell>: RateViewModelProtocol {
+    
+    let style: MagellanStyleProtocol
+    let score: Double
+    let reviewCount: Int
+    
+    var cellType: UITableViewCell.Type { Cell.self }
+    var rate: Double { score }
+    var comment: String { "(\(reviewCount))" }
+    
+    func bind(to cell: UITableViewCell) {
+        (cell as? Cell)?.bind(viewModel: self)
+        (cell as? Cell)?.apply(style: Cell.Style(style: style))
+    }
+}
+
+struct RateControlViewModel: BindableViewModelProtocol {
+    var cellType: UITableViewCell.Type { RateControlTableViewCell.self }
+    
+    func bind<Cell>(to cell: Cell) where Cell : UITableViewCell {}
+}
+
 class PlaceReviewDataSource: NSObject, PlaceReviewDataSourceProtocol {
-     
+    
     weak var view: ListViewProtocol?
+    let style: MagellanStyleProtocol
     private(set) var items: [ReviewSectionViewModel] = []
+    
+    init(view: ListViewProtocol? = nil,
+         style: MagellanStyleProtocol,
+         items: [ReviewSectionViewModel] = []) {
+        self.view = view
+        self.style = style
+        self.items = items
+    }
     
     func provideModel(_ model: PlaceReviewViewModel) {
         
@@ -18,11 +59,16 @@ class PlaceReviewDataSource: NSObject, PlaceReviewDataSourceProtocol {
         
         // make score section
         
-        items.append(ReviewSectionViewModel(title: "Review summary", items: []))
+        let rateItem = RateViewModel(style: style,
+                                     score: model.score,
+                                     reviewCount: model.reviewCount)
+        let scoreItems: [BindableViewModelProtocol] = [rateItem, RateControlViewModel()]
+        
+        items.append(ReviewSectionViewModel(title: "Review summary", items: scoreItems))
         
         // make reviews section
         
-        var reviewItems = [CellViewModelProtocol]()
+        var reviewItems = [BindableViewModelProtocol]()
         
         // append reviews collection
         
@@ -60,8 +106,9 @@ extension PlaceReviewDataSource: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let model = items[indexPath.section].items[indexPath.row]
-        let cell = tableView.dequeueReusableCell(withIdentifier: model.cellReusableKey, for: indexPath)
-        (cell as? Bindable)?.bind(viewModel: model)
+        let cell = tableView.dequeueReusableCell(withIdentifier: model.cellReusableKey,
+                                                 for: indexPath)
+        model.bind(to: cell)
         return cell
     }
     

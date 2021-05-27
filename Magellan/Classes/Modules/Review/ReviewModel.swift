@@ -11,12 +11,12 @@ struct PlaceReviewViewModel {
     
     let place: PlaceInfo
     var score: Double { place.score ?? 0.0 }
-    
+    var reviewCount: Int = 39
 }
 
 struct ReviewSectionViewModel: HeaderFooterViewModelProtocol {
     let title: String?
-    var items: [CellViewModelProtocol]
+    var items: [BindableViewModelProtocol]
     var viewType: UITableViewHeaderFooterView.Type { UITableViewSectionHeader.self }
 }
 

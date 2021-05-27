@@ -112,7 +112,7 @@ extension LocationDetailsViewController: UITableViewDataSource {
 
         if let style = style(for: indexPath),
             let styleApplicable = cell as? StyleApplicable {
-            styleApplicable.allpy(style: style)
+            styleApplicable.apply(style: style)
         }
 
         return cell

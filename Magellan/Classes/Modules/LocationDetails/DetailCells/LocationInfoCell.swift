@@ -84,7 +84,7 @@ extension LocationInfoCell: Bindable, StyleApplicable {
         }
     }
 
-    func allpy(style: StyleProtocol) {
+    func apply(style: StyleProtocol) {
         guard let style = style as? Style else {
             return
         }

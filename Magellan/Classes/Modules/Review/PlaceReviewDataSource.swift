@@ -28,26 +28,37 @@ struct RateViewModel<Cell: RateTableViewCell>: RateViewModelProtocol {
     var comment: String { "(\(reviewCount))" }
     
     func bind(to cell: UITableViewCell) {
-        (cell as? Cell)?.bind(viewModel: self)
-        (cell as? Cell)?.apply(style: Cell.Style(style: style))
+        (cell as? Cell).map {
+            $0.bind(viewModel: self)
+            Cell.Default(style: style).apply(to: $0)
+        }
     }
 }
 
-struct RateControlViewModel: BindableViewModelProtocol {
-    var cellType: UITableViewCell.Type { RateControlTableViewCell.self }
+protocol ControlCellViewModelProtocol: BindableViewModelProtocol {}
+
+struct ControlCellViewModel<Cell: RateControlTableViewCell>: ControlCellViewModelProtocol {
     
-    func bind<Cell>(to cell: Cell) where Cell : UITableViewCell {}
+    let style: MagellanStyleProtocol
+    var cellType: UITableViewCell.Type { Cell.self }
+
+    func bind(to cell: UITableViewCell) {
+        (cell as? Cell).map {
+            $0.bind(viewModel: self)
+            Cell.Default(style: style).apply(to: $0)
+        }
+    }
 }
 
 class PlaceReviewDataSource: NSObject, PlaceReviewDataSourceProtocol {
     
     weak var view: ListViewProtocol?
     let style: MagellanStyleProtocol
-    private(set) var items: [ReviewSectionViewModel] = []
+    private(set) var items: [HeaderFooterViewModelProtocol] = []
     
     init(view: ListViewProtocol? = nil,
          style: MagellanStyleProtocol,
-         items: [ReviewSectionViewModel] = []) {
+         items: [HeaderFooterViewModelProtocol] = []) {
         self.view = view
         self.style = style
         self.items = items
@@ -62,9 +73,11 @@ class PlaceReviewDataSource: NSObject, PlaceReviewDataSourceProtocol {
         let rateItem = RateViewModel(style: style,
                                      score: model.score,
                                      reviewCount: model.reviewCount)
-        let scoreItems: [BindableViewModelProtocol] = [rateItem, RateControlViewModel()]
+        let controlItem = ControlCellViewModel(style: style)
+        let scoreItems: [BindableViewModelProtocol] = [rateItem, controlItem]
         
-        items.append(ReviewSectionViewModel(title: "Review summary", items: scoreItems))
+        items.append(ReviewSectionViewModel(title: "Review summary", items: scoreItems,
+                                            style: style))
         
         // make reviews section
         
@@ -72,7 +85,8 @@ class PlaceReviewDataSource: NSObject, PlaceReviewDataSourceProtocol {
         
         // append reviews collection
         
-        items.append(ReviewSectionViewModel(title: "Reviews", items: reviewItems))
+        items.append(ReviewSectionViewModel(title: "Reviews", items: reviewItems,
+                                            style: style))
         
         setupContent()
     }
@@ -118,9 +132,8 @@ extension PlaceReviewDataSource: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let model = items[section]
-        let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: model.reusableKey)
-        (view as? Bindable)?.bind(viewModel: model)
-        return view
+        return tableView.dequeueReusableHeaderFooterView(withIdentifier: model.reusableKey)
+            .map { model.bind(to: $0) }
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

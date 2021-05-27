@@ -118,3 +118,43 @@ final class RatingView: UIView {
     }
 
 }
+
+extension RatingView {
+    
+    enum State {
+        
+        case disabled
+        case normal
+        
+        func apply(to view: RatingView) {
+            
+            switch self {
+            case .disabled:
+                view.commentLabel.isHidden = true
+                view.ratingLabel.isHidden = true
+            case .normal:
+                view.commentLabel.isHidden = false
+                view.ratingLabel.isHidden = false
+            }
+        
+        }
+    }
+    
+    convenience init(image: UIImage, itemSize: CGSize, spacing: CGFloat) {
+        self.init(image: image)
+        mainStack.spacing = spacing
+        layoutViews(itemSize: itemSize)
+    }
+    
+    private func layoutViews(itemSize: CGSize) {
+        mainStack.arrangedSubviews.compactMap { $0 as? UIImageView }.forEach {
+            $0.heightAnchor.constraint(equalToConstant: itemSize.height).isActive = true
+            $0.widthAnchor.constraint(equalToConstant: itemSize.height).isActive = true
+        }
+    }
+    
+    func set(_ state: State) {
+        state.apply(to: self)
+    }
+    
+}

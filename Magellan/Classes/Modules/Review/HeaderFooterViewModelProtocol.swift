@@ -8,7 +8,11 @@
 import Foundation
 
 protocol HeaderFooterViewModelProtocol: ViewModelProtocol {
+    var items: [BindableViewModelProtocol] { get }
     var viewType: UITableViewHeaderFooterView.Type { get }
+    
+    @discardableResult
+    func bind(to view: UITableViewHeaderFooterView) -> UITableViewHeaderFooterView
 }
 
 extension HeaderFooterViewModelProtocol {

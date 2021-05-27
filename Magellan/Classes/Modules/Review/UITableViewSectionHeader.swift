@@ -44,9 +44,26 @@ final class UITableViewSectionHeader: UITableViewHeaderFooterView {
     }
 }
 
-extension UITableViewSectionHeader: Bindable {
+extension UITableViewSectionHeader {
     
-    func bind(viewModel: ViewModelProtocol) {
+    func bind(viewModel: ReviewSectionViewModelProtocol) {
         titleLabel.text = (viewModel as? ReviewSectionViewModel)?.title
+    }
+}
+
+extension UITableViewSectionHeader {
+    
+    // MARK: HeaderFooterStyles
+    
+    struct Default: ViewStylable {
+        
+        let style: MagellanStyleProtocol
+        
+        func apply(to view: UIView) {
+            (view as? UITableViewSectionHeader).map {
+                $0.titleLabel.font = style.semiBold15
+                $0.titleLabel.textColor = style.textAfro
+            }
+        }
     }
 }

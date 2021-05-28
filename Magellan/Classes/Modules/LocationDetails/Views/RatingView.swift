@@ -19,6 +19,8 @@ final class RatingView: UIView {
         let ratingColor: UIColor
         let bodyFont: UIFont
         let bodyColor: UIColor
+        
+        var isRateValueHidden: Bool = false
     }
 
     private let image: UIImage
@@ -97,7 +99,8 @@ final class RatingView: UIView {
     private func applyStyle() {
         ratingLabel.font = style.ratingFont
         ratingLabel.textColor = style.ratingColor
-
+        ratingLabel.isHidden = style.isRateValueHidden
+        
         commentLabel.font = style.bodyFont
         commentLabel.textColor = style.bodyColor
     }
@@ -122,7 +125,7 @@ final class RatingView: UIView {
 }
 
 extension RatingView {
-    
+        
     /// Provides rules for converting Double rating value to required visual format
     enum RoundedStrategy: Int {
         
@@ -161,16 +164,23 @@ extension RatingView {
         }
     }
     
-    convenience init(image: UIImage, itemSize: CGSize, spacing: CGFloat) {
-        self.init(image: image, strategy: .review)
+    convenience init(image: UIImage,
+                     itemSize: CGSize,
+                     spacing: CGFloat,
+                     strategy: RoundedStrategy = .review) {
+        self.init(image: image, strategy: strategy)
         mainStack.spacing = spacing
         layoutViews(itemSize: itemSize)
     }
     
     private func layoutViews(itemSize: CGSize) {
         mainStack.arrangedSubviews.compactMap { $0 as? UIImageView }.forEach {
-            $0.heightAnchor.constraint(equalToConstant: itemSize.height).isActive = true
-            $0.widthAnchor.constraint(equalToConstant: itemSize.height).isActive = true
+            let heightAnchor = $0.heightAnchor.constraint(equalToConstant: itemSize.height)
+            let widthAnchor = $0.widthAnchor.constraint(equalToConstant: itemSize.height)
+            heightAnchor.priority = .defaultHigh
+            widthAnchor.priority = .defaultHigh
+            heightAnchor.isActive = true
+            widthAnchor.isActive = true
         }
     }
     

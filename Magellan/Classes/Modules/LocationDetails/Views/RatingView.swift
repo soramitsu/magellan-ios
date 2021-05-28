@@ -22,6 +22,7 @@ final class RatingView: UIView {
     }
 
     private let image: UIImage
+    private let strategy: RoundedStrategy
     private var mainStack: UIStackView!
     private var ratingLabel: UILabel!
     private var commentLabel: UILabel!
@@ -38,14 +39,15 @@ final class RatingView: UIView {
             commentLabel.text = comment
         }
     }
-
-    init(image: UIImage) {
+    
+    init(image: UIImage, strategy: RoundedStrategy = .base) {
         self.style = Style(disabledColor: .lightGray,
                            ratingFont: .systemFont(ofSize: 14),
                            ratingColor: .black,
                            bodyFont: .systemFont(ofSize: 14),
                            bodyColor: .gray)
         self.image = image
+        self.strategy = strategy
         super.init(frame: .zero)
         configureUI()
         setupConstraints()
@@ -101,7 +103,7 @@ final class RatingView: UIView {
     }
 
     private func applyRating() {
-        let roundedRating = Int(rating)
+        let roundedRating = strategy.apply(to: rating)
         for i in 0...4 {
             let color = rating == 0 || i > roundedRating
                 ? style.disabledColor
@@ -120,6 +122,25 @@ final class RatingView: UIView {
 }
 
 extension RatingView {
+    
+    /// Provides rules for converting Double rating value to required visual format
+    enum RoundedStrategy: Int {
+        
+        case base // legacy
+        case review // Ex: 4.9 score into 3 for 0...4 visual collection
+        
+        func apply(to value: Double) -> Int {
+            
+            switch self {
+            case .base:
+                return Int(value)
+            case .review:
+                return Int(value.rounded(.down)) - 1
+            }
+            
+        }
+
+    }
     
     enum State {
         
@@ -141,7 +162,7 @@ extension RatingView {
     }
     
     convenience init(image: UIImage, itemSize: CGSize, spacing: CGFloat) {
-        self.init(image: image)
+        self.init(image: image, strategy: .review)
         mainStack.spacing = spacing
         layoutViews(itemSize: itemSize)
     }

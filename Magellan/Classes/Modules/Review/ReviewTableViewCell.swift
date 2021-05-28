@@ -98,7 +98,7 @@ class RateControlTableViewCell: UITableViewCell {
 extension RateControlTableViewCell {
     
     func bind(viewModel: ControlCellViewModelProtocol) {
-        
+        titleLabel.text = viewModel.title
     }
     
     func apply(style: ViewStylable) {
@@ -125,6 +125,8 @@ extension RateControlTableViewCell {
                                                bodyFont: style.regular14,
                                                bodyColor: style.lighterGray))
                 $0.ratingView.set(.disabled)
+                $0.titleLabel.font = style.regular14
+                $0.titleLabel.textColor = style.headerColor
             }
         }
     }
@@ -141,7 +143,7 @@ class RateTableViewCell: UITableViewCell {
     
     lazy private var ratingView: RatingView = {
         let image = UIImage(named: "rating", in: .frameworkBundle, compatibleWith: nil) ?? UIImage()
-        let view = RatingView(image: image)
+        let view = RatingView(image: image, itemSize: .init(width: 16.0, height: 16.0), spacing: 8)
         return view
     }()
     
@@ -176,7 +178,7 @@ class RateTableViewCell: UITableViewCell {
 extension RateTableViewCell {
     
     func bind(viewModel: RateViewModelProtocol) {
-        ratingView.rating = viewModel.rate 
+        ratingView.rating = 4.9
         ratingView.comment = viewModel.comment
     }
     
@@ -196,6 +198,7 @@ extension RateTableViewCell {
         func apply(to view: UIView) {
             (view as? RateTableViewCell).map {
                 $0.selectionStyle = .none
+                $0.ratingView.tintColor = style.accent
                 $0.ratingView.set(style: .init(disabledColor: style.dividerColor,
                                                ratingFont: style.semiBold14,
                                                ratingColor: style.textAfro,

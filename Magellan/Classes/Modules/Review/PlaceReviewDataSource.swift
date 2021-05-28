@@ -25,7 +25,7 @@ struct RateViewModel<Cell: RateTableViewCell>: RateViewModelProtocol {
     
     var cellType: UITableViewCell.Type { Cell.self }
     var rate: Double { score }
-    var comment: String { "(\(reviewCount))" }
+    var comment: String { "(\(reviewCount) reviews)" }
     
     func bind(to cell: UITableViewCell) {
         (cell as? Cell).map {
@@ -35,12 +35,16 @@ struct RateViewModel<Cell: RateTableViewCell>: RateViewModelProtocol {
     }
 }
 
-protocol ControlCellViewModelProtocol: BindableViewModelProtocol {}
+protocol ControlCellViewModelProtocol: BindableViewModelProtocol {
+    
+    var title: String? { get }
+}
 
 struct ControlCellViewModel<Cell: RateControlTableViewCell>: ControlCellViewModelProtocol {
     
     let style: MagellanStyleProtocol
     var cellType: UITableViewCell.Type { Cell.self }
+    var title: String?
 
     func bind(to cell: UITableViewCell) {
         (cell as? Cell).map {
@@ -73,7 +77,7 @@ class PlaceReviewDataSource: NSObject, PlaceReviewDataSourceProtocol {
         let rateItem = RateViewModel(style: style,
                                      score: model.score,
                                      reviewCount: model.reviewCount)
-        let controlItem = ControlCellViewModel(style: style)
+        let controlItem = ControlCellViewModel(style: style, title: "Rate this place")
         let scoreItems: [BindableViewModelProtocol] = [rateItem, controlItem]
         
         items.append(ReviewSectionViewModel(title: "Review summary", items: scoreItems,

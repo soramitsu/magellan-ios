@@ -55,7 +55,7 @@ extension UITableViewSectionHeader {
     
     // MARK: HeaderFooterStyles
     
-    struct Default: ViewStylable {
+    struct Default: ViewStyleProtocol {
         
         let style: MagellanStyleProtocol
         

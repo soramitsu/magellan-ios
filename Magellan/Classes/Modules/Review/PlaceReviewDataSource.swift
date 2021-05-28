@@ -12,49 +12,7 @@ protocol BindableViewModelProtocol: CellViewModelProtocol {
     func bind(to cell: UITableViewCell)
 }
 
-protocol RateViewModelProtocol: BindableViewModelProtocol {
-    var rate: Double { get }
-    var comment: String { get }
-}
-
-struct RateViewModel<Cell: RateTableViewCell>: RateViewModelProtocol {
-    
-    let style: MagellanStyleProtocol
-    let score: Double
-    let reviewCount: Int
-    
-    var cellType: UITableViewCell.Type { Cell.self }
-    var rate: Double { score }
-    var comment: String { "(\(reviewCount) reviews)" }
-    
-    func bind(to cell: UITableViewCell) {
-        (cell as? Cell).map {
-            $0.bind(viewModel: self)
-            Cell.Default(style: style).apply(to: $0)
-        }
-    }
-}
-
-protocol ControlCellViewModelProtocol: BindableViewModelProtocol {
-    
-    var title: String? { get }
-}
-
-struct ControlCellViewModel<Cell: RateControlTableViewCell>: ControlCellViewModelProtocol {
-    
-    let style: MagellanStyleProtocol
-    var cellType: UITableViewCell.Type { Cell.self }
-    var title: String?
-
-    func bind(to cell: UITableViewCell) {
-        (cell as? Cell).map {
-            $0.bind(viewModel: self)
-            Cell.Default(style: style).apply(to: $0)
-        }
-    }
-}
-
-class PlaceReviewDataSource: NSObject, PlaceReviewDataSourceProtocol {
+final class PlaceReviewDataSource: NSObject, PlaceReviewDataSourceProtocol {
     
     weak var view: ListViewProtocol?
     let style: MagellanStyleProtocol
@@ -71,28 +29,28 @@ class PlaceReviewDataSource: NSObject, PlaceReviewDataSourceProtocol {
     func provideModel(_ model: PlaceReviewViewModel) {
         
         items.removeAll()
+        items.append(makeReviewSummary(for: model))
+        items.append(makeReviews(for: model))
         
-        // make score section
-        
+        setupContent()
+    }
+
+    private func makeReviewSummary(for model: PlaceReviewViewModel) -> HeaderFooterViewModelProtocol {
         let rateItem = RateViewModel(style: style,
                                      score: model.score,
                                      reviewCount: model.reviewCount)
         let controlItem = ControlCellViewModel(style: style, title: "Rate this place")
-        let scoreItems: [BindableViewModelProtocol] = [rateItem, controlItem]
-        
-        items.append(ReviewSectionViewModel(title: "Review summary", items: scoreItems,
-                                            style: style))
-        
-        // make reviews section
-        
-        var reviewItems = [BindableViewModelProtocol]()
-        
-        // append reviews collection
-        
-        items.append(ReviewSectionViewModel(title: "Reviews", items: reviewItems,
-                                            style: style))
-        
-        setupContent()
+        let items: [BindableViewModelProtocol] = [rateItem, controlItem]
+        return ReviewSectionViewModel(title: "Review summary",
+                                      items: items,
+                                      style: style)
+    }
+
+    private func makeReviews(for model: PlaceReviewViewModel) -> HeaderFooterViewModelProtocol {
+        var items = [BindableViewModelProtocol]()
+        return ReviewSectionViewModel(title: "Reviews",
+                                      items: items,
+                                      style: style)
     }
     
     private func setupContent() {

@@ -8,57 +8,7 @@
 import Foundation
 import SoraUI
 
-protocol CommentViewModelProtocol: BindableViewModelProtocol {
-    var title: String { get }
-    var shortTitle: String? { get }
-    var rate: Double { get }
-    var creationDate: String { get }
-    var message: String { get }
-    var avatarURL: String? { get }
-}
-extension CommentViewModelProtocol {
-    
-    var title: String { "Lula Shelton" }
-    var rate: Double { 3.0 }
-    var creationDate: String { "13 Jan 2019" }
-    var message: String { "The best latte I’ve had in Phnom Penh, one of the best of any I’ve had elsewhere. Nice ambiance, good decor." }
-    var avatarURL: String? { nil }
-    var shortTitle: String? { "LS" }
-    
-}
-
-extension String {
-    
-    var shortUppercased: String {
-        components(separatedBy: .whitespaces)
-            .compactMap {
-                $0.first.map { String($0) }
-            }.joined()
-    }
-    
-}
-
-struct CommentViewModel<Cell: CommentTableViewCell>: CommentViewModelProtocol {
-    
-    let style: MagellanStyleProtocol
-    let fullName: String
-    let rate: Double
-    let date: Date
-    let text: String
-    var avatarURL: String?
-    var shortTitle: String? { title.shortUppercased }
-        
-    var cellType: UITableViewCell.Type { Cell.self }
-    
-    func bind(to cell: UITableViewCell) {
-        (cell as? Cell).map {
-            $0.bind(viewModel: self)
-            Cell.Default(style: style).apply(to: $0)
-        }
-    }
-}
-
-class CommentTableViewCell: UITableViewCell {
+final class CommentTableViewCell: UITableViewCell {
     
     private let offset: CGFloat = 8
     
@@ -193,16 +143,4 @@ extension CommentTableViewCell {
             }
         }
     }
-}
-
-extension UIView {
-    
-    func makeRound() {
-        let mask = CAShapeLayer()
-        let path = UIBezierPath(ovalIn: bounds)
-        mask.path = path.cgPath
-        mask.fillRule = .evenOdd
-        layer.mask = mask
-    }
-    
 }

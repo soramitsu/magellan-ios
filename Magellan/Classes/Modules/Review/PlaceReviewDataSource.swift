@@ -47,7 +47,7 @@ final class PlaceReviewDataSource: NSObject, PlaceReviewDataSourceProtocol {
     }
 
     private func makeReviews(for model: PlaceReviewViewModel) -> HeaderFooterViewModelProtocol {
-        var items: [BindableViewModelProtocol] = Array(repeating: CommentViewModel(style: style, fullName: "", rate: 0.0, date: Date(), text: ""), count: 8)
+        var items: [BindableViewModelProtocol] = Array(repeating: CommentViewModel(style: style, fullName: "", rate: 3.0, date: Date(), text: ""), count: 8)
         return ReviewSectionViewModel(title: "Reviews",
                                       items: items,
                                       style: style)

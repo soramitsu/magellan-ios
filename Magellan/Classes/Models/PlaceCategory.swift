@@ -9,8 +9,19 @@ import Foundation
 
 struct PlaceCategory {
     let id: UInt64
-    let name: String
+    let name: String?
+    let names: Names?
     let khmerName: String?
+}
+
+struct Names: Codable, Hashable {
+    let eng: String
+    let khm: String
+
+    enum CodingKeys: String, CodingKey {
+        case eng = "ENG"
+        case khm = "KHM"
+    }
 }
 
 extension PlaceCategory: Equatable {

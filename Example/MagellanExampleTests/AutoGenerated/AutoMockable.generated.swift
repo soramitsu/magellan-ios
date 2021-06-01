@@ -1,6 +1,5 @@
-// Generated using Sourcery 1.0.0 — https://github.com/krzysztofzablocki/Sourcery
+// Generated using Sourcery 1.4.2 — https://github.com/krzysztofzablocki/Sourcery
 // DO NOT EDIT
-
 // swiftlint:disable line_length
 // swiftlint:disable variable_name
 
@@ -529,7 +528,7 @@ class MapPresenterProtocolMock: MapPresenterProtocol {
     var loadPlacesTopLeftBottomRightZoomReceivedArguments: (topLeft: Coordinates, bottomRight: Coordinates, zoom: Int)?
     var loadPlacesTopLeftBottomRightZoomClosure: ((Coordinates, Coordinates, Int) -> Void)?
 
-    func loadPlaces(topLeft:Coordinates, bottomRight: Coordinates, zoom: Int) {
+    func loadPlaces(topLeft: Coordinates, bottomRight: Coordinates, zoom: Int) {
         loadPlacesTopLeftBottomRightZoomCallsCount += 1
         loadPlacesTopLeftBottomRightZoomReceivedArguments = (topLeft: topLeft, bottomRight: bottomRight, zoom: zoom)
         loadPlacesTopLeftBottomRightZoomClosure?(topLeft, bottomRight, zoom)

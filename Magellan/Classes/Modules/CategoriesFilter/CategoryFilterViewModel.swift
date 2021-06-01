@@ -15,10 +15,18 @@ struct CategoryFilterViewModel {
     var isSelected: Bool
     
     var name: String {
-        if locale.isKm {
-            return category.khmerName ?? category.name
+        if let names = category.names {
+            if locale.isKm {
+                return names.khm
+            }
+            return names.eng
+        } else if let name = category.name {
+            if locale.isKm {
+                return category.khmerName ?? name
+            }
+            return name
         }
-        return category.name
+        return ""
     }
     
     var count: String {
@@ -26,7 +34,7 @@ struct CategoryFilterViewModel {
     }
     
     var image: UIImage {
-        guard let image = UIImage(named: "filter_\(category.name.lowercased())", in: Bundle.frameworkBundle, compatibleWith: nil) else {
+        guard let image = UIImage(named: "filter_\(name.lowercased())", in: Bundle.frameworkBundle, compatibleWith: nil) else {
             return UIImage(named: "filter_other", in: Bundle.frameworkBundle, compatibleWith: nil)!
         }
         

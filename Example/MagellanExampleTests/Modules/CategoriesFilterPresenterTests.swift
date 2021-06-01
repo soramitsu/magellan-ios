@@ -18,9 +18,9 @@ class CategoriesFilterPresenterTests: XCTestCase {
     var categories: [PlaceCategory] {
         
         return [
-            PlaceCategory(id: 0, name: "zero", khmerName: nil),
-            PlaceCategory(id: 1, name: "first", khmerName: nil),
-            PlaceCategory(id: 2, name: "second", khmerName: nil),
+            PlaceCategory(id: 0, name: "zero", names: nil, khmerName: nil),
+            PlaceCategory(id: 1, name: "first", names: nil, khmerName: nil),
+            PlaceCategory(id: 2, name: "second", names: nil, khmerName: nil),
         ]
     }
     

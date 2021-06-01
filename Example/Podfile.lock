@@ -88,7 +88,7 @@ PODS:
     - SoraFoundation/DateProcessing (~> 0.7.0)
     - SoraFoundation/Localization (~> 0.7.0)
     - SoraFoundation/NotificationHandlers (~> 0.7.0)
-    - SoraUI (~> 1.8.7)
+    - SoraUI
     - SVProgressHUD
   - nanopb (1.30905.0):
     - nanopb/decode (= 1.30905.0)
@@ -187,8 +187,8 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  Crashlytics: 540b7e5f5da5a042647227a5e3ac51d85eed06df
-  Fabric: 706c8b8098fff96c33c0db69cbf81f9c551d0d74
+  Crashlytics: 9220f5bc89e7a618df411b4f639389dbfb0e03d2
+  Fabric: ea977e3cd9c20425516d3dafd3bf8c941c51223f
   Firebase: 210f41ca352067d83b1ba4fd2e7fb49a0c017397
   FirebaseAnalytics: a299a86ef70fcc6aa011418bc65a7e101fb9636c
   FirebaseCore: 9a41e2de78fef10f63cee30ab10e2945266bc1fc
@@ -200,7 +200,7 @@ SPEC CHECKSUMS:
   GoogleMaps: 4b5346bddfe6911bb89155d43c903020170523ac
   GoogleUtilities: 7f2f5a07f888cdb145101d6042bc4422f57e70b3
   libPhoneNumber-iOS: 0a32a9525cf8744fe02c5206eb30d571e38f7d75
-  Magellan: 5d910f07076b5ccf54b5b47ba97730e66d54687e
+  Magellan: e24062ee1d2611e1173008747a3b435814515e6e
   nanopb: c43f40fadfe79e8b8db116583945847910cbabc9
   OHHTTPStubs: cb29d2a9d09a828ecb93349a2b0c64f99e0db89f
   PromisesObjC: b14b1c6b68e306650688599de8a45e49fae81151
@@ -211,6 +211,6 @@ SPEC CHECKSUMS:
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
   SwiftLint: 7a0227733d786395817373b2d0ca799fd0093ff3
 
-PODFILE CHECKSUM: 9785b69787bd6286dff9c7dc18fb4891e7a32d9d
+PODFILE CHECKSUM: 34a0cc2bb4a6114d3d3e998fd5246befe5615d20
 
-COCOAPODS: 1.9.3
+COCOAPODS: 1.10.1

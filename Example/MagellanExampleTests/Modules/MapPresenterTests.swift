@@ -22,17 +22,17 @@ final class MapPresenterTests: XCTestCase {
     
     var categoties: [Magellan.PlaceCategory] {
         return [
-            Magellan.PlaceCategory(id: 1, name: "1", khmerName: nil),
-            Magellan.PlaceCategory(id: 2, name: "2", khmerName: nil),
-            Magellan.PlaceCategory(id: 3, name: "3", khmerName: nil),
-            Magellan.PlaceCategory(id: 4, name: "4", khmerName: nil),
+            Magellan.PlaceCategory(id: 1, name: "1", names: nil, khmerName: nil),
+            Magellan.PlaceCategory(id: 2, name: "2", names: nil, khmerName: nil),
+            Magellan.PlaceCategory(id: 3, name: "3", names: nil, khmerName: nil),
+            Magellan.PlaceCategory(id: 4, name: "4", names: nil, khmerName: nil),
         ]
     }
     
     var places: [Place] {
         return [
-            Place(id: "1", name: "first", type: "one", khmerType: nil, coordinates: Coordinates(lat: 1, lon: 1)),
-            Place(id: "2", name: "second", type: "one", khmerType: nil, coordinates: Coordinates(lat: 2, lon: 2))
+            Place(id: "1", name: "first", type: "one", types: nil, khmerType: nil, coordinates: Coordinates(lat: 1, lon: 1)),
+            Place(id: "2", name: "second", type: "one", types: nil, khmerType: nil, coordinates: Coordinates(lat: 2, lon: 2))
         ]
     }
     
@@ -40,6 +40,7 @@ final class MapPresenterTests: XCTestCase {
         return PlaceInfo(id: "1",
                 name: "name",
                 type: "type",
+                types: nil,
                 khmerType: nil,
                 coordinates: Coordinates(lat: 1, lon: 1),
                 address: "addr",

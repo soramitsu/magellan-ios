@@ -16,6 +16,7 @@ final class LocationDetailPresenterTests: XCTestCase {
         return PlaceInfo(id: "1",
                         name: "name",
                         type: "type",
+                        types: nil,
                         khmerType: nil,
                         coordinates: Coordinates(lat: 1, lon: 1),
                         address: "addr",

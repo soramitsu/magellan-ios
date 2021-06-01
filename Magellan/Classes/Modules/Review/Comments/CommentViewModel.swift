@@ -17,7 +17,6 @@ struct CommentViewModel<Cell: CommentTableViewCell>: CommentViewModelProtocol {
     var avatarURL: String?
     var shortTitle: String? { title.shortUppercased }
     var message: String { text }
-    var storage = [Int: Int]()
     var isAllowedToExpand: Bool = false
         
     var cellType: UITableViewCell.Type { Cell.self }
@@ -30,12 +29,12 @@ struct CommentViewModel<Cell: CommentTableViewCell>: CommentViewModelProtocol {
     }
     
     func expand(cell: UITableViewCell?, in tableView: UITableView, at indexPath: IndexPath) {
-        (cell as? Cell).map {
-            guard $0.strategy?.shouldExpand(view: $0.expandingView) == true else { return }
-            UIView.performWithoutAnimation {
-                tableView.beginUpdates()
-                tableView.endUpdates()
-            }
+        (cell as? Cell).map { cell in
+            guard cell.strategy.shouldExpand(to: text,
+                                           view: cell.expandingView) == true else { return }
+            
+            tableView.beginUpdates()
+            tableView.endUpdates()
         }
     }
 

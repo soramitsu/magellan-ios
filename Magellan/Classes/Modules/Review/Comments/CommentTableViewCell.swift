@@ -12,7 +12,7 @@ final class CommentTableViewCell: UITableViewCell {
     
     private let offset: CGFloat = 8
     
-    private(set) var strategy: TruncateStrategy?
+    private(set) var strategy: TruncateStrategy = TruncateStrategy()
     
     lazy private var rootStackView: UIStackView = {
         let view = UIStackView()
@@ -78,7 +78,7 @@ final class CommentTableViewCell: UITableViewCell {
     override func draw(_ rect: CGRect) {
         super.draw(rect)
         roundAvatarView()
-        strategy?.truncate(view: messageLabel)
+        strategy.truncate(view: messageLabel)
     }
     
     private func layoutViews() {
@@ -136,12 +136,8 @@ extension CommentTableViewCell {
         
         func apply(to view: UIView) {
             (view as? CommentTableViewCell).map {
-                
-                $0.strategy = TruncateStrategy(fullText: $0.messageLabel.text ?? "",
-                                               style: .init(foregroundColor: style.darkTextColor,
-                                                            font: style.semiBold14))
-                
-                
+                $0.strategy.style = .init(foregroundColor: style.darkTextColor,
+                                          font: style.semiBold14)
                 $0.selectionStyle = .none
                 $0.titleLabel.textColor = style.textAfro
                 $0.titleLabel.font = style.medium15
@@ -181,36 +177,32 @@ extension UILabel {
     
 }
 
-final class TruncateStrategy {
-    
-    internal init(fullText: String, style: ReadMoreStyle) {
-        self.fullText = fullText
-        self.style = style
-    }
+struct TruncateStrategy {
     
     struct ReadMoreStyle {
-        let foregroundColor: UIColor
-        let font: UIFont
+        var foregroundColor: UIColor = .blue
+        var font: UIFont = UIFont.systemFont(ofSize: 14.0, weight: .semibold)
     }
     
-    let style: ReadMoreStyle
+    var style: ReadMoreStyle = ReadMoreStyle()
     let readMore: String = "More"
     let tail: String = "... "
-    let fullText: String
-    var maxLines: Int = 0
     var maxRightOffset: Int = 40
 
-    func shouldExpand(view: UILabel) -> Bool {
-        guard view.numberOfLines < maxLines else { return false }
-        view.text = fullText
-        view.numberOfLines = maxLines
+    func shouldExpand(to text: String, view: UILabel) -> Bool {
+        // wrap in ExpandingLabel
+        guard view.attributedText != nil else { return false }
+        view.text = text
+        guard view.maxNumberOfLines > view.numberOfLines else { return false }
+        view.numberOfLines = view.maxNumberOfLines
         return true
     }
     
     func truncate(view: UILabel) {
         
         guard view.maxNumberOfLines > view.numberOfLines else { return }
-        maxLines = 0
+                
+        let fullText = view.text ?? ""
         
         fullText.range(of: fullText).map {
             let layoutManager = NSLayoutManager()

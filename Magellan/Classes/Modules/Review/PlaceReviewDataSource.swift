@@ -112,6 +112,15 @@ extension PlaceReviewDataSource: UITableViewDelegate {
             .map { model.bind(to: $0) }
     }
     
+    func tableView(_ tableView: UITableView,
+                   estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        200.0
+    }
+    
+    func tableView(_ tableView: UITableView, estimatedHeightForHeaderInSection section: Int) -> CGFloat {
+        48.0
+    }
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         UITableView.automaticDimension
     }

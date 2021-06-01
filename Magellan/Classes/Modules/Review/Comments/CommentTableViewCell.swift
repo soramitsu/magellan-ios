@@ -11,9 +11,7 @@ import SoraUI
 final class CommentTableViewCell: UITableViewCell {
     
     private let offset: CGFloat = 8
-    
-    private(set) var strategy: TruncateStrategy = TruncateStrategy()
-    
+        
     lazy private var rootStackView: UIStackView = {
         let view = UIStackView()
         view.axis = .vertical
@@ -59,8 +57,8 @@ final class CommentTableViewCell: UITableViewCell {
         return view
     }()
     
-    lazy private var messageLabel: UILabel = {
-        let view = UILabel()
+    lazy private var messageLabel: ExpandingLabel = {
+        let view = ExpandingLabel()
         view.numberOfLines = 5
         view.contentMode = .top
         return view
@@ -78,7 +76,7 @@ final class CommentTableViewCell: UITableViewCell {
     override func draw(_ rect: CGRect) {
         super.draw(rect)
         roundAvatarView()
-        strategy.truncate(view: messageLabel)
+        messageLabel.shouldTruncate()
     }
     
     private func layoutViews() {
@@ -115,7 +113,7 @@ final class CommentTableViewCell: UITableViewCell {
 }
 extension CommentTableViewCell {
     
-    var expandingView: UILabel { messageLabel }
+    var expandingView: ExpandingLabel { messageLabel }
     
     func bind(viewModel: CommentViewModelProtocol) {
         titleLabel.text = viewModel.title
@@ -136,8 +134,8 @@ extension CommentTableViewCell {
         
         func apply(to view: UIView) {
             (view as? CommentTableViewCell).map {
-                $0.strategy.style = .init(foregroundColor: style.darkTextColor,
-                                          font: style.semiBold14)
+                $0.messageLabel.style = .init(color: style.darkTextColor,
+                                              font: style.semiBold14)
                 $0.selectionStyle = .none
                 $0.titleLabel.textColor = style.textAfro
                 $0.titleLabel.font = style.medium15
@@ -157,91 +155,95 @@ extension CommentTableViewCell {
             }
         }
     }
+
 }
 
-extension UILabel {
+extension CommentTableViewCell {
     
-    var maxNumberOfLines: Int {
-        let maxSize = CGSize(width: frame.size.width, height: .infinity)
-        let charSize = font.lineHeight
-        let textSize = text?.boundingRect(with: maxSize,
-                                          options: .usesLineFragmentOrigin,
-                                          attributes: [.font: font],
-                                          context: nil)
-        if let textSize = textSize {
-            return Int(ceil(textSize.height/charSize))
-        } else {
-            return 1
-        }
-    }
-    
-}
-
-struct TruncateStrategy {
-    
-    struct ReadMoreStyle {
-        var foregroundColor: UIColor = .blue
-        var font: UIFont = UIFont.systemFont(ofSize: 14.0, weight: .semibold)
-    }
-    
-    var style: ReadMoreStyle = ReadMoreStyle()
-    let readMore: String = "More"
-    let tail: String = "... "
-    var maxRightOffset: Int = 40
-
-    func shouldExpand(to text: String, view: UILabel) -> Bool {
-        // wrap in ExpandingLabel
-        guard view.attributedText != nil else { return false }
-        view.text = text
-        guard view.maxNumberOfLines > view.numberOfLines else { return false }
-        view.numberOfLines = view.maxNumberOfLines
-        return true
-    }
-    
-    func truncate(view: UILabel) {
+    final class ExpandingLabel: UILabel {
         
-        guard view.maxNumberOfLines > view.numberOfLines else { return }
+        struct ReadMoreStyle {
+            var tail: String = "... "
+            var more: String = "More"
+            var maxOffset: Int = 40
+            var color: UIColor = .black
+            var font: UIFont = UIFont.systemFont(ofSize: 14)
+        }
+        var style: ReadMoreStyle = ReadMoreStyle()
+
+        private var canExpand: Bool = false
+        private var maxNumberOfLines: Int = 0
+
+        func shouldExpand(to text: String) -> Bool {
+            guard canExpand else { return false }
+            self.text = text
+            numberOfLines = maxNumberOfLines
+            return true
+        }
+        
+        @discardableResult
+        func shouldTruncate() -> Bool {
+            maxNumberOfLines = computeMaxNumberOfLines()
+            canExpand = maxNumberOfLines > numberOfLines
+            guard canExpand else { return false }
+            provideReadMoreTail()
+            return true
+        }
+        
+        private func provideReadMoreTail() {
+            let fullText = text ?? ""
+            fullText.range(of: fullText).map {
+                let layoutManager = NSLayoutManager()
+                let range = NSRange($0, in: fullText)
+                let textStorage = NSTextStorage(string: fullText)
+                let size = bounds.size
+                let textContainer = NSTextContainer(size: size)
                 
-        let fullText = view.text ?? ""
-        
-        fullText.range(of: fullText).map {
-            let layoutManager = NSLayoutManager()
-            let range = NSRange($0, in: fullText)
-            let textStorage = NSTextStorage(string: fullText)
-            let size = view.bounds.size
-            let textContainer = NSTextContainer(size: size)
-            
-            textStorage.setAttributes([.font: view.font], range: range)
-            textStorage.addLayoutManager(layoutManager)
-            textContainer.lineFragmentPadding = 0
-            textContainer.maximumNumberOfLines = view.numberOfLines
-            layoutManager.addTextContainer(textContainer)
-            
-            let glyphRange = layoutManager.glyphRange(forBoundingRect: view.bounds, in: textContainer)
-            let offset = glyphRange.length - max(readMore.count + tail.count, maxRightOffset)
-            let endIndex = fullText.index(fullText.startIndex, offsetBy: offset)
-            
-            let result = NSMutableAttributedString(string: String(fullText[..<endIndex]))
-            result.append(NSAttributedString(string: tail))
-            result.string.range(of: result.string).map {
-                result.addAttribute(.font, value: view.font, range: NSRange($0, in: result.string))
-                result.addAttribute(.foregroundColor, value: view.textColor, range: NSRange($0, in: result.string))
+                textStorage.setAttributes([.font: font], range: range)
+                textStorage.addLayoutManager(layoutManager)
+                textContainer.lineFragmentPadding = 0
+                textContainer.maximumNumberOfLines = numberOfLines
+                layoutManager.addTextContainer(textContainer)
+                
+                let glyphRange = layoutManager.glyphRange(forBoundingRect: bounds, in: textContainer)
+                let offset = glyphRange.length - max(style.more.count + style.tail.count, style.maxOffset)
+                let endIndex = fullText.index(fullText.startIndex, offsetBy: offset)
+                
+                let result = NSMutableAttributedString(string: String(fullText[..<endIndex]))
+                result.append(NSAttributedString(string: style.tail))
+                result.string.range(of: result.string).map {
+                    result.addAttribute(.font, value: font, range: NSRange($0, in: result.string))
+                    result.addAttribute(.foregroundColor, value: textColor, range: NSRange($0, in: result.string))
+                }
+                
+                result.append(NSAttributedString(string: style.more))
+                result.string.range(of: style.more).map {
+                    result.addAttribute(.font, value: font,
+                                        range: NSRange($0, in: result.string))
+                    result.addAttribute(.foregroundColor, value: textColor,
+                                        range: NSRange($0, in: result.string))
+                    result.addAttribute(.underlineStyle, value: NSUnderlineStyle.single.rawValue,
+                                        range: NSRange($0, in: result.string))
+                    result.addAttribute(.underlineColor, value: textColor,
+                                        range: NSRange($0, in: result.string))
+                }
+                
+                attributedText = result
             }
-            
-            result.append(NSAttributedString(string: readMore))
-            result.string.range(of: readMore).map {
-                result.addAttribute(.font, value: style.font,
-                                    range: NSRange($0, in: result.string))
-                result.addAttribute(.foregroundColor, value: style.foregroundColor,
-                                    range: NSRange($0, in: result.string))
-                result.addAttribute(.underlineStyle, value: NSUnderlineStyle.single.rawValue,
-                                    range: NSRange($0, in: result.string))
-                result.addAttribute(.underlineColor, value: style.foregroundColor,
-                                    range: NSRange($0, in: result.string))
-            }
-            
-            view.attributedText = result
         }
         
+        private func computeMaxNumberOfLines() -> Int {
+            let maxSize = CGSize(width: frame.size.width, height: .infinity)
+            let charSize = font.lineHeight
+            let textSize = text?.boundingRect(with: maxSize,
+                                              options: .usesLineFragmentOrigin,
+                                              attributes: [.font: font],
+                                              context: nil)
+            if let textSize = textSize {
+                return Int(ceil(textSize.height/charSize))
+            } else {
+                return 0
+            }
+        }
     }
 }

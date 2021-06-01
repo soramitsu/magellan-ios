@@ -14,7 +14,6 @@ protocol CommentViewModelProtocol: BindableViewModelProtocol {
     var creationDate: String { get }
     var message: String { get }
     var avatarURL: String? { get }
-    var isAllowedToExpand: Bool { get }
 }
 extension CommentViewModelProtocol {
     

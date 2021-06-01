@@ -57,11 +57,11 @@ final class PlaceReviewDataSource: NSObject, PlaceReviewDataSourceProtocol {
     }
 
     private func makeReviews(for model: PlaceReviewViewModel) -> HeaderFooterViewModelProtocol {
-        let shortItems = Array(repeating: CommentViewModel(style: style, fullName: "", rate: 3.0, date: Date()), count: 10)
+        let s = Array(repeating: CommentViewModel(style: style, fullName: "", rate: 3.0, date: Date()), count: 3)
         let longItem = CommentViewModel(style: style, fullName: "", rate: 3.0, date: Date(), text: "St. Christopher's Inn is in the best location in all of Berlin. You are within walking distance to the Spree Promenade, Museum Insel and, in the other direction you are within walking distance to the Berlin Hauptbahnhof...St. Christopher's Inn is in the best location in all of Berlin. You are within walking distance to the Spree Promenade, Museum Insel and, in the other direction you are within walking distance to the Berlin Hauptbahnhof...", avatarURL: nil)
         var items: [BindableViewModelProtocol] = Array(repeating: CommentViewModel(style: style, fullName: "", rate: 3.0, date: Date()), count: 2)
         items.append(longItem)
-        items.append(contentsOf: shortItems)
+        items.append(contentsOf: s)
         return ReviewSectionViewModel(title: "Reviews",
                                       items: items,
                                       style: style)

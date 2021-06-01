@@ -1,11 +1,12 @@
 //
 /**
-* Copyright Soramitsu Co., Ltd. All Rights Reserved.
-* SPDX-License-Identifier: GPL-3.0
-*/
+ * Copyright Soramitsu Co., Ltd. All Rights Reserved.
+ * SPDX-License-Identifier: GPL-3.0
+ */
 
 
 import Foundation
+import SoraFoundation
 
 struct CommentViewModel<Cell: CommentTableViewCell>: CommentViewModelProtocol {
     
@@ -17,8 +18,11 @@ struct CommentViewModel<Cell: CommentTableViewCell>: CommentViewModelProtocol {
     var avatarURL: String?
     var shortTitle: String? { title.shortUppercased }
     var message: String { text }
-    var isAllowedToExpand: Bool = false
-        
+    var creationDate: String {
+        CompoundDateFormatterBuilder(baseDate: date, calendar: .current)
+            .build(defaultFormat: "dd MMM yyyy")
+            .string(from: date)
+    }        
     var cellType: UITableViewCell.Type { Cell.self }
     
     func bind(to cell: UITableViewCell) {
@@ -29,13 +33,11 @@ struct CommentViewModel<Cell: CommentTableViewCell>: CommentViewModelProtocol {
     }
     
     func expand(cell: UITableViewCell?, in tableView: UITableView, at indexPath: IndexPath) {
-        (cell as? Cell).map { cell in
-            guard cell.strategy.shouldExpand(to: text,
-                                           view: cell.expandingView) == true else { return }
-            
+        (cell as? Cell).map {
+            guard $0.expandingView.shouldExpand(to: text) else { return }
             tableView.beginUpdates()
             tableView.endUpdates()
         }
     }
-
+    
 }

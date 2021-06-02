@@ -13,15 +13,22 @@ struct CommentViewModel<Cell: CommentTableViewCell>: CommentViewModelProtocol {
     let style: MagellanStyleProtocol
     let fullName: String
     let rate: Double
-    let date: Date
-    var text: String = "The best latte I’ve had in Phnom Penh, one of the best of any I’ve had elsewhere. Nice ambiance, good decor."
+    let date: String
+    let text: String
     var avatarURL: String?
+    
+    var title: String { fullName }
     var shortTitle: String? { title.shortUppercased }
     var message: String { text }
     var creationDate: String {
-        CompoundDateFormatterBuilder(baseDate: date, calendar: .current)
-            .build(defaultFormat: "dd MMM yyyy")
-            .string(from: date)
+        let formatter = DateFormatter()
+        formatter.calendar = Calendar(identifier: .iso8601)
+        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssXXXXX"
+        let date = formatter.date(from: date)
+//        CompoundDateFormatterBuilder()
+//            .build(defaultFormat: "dd MMM yyyy")
+//            .string(from: date)
+        return ""
     }        
     var cellType: UITableViewCell.Type { Cell.self }
     

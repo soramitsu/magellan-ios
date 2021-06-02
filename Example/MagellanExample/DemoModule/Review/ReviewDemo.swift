@@ -16,7 +16,7 @@ struct ReviewDemo: DemoFactoryProtocol {
         UIFont.registerFonts()
         guard let baseUrl = URL(string: "https://pgateway1.s1.dev.bakong.soramitsu.co.jp") else { throw URLError(.badURL) }
         let networkResolver = NetworkResolver(baseUrl: baseUrl)
-        Mocks.mockAPI()
+        Mocks.mockAPI(networkResolver)
         return ReviewAssembly.assembly(with: networkResolver)
     }
 }

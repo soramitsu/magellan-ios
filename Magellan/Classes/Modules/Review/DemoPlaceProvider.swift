@@ -17,12 +17,14 @@ final class DemoPlaceProvider: PlaceProvider {
     }
     
     func getPlaceInfo(completion: @escaping (PlaceInfo) -> Void) {
-        service.getPlace(with: "1", runCompletionIn: .main) { result in
-            switch result {
-                case .success(let place):
-                    completion(place)
-                case.failure(_): break
+        
+        service.getPlaceSummaryInfo(with: "1", runCompletionIn: .main) {
+            switch $0 {
+            case .success(let placeInfo):
+                completion(placeInfo)
+            case .failure(_): break
             }
         }
+        
     }
 }

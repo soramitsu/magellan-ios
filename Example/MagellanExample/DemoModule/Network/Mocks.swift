@@ -8,11 +8,13 @@ import OHHTTPStubs
 
 
 final class Mocks {
-    
-    static func mockAPI() {
-        mock(path: "/paymentservice/api/v1/merchants/types", filename: "types.json")
-        mock(path: "/paymentservice/api/v1/merchants/{placeId}", filename: "placeInfo.json")
-        mock(path: "/paymentservice/api/v1/merchants", filename: "placesList.json")
+        
+    static func mockAPI(_ resolver: NetworkResolver) {
+        mock(path: resolver.makePathComponent(for: .categories), filename: "types.json")
+        mock(path: resolver.makePathComponent(for: .placeInfo), filename: "placeInfo.json")
+        mock(path: resolver.makePathComponent(for: .placesList), filename: "placesList.json")
+        mock(path: resolver.makePathComponent(for: .placeAllReviews), filename: "reviewsAll.json")
+        mock(path: resolver.makePathComponent(for: .placeLastReviews), filename: "reviewsLast.json")
     }
     
     static func mock(path: String, filename: String) {

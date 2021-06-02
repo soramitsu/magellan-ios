@@ -17,7 +17,7 @@ class DummyDemo: DemoFactoryProtocol {
         let testKey = "AIzaSyA-hfkkknmSEx4BR1WsnlrydPpgYncnKkg"
         let baseUrl = URL(string: "https://pgateway1.s1.dev.bakong.soramitsu.co.jp")!
         let networkResolver = NetworkResolver(baseUrl: baseUrl)
-        Mocks.mockAPI()
+        Mocks.mockAPI(networkResolver)
         return MaggelanBuilder(key: testKey)
             .with(phoneFormatter: MagellanPhoneFormatter())
             .build(networkResolver: networkResolver)

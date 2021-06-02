@@ -12,6 +12,7 @@ struct PlaceReviewViewModel {
     let place: PlaceInfo
     var score: Double { place.score ?? 0.0 }
     var reviewCount: Int = 39
+    
 }
 
 protocol ReviewSectionViewModelProtocol: HeaderFooterViewModelProtocol {
@@ -76,4 +77,5 @@ extension ReviewModel: ListModelProtocol {
 
 protocol Reviewable {
     var score: Double? { get }
+    var review: PlaceReview? { get }
 }

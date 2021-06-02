@@ -40,7 +40,9 @@ final class PlaceReviewDataSource: NSObject, PlaceReviewDataSourceProtocol {
         
         items.removeAll()
         items.append(makeReviewSummary(for: model))
-        items.append(makeReviews(for: model))
+        makeReviews(for: model).map {
+            items.append($0)
+        }
         
         setupContent()
     }
@@ -50,21 +52,37 @@ final class PlaceReviewDataSource: NSObject, PlaceReviewDataSourceProtocol {
                                      score: model.score,
                                      reviewCount: model.reviewCount)
         let controlItem = ControlCellViewModel(style: style, title: "Rate this place")
-        let items: [BindableViewModelProtocol] = [rateItem, controlItem]
+        var items: [BindableViewModelProtocol] = [rateItem, controlItem]
+        model.place.review?.userReview.map {
+            items.append(CommentViewModel(style: style,
+                                          fullName: $0.createdByName,
+                                          rate: $0.score,
+                                          date: $0.createTime,
+                                          text: $0.text))
+        }
         return ReviewSectionViewModel(title: "Review summary",
                                       items: items,
                                       style: style)
     }
 
-    private func makeReviews(for model: PlaceReviewViewModel) -> HeaderFooterViewModelProtocol {
-        let s = Array(repeating: CommentViewModel(style: style, fullName: "", rate: 3.0, date: Date()), count: 3)
-        let longItem = CommentViewModel(style: style, fullName: "", rate: 3.0, date: Date(), text: "St. Christopher's Inn is in the best location in all of Berlin. You are within walking distance to the Spree Promenade, Museum Insel and, in the other direction you are within walking distance to the Berlin Hauptbahnhof...St. Christopher's Inn is in the best location in all of Berlin. You are within walking distance to the Spree Promenade, Museum Insel and, in the other direction you are within walking distance to the Berlin Hauptbahnhof...", avatarURL: nil)
-        var items: [BindableViewModelProtocol] = Array(repeating: CommentViewModel(style: style, fullName: "", rate: 3.0, date: Date()), count: 2)
-        items.append(longItem)
-        items.append(contentsOf: s)
-        return ReviewSectionViewModel(title: "Reviews",
-                                      items: items,
-                                      style: style)
+    private func makeReviews(for model: PlaceReviewViewModel) -> HeaderFooterViewModelProtocol? {
+        
+        model.place.review.map {
+            $0.latestReviews.map {
+                CommentViewModel(style: style,
+                                 fullName: $0.createdByName,
+                                 rate: $0.score,
+                                 date: $0.createTime,
+                                 text: $0.text)
+            }
+        }.map {
+            ReviewSectionViewModel(title: "Reviews",
+                                   items: $0,
+                                   style: style)
+        }.map {
+            return $0
+        }
+
     }
     
     private func setupContent() {

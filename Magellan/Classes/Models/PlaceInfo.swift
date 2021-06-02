@@ -68,7 +68,7 @@ extension WorkingDay: Hashable {
     }
 }
 
-struct PlaceInfo: Coordinated, Reviewable {
+struct PlaceInfo: Coordinated {
     
     let id: String
     let name: String
@@ -85,11 +85,19 @@ struct PlaceInfo: Coordinated, Reviewable {
     let distance: String?
     let workSchedule: Schedule?
     let score: Double?
+    private(set) var review: PlaceReview?
+    
 }
 
 extension PlaceInfo: Codable { }
 extension PlaceInfo: Equatable {
     static func == (lhs: PlaceInfo, rhs: PlaceInfo) -> Bool {
         return lhs.id == rhs.id
+    }
+}
+extension PlaceInfo: Reviewable {
+    
+    mutating func append(_ review: PlaceReview) {
+        self.review = review
     }
 }

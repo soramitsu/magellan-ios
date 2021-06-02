@@ -152,3 +152,59 @@ extension MiddlewareOperationFactoryProtocol {
         }
     }
 }
+
+extension ReviewOperationFactoryProtocol {
+    
+    func make<Result: Codable>(for request: AllReviewsRequest) -> BaseOperation<[Result]> {
+        
+//        let requestFactory = BlockNetworkRequestFactory {
+//            guard let url = URL(string: path) else {
+//                throw NetworkBaseError.invalidUrl
+//            }
+//
+//            var request = URLRequest(url: url)
+//            request.httpMethod = HttpMethod.post.rawValue
+//            request.addValue(HttpContentType.json.rawValue, forHTTPHeaderField: HttpHeaderKey.contentType.rawValue)
+//            request.httpBody = try self.encoder.encode(requestBody)
+//            return request
+//        }
+//
+//        let resultFactory = AnyNetworkResultFactory<PlacesResponse> { data in
+//            let result = try self.decoder.decode(ResultData<PlacesResponse>.self, from: data)
+//
+//            if let error = self.error(for: result.status, requestType: .placesList) {
+//                throw error
+//            }
+//
+//            guard let places = result.result else {
+//                throw NetworkBaseError.unexpectedResponseObject
+//            }
+//
+//            return places
+//        }
+        
+        let requestFactory = BlockNetworkRequestFactory {
+            
+        }
+        
+        let resultFactory = AnyNetworkResultFactory<Result> {
+            
+        }
+        
+        let operation = NetworkOperation(requestFactory: requestFactory,
+                                         resultFactory: resultFactory)
+        operation.requestModifier = networkResolver.adapter(for: .categories)
+        
+        return operation
+    }
+    
+    func make<Result: Codable>(for request: LastReviewsRequest) -> BaseOperation<[Result]> {
+        
+        let operation = NetworkOperation(requestFactory: requestFactory,
+                                         resultFactory: resultFactory)
+        operation.requestModifier = networkResolver.adapter(for: .categories)
+        
+        return operation
+    }
+
+}

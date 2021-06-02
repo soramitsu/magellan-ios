@@ -249,6 +249,38 @@ class MagellanServicePrototcolMock: MagellanServicePrototcol {
         return getPlacesWithRunCompletionInCompletionClosure.map({ $0(request, queue, completion) }) ?? getPlacesWithRunCompletionInCompletionReturnValue
     }
 
+    //MARK: - getLastReviews
+
+    var getLastReviewsWithRunCompletionInCompletionCallsCount = 0
+    var getLastReviewsWithRunCompletionInCompletionCalled: Bool {
+        return getLastReviewsWithRunCompletionInCompletionCallsCount > 0
+    }
+    var getLastReviewsWithRunCompletionInCompletionReceivedArguments: (placeId: String, queue: DispatchQueue, completion: (Result<[PlaceReview], Error>) -> Void)?
+    var getLastReviewsWithRunCompletionInCompletionReturnValue: Operation!
+    var getLastReviewsWithRunCompletionInCompletionClosure: ((String, DispatchQueue, @escaping (Result<[PlaceReview], Error>) -> Void) -> Operation)?
+
+    func getLastReviews(with placeId: String, runCompletionIn queue: DispatchQueue, completion: @escaping (Result<[PlaceReview], Error>) -> Void) -> Operation {
+        getLastReviewsWithRunCompletionInCompletionCallsCount += 1
+        getLastReviewsWithRunCompletionInCompletionReceivedArguments = (placeId: placeId, queue: queue, completion: completion)
+        return getLastReviewsWithRunCompletionInCompletionClosure.map({ $0(placeId, queue, completion) }) ?? getLastReviewsWithRunCompletionInCompletionReturnValue
+    }
+
+    //MARK: - getAllReviews
+
+    var getAllReviewsWithRunCompletionInCompletionCallsCount = 0
+    var getAllReviewsWithRunCompletionInCompletionCalled: Bool {
+        return getAllReviewsWithRunCompletionInCompletionCallsCount > 0
+    }
+    var getAllReviewsWithRunCompletionInCompletionReceivedArguments: (placeId: String, queue: DispatchQueue, completion: (Result<[PlaceReview], Error>) -> Void)?
+    var getAllReviewsWithRunCompletionInCompletionReturnValue: Operation!
+    var getAllReviewsWithRunCompletionInCompletionClosure: ((String, DispatchQueue, @escaping (Result<[PlaceReview], Error>) -> Void) -> Operation)?
+
+    func getAllReviews(with placeId: String, runCompletionIn queue: DispatchQueue, completion: @escaping (Result<[PlaceReview], Error>) -> Void) -> Operation {
+        getAllReviewsWithRunCompletionInCompletionCallsCount += 1
+        getAllReviewsWithRunCompletionInCompletionReceivedArguments = (placeId: placeId, queue: queue, completion: completion)
+        return getAllReviewsWithRunCompletionInCompletionClosure.map({ $0(placeId, queue, completion) }) ?? getAllReviewsWithRunCompletionInCompletionReturnValue
+    }
+
 }
 // MARK: -
 // MARK: -

@@ -8,7 +8,7 @@
 import Foundation
 import RobinHood
 
-protocol MiddlewareOperationFactoryProtocol {
+protocol MiddlewareOperationFactoryProtocol: ReviewOperationFactoryProtocol {
     var networkResolver: MagellanNetworkResolverProtocol { get }
     var encoder: JSONEncoder { get }
     var decoder: JSONDecoder { get }
@@ -140,7 +140,7 @@ extension MiddlewareOperationFactoryProtocol {
         return sumOperation
     }
     
-    private func error(for status: StatusData,  requestType: MagellanRequestType) -> Error? {
+    func error(for status: StatusData,  requestType: MagellanRequestType) -> Error? {
         if status.isSuccess {
             return nil
         }
@@ -153,58 +153,71 @@ extension MiddlewareOperationFactoryProtocol {
     }
 }
 
-extension ReviewOperationFactoryProtocol {
-    
-    func make<Result: Codable>(for request: AllReviewsRequest) -> BaseOperation<[Result]> {
+struct PlaceReview: Codable {}
+
+protocol ReviewOperationFactoryProtocol {}
+
+extension ReviewOperationFactoryProtocol where Self: MiddlewareOperationFactoryProtocol {
         
-//        let requestFactory = BlockNetworkRequestFactory {
-//            guard let url = URL(string: path) else {
-//                throw NetworkBaseError.invalidUrl
-//            }
-//
-//            var request = URLRequest(url: url)
-//            request.httpMethod = HttpMethod.post.rawValue
-//            request.addValue(HttpContentType.json.rawValue, forHTTPHeaderField: HttpHeaderKey.contentType.rawValue)
-//            request.httpBody = try self.encoder.encode(requestBody)
-//            return request
-//        }
-//
-//        let resultFactory = AnyNetworkResultFactory<PlacesResponse> { data in
-//            let result = try self.decoder.decode(ResultData<PlacesResponse>.self, from: data)
-//
-//            if let error = self.error(for: result.status, requestType: .placesList) {
-//                throw error
-//            }
-//
-//            guard let places = result.result else {
-//                throw NetworkBaseError.unexpectedResponseObject
-//            }
-//
-//            return places
-//        }
+    func fetchLastReviews(with placeId: String) -> BaseOperation<[PlaceReview]> {
+        let urlTemplate = networkResolver.urlTemplate(for: .placeInfo)
         
         let requestFactory = BlockNetworkRequestFactory {
+            let url = try EndpointBuilder(urlTemplate: urlTemplate).buildParameterURL(placeId)
             
+            var request = URLRequest(url: url)
+            request.httpMethod = HttpMethod.get.rawValue
+            return request
         }
         
-        let resultFactory = AnyNetworkResultFactory<Result> {
+        let resultFactory = AnyNetworkResultFactory<[PlaceReview]> { data in
+            let result = try self.decoder.decode(ResultData<[PlaceReview]>.self, from: data)
             
+            if let error = self.error(for: result.status, requestType: .placeLastReviews) {
+                throw error
+            }
+            
+            guard let result = result.result else {
+                throw NetworkBaseError.unexpectedResponseObject
+            }
+            
+            return result
         }
         
-        let operation = NetworkOperation(requestFactory: requestFactory,
-                                         resultFactory: resultFactory)
-        operation.requestModifier = networkResolver.adapter(for: .categories)
+        let operation = NetworkOperation(requestFactory: requestFactory, resultFactory: resultFactory)
+        operation.requestModifier = networkResolver.adapter(for: .placeLastReviews)
         
         return operation
     }
     
-    func make<Result: Codable>(for request: LastReviewsRequest) -> BaseOperation<[Result]> {
+    func fetchAllReviews(with placeId: String) -> BaseOperation<[PlaceReview]> {
+        let urlTemplate = networkResolver.urlTemplate(for: .placeAllReviews)
         
-        let operation = NetworkOperation(requestFactory: requestFactory,
-                                         resultFactory: resultFactory)
-        operation.requestModifier = networkResolver.adapter(for: .categories)
+        let requestFactory = BlockNetworkRequestFactory {
+            let url = try EndpointBuilder(urlTemplate: urlTemplate).buildParameterURL(placeId)
+            
+            var request = URLRequest(url: url)
+            request.httpMethod = HttpMethod.get.rawValue
+            return request
+        }
+        
+        let resultFactory = AnyNetworkResultFactory<[PlaceReview]> { data in
+            let result = try self.decoder.decode(ResultData<[PlaceReview]>.self, from: data)
+            
+            if let error = self.error(for: result.status, requestType: .placeAllReviews) {
+                throw error
+            }
+            
+            guard let placeInfo = result.result else {
+                throw NetworkBaseError.unexpectedResponseObject
+            }
+            
+            return placeInfo
+        }
+        
+        let operation = NetworkOperation(requestFactory: requestFactory, resultFactory: resultFactory)
+        operation.requestModifier = networkResolver.adapter(for: .placeAllReviews)
         
         return operation
     }
-
 }

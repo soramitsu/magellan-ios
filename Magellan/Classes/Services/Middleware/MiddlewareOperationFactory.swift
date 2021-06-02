@@ -16,18 +16,3 @@ final class MiddlewareOperationFactory: MiddlewareOperationFactoryProtocol {
         self.networkResolver = networkResolver
     }
 }
-
-final class ReviewOperationFactory: ReviewOperationFactoryProtocol {
-
-    let decorated: MiddlewareOperationFactoryProtocol
-    var networkResolver: MagellanNetworkResolverProtocol { decorated.networkResolver }
-    var encoder: JSONEncoder { decorated.encoder }
-    var decoder: JSONDecoder { decorated.decoder }
-    
-    internal init(decorated: MiddlewareOperationFactoryProtocol) {
-        self.decorated = decorated
-    }
-}
-
-protocol ReviewOperationFactoryProtocol: MiddlewareOperationFactoryProtocol {}
-

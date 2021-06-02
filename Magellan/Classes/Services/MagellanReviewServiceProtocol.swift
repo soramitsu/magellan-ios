@@ -7,24 +7,27 @@
 
 import Foundation
 
-public struct AllReviewsRequest: Codable {}
-public struct LastReviewsRequest: Codable {}
-
 protocol MagellanReviewServiceProtocol {
     
     @discardableResult
-    func get(request: AllReviewsRequest, queue: DispatchQueue) -> Operation
-    
+    func getLastReviews(with placeId: String,
+                        runCompletionIn queue: DispatchQueue,
+                        completion: @escaping (Result<[PlaceReview], Error>) -> Void) -> Operation
+
     @discardableResult
-    func get(request: LastReviewsRequest, queue: DispatchQueue) -> Operation
-    
+    func getAllReviews(with placeId: String,
+                       runCompletionIn queue: DispatchQueue,
+                       completion: @escaping (Result<[PlaceReview], Error>) -> Void) -> Operation
 }
 
 extension MagellanService: MagellanReviewServiceProtocol {
     
     @discardableResult
-    func get(request: AllReviewsRequest, queue: DispatchQueue) -> Operation {
-        let operation = operationFactory.fetchPlaces(with: request)
+    func getLastReviews(with placeId: String,
+                        runCompletionIn queue: DispatchQueue,
+                        completion: @escaping (Result<[PlaceReview], Error>) -> Void) -> Operation {
+       
+        let operation = operationFactory.fetchLastReviews(with: placeId)
         
         operation.completionBlock = {
             queue.async {
@@ -40,13 +43,16 @@ extension MagellanService: MagellanReviewServiceProtocol {
         }
         
         operationQueue.addOperation(operation)
-        
         return operation
+        
     }
-    
+
     @discardableResult
-    func get(request: LastReviewsRequest, queue: DispatchQueue) -> Operation {
-        let operation = operationFactory.fetchPlaces(with: request)
+    func getAllReviews(with placeId: String,
+                       runCompletionIn queue: DispatchQueue,
+                       completion: @escaping (Result<[PlaceReview], Error>) -> Void) -> Operation {
+        
+        let operation = operationFactory.fetchAllReviews(with: placeId)
         
         operation.completionBlock = {
             queue.async {
@@ -62,7 +68,6 @@ extension MagellanService: MagellanReviewServiceProtocol {
         }
         
         operationQueue.addOperation(operation)
-        
         return operation
     }
     

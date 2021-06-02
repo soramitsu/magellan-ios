@@ -7,4 +7,6 @@ public enum MagellanRequestType {
     case categories
     case placeInfo
     case placesList
+    case placeAllReviews
+    case placeLastReviews
 }

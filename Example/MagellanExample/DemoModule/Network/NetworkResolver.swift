@@ -53,6 +53,10 @@ class NetworkResolver: MagellanNetworkResolverProtocol {
             return baseUrl.appendingPathComponent("/paymentservice/api/v1/merchants/{placeId}").absoluteString
         case .placesList:
             return baseUrl.appendingPathComponent("/paymentservice/api/v1/merchants").absoluteString
+        case .placeAllReviews:
+            return baseUrl.appendingPathComponent("/paymentservice/api/v1/merchants/reviews/{id}").absoluteString
+        case .placeLastReviews:
+            return baseUrl.appendingPathComponent("/paymentservice/api/v1/merchants/reviews/partial/{id}").absoluteString
         }
     }
     

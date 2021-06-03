@@ -9,11 +9,15 @@ import Foundation
 
 protocol BindableViewModelProtocol: CellViewModelProtocol {
     
+    var estimatedHeight: CGFloat { get }
+    
     func bind(to cell: UITableViewCell)
         
     func expand(cell: UITableViewCell?, in tableView: UITableView, at indexPath: IndexPath)
 }
 extension BindableViewModelProtocol {
+    
+    var estimatedHeight: CGFloat { 44.0 }
     
     func expand(cell: UITableViewCell?, in tableView: UITableView, at indexPath: IndexPath) {}
     
@@ -144,11 +148,12 @@ extension PlaceReviewDataSource: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView,
                    estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-        200.0
+        items[indexPath.section].items[indexPath.row].estimatedHeight
     }
     
-    func tableView(_ tableView: UITableView, estimatedHeightForHeaderInSection section: Int) -> CGFloat {
-        48.0
+    func tableView(_ tableView: UITableView,
+                   estimatedHeightForHeaderInSection section: Int) -> CGFloat {
+        46.0
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

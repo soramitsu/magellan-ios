@@ -224,12 +224,12 @@ extension LocationDetailsViewController: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView,
                    estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-        200.0
+        presenter.items[indexPath.section].header?.items[indexPath.row].estimatedHeight ?? 200
     }
     
     func tableView(_ tableView: UITableView,
                    estimatedHeightForHeaderInSection section: Int) -> CGFloat {
-        48.0
+        46.0
     }
 
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {

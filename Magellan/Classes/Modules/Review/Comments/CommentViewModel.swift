@@ -16,6 +16,7 @@ struct CommentViewModel<Cell: CommentTableViewCell>: CommentViewModelProtocol {
     let date: String
     let text: String
     var avatarURL: String?
+    var estimatedHeight: CGFloat { 188.0 }
     
     var title: String { fullName }
     var shortTitle: String? { title.shortUppercased }

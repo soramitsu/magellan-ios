@@ -48,18 +48,27 @@ final class PlaceReviewDataSource: NSObject, PlaceReviewDataSourceProtocol {
     }
 
     private func makeReviewSummary(for model: PlaceReviewViewModel) -> HeaderFooterViewModelProtocol {
-        let rateItem = RateViewModel(style: style,
+        var rateItem = RateViewModel(style: style,
                                      score: model.score,
-                                     reviewCount: model.reviewCount)
-        let controlItem = ControlCellViewModel(style: style, title: "Rate this place")
-        var items: [BindableViewModelProtocol] = [rateItem, controlItem]
-        model.place.review?.userReview.map {
+                                     reviewCount: model.reviewCount,
+                                     margins: .zero)
+        
+        var items: [BindableViewModelProtocol] = []
+
+        if let userReview = model.place.review?.userReview {
+            rateItem.margins = .init(top: 0, left: 0, bottom: 16.0, right: 0)
+            items.append(rateItem)
             items.append(CommentViewModel(style: style,
-                                          fullName: $0.createdByName,
-                                          rate: $0.score,
-                                          date: $0.createTime,
-                                          text: $0.text))
+                                          fullName: userReview.createdByName,
+                                          rate: userReview.score,
+                                          date: userReview.createTime,
+                                          text: userReview.text))
+        } else {
+            let controlItem = ControlCellViewModel(style: style, title: "Rate this place")
+            items.append(rateItem)
+            items.append(controlItem)
         }
+        
         return ReviewSectionViewModel(title: "Review summary",
                                       items: items,
                                       style: style)

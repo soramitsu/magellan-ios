@@ -29,11 +29,13 @@ final class RateTableViewCell: UITableViewCell {
     private func layoutViews() {
         contentView.addSubview(ratingView)
         ratingView.translatesAutoresizingMaskIntoConstraints = false
+        
+        let margins = contentView.layoutMarginsGuide
+        
         NSLayoutConstraint.activate([
-            ratingView.topAnchor.constraint(equalTo: contentView.topAnchor),
-            ratingView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-            ratingView.leftAnchor.constraint(equalTo: contentView.leftAnchor,
-                                             constant: 2 * offset)
+            ratingView.topAnchor.constraint(equalTo: margins.topAnchor),
+            ratingView.bottomAnchor.constraint(equalTo: margins.bottomAnchor),
+            ratingView.leftAnchor.constraint(equalTo: margins.leftAnchor)
         ])
     }
     
@@ -42,8 +44,9 @@ final class RateTableViewCell: UITableViewCell {
 extension RateTableViewCell {
     
     func bind(viewModel: RateViewModelProtocol) {
-        ratingView.rating = 4.9
+        ratingView.rating = viewModel.rate
         ratingView.comment = viewModel.comment
+        contentView.layoutMargins = viewModel.margins
     }
     
 }

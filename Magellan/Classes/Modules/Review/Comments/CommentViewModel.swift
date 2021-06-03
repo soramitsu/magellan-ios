@@ -20,16 +20,7 @@ struct CommentViewModel<Cell: CommentTableViewCell>: CommentViewModelProtocol {
     var title: String { fullName }
     var shortTitle: String? { title.shortUppercased }
     var message: String { text }
-    var creationDate: String {
-        let formatter = DateFormatter()
-        formatter.calendar = Calendar(identifier: .iso8601)
-        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssXXXXX"
-        let date = formatter.date(from: date)
-//        CompoundDateFormatterBuilder()
-//            .build(defaultFormat: "dd MMM yyyy")
-//            .string(from: date)
-        return ""
-    }        
+    var creationDate: String { "14 Jan 2019" }
     var cellType: UITableViewCell.Type { Cell.self }
     
     func bind(to cell: UITableViewCell) {

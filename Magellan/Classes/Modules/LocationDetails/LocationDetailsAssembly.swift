@@ -10,15 +10,16 @@ final class LocationDetailsAssembly {
 
     static func assemble(placeInfo: PlaceInfo, resolver: ResolverProtocol) -> LocationDetailsViewProtocol {
         
-        let localizator = resolver.localizationResourcesFactory
+        let localizedResourcesFactory = resolver.localizationResourcesFactory
         let presenter = LocationDetailsPresenter(placeInfo: placeInfo,
-                                                 localizedResourcesFactory: localizator,
+                                                 localizedResourcesFactory: localizedResourcesFactory,
                                                  phoneFormatter: resolver.phoneFormatter)
         
-        let dataSource = PlaceReviewDataSource(style: resolver.style)
+        let dataSource = PlaceReviewDataSource(style: resolver.style,
+                                               localizables: localizedResourcesFactory)
         let decorator = LocationDetailsReviewablePresenter(place: placeInfo,
                                                            decorated: presenter,
-                                                           localizator: localizator,
+                                                           localizator: localizedResourcesFactory,
                                                            dataSource: dataSource)
         
         let view = LocationDetailsViewController(presenter: decorator,

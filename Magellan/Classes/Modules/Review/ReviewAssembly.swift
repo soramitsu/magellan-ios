@@ -14,7 +14,8 @@ public final class ReviewAssembly {
         let operationFactory = MiddlewareOperationFactory(networkResolver: resolver)
         let service = MagellanService(operationFactory: operationFactory)
         let placeProvider = DemoPlaceProvider(service: service)
-        let dataSource = PlaceReviewDataSource(style: DefaultMagellanStyle())
+        let dataSource = PlaceReviewDataSource(style: DefaultMagellanStyle(),
+                                               localizables: DefaultLocalizedResorcesFactory())
         let model = ReviewModel(placeProvider: placeProvider, dataSource: dataSource)
         let style = DefaultMagellanStyle()
         let listController = ListViewController(model: model, style: style)

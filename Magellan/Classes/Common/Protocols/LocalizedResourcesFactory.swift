@@ -43,6 +43,9 @@ public protocol LocalizedResourcesFactoryProtocol {
     var error: String { get }
     var loadingError: String { get }
 
+    var reviewSummary: String { get }
+    var reviews: String { get }
+    var ratePlace: String { get }
 }
 
 internal extension LocalizedResourcesFactoryProtocol {
@@ -82,4 +85,7 @@ struct DefaultLocalizedResorcesFactory: LocalizedResourcesFactoryProtocol {
     let today: String = "Today"
     let lunchTime: String = "Lunch time"
     let daily: String = "Daily"
+    let reviewSummary: String = "Review summary"
+    let reviews: String = "Reviews"
+    let ratePlace: String = "Rate this place"
 }

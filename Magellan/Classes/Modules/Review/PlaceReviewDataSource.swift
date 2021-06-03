@@ -26,13 +26,16 @@ final class PlaceReviewDataSource: NSObject, PlaceReviewDataSourceProtocol {
     
     weak var view: ListViewProtocol?
     let style: MagellanStyleProtocol
+    let localizables: LocalizedResourcesFactoryProtocol
     private(set) var items: [HeaderFooterViewModelProtocol] = []
     
     init(view: ListViewProtocol? = nil,
          style: MagellanStyleProtocol,
+         localizables: LocalizedResourcesFactoryProtocol,
          items: [HeaderFooterViewModelProtocol] = []) {
         self.view = view
         self.style = style
+        self.localizables = localizables
         self.items = items
     }
     
@@ -64,12 +67,12 @@ final class PlaceReviewDataSource: NSObject, PlaceReviewDataSourceProtocol {
                                           date: userReview.createTime,
                                           text: userReview.text))
         } else {
-            let controlItem = ControlCellViewModel(style: style, title: "Rate this place")
+            let controlItem = ControlCellViewModel(style: style, title: localizables.ratePlace)
             items.append(rateItem)
             items.append(controlItem)
         }
         
-        return ReviewSectionViewModel(title: "Review summary",
+        return ReviewSectionViewModel(title: localizables.reviewSummary,
                                       items: items,
                                       style: style)
     }
@@ -85,7 +88,7 @@ final class PlaceReviewDataSource: NSObject, PlaceReviewDataSourceProtocol {
                                  text: $0.text)
             }
         }.map {
-            ReviewSectionViewModel(title: "Reviews",
+            ReviewSectionViewModel(title: localizables.reviews,
                                    items: $0,
                                    style: style)
         }.map {

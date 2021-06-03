@@ -519,6 +519,171 @@ class MapListViewProtocolMock: MapListViewProtocol {
 }
 // MARK: -
 // MARK: -
+class MapPresenterDecorableMock: MapPresenterDecorable {
+    var logger: LoggerDecorator?
+    var alertHelper: AlertHelperProtocol?
+    var view: MapViewProtocol?
+    var coordinator: MapCoordinatorProtocol?
+    var output: MapOutputProtocol?
+    var categories: [PlaceCategory] = []
+    var places: [PlaceViewModel] = []
+    var clusters: [ClusterViewModel] = []
+    var position: Coordinates {
+        get { return underlyingPosition }
+        set(value) { underlyingPosition = value }
+    }
+    var underlyingPosition: Coordinates!
+    var myLocation: Coordinates?
+    var requestDelay: TimeInterval {
+        get { return underlyingRequestDelay }
+        set(value) { underlyingRequestDelay = value }
+    }
+    var underlyingRequestDelay: TimeInterval!
+    var selectedPlace: PlaceViewModel?
+
+    //MARK: - setSelectedPlace
+
+    var setSelectedPlaceCallsCount = 0
+    var setSelectedPlaceCalled: Bool {
+        return setSelectedPlaceCallsCount > 0
+    }
+    var setSelectedPlaceReceivedPlace: PlaceViewModel?
+    var setSelectedPlaceClosure: ((PlaceViewModel) -> Void)?
+
+    func setSelectedPlace(_ place: PlaceViewModel) {
+        setSelectedPlaceCallsCount += 1
+        setSelectedPlaceReceivedPlace = place
+        setSelectedPlaceClosure?(place)
+    }
+
+    //MARK: - select
+
+    var selectPlaceCallsCount = 0
+    var selectPlaceCalled: Bool {
+        return selectPlaceCallsCount > 0
+    }
+    var selectPlaceReceivedPlace: PlaceViewModel?
+    var selectPlaceClosure: ((PlaceViewModel) -> Void)?
+
+    func select(place: PlaceViewModel) {
+        selectPlaceCallsCount += 1
+        selectPlaceReceivedPlace = place
+        selectPlaceClosure?(place)
+    }
+
+    //MARK: - search
+
+    var searchWithCallsCount = 0
+    var searchWithCalled: Bool {
+        return searchWithCallsCount > 0
+    }
+    var searchWithReceivedText: String?
+    var searchWithClosure: ((String?) -> Void)?
+
+    func search(with text: String?) {
+        searchWithCallsCount += 1
+        searchWithReceivedText = text
+        searchWithClosure?(text)
+    }
+
+    //MARK: - reset
+
+    var resetCallsCount = 0
+    var resetCalled: Bool {
+        return resetCallsCount > 0
+    }
+    var resetClosure: (() -> Void)?
+
+    func reset() {
+        resetCallsCount += 1
+        resetClosure?()
+    }
+
+    //MARK: - showDetails
+
+    var showDetailsPlaceCallsCount = 0
+    var showDetailsPlaceCalled: Bool {
+        return showDetailsPlaceCallsCount > 0
+    }
+    var showDetailsPlaceReceivedPlace: PlaceViewModel?
+    var showDetailsPlaceClosure: ((PlaceViewModel) -> Void)?
+
+    func showDetails(place: PlaceViewModel) {
+        showDetailsPlaceCallsCount += 1
+        showDetailsPlaceReceivedPlace = place
+        showDetailsPlaceClosure?(place)
+    }
+
+    //MARK: - loadCategories
+
+    var loadCategoriesCallsCount = 0
+    var loadCategoriesCalled: Bool {
+        return loadCategoriesCallsCount > 0
+    }
+    var loadCategoriesClosure: (() -> Void)?
+
+    func loadCategories() {
+        loadCategoriesCallsCount += 1
+        loadCategoriesClosure?()
+    }
+
+    //MARK: - loadPlaces
+
+    var loadPlacesTopLeftBottomRightZoomCallsCount = 0
+    var loadPlacesTopLeftBottomRightZoomCalled: Bool {
+        return loadPlacesTopLeftBottomRightZoomCallsCount > 0
+    }
+    var loadPlacesTopLeftBottomRightZoomReceivedArguments: (topLeft: Coordinates, bottomRight: Coordinates, zoom: Int)?
+    var loadPlacesTopLeftBottomRightZoomClosure: ((Coordinates, Coordinates, Int) -> Void)?
+
+    func loadPlaces(topLeft: Coordinates, bottomRight: Coordinates, zoom: Int) {
+        loadPlacesTopLeftBottomRightZoomCallsCount += 1
+        loadPlacesTopLeftBottomRightZoomReceivedArguments = (topLeft: topLeft, bottomRight: bottomRight, zoom: zoom)
+        loadPlacesTopLeftBottomRightZoomClosure?(topLeft, bottomRight, zoom)
+    }
+
+    //MARK: - mapCameraDidChange
+
+    var mapCameraDidChangeCallsCount = 0
+    var mapCameraDidChangeCalled: Bool {
+        return mapCameraDidChangeCallsCount > 0
+    }
+    var mapCameraDidChangeClosure: (() -> Void)?
+
+    func mapCameraDidChange() {
+        mapCameraDidChangeCallsCount += 1
+        mapCameraDidChangeClosure?()
+    }
+
+    //MARK: - showFilter
+
+    var showFilterCallsCount = 0
+    var showFilterCalled: Bool {
+        return showFilterCallsCount > 0
+    }
+    var showFilterClosure: (() -> Void)?
+
+    func showFilter() {
+        showFilterCallsCount += 1
+        showFilterClosure?()
+    }
+
+    //MARK: - removeSelection
+
+    var removeSelectionCallsCount = 0
+    var removeSelectionCalled: Bool {
+        return removeSelectionCallsCount > 0
+    }
+    var removeSelectionClosure: (() -> Void)?
+
+    func removeSelection() {
+        removeSelectionCallsCount += 1
+        removeSelectionClosure?()
+    }
+
+}
+// MARK: -
+// MARK: -
 class MapPresenterProtocolMock: MapPresenterProtocol {
     var view: MapViewProtocol?
     var coordinator: MapCoordinatorProtocol?

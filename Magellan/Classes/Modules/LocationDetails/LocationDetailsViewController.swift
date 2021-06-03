@@ -12,7 +12,7 @@ final class LocationDetailsViewController: UIViewController, LocationDetailsView
     private let style: MagellanStyleProtocol
     var presenter: LocationDetailsPresenterProtocol
     
-    private let tableView = UITableView(frame: .zero, style: .grouped)
+    private let tableView = UITableView(frame: .zero, style: .plain)
     private let headerView = RoundedView()
     private let panView = UIView()
         
@@ -218,10 +218,8 @@ extension LocationDetailsViewController: UITableViewDelegate {
         return containerView
     }
 
-    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        let item = UIView()
-        item.backgroundColor = tableView.backgroundColor
-        return item
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        UITableView.automaticDimension
     }
 
     func tableView(_ tableView: UITableView,

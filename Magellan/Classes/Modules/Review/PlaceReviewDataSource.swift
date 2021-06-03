@@ -36,15 +36,15 @@ final class PlaceReviewDataSource: NSObject, PlaceReviewDataSourceProtocol {
         self.items = items
     }
     
-    func provideModel(_ model: PlaceReviewViewModel) {
+    func apply(_ model: PlaceReviewViewModel) -> [HeaderFooterViewModelProtocol] {
         
         items.removeAll()
         items.append(makeReviewSummary(for: model))
-        makeReviews(for: model).map {
-            items.append($0)
-        }
+        makeReviews(for: model).map { items.append($0) }
         
         setupContent()
+        
+        return items
     }
 
     private func makeReviewSummary(for model: PlaceReviewViewModel) -> HeaderFooterViewModelProtocol {

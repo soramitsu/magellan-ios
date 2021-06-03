@@ -87,7 +87,21 @@ final class LocationDetailsViewController: UIViewController, LocationDetailsView
     }
     
     func reload() {
+        presenter.items.forEach {
+            $0.header.map(registerHeaderFooter(_:))
+            $0.header?.items.forEach(registerCells(_:))
+        }
         tableView.reloadData()
+    }
+    
+    private func registerHeaderFooter(_ viewModel: HeaderFooterViewModelProtocol) {
+        tableView.register(viewModel.viewType,
+                           forHeaderFooterViewReuseIdentifier: viewModel.reusableKey)
+    }
+    
+    private func registerCells(_ viewModel: CellViewModelProtocol) {
+        tableView.register(viewModel.cellType,
+                           forCellReuseIdentifier: viewModel.cellReusableKey)
     }
 }
 
@@ -99,13 +113,29 @@ extension LocationDetailsViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return presenter.items[section].items.count
+        if let header = presenter.items[section].header {
+            return header.items.count
+        } else {
+            return presenter.items[section].items.count
+        }
     }
     
     //swiftlint:disable next force_try
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        // Providing review cells
+        if let header = presenter.items[indexPath.section].header {
+            let model = header.items[indexPath.row]
+            let cell = tableView.dequeueReusableCell(withIdentifier: model.cellReusableKey,
+                                                     for: indexPath)
+            model.bind(to: cell, at: indexPath)
+            return cell
+        }
+
         let model = presenter.items[indexPath.section].items[indexPath.row]
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: model.cellReusableKey, for: indexPath)
+        cell.selectionStyle = .none
         if let bindable = cell as? Bindable {
             bindable.bind(viewModel: model)
         }
@@ -149,16 +179,20 @@ extension LocationDetailsViewController: UITableViewDelegate {
         if let model = presenter.items[indexPath.section].items[indexPath.row] as? MapDetailViewModel {
             model.action?()
         }
+        // Provide review cell expanding
+        let cell = tableView.cellForRow(at: indexPath)
+        presenter.items[indexPath.section].header?.items[indexPath.row].expand(cell: cell, in: tableView, at: indexPath)
     }
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    
+        // Providing review headers
+        if let model = presenter.items[section].header {
+            return tableView.dequeueReusableHeaderFooterView(withIdentifier: model.reusableKey)
+                .map { model.bind(to: $0) }
+        }
+        
         guard let title = presenter.items[section].title else {
-            let model = presenter.items[section]
-            model.header.map { header in
-                return tableView.dequeueReusableHeaderFooterView(withIdentifier: header.reusableKey).map {
-                    header.bind(to: $0)
-                }
-            }
             return nil
         }
 
@@ -190,16 +224,27 @@ extension LocationDetailsViewController: UITableViewDelegate {
         return item
     }
 
+    func tableView(_ tableView: UITableView,
+                   estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        200.0
+    }
+    
+    func tableView(_ tableView: UITableView,
+                   estimatedHeightForHeaderInSection section: Int) -> CGFloat {
+        48.0
+    }
 
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         return style.offset
     }
 
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        if let _ = presenter.items[section].header {
+            return UITableView.automaticDimension
+        }
         guard let title = presenter.items[section].title else {
             return .zero
         }
-
         return UITableView.automaticDimension
     }
 }

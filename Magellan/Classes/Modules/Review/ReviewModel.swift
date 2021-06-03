@@ -43,7 +43,8 @@ protocol PlaceProvider {
 
 protocol PlaceReviewDataSourceProtocol: UITableViewDataSource, UITableViewDelegate {
     
-    func provideModel(_ model: PlaceReviewViewModel)
+    @discardableResult
+    func apply(_ model: PlaceReviewViewModel) -> [HeaderFooterViewModelProtocol]
 }
 
 class ReviewModel {
@@ -61,7 +62,7 @@ class ReviewModel {
     }
     
     private func providePlace(_ place: PlaceInfo) {
-        reviewDatasource.provideModel(.init(place: place))
+        reviewDatasource.apply(.init(place: place))
     }
 }
 

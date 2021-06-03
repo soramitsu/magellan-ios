@@ -28,8 +28,12 @@ final class LocationDetailsReviewablePresenter {
     func setupContent() {
         decorated.setupContent()
         
-        dataSource.provideModel(.init(place: place))
-        
+        var decoratedItems = decorated.items
+        let items = dataSource.apply(.init(place: place)).map {
+            LocationSectionViewModel(title: nil, header: $0, items: $0.items)
+        }
+        decoratedItems.append(contentsOf: items)
+        decorated.setItems(decoratedItems)
         
         view?.reload()
     }

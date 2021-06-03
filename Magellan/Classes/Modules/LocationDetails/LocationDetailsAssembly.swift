@@ -25,6 +25,7 @@ final class LocationDetailsAssembly {
         let view = LocationDetailsViewController(presenter: decorator,
                                                  style: resolver.style)
         decorator.view = view
+        decorator.becomeObserver()
         return view
     }
 }

@@ -8,5 +8,6 @@ import Foundation
 
 struct LocationSectionViewModel {
     let title: String?
+    var header: HeaderFooterViewModelProtocol?
     var items: [CellViewModelProtocol]
 }

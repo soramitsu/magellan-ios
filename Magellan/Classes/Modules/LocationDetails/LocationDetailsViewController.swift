@@ -153,6 +153,12 @@ extension LocationDetailsViewController: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         guard let title = presenter.items[section].title else {
+            let model = presenter.items[section]
+            model.header.map { header in
+                return tableView.dequeueReusableHeaderFooterView(withIdentifier: header.reusableKey).map {
+                    header.bind(to: $0)
+                }
+            }
             return nil
         }
 

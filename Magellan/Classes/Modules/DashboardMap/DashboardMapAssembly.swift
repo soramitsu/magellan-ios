@@ -15,7 +15,8 @@ class DashboardMapAssembly: DashboardMapAssemblyProtocol {
         dashboardMapController.appearsClosure = resolver.moduleAppersClosure
         dashboardMapController.disappearsClosure = resolver.moduleDisappersClosure
 
-        let mapView = MapAssembly.assembly(with: resolver)
+        let mapView = MapAssembly.assembly(with: resolver,
+                                           decorator: MapReviewablePresenter.self)
         let dragableView = DraggableNavigationController()
 
         let mapListView = MapListAssembly.assembly(with: resolver)

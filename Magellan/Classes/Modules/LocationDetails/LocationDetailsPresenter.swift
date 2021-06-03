@@ -7,6 +7,65 @@ import UIKit
 import MessageUI
 import SafariServices
 
+final class LocationDetailsReviewablePresenter {
+
+    weak var view: LocationDetailsViewProtocol?
+    let decorated: LocationDetailsDecorable
+    let localizator: LocalizedResourcesFactoryProtocol
+    let place: PlaceInfo
+    let dataSource: PlaceReviewDataSource
+
+    internal init(place: PlaceInfo,
+                  decorated: LocationDetailsDecorable,
+                  localizator: LocalizedResourcesFactoryProtocol,
+                  dataSource: PlaceReviewDataSource) {
+        self.place = place
+        self.decorated = decorated
+        self.localizator = localizator
+        self.dataSource = dataSource
+    }
+    
+    func setupContent() {
+        decorated.setupContent()
+        
+        dataSource.provideModel(.init(place: place))
+        
+        
+        view?.reload()
+    }
+    
+}
+extension LocationDetailsReviewablePresenter: LocationDetailsPresenterProtocol {
+    
+    var delegate: LocationDetailsPresenterDelegate? {
+        get { decorated.delegate }
+        set { decorated.delegate = newValue }
+    }
+    var items: [LocationSectionViewModel] { decorated.items }
+    
+    func dismiss() {
+        decorated.dismiss()
+    }
+    
+    func viewDidLoad() {
+        setupContent()
+    }
+}
+
+protocol LocationDetailsDecorable: LocationDetailsPresenterProtocol {
+            
+    func setItems(_ items: [LocationSectionViewModel])
+    
+    func setupContent()
+}
+
+extension LocationDetailsPresenter: LocationDetailsDecorable {
+    
+    func setItems(_ items: [LocationSectionViewModel]) {
+        self.items = items
+    }
+
+}
 
 final class LocationDetailsPresenter {
     

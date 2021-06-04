@@ -8,22 +8,14 @@
 import Foundation
 
 protocol BindableViewModelProtocol: CellViewModelProtocol {
-    
-    var estimatedHeight: CGFloat { get }
-    
+        
     func bind(to cell: UITableViewCell)
         
-    func expand(cell: UITableViewCell?, in tableView: UITableView, at indexPath: IndexPath)
+    func expand(cell: UITableViewCell?, in tableView: UITableView)
 }
 extension BindableViewModelProtocol {
     
-    var estimatedHeight: CGFloat { 44.0 }
-    
-    func expand(cell: UITableViewCell?, in tableView: UITableView, at indexPath: IndexPath) {}
-    
-    func bind(to cell: UITableViewCell, at indexPath: IndexPath) {
-        bind(to: cell)
-    }
+    func expand(cell: UITableViewCell?, in tableView: UITableView) {}
 }
 
 final class PlaceReviewDataSource: NSObject, PlaceReviewDataSourceProtocol {
@@ -132,7 +124,7 @@ extension PlaceReviewDataSource: UITableViewDataSource {
         let model = items[indexPath.section].items[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: model.cellReusableKey,
                                                  for: indexPath)
-        model.bind(to: cell, at: indexPath)
+        model.bind(to: cell)
         return cell
     }
     
@@ -148,7 +140,7 @@ extension PlaceReviewDataSource: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView,
                    estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-        items[indexPath.section].items[indexPath.row].estimatedHeight
+        UITableView.automaticDimension
     }
     
     func tableView(_ tableView: UITableView,
@@ -167,6 +159,6 @@ extension PlaceReviewDataSource: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let model = items[indexPath.section].items[indexPath.row]
         let cell = tableView.cellForRow(at: indexPath)
-        model.expand(cell: cell, in: tableView, at: indexPath)
+        model.expand(cell: cell, in: tableView)
     }
 }

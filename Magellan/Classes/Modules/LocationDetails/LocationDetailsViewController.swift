@@ -128,7 +128,7 @@ extension LocationDetailsViewController: UITableViewDataSource {
             let model = header.items[indexPath.row]
             let cell = tableView.dequeueReusableCell(withIdentifier: model.cellReusableKey,
                                                      for: indexPath)
-            model.bind(to: cell, at: indexPath)
+            model.bind(to: cell)
             return cell
         }
 
@@ -181,7 +181,7 @@ extension LocationDetailsViewController: UITableViewDelegate {
         }
         // Provide review cell expanding
         let cell = tableView.cellForRow(at: indexPath)
-        presenter.items[indexPath.section].header?.items[indexPath.row].expand(cell: cell, in: tableView, at: indexPath)
+        presenter.items[indexPath.section].header?.items[indexPath.row].expand(cell: cell, in: tableView)
     }
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -224,7 +224,7 @@ extension LocationDetailsViewController: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView,
                    estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-        presenter.items[indexPath.section].header?.items[indexPath.row].estimatedHeight ?? 200
+        UITableView.automaticDimension
     }
     
     func tableView(_ tableView: UITableView,

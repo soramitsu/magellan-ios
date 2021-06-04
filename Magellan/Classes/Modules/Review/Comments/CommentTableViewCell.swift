@@ -76,7 +76,6 @@ final class CommentTableViewCell: UITableViewCell {
     override func draw(_ rect: CGRect) {
         super.draw(rect)
         roundAvatarView()
-        messageLabel.shouldTruncate()
     }
     
     private func layoutViews() {
@@ -161,7 +160,7 @@ extension CommentTableViewCell {
 extension CommentTableViewCell {
     
     final class ExpandingLabel: UILabel {
-        
+                
         struct ReadMoreStyle {
             var tail: String = "... "
             var more: String = "More"
@@ -171,11 +170,7 @@ extension CommentTableViewCell {
         }
         var style: ReadMoreStyle = ReadMoreStyle()
 
-        private var canExpand: Bool = false
-        private var maxNumberOfLines: Int = 0
-
         func shouldExpand(to text: String) -> Bool {
-            guard canExpand else { return false }
             self.text = text
             numberOfLines = maxNumberOfLines
             return true
@@ -183,15 +178,13 @@ extension CommentTableViewCell {
         
         @discardableResult
         func shouldTruncate() -> Bool {
-            maxNumberOfLines = computeMaxNumberOfLines()
-            canExpand = maxNumberOfLines > numberOfLines
-            guard canExpand else { return false }
+            guard maxNumberOfLines > numberOfLines else { return false }
             provideReadMoreTail()
             return true
         }
         
         private func provideReadMoreTail() {
-            let fullText = text ?? ""
+            guard let fullText = text else { return }
             fullText.range(of: fullText).map {
                 let layoutManager = NSLayoutManager()
                 let range = NSRange($0, in: fullText)
@@ -232,7 +225,7 @@ extension CommentTableViewCell {
             }
         }
         
-        private func computeMaxNumberOfLines() -> Int {
+        var maxNumberOfLines: Int {
             let maxSize = CGSize(width: frame.size.width, height: .infinity)
             let charSize = font.lineHeight
             let textSize = text?.boundingRect(with: maxSize,
@@ -242,8 +235,13 @@ extension CommentTableViewCell {
             if let textSize = textSize {
                 return Int(ceil(textSize.height/charSize))
             } else {
-                return 0
+                return numberOfLines
             }
+        }
+        
+        override func drawText(in rect: CGRect) {
+            shouldTruncate()
+            super.drawText(in: rect)
         }
     }
 }

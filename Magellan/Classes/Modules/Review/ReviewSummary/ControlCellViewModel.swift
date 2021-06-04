@@ -16,7 +16,6 @@ struct ControlCellViewModel<Cell: RateControlTableViewCell>: ControlCellViewMode
     
     let style: MagellanStyleProtocol
     var cellType: UITableViewCell.Type { Cell.self }
-    var estimatedHeight: CGFloat { 150.0 }
     var title: String?
 
     func bind(to cell: UITableViewCell) {

@@ -40,7 +40,7 @@ struct CommentViewModel<Cell: CommentTableViewCell>: CommentViewModelProtocol {
         }
     }
     
-    func expand(cell: UITableViewCell?, in tableView: UITableView, at indexPath: IndexPath) {
+    func expand(cell: UITableViewCell?, in tableView: UITableView) {
         (cell as? Cell).map {
             guard $0.expandingView.shouldExpand(to: text) else { return }
             tableView.beginUpdates()

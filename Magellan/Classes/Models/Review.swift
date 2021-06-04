@@ -19,3 +19,8 @@ struct PlaceReview: Codable {
     let latestReviews: [Review]
     let userReview: Review?
 }
+
+protocol Reviewable {
+    var score: Double? { get }
+    var review: PlaceReview? { get }
+}

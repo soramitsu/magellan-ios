@@ -16,7 +16,8 @@ public final class ReviewAssembly {
         let placeProvider = DemoPlaceProvider(service: service)
         let dataSource = PlaceReviewDataSource(style: DefaultMagellanStyle(),
                                                localizables: DefaultLocalizedResorcesFactory())
-        let model = ReviewModel(placeProvider: placeProvider, dataSource: dataSource)
+        let model = PlaceReviewDataSource.ReviewModel(placeProvider: placeProvider,
+                                                      dataSource: dataSource)
         let style = DefaultMagellanStyle()
         let listController = ListViewController(model: model, style: style)
         let modalController = ModalViewController(rootViewController: listController)

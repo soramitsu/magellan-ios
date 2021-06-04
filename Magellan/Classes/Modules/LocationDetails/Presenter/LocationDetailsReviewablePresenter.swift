@@ -59,7 +59,7 @@ final class LocationDetailsReviewablePresenter {
         decorated.setupContent()
         
         var decoratedItems = decorated.items
-        let items = dataSource.apply(.init(place: place)).map {
+        let items = dataSource.apply(place).map {
             LocationSectionViewModel(title: nil, header: $0, items: $0.items)
         }
         decoratedItems.append(contentsOf: items)

@@ -7,6 +7,11 @@
 
 import Foundation
 
+protocol PlaceProvider {
+        
+    func getPlaceInfo(completion: @escaping (PlaceInfo) -> Void)
+}
+
 final class DemoPlaceProvider: PlaceProvider {
 
     let service: MagellanServicePrototcol

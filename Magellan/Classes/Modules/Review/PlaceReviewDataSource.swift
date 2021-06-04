@@ -7,21 +7,10 @@
 
 import Foundation
 
-protocol BindableViewModelProtocol: CellViewModelProtocol {
-        
-    func bind(to cell: UITableViewCell)
-        
-    func expand(cell: UITableViewCell?, in tableView: UITableView)
+protocol PlaceReviewDataSourceProtocol: UITableViewDataSource, UITableViewDelegate {
     
-    func select(cell: UITableViewCell?, in tableView: UITableView)
-}
-extension BindableViewModelProtocol {
-    
-    func select(cell: UITableViewCell?, in tableView: UITableView) {
-        expand(cell: cell, in: tableView)
-    }
-    
-    func expand(cell: UITableViewCell?, in tableView: UITableView) {}
+    @discardableResult
+    func apply(_ model: PlaceInfo) -> [HeaderFooterViewModelProtocol]
 }
 
 final class PlaceReviewDataSource: NSObject, PlaceReviewDataSourceProtocol {
@@ -42,7 +31,7 @@ final class PlaceReviewDataSource: NSObject, PlaceReviewDataSourceProtocol {
         self.items = items
     }
     
-    func apply(_ model: PlaceReviewViewModel) -> [HeaderFooterViewModelProtocol] {
+    func apply(_ model: PlaceInfo) -> [HeaderFooterViewModelProtocol] {
         
         items.removeAll()
         items.append(makeReviewSummary(for: model))
@@ -73,15 +62,19 @@ final class PlaceReviewDataSource: NSObject, PlaceReviewDataSourceProtocol {
         return items
     }
 
-    private func makeReviewSummary(for model: PlaceReviewViewModel) -> HeaderFooterViewModelProtocol {
+    private func makeReviewSummary(for model: PlaceInfo) -> HeaderFooterViewModelProtocol {
+        
+        // Backend implementation needed
+        let reviewCount = 0
+        
         var rateItem = RateViewModel(style: style,
-                                     score: model.score,
-                                     reviewCount: model.reviewCount,
+                                     score: model.score ?? 0,
+                                     reviewCount: reviewCount,
                                      margins: .zero)
         
         var items: [BindableViewModelProtocol] = []
 
-        if let userReview = model.place.review?.userReview {
+        if let userReview = model.review?.userReview {
             rateItem.margins = .init(top: 0, left: 0, bottom: 16.0, right: 0)
             items.append(rateItem)
             items.append(CommentViewModel(style: style,
@@ -100,9 +93,9 @@ final class PlaceReviewDataSource: NSObject, PlaceReviewDataSourceProtocol {
                                       style: style)
     }
 
-    private func makeReviews(for model: PlaceReviewViewModel) -> HeaderFooterViewModelProtocol? {
+    private func makeReviews(for model: PlaceInfo) -> HeaderFooterViewModelProtocol? {
         
-        model.place.review.map {
+        model.review.map {
             $0.latestReviews.map {
                 CommentViewModel(style: style,
                                  fullName: $0.createdByName,
@@ -195,3 +188,32 @@ extension PlaceReviewDataSource: UITableViewDelegate {
         model.select(cell: cell, in: tableView)
     }
 }
+
+extension PlaceReviewDataSource {
+    class ReviewModel: ListModelProtocol {
+        
+        let reviewDatasource: PlaceReviewDataSourceProtocol
+        let placeProvider: PlaceProvider
+        var dataSource: UITableViewDataSource { reviewDatasource }
+        var delegate: UITableViewDelegate? { reviewDatasource }
+        
+
+        internal init(placeProvider: PlaceProvider, dataSource: PlaceReviewDataSourceProtocol) {
+            self.placeProvider = placeProvider
+            self.reviewDatasource = dataSource
+        }
+        
+        func loadData() {
+            placeProvider.getPlaceInfo(completion: providePlace(_:))
+        }
+        
+        private func providePlace(_ place: PlaceInfo) {
+            reviewDatasource.apply(place)
+        }
+
+        func viewDidLoad() {
+            loadData()
+        }
+    }
+}
+

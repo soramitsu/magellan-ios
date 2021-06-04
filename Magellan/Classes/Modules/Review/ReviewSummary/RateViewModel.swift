@@ -25,7 +25,8 @@ struct RateViewModel<Cell: RateTableViewCell>: RateViewModelProtocol {
     
     var cellType: UITableViewCell.Type { Cell.self }
     var rate: Double { score }
-    var comment: String { "(\(reviewCount) reviews)" }
+    // TODO: Number of reviews implementation needed from backend
+    var comment: String { "" }
     
     func bind(to cell: UITableViewCell) {
         (cell as? Cell).map {

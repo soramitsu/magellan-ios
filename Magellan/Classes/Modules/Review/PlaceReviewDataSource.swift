@@ -12,8 +12,14 @@ protocol BindableViewModelProtocol: CellViewModelProtocol {
     func bind(to cell: UITableViewCell)
         
     func expand(cell: UITableViewCell?, in tableView: UITableView)
+    
+    func select(cell: UITableViewCell?, in tableView: UITableView)
 }
 extension BindableViewModelProtocol {
+    
+    func select(cell: UITableViewCell?, in tableView: UITableView) {
+        expand(cell: cell, in: tableView)
+    }
     
     func expand(cell: UITableViewCell?, in tableView: UITableView) {}
 }
@@ -21,6 +27,7 @@ extension BindableViewModelProtocol {
 final class PlaceReviewDataSource: NSObject, PlaceReviewDataSourceProtocol {
     
     weak var view: ListViewProtocol?
+    weak var presenter: ReviewsPresenterProtocol?
     let style: MagellanStyleProtocol
     let localizables: LocalizedResourcesFactoryProtocol
     private(set) var items: [HeaderFooterViewModelProtocol] = []
@@ -42,6 +49,26 @@ final class PlaceReviewDataSource: NSObject, PlaceReviewDataSourceProtocol {
         makeReviews(for: model).map { items.append($0) }
         
         setupContent()
+        
+        return items
+    }
+    
+    func appendAllReviews(_ reviews: [Review]) -> [HeaderFooterViewModelProtocol] {
+        
+        let reviews = reviews.map {
+            CommentViewModel(style: style,
+                             fullName: $0.createdByName,
+                             rate: $0.score,
+                             date: $0.createTime,
+                             text: $0.text)
+        }
+        
+        let commentSection = ReviewSectionViewModel(title: localizables.reviews,
+                                                    items: reviews,
+                                                    style: style)
+        
+        items = items.dropLast()
+        items.append(commentSection)
         
         return items
     }
@@ -85,7 +112,11 @@ final class PlaceReviewDataSource: NSObject, PlaceReviewDataSourceProtocol {
             }
         }.map {
             var items: [BindableViewModelProtocol] = $0
-            items.append(MoreControlCellViewModel(style: style, title: localizables.showAll))
+            let item = MoreControlCellViewModel(style: style,
+                                                title: localizables.showAll) { [weak self] in
+                self?.presenter?.loadAllReviews()
+            }
+            items.append(item)
             return ReviewSectionViewModel(title: localizables.reviews,
                                           items: items,
                                           style: style)
@@ -161,6 +192,6 @@ extension PlaceReviewDataSource: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let model = items[indexPath.section].items[indexPath.row]
         let cell = tableView.cellForRow(at: indexPath)
-        model.expand(cell: cell, in: tableView)
+        model.select(cell: cell, in: tableView)
     }
 }

@@ -7,6 +7,11 @@
 
 import Foundation
 
+protocol ReviewsPresenterProtocol: AnyObject {
+    
+    func loadAllReviews()
+}
+
 protocol LocationDetailsDecorable: LocationDetailsPresenterProtocol {
             
     func setItems(_ items: [LocationSectionViewModel])
@@ -18,19 +23,21 @@ final class LocationDetailsReviewablePresenter {
 
     weak var view: LocationDetailsViewProtocol?
     let decorated: LocationDetailsDecorable
+    let service: MagellanServicePrototcol
     let localizator: LocalizedResourcesFactoryProtocol
     let place: PlaceInfo
     let dataSource: PlaceReviewDataSource
 
     internal init(place: PlaceInfo,
                   decorated: LocationDetailsDecorable,
+                  service: MagellanServicePrototcol,
                   localizator: LocalizedResourcesFactoryProtocol,
                   dataSource: PlaceReviewDataSource) {
         self.place = place
         self.decorated = decorated
+        self.service = service
         self.localizator = localizator
         self.dataSource = dataSource
-
     }
     
     func becomeObserver() {
@@ -62,6 +69,38 @@ final class LocationDetailsReviewablePresenter {
     }
     
 }
+extension LocationDetailsReviewablePresenter: ReviewsPresenterProtocol {
+    
+    func loadAllReviews() {
+        service.getAllReviews(with: place.id, runCompletionIn: .main) { [weak self] result in
+            result.mapError { (error: Error) -> Error in
+                return error
+            }.map {
+                
+                var decoratedItems = self?.decorated.items
+                decoratedItems?.removeAll { $0.header != nil }
+                
+                let items = self?.dataSource.appendAllReviews($0).map {
+                    LocationSectionViewModel(title: nil, header: $0, items: $0.items)
+                }
+                items.map {
+                    decoratedItems?.append(contentsOf: $0)
+                }
+                
+                decoratedItems.map { items in
+                    self?.decorated.setItems(Array(items))
+                    let indexPaths = items.last?.header?.items.enumerated().compactMap { (index, element) -> IndexPath? in
+                        guard index > 3 else { return nil }
+                        return IndexPath(item: index - 1, section: items.count - 1)
+                    }
+                    self?.view?.reload(at: indexPaths ?? [])
+                }
+            }
+        }
+    }
+
+}
+
 extension LocationDetailsReviewablePresenter: LocationDetailsPresenterProtocol {
     
     var delegate: LocationDetailsPresenterDelegate? {

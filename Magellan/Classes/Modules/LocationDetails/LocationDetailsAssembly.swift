@@ -31,6 +31,7 @@ final class LocationDetailsAssembly {
                                                localizables: localizedResourcesFactory)
         let decorator = Decorator(place: placeInfo,
                                   decorated: presenter,
+                                  service: resolver.networkService,
                                   localizator: localizedResourcesFactory,
                                   dataSource: dataSource)
         
@@ -38,6 +39,8 @@ final class LocationDetailsAssembly {
                                                  style: resolver.style)
         decorator.view = view
         decorator.becomeObserver()
+        dataSource.presenter = decorator
+        
         return view
     }
     

@@ -12,7 +12,7 @@ final class LocationDetailsViewController: UIViewController, LocationDetailsView
     private let style: MagellanStyleProtocol
     var presenter: LocationDetailsPresenterProtocol
     
-    private let tableView = UITableView(frame: .zero, style: .plain)
+    private let tableView = UITableView(frame: .zero, style: .grouped)
     private let headerView = RoundedView()
     private let panView = UIView()
         
@@ -92,6 +92,14 @@ final class LocationDetailsViewController: UIViewController, LocationDetailsView
             $0.header?.items.forEach(registerCells(_:))
         }
         tableView.reloadData()
+    }
+    
+    func reload(at indexPaths:[IndexPath]) {
+        let section = presenter.items.count - 1
+        let s = [IndexPath(row: 3, section: section),
+                 IndexPath(row: 4, section: section),
+                 IndexPath(row: 5, section: section)]
+        tableView.insertRows(at: s, with: .automatic)
     }
     
     private func registerHeaderFooter(_ viewModel: HeaderFooterViewModelProtocol) {
@@ -181,7 +189,7 @@ extension LocationDetailsViewController: UITableViewDelegate {
         }
         // Provide review cell expanding
         let cell = tableView.cellForRow(at: indexPath)
-        presenter.items[indexPath.section].header?.items[indexPath.row].expand(cell: cell, in: tableView)
+        presenter.items[indexPath.section].header?.items[indexPath.row].select(cell: cell, in: tableView)
     }
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {

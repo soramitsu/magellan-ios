@@ -21,11 +21,21 @@ struct PlaceInfoViewModel {
     }
     
     var type: String {
-        return place.type
+        if let type = place.type {
+            return type
+        } else if let types = place.types {
+            return types.eng
+        }
+        return ""
     }
     
     var khmerType: String? {
-        return place.khmerType
+        if let khmerType = place.khmerType {
+            return khmerType
+        } else if let types = place.types {
+            return types.khm
+        }
+        return ""
     }
     
     var coordinates: Coordinates {

@@ -13,8 +13,10 @@ Library allow fast integration of Soramitsu Places.
   s.author           = { 'Andrei Marin' => 'marin@soramitsu.co.jp', 'Ruslan Rezin' => 'rezin@soramitsu.co.jp', 'Iskander Foatov' => 'foatov@soramitsu.co.jp' }
   s.source           = { :git => 'https://github.com/soramitsu/Magellan-iOS.git', :tag => s.version.to_s }
 
-  s.ios.deployment_target = '9.0'
+  s.ios.deployment_target = '11.0'
   s.swift_version = '5.0'
+  s.pod_target_xcconfig = { 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64' }
+  s.user_target_xcconfig = { 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64' }
   s.static_framework = true
   s.source_files = 'Magellan/Classes/**/*.swift'
   s.ios.resource_bundle = { 'Magellan' => ['Magellan/Assets/*.xcassets' , 'Magellan/Assets/Lang/**/*'] }

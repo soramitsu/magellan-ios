@@ -25,8 +25,13 @@ class PlaceViewModel: NSObject, Coordinated {
     
     var category: String {
         guard locale.isKm,
-            let khmerType = place.khmerType else {
-                return place.type
+              let khmerType = place.khmerType else {
+            if let type = place.type {
+                return type
+            } else if let types = place.types {
+                return locale.isKm ? types.khm : types.eng
+            }
+            return ""
         }
         return khmerType
     }

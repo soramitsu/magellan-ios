@@ -119,3 +119,4 @@ extension RateControlTableViewCell {
         }
     }
 }
+

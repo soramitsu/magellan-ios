@@ -84,9 +84,11 @@ final class PlaceReviewDataSource: NSObject, PlaceReviewDataSourceProtocol {
                                  text: $0.text)
             }
         }.map {
-            ReviewSectionViewModel(title: localizables.reviews,
-                                   items: $0,
-                                   style: style)
+            var items: [BindableViewModelProtocol] = $0
+            items.append(MoreControlCellViewModel(style: style, title: localizables.showAll))
+            return ReviewSectionViewModel(title: localizables.reviews,
+                                          items: items,
+                                          style: style)
         }.map {
             return $0
         }

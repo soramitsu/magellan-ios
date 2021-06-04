@@ -94,14 +94,6 @@ final class LocationDetailsViewController: UIViewController, LocationDetailsView
         tableView.reloadData()
     }
     
-    func reload(at indexPaths:[IndexPath]) {
-        let section = presenter.items.count - 1
-        let s = [IndexPath(row: 3, section: section),
-                 IndexPath(row: 4, section: section),
-                 IndexPath(row: 5, section: section)]
-        tableView.insertRows(at: s, with: .automatic)
-    }
-    
     private func registerHeaderFooter(_ viewModel: HeaderFooterViewModelProtocol) {
         tableView.register(viewModel.viewType,
                            forHeaderFooterViewReuseIdentifier: viewModel.reusableKey)

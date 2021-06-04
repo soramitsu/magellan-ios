@@ -54,8 +54,8 @@ final class PlaceReviewDataSource: NSObject, PlaceReviewDataSourceProtocol {
     }
     
     func appendAllReviews(_ reviews: [Review]) -> [HeaderFooterViewModelProtocol] {
-        
-        let reviews = reviews.map {
+
+        var reviews: [BindableViewModelProtocol] = reviews.map {
             CommentViewModel(style: style,
                              fullName: $0.createdByName,
                              rate: $0.score,

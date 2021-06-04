@@ -28,7 +28,5 @@ protocol LocationDetailsViewProtocol: class, ControllerBackedProtocol {
     
     var presenter: LocationDetailsPresenterProtocol { get set }
     
-    func reload()
-    
-    func reload(at indexPaths:[IndexPath])
+    func reload()    
 }

@@ -47,6 +47,8 @@ public protocol LocalizedResourcesFactoryProtocol {
     var reviews: String { get }
     var ratePlace: String { get }
     var showAll: String { get }
+    var showMore: String { get }
+
 }
 
 internal extension LocalizedResourcesFactoryProtocol {
@@ -90,4 +92,5 @@ struct DefaultLocalizedResorcesFactory: LocalizedResourcesFactoryProtocol {
     let reviews: String = "Reviews"
     let ratePlace: String = "Rate this place"
     let showAll: String = "Show all reviews"
+    let showMore: String = "More reviews"
 }

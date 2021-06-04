@@ -89,12 +89,9 @@ extension LocationDetailsReviewablePresenter: ReviewsPresenterProtocol {
                 
                 decoratedItems.map { items in
                     self?.decorated.setItems(Array(items))
-                    let indexPaths = items.last?.header?.items.enumerated().compactMap { (index, element) -> IndexPath? in
-                        guard index > 3 else { return nil }
-                        return IndexPath(item: index - 1, section: items.count - 1)
-                    }
-                    self?.view?.reload(at: indexPaths ?? [])
+                    self?.view?.reload()
                 }
+                
             }
         }
     }

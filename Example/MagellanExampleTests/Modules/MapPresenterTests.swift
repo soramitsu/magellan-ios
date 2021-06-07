@@ -50,7 +50,8 @@ final class MapPresenterTests: XCTestCase {
                 facebook: "fb",
                 logoUuid: "logoUiid",
                 promoImageUuid: "promoUiid",
-                distance: "dist", workSchedule: Schedule(open24: true, workDays: nil))
+                distance: "dist",
+                workSchedule: Schedule(open24: true, workDays: nil), score: 3.9)
     }
     
     var defaultPosition: Coordinates {

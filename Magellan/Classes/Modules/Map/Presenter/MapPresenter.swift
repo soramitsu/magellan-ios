@@ -242,3 +242,10 @@ extension MapPresenter: CategoriesFilterOutputProtocol {
         whiteFilter = filter
     }
 }
+extension MapPresenter: MapPresenterDecorable {
+    
+    func setSelectedPlace(_ place: PlaceViewModel) {
+        self.selectedPlace = place
+    }
+    
+}

@@ -85,11 +85,20 @@ struct PlaceInfo: Coordinated {
     let promoImageUuid: String?
     let distance: String?
     let workSchedule: Schedule?
+    let score: Double?
+    private(set) var review: PlaceReview?
+    
 }
 
 extension PlaceInfo: Codable { }
 extension PlaceInfo: Equatable {
     static func == (lhs: PlaceInfo, rhs: PlaceInfo) -> Bool {
         return lhs.id == rhs.id
+    }
+}
+extension PlaceInfo: Reviewable {
+    
+    mutating func append(_ review: PlaceReview) {
+        self.review = review
     }
 }

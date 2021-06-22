@@ -249,6 +249,54 @@ class MagellanServicePrototcolMock: MagellanServicePrototcol {
         return getPlacesWithRunCompletionInCompletionClosure.map({ $0(request, queue, completion) }) ?? getPlacesWithRunCompletionInCompletionReturnValue
     }
 
+    //MARK: - getPlaceSummaryInfo
+
+    var getPlaceSummaryInfoWithRunCompletionInCompletionCallsCount = 0
+    var getPlaceSummaryInfoWithRunCompletionInCompletionCalled: Bool {
+        return getPlaceSummaryInfoWithRunCompletionInCompletionCallsCount > 0
+    }
+    var getPlaceSummaryInfoWithRunCompletionInCompletionReceivedArguments: (placeId: String, queue: DispatchQueue, completion: (Result<(PlaceInfo), Error>) -> Void)?
+    var getPlaceSummaryInfoWithRunCompletionInCompletionReturnValue: Operation!
+    var getPlaceSummaryInfoWithRunCompletionInCompletionClosure: ((String, DispatchQueue, @escaping (Result<(PlaceInfo), Error>) -> Void) -> Operation)?
+
+    func getPlaceSummaryInfo(with placeId: String, runCompletionIn queue: DispatchQueue, completion: @escaping (Result<(PlaceInfo), Error>) -> Void) -> Operation {
+        getPlaceSummaryInfoWithRunCompletionInCompletionCallsCount += 1
+        getPlaceSummaryInfoWithRunCompletionInCompletionReceivedArguments = (placeId: placeId, queue: queue, completion: completion)
+        return getPlaceSummaryInfoWithRunCompletionInCompletionClosure.map({ $0(placeId, queue, completion) }) ?? getPlaceSummaryInfoWithRunCompletionInCompletionReturnValue
+    }
+
+    //MARK: - getLastReviews
+
+    var getLastReviewsWithRunCompletionInCompletionCallsCount = 0
+    var getLastReviewsWithRunCompletionInCompletionCalled: Bool {
+        return getLastReviewsWithRunCompletionInCompletionCallsCount > 0
+    }
+    var getLastReviewsWithRunCompletionInCompletionReceivedArguments: (placeId: String, queue: DispatchQueue, completion: (Result<PlaceReview, Error>) -> Void)?
+    var getLastReviewsWithRunCompletionInCompletionReturnValue: Operation!
+    var getLastReviewsWithRunCompletionInCompletionClosure: ((String, DispatchQueue, @escaping (Result<PlaceReview, Error>) -> Void) -> Operation)?
+
+    func getLastReviews(with placeId: String, runCompletionIn queue: DispatchQueue, completion: @escaping (Result<PlaceReview, Error>) -> Void) -> Operation {
+        getLastReviewsWithRunCompletionInCompletionCallsCount += 1
+        getLastReviewsWithRunCompletionInCompletionReceivedArguments = (placeId: placeId, queue: queue, completion: completion)
+        return getLastReviewsWithRunCompletionInCompletionClosure.map({ $0(placeId, queue, completion) }) ?? getLastReviewsWithRunCompletionInCompletionReturnValue
+    }
+
+    //MARK: - getAllReviews
+
+    var getAllReviewsWithRunCompletionInCompletionCallsCount = 0
+    var getAllReviewsWithRunCompletionInCompletionCalled: Bool {
+        return getAllReviewsWithRunCompletionInCompletionCallsCount > 0
+    }
+    var getAllReviewsWithRunCompletionInCompletionReceivedArguments: (placeId: String, queue: DispatchQueue, completion: (Result<[Review], Error>) -> Void)?
+    var getAllReviewsWithRunCompletionInCompletionReturnValue: Operation!
+    var getAllReviewsWithRunCompletionInCompletionClosure: ((String, DispatchQueue, @escaping (Result<[Review], Error>) -> Void) -> Operation)?
+
+    func getAllReviews(with placeId: String, runCompletionIn queue: DispatchQueue, completion: @escaping (Result<[Review], Error>) -> Void) -> Operation {
+        getAllReviewsWithRunCompletionInCompletionCallsCount += 1
+        getAllReviewsWithRunCompletionInCompletionReceivedArguments = (placeId: placeId, queue: queue, completion: completion)
+        return getAllReviewsWithRunCompletionInCompletionClosure.map({ $0(placeId, queue, completion) }) ?? getAllReviewsWithRunCompletionInCompletionReturnValue
+    }
+
 }
 // MARK: -
 // MARK: -
@@ -466,6 +514,171 @@ class MapListViewProtocolMock: MapListViewProtocol {
         setLoadingCallsCount += 1
         setLoadingReceivedLoading = loading
         setLoadingClosure?(loading)
+    }
+
+}
+// MARK: -
+// MARK: -
+class MapPresenterDecorableMock: MapPresenterDecorable {
+    var logger: LoggerDecorator?
+    var alertHelper: AlertHelperProtocol?
+    var view: MapViewProtocol?
+    var coordinator: MapCoordinatorProtocol?
+    var output: MapOutputProtocol?
+    var categories: [PlaceCategory] = []
+    var places: [PlaceViewModel] = []
+    var clusters: [ClusterViewModel] = []
+    var position: Coordinates {
+        get { return underlyingPosition }
+        set(value) { underlyingPosition = value }
+    }
+    var underlyingPosition: Coordinates!
+    var myLocation: Coordinates?
+    var requestDelay: TimeInterval {
+        get { return underlyingRequestDelay }
+        set(value) { underlyingRequestDelay = value }
+    }
+    var underlyingRequestDelay: TimeInterval!
+    var selectedPlace: PlaceViewModel?
+
+    //MARK: - setSelectedPlace
+
+    var setSelectedPlaceCallsCount = 0
+    var setSelectedPlaceCalled: Bool {
+        return setSelectedPlaceCallsCount > 0
+    }
+    var setSelectedPlaceReceivedPlace: PlaceViewModel?
+    var setSelectedPlaceClosure: ((PlaceViewModel) -> Void)?
+
+    func setSelectedPlace(_ place: PlaceViewModel) {
+        setSelectedPlaceCallsCount += 1
+        setSelectedPlaceReceivedPlace = place
+        setSelectedPlaceClosure?(place)
+    }
+
+    //MARK: - select
+
+    var selectPlaceCallsCount = 0
+    var selectPlaceCalled: Bool {
+        return selectPlaceCallsCount > 0
+    }
+    var selectPlaceReceivedPlace: PlaceViewModel?
+    var selectPlaceClosure: ((PlaceViewModel) -> Void)?
+
+    func select(place: PlaceViewModel) {
+        selectPlaceCallsCount += 1
+        selectPlaceReceivedPlace = place
+        selectPlaceClosure?(place)
+    }
+
+    //MARK: - search
+
+    var searchWithCallsCount = 0
+    var searchWithCalled: Bool {
+        return searchWithCallsCount > 0
+    }
+    var searchWithReceivedText: String?
+    var searchWithClosure: ((String?) -> Void)?
+
+    func search(with text: String?) {
+        searchWithCallsCount += 1
+        searchWithReceivedText = text
+        searchWithClosure?(text)
+    }
+
+    //MARK: - reset
+
+    var resetCallsCount = 0
+    var resetCalled: Bool {
+        return resetCallsCount > 0
+    }
+    var resetClosure: (() -> Void)?
+
+    func reset() {
+        resetCallsCount += 1
+        resetClosure?()
+    }
+
+    //MARK: - showDetails
+
+    var showDetailsPlaceCallsCount = 0
+    var showDetailsPlaceCalled: Bool {
+        return showDetailsPlaceCallsCount > 0
+    }
+    var showDetailsPlaceReceivedPlace: PlaceViewModel?
+    var showDetailsPlaceClosure: ((PlaceViewModel) -> Void)?
+
+    func showDetails(place: PlaceViewModel) {
+        showDetailsPlaceCallsCount += 1
+        showDetailsPlaceReceivedPlace = place
+        showDetailsPlaceClosure?(place)
+    }
+
+    //MARK: - loadCategories
+
+    var loadCategoriesCallsCount = 0
+    var loadCategoriesCalled: Bool {
+        return loadCategoriesCallsCount > 0
+    }
+    var loadCategoriesClosure: (() -> Void)?
+
+    func loadCategories() {
+        loadCategoriesCallsCount += 1
+        loadCategoriesClosure?()
+    }
+
+    //MARK: - loadPlaces
+
+    var loadPlacesTopLeftBottomRightZoomCallsCount = 0
+    var loadPlacesTopLeftBottomRightZoomCalled: Bool {
+        return loadPlacesTopLeftBottomRightZoomCallsCount > 0
+    }
+    var loadPlacesTopLeftBottomRightZoomReceivedArguments: (topLeft: Coordinates, bottomRight: Coordinates, zoom: Int)?
+    var loadPlacesTopLeftBottomRightZoomClosure: ((Coordinates, Coordinates, Int) -> Void)?
+
+    func loadPlaces(topLeft: Coordinates, bottomRight: Coordinates, zoom: Int) {
+        loadPlacesTopLeftBottomRightZoomCallsCount += 1
+        loadPlacesTopLeftBottomRightZoomReceivedArguments = (topLeft: topLeft, bottomRight: bottomRight, zoom: zoom)
+        loadPlacesTopLeftBottomRightZoomClosure?(topLeft, bottomRight, zoom)
+    }
+
+    //MARK: - mapCameraDidChange
+
+    var mapCameraDidChangeCallsCount = 0
+    var mapCameraDidChangeCalled: Bool {
+        return mapCameraDidChangeCallsCount > 0
+    }
+    var mapCameraDidChangeClosure: (() -> Void)?
+
+    func mapCameraDidChange() {
+        mapCameraDidChangeCallsCount += 1
+        mapCameraDidChangeClosure?()
+    }
+
+    //MARK: - showFilter
+
+    var showFilterCallsCount = 0
+    var showFilterCalled: Bool {
+        return showFilterCallsCount > 0
+    }
+    var showFilterClosure: (() -> Void)?
+
+    func showFilter() {
+        showFilterCallsCount += 1
+        showFilterClosure?()
+    }
+
+    //MARK: - removeSelection
+
+    var removeSelectionCallsCount = 0
+    var removeSelectionCalled: Bool {
+        return removeSelectionCallsCount > 0
+    }
+    var removeSelectionClosure: (() -> Void)?
+
+    func removeSelection() {
+        removeSelectionCallsCount += 1
+        removeSelectionClosure?()
     }
 
 }

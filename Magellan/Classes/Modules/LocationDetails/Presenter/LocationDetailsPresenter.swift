@@ -21,7 +21,9 @@ final class LocationDetailsPresenter {
         place = PlaceInfoViewModel(place: placeInfo)
         formatter = phoneFormatter
         self.localizator = localizedResourcesFactory
-        
+    }
+    
+    func becomeObserver() {
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(localizationChanged),
                                                name: .init(rawValue: localizator.notificationName),
@@ -30,6 +32,10 @@ final class LocationDetailsPresenter {
     
     @objc func localizationChanged() {
         setupContent()
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
     
     func setupContent() {
@@ -112,3 +118,10 @@ extension LocationDetailsPresenter: LocationDetailsPresenterProtocol {
 }
 
 extension LocationDetailsPresenter: UrlHandlerProtocol { }
+extension LocationDetailsPresenter: LocationDetailsDecorable {
+    
+    func setItems(_ items: [LocationSectionViewModel]) {
+        self.items = items
+    }
+
+}

@@ -42,8 +42,7 @@ extension DashboardMapCoordinator: MapCoordinatorProtocol {
         hideDetailsIfPresented()
         setMapList(state: .compact, animated: true)
         
-        let detailsView = LocationDetailsAssembly.assemble(placeInfo: placeInfo,
-                                                           resolver: resolver)
+        let detailsView = LocationDetailsAssembly.assemble(placeInfo: placeInfo, resolver: resolver, decorator: LocationDetailsReviewablePresenter.self)
         detailsView.presenter.delegate = self
         
         let controller = detailsView.controller

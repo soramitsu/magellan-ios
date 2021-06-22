@@ -7,10 +7,8 @@
 
 import Foundation
 
-protocol StyleProtocol {
-
-}
+protocol StyleProtocol {}
 
 protocol StyleApplicable {
-    func allpy(style: StyleProtocol)
+    func apply(style: StyleProtocol)
 }

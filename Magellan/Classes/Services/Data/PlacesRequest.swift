@@ -16,3 +16,4 @@ public struct PlacesRequest: Codable {
     let zoom: Int 
     
 }
+

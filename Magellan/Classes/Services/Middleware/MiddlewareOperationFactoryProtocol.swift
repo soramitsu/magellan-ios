@@ -8,7 +8,7 @@
 import Foundation
 import RobinHood
 
-protocol MiddlewareOperationFactoryProtocol {
+protocol MiddlewareOperationFactoryProtocol: ReviewOperationFactoryProtocol {
     var networkResolver: MagellanNetworkResolverProtocol { get }
     var encoder: JSONEncoder { get }
     var decoder: JSONDecoder { get }
@@ -140,7 +140,7 @@ extension MiddlewareOperationFactoryProtocol {
         return sumOperation
     }
     
-    private func error(for status: StatusData,  requestType: MagellanRequestType) -> Error? {
+    func error(for status: StatusData,  requestType: MagellanRequestType) -> Error? {
         if status.isSuccess {
             return nil
         }

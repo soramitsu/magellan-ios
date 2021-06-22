@@ -46,14 +46,7 @@ class NetworkResolver: MagellanNetworkResolverProtocol {
     }
     
     func urlTemplate(for type: MagellanRequestType) -> String {
-        switch type {
-        case .categories:
-            return baseUrl.appendingPathComponent("/paymentservice/api/v1/merchants/types").absoluteString
-        case .placeInfo:
-            return baseUrl.appendingPathComponent("/paymentservice/api/v1/merchants/{placeId}").absoluteString
-        case .placesList:
-            return baseUrl.appendingPathComponent("/paymentservice/api/v1/merchants").absoluteString
-        }
+        baseUrl.appendingPathComponent(makePathComponent(for: type)).absoluteString
     }
     
     func adapter(for type: MagellanRequestType) -> NetworkRequestModifierProtocol? {
@@ -66,4 +59,21 @@ class NetworkResolver: MagellanNetworkResolverProtocol {
     }
 }
 
-
+extension NetworkResolver {
+    
+    func makePathComponent(for type: MagellanRequestType) -> String {
+        switch type {
+        case .categories:
+            return "/paymentservice/api/v1/merchants/types"
+        case .placeInfo:
+            return "/paymentservice/api/v1/merchants/{placeId}"
+        case .placesList:
+            return "/paymentservice/api/v1/merchants"
+        case .placeAllReviews:
+            return "/paymentservice/api/v1/merchants/reviews/{id}"
+        case .placeLastReviews:
+            return "/paymentservice/api/v1/merchants/reviews/partial/{id}"
+        }
+    }
+    
+}

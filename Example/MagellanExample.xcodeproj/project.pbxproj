@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		17061FE073A57124647D5975 /* Pods_MagellanExampleTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A3BA81BCD1B57884BA4E8D0B /* Pods_MagellanExampleTests.framework */; };
+		1BED310D265D45A800BB0C65 /* ReviewDemo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BED310C265D45A800BB0C65 /* ReviewDemo.swift */; };
+		1BED31462667C43400BB0C65 /* reviewsAll.json in Resources */ = {isa = PBXBuildFile; fileRef = 1BED31452667C43300BB0C65 /* reviewsAll.json */; };
+		1BED314A2667C4E300BB0C65 /* reviewsLast.json in Resources */ = {isa = PBXBuildFile; fileRef = 1BED31492667C4E300BB0C65 /* reviewsLast.json */; };
 		A831EC652F77C08E5DB8F62B /* Pods_MagellanExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D65D4FA8123FFAC561A0302 /* Pods_MagellanExample.framework */; };
 		CECA0A4B2508C75F0070E9E0 /* ScheduleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CECA0A4A2508C75F0070E9E0 /* ScheduleTests.swift */; };
 		F819F83E2452E0BE00A6284F /* MapPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F819F83D2452E0BE00A6284F /* MapPresenterTests.swift */; };
@@ -56,6 +59,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1BED310C265D45A800BB0C65 /* ReviewDemo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewDemo.swift; sourceTree = "<group>"; };
+		1BED31452667C43300BB0C65 /* reviewsAll.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = reviewsAll.json; sourceTree = "<group>"; };
+		1BED31492667C4E300BB0C65 /* reviewsLast.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = reviewsLast.json; sourceTree = "<group>"; };
 		1F05751BAA6807A96A82B703 /* Pods-MagellanExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MagellanExample.release.xcconfig"; path = "Target Support Files/Pods-MagellanExample/Pods-MagellanExample.release.xcconfig"; sourceTree = "<group>"; };
 		2A211F64524CDB399C7F8579 /* Pods-MagellanExampleTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MagellanExampleTests.debug.xcconfig"; path = "Target Support Files/Pods-MagellanExampleTests/Pods-MagellanExampleTests.debug.xcconfig"; sourceTree = "<group>"; };
 		2F15C4D9882F4AA2FBF60436 /* Pods-MagellanExampleTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MagellanExampleTests.release.xcconfig"; path = "Target Support Files/Pods-MagellanExampleTests/Pods-MagellanExampleTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -122,6 +128,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1BED310B265D457400BB0C65 /* Review */ = {
+			isa = PBXGroup;
+			children = (
+				1BED310C265D45A800BB0C65 /* ReviewDemo.swift */,
+			);
+			path = Review;
+			sourceTree = "<group>";
+		};
 		7E39B0EB174DF16A465B129C /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -202,6 +216,8 @@
 				F838F056244997E100F34627 /* placeInfo.json */,
 				F838F0582449980E00F34627 /* placesList.json */,
 				F8C0AF6524506DE70024A8DC /* fail.json */,
+				1BED31452667C43300BB0C65 /* reviewsAll.json */,
+				1BED31492667C4E300BB0C65 /* reviewsLast.json */,
 			);
 			path = MockFiles;
 			sourceTree = "<group>";
@@ -212,6 +228,7 @@
 				F838F04E2449927E00F34627 /* Network */,
 				F83422EC2448734A00E0C685 /* DummyMap */,
 				F87C950324460D6E008CE9F2 /* Empty */,
+				1BED310B265D457400BB0C65 /* Review */,
 				F82317782445D54F00D4B95F /* DemoViewController.swift */,
 				F83F50E32446053B001AD397 /* DemoFactoryProtocol.swift */,
 				F83BB63E247E597E00A3FD8F /* DemoMagellanStyle.swift */,
@@ -372,6 +389,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F82317812445D55200D4B95F /* LaunchScreen.storyboard in Resources */,
+				1BED314A2667C4E300BB0C65 /* reviewsLast.json in Resources */,
 				F823177E2445D55200D4B95F /* Assets.xcassets in Resources */,
 				F81F1802247E5A7B00B35A29 /* Sora-Light.otf in Resources */,
 				F81F1803247E5A7B00B35A29 /* Sora-Regular.otf in Resources */,
@@ -382,6 +400,7 @@
 				F838F0592449980E00F34627 /* placesList.json in Resources */,
 				F838F057244997E100F34627 /* placeInfo.json in Resources */,
 				F81F1800247E5A7B00B35A29 /* Sora-ExtraBold.otf in Resources */,
+				1BED31462667C43400BB0C65 /* reviewsAll.json in Resources */,
 				F81F1804247E5A7B00B35A29 /* Sora-SemiBold.otf in Resources */,
 				F81F1801247E5A7B00B35A29 /* Sora-ExtraLight.otf in Resources */,
 				F81F17FF247E5A7400B35A29 /* Sora-Bold.otf in Resources */,
@@ -528,6 +547,7 @@
 				F83422EE2448736400E0C685 /* DummyDemo.swift in Sources */,
 				F87C950224460B5D008CE9F2 /* EmptyDemo.swift in Sources */,
 				F8524D84245836E20091ED5F /* UIFont+Extensions.swift in Sources */,
+				1BED310D265D45A800BB0C65 /* ReviewDemo.swift in Sources */,
 				F82317752445D54F00D4B95F /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -113,3 +113,22 @@ final class DefaultMagellanStyle: MagellanStyleProtocol {
     var primaryColor: UIColor = UIColor(red: 0.816, green: 0.008, blue: 0.107, alpha: 1)
     var categoryLabelBackground: UIColor = UIColor(red: 0.98, green: 0.902, blue: 0.91, alpha: 1)
 }
+
+public extension MagellanStyleProtocol {
+    
+    /// #F5F7F8, 100 %
+    var superLightGrayColor: UIColor { #colorLiteral(red: 0.9607843137, green: 0.968627451, blue: 0.9725490196, alpha: 1) }
+    
+    /// #242629, 100 %
+    var textAfro: UIColor { #colorLiteral(red: 0.1411764706, green: 0.1490196078, blue: 0.1607843137, alpha: 1) }
+    
+    /// #D0021B, 100 %
+    var accent: UIColor { #colorLiteral(red: 0.8156862745, green: 0.007843137255, blue: 0.1058823529, alpha: 1) }
+    
+    /// #ECEFF0, 100 %
+    var iconsBack: UIColor { #colorLiteral(red: 0.9254901961, green: 0.937254902, blue: 0.9411764706, alpha: 1) }
+    
+    /// #size 15, weight: medium
+    var medium15: UIFont { UIFont.systemFont(ofSize: 15, weight: .medium) }
+
+}
